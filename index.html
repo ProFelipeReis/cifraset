@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>CifraSet</title>
+<title>CifraSet — Músico de Igreja</title>
 <link rel="icon" href="https://i.imgur.com/rFgCI7Y.png" type="image/png">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <!-- Firebase -->
@@ -3132,6 +3132,14 @@ document.addEventListener('keydown', e => {
 });
 
 // ── INIT ─────────────────────────────────────────────────
+// ── BLOCK PINCH ZOOM (iOS ignores user-scalable=no) ──────
+document.addEventListener('touchmove', function(e) {
+  if (e.touches.length > 1) e.preventDefault();
+}, { passive: false });
+document.addEventListener('gesturestart', function(e) {
+  e.preventDefault();
+}, { passive: false });
+
 window.addEventListener('DOMContentLoaded', () => {
   const isDemo = firebaseConfig.apiKey.includes('DEMO') || firebaseConfig.apiKey.includes('SUBSTITUA');
   runIntro(isDemo);
