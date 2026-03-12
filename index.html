@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>CifraSet — Músico de Igreja</title>
+<title>CifraSet</title>
 <link rel="icon" href="https://i.imgur.com/ql0dlx6.png" type="image/png">
 <link rel="apple-touch-icon" href="https://i.imgur.com/ql0dlx6.png">
 <link rel="apple-touch-icon" sizes="152x152" href="https://i.imgur.com/ql0dlx6.png">
@@ -12,25 +12,25 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="CifraSet">
-<meta name="theme-color" content="#0f0e0c">
+<meta name="theme-color" content="#0d0d0d">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <style>
   :root {
-    --bg: #0f0e0c;
-    --surface: #1a1916;
-    --surface2: #232118;
-    --border: #2e2c27;
-    --gold: #c9a84c;
-    --gold2: #e8c96a;
-    --cream: #f0ead8;
-    --muted: #6b6555;
-    --text: #e8e2d0;
-    --accent: #7e5c2b;
-    --red: #c05c3a;
-    --green: #4a7c59;
+    --bg: #0d0d0d;
+    --surface: #161616;
+    --surface2: #1f1f1f;
+    --border: #2a2a2a;
+    --gold: #d4d4d4;
+    --gold2: #ffffff;
+    --cream: #f0f0f0;
+    --muted: #606060;
+    --text: #e0e0e0;
+    --accent: #3a3a3a;
+    --red: #e05252;
+    --green: #4caf7d;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -166,8 +166,8 @@
   .key-badge {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 10px; padding: 1px 6px;
-    border-radius: 4px; border: 1px solid var(--accent);
-    color: var(--gold); background: rgba(201,168,76,0.08);
+    border-radius: 4px; border: 1px solid var(--border);
+    color: var(--muted); background: var(--surface2);
   }
   .song-drag {
     color: var(--muted); font-size: 16px; cursor: grab;
@@ -221,7 +221,7 @@
     flex: 1; overflow: hidden;
   }
   .editor-topbar {
-    padding: 16px 28px;
+    padding: 16px 32px;
     border-bottom: 1px solid var(--border);
     display: flex; align-items: center;
     background: var(--surface);
@@ -259,15 +259,15 @@
     display: flex; align-items: center; gap: 6px;
     letter-spacing: 0.3px;
   }
-  .btn-primary { background: var(--gold); color: var(--bg); }
-  .btn-primary:hover { background: var(--gold2); }
+  .btn-primary { background: #ffffff; color: #0d0d0d; border-color: #ffffff; }
+  .btn-primary:hover { background: #e0e0e0; border-color: #e0e0e0; }
   .btn-ghost {
     background: var(--surface2); color: var(--text);
     border: 1px solid var(--border);
   }
   .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
-  .btn-danger { background: rgba(192,92,58,0.15); color: var(--red); border: 1px solid rgba(192,92,58,0.3); }
-  .btn-danger:hover { background: rgba(192,92,58,0.25); }
+  .btn-danger { background: rgba(224,82,82,0.1); color: var(--red); border: 1px solid rgba(224,82,82,0.25); }
+  .btn-danger:hover { background: rgba(224,82,82,0.2); }
   .btn-sm { padding: 5px 12px; font-size: 11px; }
 
   /* ── TRANSPOSE WIDGET ── */
@@ -302,8 +302,8 @@
   }
   .section-label-bar {
     display: flex; align-items: center; gap: 10px;
-    padding: 8px 28px 4px;
-    background: rgba(201,168,76,0.04);
+    padding: 8px 32px 4px;
+    background: rgba(255,255,255,0.02);
   }
   .section-label-input {
     font-family: 'IBM Plex Mono', monospace;
@@ -322,7 +322,7 @@
 
   .line-row {
     display: flex; flex-direction: column;
-    padding: 2px 28px;
+    padding: 2px 32px;
   }
   .chord-line {
     font-family: 'IBM Plex Mono', monospace;
@@ -334,7 +334,7 @@
     white-space: pre;
     letter-spacing: 0;
   }
-  .chord-line::placeholder { color: rgba(201,168,76,0.2); font-size: 12px; }
+  .chord-line::placeholder { color: rgba(255,255,255,0.08); font-size: 12px; }
   .lyric-line {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 14px; color: var(--text);
@@ -383,7 +383,7 @@
   .present-overlay.active { display: flex; }
   .present-header {
     padding: 20px 48px 12px;
-    border-bottom: 1px solid rgba(201,168,76,0.2);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
     display: flex; justify-content: space-between; align-items: center;
     position: sticky; top: 0; background: #0a0908; z-index: 10;
   }
@@ -401,7 +401,7 @@
     font-family: 'IBM Plex Mono', monospace;
     font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
     color: var(--gold); margin-bottom: 12px;
-    padding-bottom: 6px; border-bottom: 1px solid rgba(201,168,76,0.2);
+    padding-bottom: 6px; border-bottom: 1px solid rgba(255,255,255,0.08);
   }
   .present-line { margin-bottom: 16px; }
   .present-chord {
@@ -502,7 +502,7 @@
     border-radius: 6px; padding: 8px; text-align: center;
     cursor: pointer; transition: all 0.2s;
   }
-  .chord-chip:hover { border-color: var(--gold); background: rgba(201,168,76,0.08); }
+  .chord-chip:hover { border-color: var(--gold); background: rgba(255,255,255,0.06); }
   .chord-chip-name { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--gold); font-weight: 600; }
   .chord-chip-notes { font-size: 10px; color: var(--muted); margin-top: 2px; }
 
@@ -555,7 +555,7 @@
     transition: background 0.15s;
   }
   .playlist-list-item:hover { background: var(--surface2); }
-  .playlist-list-item.active { background: rgba(201,168,76,0.1); color: var(--gold); }
+  .playlist-list-item.active { background: rgba(255,255,255,0.06); color: var(--gold); }
 
   /* ── INTRO / AUTH ── */
   .screen {
@@ -650,7 +650,7 @@
     border-radius: 16px; padding: 28px 22px; width: 150px;
     cursor: pointer; transition: all 0.2s; text-align: center;
   }
-  .home-card:hover { border-color: var(--gold); transform: translateY(-4px); background: var(--surface2); box-shadow: 0 8px 24px rgba(201,168,76,0.12); }
+  .home-card:hover { border-color: var(--gold); transform: translateY(-4px); background: var(--surface2); box-shadow: 0 8px 24px rgba(255,255,255,0.06); }
   .home-card-icon { font-size: 32px; margin-bottom: 10px; }
   .home-card-title { font-size: 13px; font-weight: 600; color: var(--cream); margin-bottom: 5px; }
   .home-card-desc { font-size: 11px; color: var(--muted); line-height: 1.4; }
@@ -674,7 +674,7 @@
     border-radius: 10px; color: var(--gold); padding: 18px;
     outline: none; text-transform: uppercase; transition: border-color 0.2s;
   }
-  .code-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,168,76,0.1); }
+  .code-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(255,255,255,0.06); }
   .code-hint { font-size: 11px; color: var(--muted); text-align: center; margin-top: 8px; }
 
   /* MY PLAYLISTS SCREEN */
@@ -698,7 +698,7 @@
     display: flex; align-items: center; gap: 12px;
     transition: border-color 0.2s;
   }
-  .mypl-item:hover { border-color: rgba(201,168,76,0.3); }
+  .mypl-item:hover { border-color: rgba(255,255,255,0.1); }
   .mypl-item-info { flex: 1; min-width: 0; }
   .mypl-item-name {
     font-size: 14px; font-weight: 600; color: var(--cream);
@@ -707,12 +707,12 @@
   .mypl-item-meta { font-size: 11px; color: var(--muted); margin-top: 3px; }
   .mypl-code {
     font-family: 'IBM Plex Mono', monospace; font-size: 16px; font-weight: 700;
-    color: var(--gold); background: rgba(201,168,76,0.1);
-    border: 1px solid rgba(201,168,76,0.25); border-radius: 6px;
+    color: var(--gold); background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1); border-radius: 6px;
     padding: 5px 12px; cursor: pointer; letter-spacing: 3px;
     transition: all 0.2s; flex-shrink: 0;
   }
-  .mypl-code:hover { background: rgba(201,168,76,0.2); }
+  .mypl-code:hover { background: rgba(255,255,255,0.08); }
   .mypl-perm {
     font-size: 10px; font-family: 'IBM Plex Mono', monospace;
     padding: 3px 8px; border-radius: 20px; cursor: pointer;
@@ -730,11 +730,11 @@
   .pl-code-badge {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 11px; letter-spacing: 3px; font-weight: 700;
-    background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.3);
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
     color: var(--gold); border-radius: 5px; padding: 3px 10px;
     cursor: pointer; transition: all 0.2s;
   }
-  .pl-code-badge:hover { background: rgba(201,168,76,0.2); }
+  .pl-code-badge:hover { background: rgba(255,255,255,0.08); }
 
   /* USER BADGE in header */
   .user-badge {
@@ -2939,7 +2939,7 @@ function exportPlaylistPDF() {
   ══════════════════════ */
   .index-page {
     width: 100%;
-    padding: 32px 0 0;
+    padding: 32px 48px 0;
     page-break-after: always;
     display: flex; flex-direction: column;
   }
@@ -2992,7 +2992,7 @@ function exportPlaylistPDF() {
   ══════════════════════ */
   .song-page {
     width: 100%;
-    padding: 0;
+    padding: 0 48px;
     display: flex; flex-direction: column;
   }
   .page-break { page-break-before: always; }
@@ -3066,6 +3066,21 @@ function exportPlaylistPDF() {
 </style>
 </head>
 <body>
+
+<!-- BOTÃO VOLTAR -->
+<button onclick="window.close()" style="
+  position: fixed; bottom: 24px; left: 24px;
+  background: #0a0a0a; color: #fff;
+  border: none; border-radius: 50px;
+  padding: 12px 20px; font-size: 13px; font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer; z-index: 9999;
+  display: flex; align-items: center; gap: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  transition: all 0.2s;
+" onmouseover="this.style.background='#333'" onmouseout="this.style.background='#0a0a0a'">
+  ← Voltar ao site
+</button>
 
 <!-- WATERMARK -->
 <div class="watermark">
