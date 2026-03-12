@@ -1316,7 +1316,7 @@ function showHome() {
   showScreen('homeScreen');
 }
 function goJoinPlaylist()  { showScreen('joinScreen'); document.getElementById('joinCode').value=''; document.getElementById('joinErr').textContent=''; }
-function goCreatePlaylist(){ loadMyPlaylists(); }
+function goCreatePlaylist(){ showScreen('app'); if (state.playlists.length > 0) { openPlaylistModal(); } else { showCreatePlaylistFlow(); } }
 function goMyPlaylists()   { showMyPlaylistsScreen(); }
 
 // Carrega todas as playlists do usuário em background e atualiza o state
