@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>CifraSet</title>
+<title>CifraSet — Músico de Igreja</title>
 <link rel="icon" href="https://i.imgur.com/ql0dlx6.png" type="image/png">
 <link rel="apple-touch-icon" href="https://i.imgur.com/ql0dlx6.png">
 <link rel="apple-touch-icon" sizes="152x152" href="https://i.imgur.com/ql0dlx6.png">
@@ -13,7 +13,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="CifraSet">
 <meta name="theme-color" content="#0f0e0c">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
@@ -53,7 +53,7 @@
     position: sticky; top: 0; z-index: 100;
   }
   .logo {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Syne', serif;
     font-size: 22px; font-weight: 900;
     color: var(--gold);
     letter-spacing: 2px;
@@ -91,27 +91,54 @@
     display: flex; align-items: center; gap: 8px;
     flex-wrap: wrap;
   }
-  .playlist-tab {
-    font-size: 12px; padding: 5px 12px;
-    border-radius: 20px;
+  /* ── PLAYLIST LIST (nova lista vertical) ── */
+  .pl-list { display: flex; flex-direction: column; gap: 2px; }
+  .pl-list-item {
+    display: flex; align-items: center;
+    padding: 8px 10px; border-radius: 8px;
+    cursor: pointer; transition: background 0.15s;
+    border: 1px solid transparent;
+    gap: 8px;
+  }
+  .pl-list-item:hover { background: var(--surface2); }
+  .pl-list-item.active {
+    background: var(--surface2);
+    border-color: var(--border);
+  }
+  .pl-list-item-name {
+    flex: 1; font-size: 13px; font-weight: 500;
+    color: var(--cream); white-space: nowrap;
+    overflow: hidden; text-overflow: ellipsis;
+    min-width: 0;
+  }
+  .pl-list-item.active .pl-list-item-name { color: var(--gold); }
+  .pl-list-item-code {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px; font-weight: 700; letter-spacing: 2px;
+    color: var(--muted); background: var(--bg);
     border: 1px solid var(--border);
-    background: transparent; color: var(--muted);
-    cursor: pointer; transition: all 0.2s;
-    font-family: 'IBM Plex Sans', sans-serif;
+    border-radius: 4px; padding: 2px 6px;
+    cursor: pointer; flex-shrink: 0;
+    transition: all 0.15s;
   }
-  .playlist-tab:hover { border-color: var(--gold); color: var(--gold); }
-  .playlist-tab.active { background: var(--gold); color: var(--bg); border-color: var(--gold); font-weight: 600; }
-  .playlist-tab.add-btn { border-style: dashed; }
-  .playlist-tab-wrap {
-    display: flex; align-items: center; gap: 2px;
-  }
-  .playlist-del-btn {
+  .pl-list-item-code:hover { color: var(--gold); border-color: var(--gold); }
+  .pl-list-item-del {
     background: none; border: none; color: transparent;
-    font-size: 10px; cursor: pointer; padding: 3px 4px;
-    border-radius: 4px; transition: all 0.15s; line-height: 1;
+    font-size: 11px; cursor: pointer; padding: 2px 4px;
+    border-radius: 4px; transition: all 0.15s; flex-shrink: 0;
   }
-  .playlist-tab-wrap:hover .playlist-del-btn { color: var(--muted); }
-  .playlist-del-btn:hover { color: var(--red) !important; background: rgba(192,92,58,0.15); }
+  .pl-list-item:hover .pl-list-item-del { color: var(--muted); }
+  .pl-list-item-del:hover { color: var(--red) !important; background: rgba(192,92,58,0.15); }
+  .pl-list-add {
+    display: flex; align-items: center; gap: 6px;
+    padding: 7px 10px; border-radius: 8px;
+    border: 1px dashed var(--border);
+    background: none; color: var(--muted);
+    font-size: 12px; cursor: pointer;
+    font-family: 'IBM Plex Sans', sans-serif;
+    transition: all 0.2s; width: 100%; margin-top: 4px;
+  }
+  .pl-list-add:hover { border-color: var(--gold); color: var(--gold); }
 
   .song-list { overflow-y: auto; flex: 1; padding: 8px 0; }
   .song-item {
@@ -183,7 +210,7 @@
   }
   .empty-icon { font-size: 64px; opacity: 0.3; }
   .empty-state h2 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Syne', serif;
     font-size: 24px; color: var(--text); opacity: 0.4;
   }
   .empty-state p { font-size: 14px; opacity: 0.6; text-align: center; }
@@ -196,12 +223,12 @@
   .editor-topbar {
     padding: 16px 28px;
     border-bottom: 1px solid var(--border);
-    display: flex; align-items: center; gap: 16px;
+    display: flex; align-items: center;
     background: var(--surface);
     flex-wrap: wrap; gap: 12px;
   }
   .song-title-input {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Syne', serif;
     font-size: 22px; font-weight: 700;
     background: none; border: none; color: var(--cream);
     flex: 1; min-width: 180px; outline: none;
@@ -361,7 +388,7 @@
     position: sticky; top: 0; background: #0a0908; z-index: 10;
   }
   .present-title {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Syne', serif;
     font-size: 28px; font-weight: 900; color: var(--cream);
   }
   .present-key {
@@ -434,7 +461,7 @@
     border-radius: 12px; padding: 28px; width: 480px; max-width: 95vw;
   }
   .modal h3 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Syne', serif;
     font-size: 20px; color: var(--cream); margin-bottom: 16px;
   }
   .modal textarea {
@@ -479,26 +506,20 @@
   .chord-chip-name { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--gold); font-weight: 600; }
   .chord-chip-notes { font-size: 10px; color: var(--muted); margin-top: 2px; }
 
-  /* ── IMPORT TABS ── */
-  .import-tab {
-    background: none; border: none; border-bottom: 2px solid transparent;
-    color: var(--muted); font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 13px; font-weight: 500; padding: 8px 16px 10px;
-    cursor: pointer; transition: all 0.2s; margin-bottom: -1px;
+  /* ── IMPORT OPTIONS ── */
+  .import-options {
+    display: flex; flex-direction: column; gap: 8px;
+    margin-top: 12px; padding: 10px 12px;
+    background: var(--surface2); border-radius: 8px;
+    border: 1px solid var(--border);
   }
-  .import-tab:hover { color: var(--text); }
-  .import-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
-
-  /* ── URL STATUS ── */
-  .url-loading { display: flex; align-items: center; gap: 8px; }
-  .url-spinner {
-    width: 14px; height: 14px; border: 2px solid var(--border);
-    border-top-color: var(--gold); border-radius: 50%;
-    animation: spin 0.7s linear infinite; flex-shrink: 0;
+  .import-opt {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; color: var(--text); cursor: pointer;
   }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .url-success { color: var(--green) !important; }
-  .url-error { color: var(--red) !important; }
+  .import-opt input[type=checkbox] {
+    width: 15px; height: 15px; accent-color: var(--gold); cursor: pointer;
+  }
 
   /* ── LINE DELETE ── */
   .line-del-btn {
@@ -575,7 +596,7 @@
   .auth-logo img { width: 240px; height: auto; object-fit: contain; }
 
   .auth-title {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Syne', serif;
     font-size: 24px; color: var(--cream); margin-bottom: 6px;
   }
   .auth-sub { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
@@ -616,7 +637,7 @@
   }
   .home-logo-img { width: 180px; height: auto; object-fit: contain; margin-bottom: 24px; mix-blend-mode: lighten; filter: brightness(1.05); }
   .home-title {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Syne', serif;
     font-size: 30px; font-weight: 900; color: var(--gold);
     letter-spacing: 3px; margin-bottom: 4px;
   }
@@ -642,7 +663,7 @@
     border-radius: 16px; padding: 36px 40px; width: 400px; max-width: 95vw;
   }
   .join-title {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Syne', serif;
     font-size: 22px; color: var(--cream); margin-bottom: 8px;
   }
   .join-sub { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
@@ -667,7 +688,7 @@
     margin-bottom: 24px; gap: 12px;
   }
   .mypl-title {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Syne', serif;
     font-size: 20px; color: var(--cream); font-weight: 700; flex: 1; text-align: center;
   }
   .mypl-list { display: flex; flex-direction: column; gap: 10px; }
@@ -726,6 +747,25 @@
     display: flex; align-items: center; justify-content: center;
     font-weight: 700; font-size: 12px; font-family: 'IBM Plex Mono', monospace;
   }
+
+  /* ── IMPORT TABS ── */
+  .import-tab {
+    background: none; border: none; padding: 8px 16px;
+    font-size: 13px; font-family: 'IBM Plex Sans', sans-serif;
+    color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent;
+    margin-bottom: -1px; transition: color 0.15s, border-color 0.15s;
+  }
+  .import-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+  .import-tab:hover:not(.active) { color: var(--text); }
+  .url-error { color: #e05555; }
+  .url-success { color: #5eb85e; }
+  .url-loading { display: flex; align-items: center; gap: 8px; }
+  .url-spinner {
+    width: 14px; height: 14px; border-radius: 50%;
+    border: 2px solid var(--border); border-top-color: var(--gold);
+    animation: spin 0.7s linear infinite; flex-shrink: 0;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
 
   /* ── MOBILE BOTTOM NAV ── */
   .mobile-nav {
@@ -985,12 +1025,8 @@
   <div class="sidebar">
     <div class="sidebar-header">
       <div class="sidebar-title">Playlists</div>
-      <div id="plCodeArea" style="margin-bottom:8px;display:none">
-        <span class="pl-code-badge" id="plCodeBadge" onclick="copyPlCode()" title="Clique para copiar o código"></span>
-        <span style="font-size:10px;color:var(--muted);margin-left:4px">clique para copiar</span>
-      </div>
-      <div id="plPermBadge" style="font-size:11px;color:var(--muted);margin-bottom:6px;display:none"></div>
-      <div class="playlist-selector" id="playlistTabs"></div>
+      <div id="plPermBadge" style="font-size:11px;color:var(--muted);margin-bottom:8px;display:none"></div>
+      <div id="playlistTabs"></div>
     </div>
     <div class="song-list" id="songList"></div>
     <div class="sidebar-footer">
@@ -1076,14 +1112,55 @@
 
 <!-- IMPORT MODAL -->
 <div class="modal-overlay" id="importModal">
-  <div class="modal" style="width:520px">
+  <div class="modal" style="width:540px">
     <h3>Importar Música</h3>
-    <input type="text" class="full" id="importTitle" placeholder="Título da música...">
-    <textarea id="importText" placeholder="Cole aqui a letra da música. Você pode separar seções com [Verso 1], [Refrão], [Ponte], etc.&#10;&#10;Também funciona com o formato do Cifra Club colado direto (cifras + letra juntos)."></textarea>
-    <div class="modal-hint">💡 Dica: No Cifra Club, selecione tudo (Ctrl+A), copie e cole aqui — o app reconhece as cifras automaticamente.</div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeImportModal()">Cancelar</button>
-      <button class="btn btn-primary" onclick="doImport()">Importar</button>
+
+    <!-- Tabs -->
+    <div style="display:flex;border-bottom:1px solid var(--border);margin-bottom:16px">
+      <button class="import-tab active" id="tabUrl" onclick="switchImportTab('url')">🔗 URL do Cifra Club</button>
+      <button class="import-tab" id="tabText" onclick="switchImportTab('text')">📋 Colar letra</button>
+    </div>
+
+    <!-- URL TAB (Cifra Club) -->
+    <div id="importPanelUrl">
+      <input type="text" class="full" id="importUrl"
+        placeholder="https://www.cifraclub.com.br/artista/musica/"
+        onkeydown="if(event.key==='Enter') doImportUrl()">
+
+      <!-- Opções de importação -->
+      <div class="import-options" id="importOptions">
+        <label class="import-opt">
+          <input type="checkbox" id="optTab"> 
+          <span>Importar com tabulatura</span>
+        </label>
+        <label class="import-opt">
+          <input type="checkbox" id="optDiagram">
+          <span>Importar com diagramas</span>
+        </label>
+      </div>
+
+      <div id="urlStatusBox" style="display:none;margin-top:8px;font-size:12px;color:var(--muted)">
+        <span id="urlStatusText"></span>
+      </div>
+
+      <div class="modal-hint" style="margin-top:10px">
+        💡 Abra a música no Cifra Club, copie o link da barra de endereço e cole aqui.
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" onclick="closeImportModal()">Cancelar</button>
+        <button class="btn btn-primary" id="btnImportUrl" onclick="doImportUrl()">🔍 Buscar e Importar</button>
+      </div>
+    </div>
+
+    <!-- TEXT TAB -->
+    <div id="importPanelText" style="display:none">
+      <input type="text" class="full" id="importTitle" placeholder="Título da música...">
+      <textarea id="importText" placeholder="Cole aqui a letra da música. Você pode separar seções com [Verso 1], [Refrão], [Ponte], etc.&#10;&#10;Também funciona com o formato do Cifra Club colado direto (cifras + letra juntos)."></textarea>
+      <div class="modal-hint">💡 No Cifra Club, selecione tudo (Ctrl+A), copie e cole aqui.</div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" onclick="closeImportModal()">Cancelar</button>
+        <button class="btn btn-primary" onclick="doImport()">Importar</button>
+      </div>
     </div>
   </div>
 </div>
@@ -1129,7 +1206,6 @@
 
 <script>
 // ── FIREBASE CONFIG ────────────────────────────────────────
-// ⚠️ SUBSTITUA com suas credenciais do Firebase Console
 const firebaseConfig = {
   apiKey: "AIzaSyB_sD8qr7aXbZLfTUR71itikLSEY3-Fra8",
   projectId: "cifraset-e9abe",
@@ -1177,7 +1253,6 @@ function save() {
   clearTimeout(_syncTimer);
   _syncTimer = setTimeout(syncPlaylistToFirebase, 1200);
 }
-function load() {}
 
 // ── SCREEN MANAGER ───────────────────────────────────────
 function showScreen(id) {
@@ -1219,6 +1294,7 @@ function checkAuth() {
   if (saved && saved.uid) {
     currentUser = saved;
     renderUserBadge();
+    fetchAllMyPlaylists();
     showHome();
   } else {
     showLogin();
@@ -1240,8 +1316,39 @@ function showHome() {
   showScreen('homeScreen');
 }
 function goJoinPlaylist()  { showScreen('joinScreen'); document.getElementById('joinCode').value=''; document.getElementById('joinErr').textContent=''; }
-function goCreatePlaylist(){ showScreen('app'); showCreatePlaylistFlow(); }
+function goCreatePlaylist(){ loadMyPlaylists(); }
 function goMyPlaylists()   { showMyPlaylistsScreen(); }
+
+// Carrega todas as playlists do usuário em background e atualiza o state
+async function fetchAllMyPlaylists() {
+  if (!currentUser) return;
+  try {
+    const snap = await db.collection('playlists')
+      .where('ownerId', '==', currentUser.uid)
+      .get();
+    snap.forEach(doc => {
+      const d = doc.data();
+      const existing = state.playlists.find(p => p.id === doc.id);
+      if (!existing) {
+        state.playlists.push({
+          id: doc.id,
+          name: d.name,
+          code: d.code,
+          songs: d.songs || [],
+          ownerId: d.ownerId,
+          ownerName: d.ownerName || '',
+          permission: d.permission || 'edit',
+          isOwner: true,
+        });
+      } else {
+        // Atualizar metadados mas preservar songs locais (podem ter edições não salvas)
+        existing.name = d.name;
+        existing.code = d.code;
+        existing.permission = d.permission || existing.permission;
+      }
+    });
+  } catch(e) { console.warn('fetchAllMyPlaylists error:', e); }
+}
 
 async function doLogin() {
   const username = document.getElementById('loginUser').value.trim().toLowerCase();
@@ -1268,6 +1375,7 @@ async function doLogin() {
     currentUser = { uid: doc.id, username: d.username, name: d.name };
     saveSession(currentUser, remember);
     renderUserBadge();
+    fetchAllMyPlaylists();
     showHome();
   } catch(e) {
     console.error(e);
@@ -1381,19 +1489,20 @@ async function loadMyPlaylists() {
   showScreen('app');
   showToast('Carregando playlists…');
   try {
-    // Only load playlists owned by this user
     const snap = await db.collection('playlists')
       .where('ownerId', '==', currentUser.uid)
       .get();
 
-    state.playlists = [];
+    const sessionOnly = state.playlists.filter(p => !p.isOwner);
+    const owned = [];
     snap.forEach(doc => {
       const d = doc.data();
-      state.playlists.push({
+      const existing = state.playlists.find(p => p.id === doc.id);
+      owned.push({
         id: doc.id,
         name: d.name,
         code: d.code,
-        songs: d.songs || [],
+        songs: existing ? existing.songs : (d.songs || []),
         ownerId: d.ownerId,
         ownerName: d.ownerName || '',
         permission: d.permission || 'edit',
@@ -1401,12 +1510,17 @@ async function loadMyPlaylists() {
       });
     });
 
+    state.playlists = [...owned, ...sessionOnly];
+
     if (state.playlists.length === 0) {
       showCreatePlaylistFlow();
       return;
     }
 
-    await openPlaylist(state.playlists[0].id);
+    const stillActive = state.playlists.find(p => p.id === state.activePl);
+    if (!stillActive) {
+      await openPlaylist(state.playlists[0].id);
+    }
     render();
     showToast('Playlists carregadas!');
   } catch(e) {
@@ -1428,25 +1542,7 @@ async function openPlaylist(plId) {
 }
 
 function updatePlCodeBadge(pl) {
-  const area = document.getElementById('plCodeArea');
-  const badge = document.getElementById('plCodeBadge');
-  const permBadge = document.getElementById('plPermBadge');
-  if (pl && pl.code) {
-    area.style.display = '';
-    badge.textContent = `🔑 ${pl.code}`;
-    badge.title = `Código da playlist: ${pl.code} — clique para copiar`;
-    if (!pl.isOwner) {
-      permBadge.style.display = '';
-      const owner = pl.ownerName ? `Criado por: <strong style="color:var(--text)">${esc(pl.ownerName)}</strong> &nbsp;·&nbsp; ` : '';
-      permBadge.innerHTML = owner + (canEdit ? '✏️ edição' : '👁 somente leitura');
-    } else {
-      permBadge.style.display = '';
-      permBadge.innerHTML = `👑 Sua playlist &nbsp;<a style="color:var(--gold);cursor:pointer;font-size:10px" onclick="showMyPlaylistsScreen()">gerenciar permissões</a>`;
-    }
-  } else {
-    area.style.display = 'none';
-    permBadge.style.display = 'none';
-  }
+  // O código agora é mostrado inline na lista de playlists — nada a fazer aqui
 }
 
 async function togglePermission(plId) {
@@ -1461,7 +1557,7 @@ async function togglePermission(plId) {
 
 function copyPlCode() {
   const pl = state.playlists.find(p => p.id === currentPlDoc);
-  if (!pl) return;
+  if (!pl || !pl.code) return;
   navigator.clipboard.writeText(pl.code).then(() => showToast(`Código ${pl.code} copiado!`));
 }
 
@@ -1682,29 +1778,80 @@ function render() {
 function renderPlaylistTabs() {
   const el = document.getElementById('playlistTabs');
   el.innerHTML = '';
+  const list = document.createElement('div');
+  list.className = 'pl-list';
+
   state.playlists.forEach(pl => {
-    const wrap = document.createElement('div');
-    wrap.className = 'playlist-tab-wrap';
-    const btn = document.createElement('button');
-    btn.className = 'playlist-tab' + (pl.id === state.activePl ? ' active' : '');
-    btn.textContent = pl.name;
-    btn.onclick = () => { state.activePl = pl.id; state.activeSong = null; render(); };
-    wrap.appendChild(btn);
-    if (state.playlists.length > 0) {
-      const del = document.createElement('button');
-      del.className = 'playlist-del-btn';
-      del.title = 'Apagar playlist';
-      del.textContent = '✕';
-      del.onclick = (e) => { e.stopPropagation(); deletePlaylist(pl.id); };
-      wrap.appendChild(del);
-    }
-    el.appendChild(wrap);
+    const item = document.createElement('div');
+    item.className = 'pl-list-item' + (pl.id === state.activePl ? ' active' : '');
+
+    const name = document.createElement('div');
+    name.className = 'pl-list-item-name';
+    name.textContent = pl.name;
+    name.title = pl.name;
+
+    const code = document.createElement('span');
+    code.className = 'pl-list-item-code';
+    code.textContent = pl.code || '—';
+    code.title = `Código: ${pl.code} — clique para copiar`;
+    code.onclick = (e) => {
+      e.stopPropagation();
+      if (!pl.code) return;
+      navigator.clipboard.writeText(pl.code).then(() => showToast(`Código ${pl.code} copiado!`));
+    };
+
+    const del = document.createElement('button');
+    del.className = 'pl-list-item-del';
+    del.title = pl.isOwner ? 'Apagar playlist' : 'Sair da playlist';
+    del.textContent = '✕';
+    del.onclick = (e) => { e.stopPropagation(); deletePlaylist(pl.id); };
+
+    item.appendChild(name);
+    item.appendChild(code);
+    item.appendChild(del);
+
+    item.onclick = () => {
+      state.activePl = pl.id;
+      state.activeSong = pl.songs[0]?.id || null;
+      currentPlDoc = pl.id;
+      canEdit = pl.isOwner || pl.permission === 'edit';
+      // Atualizar badge de permissão
+      const permBadge = document.getElementById('plPermBadge');
+      if (!pl.isOwner) {
+        permBadge.style.display = '';
+        const owner = pl.ownerName ? `Criado por: <strong style="color:var(--text)">${esc(pl.ownerName)}</strong> &nbsp;·&nbsp; ` : '';
+        permBadge.innerHTML = owner + (canEdit ? '✏️ edição' : '👁 somente leitura');
+      } else {
+        permBadge.style.display = '';
+        permBadge.innerHTML = `👑 Sua playlist &nbsp;<a style="color:var(--gold);cursor:pointer;font-size:10px" onclick="showMyPlaylistsScreen()">gerenciar</a>`;
+      }
+      render();
+    };
+
+    list.appendChild(item);
   });
+
   const add = document.createElement('button');
-  add.className = 'playlist-tab add-btn';
-  add.textContent = '+ Nova';
+  add.className = 'pl-list-add';
+  add.innerHTML = '<span style="color:var(--gold)">+</span> Nova playlist';
   add.onclick = openPlaylistModal;
-  el.appendChild(add);
+  list.appendChild(add);
+
+  el.appendChild(list);
+
+  // Atualizar badge de permissão da playlist ativa
+  const active = state.playlists.find(p => p.id === state.activePl);
+  const permBadge = document.getElementById('plPermBadge');
+  if (active && !active.isOwner) {
+    permBadge.style.display = '';
+    const owner = active.ownerName ? `Criado por: <strong style="color:var(--text)">${esc(active.ownerName)}</strong> &nbsp;·&nbsp; ` : '';
+    permBadge.innerHTML = owner + (canEdit ? '✏️ edição' : '👁 somente leitura');
+  } else if (active) {
+    permBadge.style.display = '';
+    permBadge.innerHTML = `👑 Sua playlist &nbsp;<a style="color:var(--gold);cursor:pointer;font-size:10px" onclick="showMyPlaylistsScreen()">gerenciar</a>`;
+  } else {
+    permBadge.style.display = 'none';
+  }
 }
 
 function deletePlaylist(id) {
@@ -2201,7 +2348,8 @@ function openPresent() {
 // Cobre: raiz, acidentes, qualidade, extensões, alterações, baixo alternativo
 // Ex: C, Cm, C#, Bb, Cmaj7, Cm7b5, C7sus4, Cdim7, Caug, C/E, A/C#,
 //     Bm11/E, F#m7b5, G7(b9), A#9, Gsus2, E7+, Bb13, Dm(add9), C°, C+
-const CHORD_RE = /[A-G][b#]?(?:maj(?:7|9|11|13)?|m(?:aj(?:7|9|11|13)?|7b5|7|9|11|13)?|(?:7|9|11|13)(?:sus[24])?|sus[24]|dim(?:7)?|aug|°|ø|[+]|add(?:2|4|9)|(?:6\/9|6)|[2-9]|[1][0-9])?(?:\([^)]{1,8}\))?(?:\/[A-G][b#]?)?/g;
+// Regex robusto: suporta notação brasileira e internacional, sufixos do maior pro menor
+const CHORD_RE = /[A-G][b#]?(?:maj(?:13|11|9|7)?|7M|7b5|7sus[24]|7\+|7|m(?:aj(?:13|11|9|7)?|13|11|9|7b5|7|6|m)?|13|11|9sus[24]|9|6\/9|6|5\+|5|4|2|sus[24]|dim7?|aug|°|ø|\+|add(?:9|4|2))?(?:\([^)]{1,16}\))?(?:\/[A-G][b#]?)?/g;
 
 function chordMatches(str) {
   CHORD_RE.lastIndex = 0;
@@ -2301,67 +2449,28 @@ function changePresentFont(delta) {
   if (song) renderPresentBody(song);
 }
 
-// ── PRINT ─────────────────────────────────────────────────
-function printSong() {
-  const song = getSong(state.activeSong);
-  if (!song) return;
-
-  // build inline HTML for print using same token logic
-  function printInlineLine(chords, lyrics) {
-    if (!chords) return `<span class="pt-lyric">${lyrics || ''}</span>`;
-    const tokens = parseChordTokens(chords, lyrics);
-    let h = `<span class="pt-line">`;
-    tokens.forEach(tok => {
-      h += `<span class="pt-token">`;
-      h += `<span class="pt-chord">${tok.chord ? tok.chord : '<span style="visibility:hidden">X</span>'}</span>`;
-      if (tok.text) h += `<span class="pt-lyric">${tok.text}</span>`;
-      h += `</span>`;
-    });
-    return h + `</span>`;
-  }
-
-  let html = `<!DOCTYPE html><html><head><meta charset="UTF-8">
-  <title>${song.title}</title>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    body{font-family:'IBM Plex Sans',sans-serif;padding:24px 32px;color:#111;max-width:700px;margin:0 auto}
-    h1{font-size:22px;margin-bottom:4px}
-    .meta{font-size:12px;color:#666;margin-bottom:24px;font-family:'IBM Plex Mono',monospace}
-    .section{margin-bottom:24px}
-    .sec-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#888;margin-bottom:10px;padding-bottom:4px;border-bottom:1px solid #ddd}
-    .pt-line{display:inline-flex;flex-wrap:wrap;align-items:flex-end;margin-bottom:10px}
-    .pt-token{display:inline-flex;flex-direction:column;align-items:flex-start}
-    .pt-chord{font-family:'IBM Plex Mono',monospace;font-size:12px;color:#8B4513;font-weight:700;white-space:pre;line-height:1.3;display:block}
-    .pt-lyric{font-size:15px;line-height:1.5;white-space:pre;display:block}
-    @media print{body{padding:12px}}
-  </style></head><body>
-  <h1>${song.title}</h1>
-  <div class="meta">Tom: ${song.key}${song.capo&&song.capo!=='0'?' | Capo '+song.capo:''}${song.bpm?' | ♩ '+song.bpm+' bpm':''}</div>`;
-
-  song.sections.forEach(sec => {
-    html += `<div class="section"><div class="sec-label">${sec.label}</div>`;
-    sec.lines.forEach(line => {
-      if (!line.chords && !line.lyrics) return;
-      html += `<div style="margin-bottom:8px">${printInlineLine(line.chords, line.lyrics)}</div>`;
-    });
-    html += `</div>`;
-  });
-  html += `</body></html>`;
-  const w = window.open('','_blank');
-  w.document.write(html);
-  w.document.close();
-  setTimeout(() => w.print(), 500);
-}
-
 // ── IMPORT ────────────────────────────────────────────────
 function openImportModal() {
   document.getElementById('importModal').classList.add('active');
-  setTimeout(() => document.getElementById('importTitle').focus(), 50);
+  switchImportTab('url');
+  setTimeout(() => document.getElementById('importUrl').focus(), 50);
 }
 function closeImportModal() {
   document.getElementById('importModal').classList.remove('active');
   document.getElementById('importText').value = '';
   document.getElementById('importTitle').value = '';
+  document.getElementById('importUrl').value = '';
+  document.getElementById('btnImportUrl').style.display = '';
+  _pendingCifraUrl = null;
+  setUrlStatus(null);
+}
+function switchImportTab(tab) {
+  document.getElementById('tabUrl').classList.toggle('active', tab === 'url');
+  document.getElementById('tabText').classList.toggle('active', tab === 'text');
+  document.getElementById('importPanelUrl').style.display = tab === 'url' ? '' : 'none';
+  document.getElementById('importPanelText').style.display = tab === 'text' ? '' : 'none';
+  if (tab === 'url') setTimeout(() => document.getElementById('importUrl').focus(), 50);
+  else setTimeout(() => document.getElementById('importTitle').focus(), 50);
 }
 
 // ── URL IMPORT via Claude API ──────────────────────────────
@@ -2381,169 +2490,194 @@ function setUrlStatus(type, msg) {
 async function doImportUrl() {
   const url = document.getElementById('importUrl').value.trim();
   if (!url || !url.startsWith('http')) { showToast('Cole uma URL válida!'); return; }
+  if (!url.includes('cifraclub.com')) { showToast('Cole uma URL do Cifra Club!'); return; }
 
   const btn = document.getElementById('btnImportUrl');
   btn.disabled = true;
-  setUrlStatus('loading', 'Buscando página…');
+  setUrlStatus('loading', 'Buscando cifra…');
+
+  // Tenta múltiplos proxies CORS em sequência
+  const proxies = [
+    u => `https://corsproxy.io/?${encodeURIComponent(u)}`,
+    u => `https://api.allorigins.win/get?url=${encodeURIComponent(u)}`,
+    u => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(u)}`,
+  ];
+
+  let rawHtml = '';
+  for (const makeUrl of proxies) {
+    try {
+      const res = await fetch(makeUrl(url), { signal: AbortSignal.timeout(8000) });
+      if (!res.ok) continue;
+      const ct = res.headers.get('content-type') || '';
+      if (ct.includes('json')) {
+        const j = await res.json();
+        rawHtml = j.contents || j.data || '';
+      } else {
+        rawHtml = await res.text();
+      }
+      if (rawHtml.length > 500) break;
+    } catch { continue; }
+  }
+
+  if (!rawHtml) {
+    setUrlStatus('error', '✗ Não foi possível acessar o Cifra Club. Tente copiar e colar a cifra manualmente.');
+    btn.disabled = false;
+    return;
+  }
+
+  setUrlStatus('loading', 'Extraindo cifra…');
 
   try {
-    // Step 1: fetch page HTML via allorigins proxy
-    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
-    const proxyRes = await fetch(proxyUrl);
-    if (!proxyRes.ok) throw new Error('Não foi possível acessar a URL.');
-    const proxyData = await proxyRes.json();
-    const rawHtml = proxyData.contents || '';
-    if (!rawHtml) throw new Error('Resposta vazia da URL.');
-
-    // Step 2: extract text content (strip tags, keep structure)
     const parser = new DOMParser();
     const doc = parser.parseFromString(rawHtml, 'text/html');
 
-    // Remove scripts/styles/nav/footer noise
-    ['script','style','nav','footer','header','aside','.ads','.banner'].forEach(sel => {
-      doc.querySelectorAll(sel).forEach(el => el.remove());
-    });
+    // Título
+    let title = doc.querySelector('h1.t1')?.textContent?.trim()
+      || doc.querySelector('h1')?.textContent?.trim()
+      || doc.querySelector('title')?.textContent?.replace(/\s*[|\-–].*$/, '').trim()
+      || 'Música Importada';
 
-    // Try to grab Cifra Club specific containers first
-    let mainContent = '';
-    const cifraSelectors = [
-      '.cifra_cnt', '#cifra_cnt', '.cifra-cnt',
-      '[class*="chord"]', '[class*="cifra"]', '[class*="lyric"]',
-      'pre', '.tab-content', 'article', 'main', '.content', '#content'
-    ];
-    for (const sel of cifraSelectors) {
-      const el = doc.querySelector(sel);
-      if (el && el.innerText && el.innerText.length > 100) {
-        mainContent = el.innerText || el.textContent;
-        break;
+    // Artista
+    const artist = doc.querySelector('h2.t3 a, .artist a, h2 a')?.textContent?.trim() || '';
+    if (artist) title = `${title} - ${artist}`;
+
+    // Tom e capo
+    let key = 'C', capo = '0';
+    const tomEl = doc.querySelector('.cifra_tom a, [class*="tom"] a, .js-cifra-key');
+    if (tomEl) key = tomEl.textContent.trim();
+    const capoEl = doc.querySelector('[class*="capo"], .js-cifra-capo');
+    if (capoEl) {
+      const m = capoEl.textContent.match(/\d+/);
+      if (m) capo = m[0];
+    }
+
+    // Conteúdo da cifra — o Cifra Club usa <pre> com spans para acordes
+    const preEl = doc.querySelector('pre.cifra, .cifra_cnt pre, #cifra_cnt pre, pre');
+    let cifraText = '';
+    if (preEl) {
+      // Preservar quebras de linha e extrair texto com acordes nos spans
+      cifraText = preEl.innerHTML
+        .replace(/<br\s*\/?>/gi, '\n')
+        .replace(/<a[^>]*>([^<]+)<\/a>/gi, '$1')  // acordes dentro de <a>
+        .replace(/<b[^>]*>([^<]+)<\/b>/gi, '$1')
+        .replace(/<[^>]+>/g, '')
+        .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&nbsp;/g, ' ');
+    }
+
+    // Tenta pegar seções pelo HTML estruturado do Cifra Club
+    const secEls = doc.querySelectorAll('.cifra_cnt .headline, [class*="headline"], h3');
+    const hasSections = secEls.length > 0;
+
+    let importText = cifraText || '';
+
+    // Se não achou <pre>, tentar pegar texto corrido de containers conhecidos
+    if (!importText) {
+      const containers = ['.cifra_cnt', '#cifra_cnt', 'article', 'main'];
+      for (const sel of containers) {
+        const el = doc.querySelector(sel);
+        if (el) { importText = el.innerText || el.textContent || ''; break; }
       }
     }
-    if (!mainContent) mainContent = doc.body.innerText || doc.body.textContent || '';
-    mainContent = mainContent.slice(0, 8000); // limit tokens
 
-    // Get page title hint
-    const pageTitle = doc.querySelector('title')?.textContent?.replace(/\s*[-|].*$/,'').trim() || '';
-
-    setUrlStatus('loading', 'Analisando cifras com IA…');
-
-    // Step 3: send to Claude API for parsing
-    const prompt = `Você é um extrator especializado em cifras musicais. Analise o conteúdo abaixo extraído de uma página web (pode ser do Cifra Club ou similar) e retorne um JSON estruturado com a música.
-
-URL original: ${url}
-Título sugerido pela página: ${pageTitle}
-
-CONTEÚDO DA PÁGINA:
-${mainContent}
-
-Retorne APENAS um JSON válido (sem markdown, sem explicações) neste formato exato:
-{
-  "title": "Nome da Música - Artista",
-  "key": "C",
-  "capo": "0",
-  "sections": [
-    {
-      "label": "Intro",
-      "lines": [
-        { "chords": "Am  F  C  G", "lyrics": "" },
-        { "chords": "C       G", "lyrics": "Letra da primeira linha" }
-      ]
-    }
-  ]
-}
-
-REGRAS IMPORTANTES:
-- Preserve o alinhamento das cifras com as letras usando espaços
-- Identifique as seções (Intro, Verso 1, Refrão, Ponte, etc.)
-- key deve ser a tonalidade em notação inglesa (C, Am, G, etc.)
-- capo deve ser número como string ("0" se não houver)
-- Se não encontrar cifras, coloque chords como string vazia ""
-- Cada linha de letra deve ter seu campo chords correspondente (pode ser vazio)
-- Retorne SOMENTE o JSON, nada mais`;
-
-    const apiRes = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 4000,
-        messages: [{ role: 'user', content: prompt }]
-      })
-    });
-
-    if (!apiRes.ok) {
-      const errData = await apiRes.json().catch(() => ({}));
-      throw new Error(errData?.error?.message || `Erro da API: ${apiRes.status}`);
+    if (!importText || importText.trim().length < 20) {
+      setUrlStatus('error', '✗ Não encontrei a cifra nessa página. Tente copiar e colar manualmente.');
+      btn.disabled = false;
+      return;
     }
 
-    const apiData = await apiRes.json();
-    const rawText = apiData.content?.find(c => c.type === 'text')?.text || '';
+    // Filtrar tabulatura e diagramas conforme checkboxes
+    const wantTab     = document.getElementById('optTab').checked;
+    const wantDiagram = document.getElementById('optDiagram').checked;
 
-    // Clean and parse JSON
-    const cleaned = rawText.replace(/```json|```/g, '').trim();
-    let parsed;
-    try {
-      parsed = JSON.parse(cleaned);
-    } catch {
-      // try to extract JSON from text
-      const match = cleaned.match(/\{[\s\S]+\}/);
-      if (!match) throw new Error('Não foi possível extrair a cifra desta página.');
-      parsed = JSON.parse(match[0]);
+    let lines = importText.trim().split('\n');
+
+    if (!wantTab) {
+      const isTabLine = l => {
+        const t = l.trim();
+        return /^[eEBGDAd]\|/.test(t) || /^-{3,}/.test(t) || /^\|[-\d\|hpbrs\/\\~ ]+\|?$/.test(t);
+      };
+      // Identificar quais linhas fazem parte de blocos de tab
+      // Um bloco de tab = cabeçalho TAB ou conjunto de linhas e|/B|/G|/D|/A|/E|
+      // Também remover linhas de acordes imediatamente antes de blocos de tab (ficam órfãs)
+      const isTabBlock = new Set();
+      for (let i = 0; i < lines.length; i++) {
+        const t = lines[i].trim();
+        // Cabeçalho TAB
+        if (/^\[.*tab.*\]$/i.test(t) || /^TAB[\s\-]/i.test(t)) {
+          isTabBlock.add(i);
+          let j = i + 1;
+          while (j < lines.length && (isTabLine(lines[j]) || !lines[j].trim())) {
+            isTabBlock.add(j++);
+          }
+        }
+        // Linha de tab direta
+        if (isTabLine(lines[i])) {
+          isTabBlock.add(i);
+          // Verificar se a linha anterior é um acorde sozinho (sem letra) → também remover
+          if (i > 0 && !isTabBlock.has(i - 1)) {
+            const prev = lines[i - 1].trim();
+            // É uma linha de acorde pura (só acordes, sem letra)
+            if (prev && prev.split(/\s+/).every(tok => /^[A-G][b#]?/.test(tok))) {
+              // Verificar se a linha ANTES dela também é tab (então já está marcada)
+              isTabBlock.add(i - 1);
+            }
+          }
+        }
+      }
+      lines = lines.filter((_, i) => !isTabBlock.has(i));
     }
 
-    if (!parsed.sections || !Array.isArray(parsed.sections)) throw new Error('Formato inválido retornado pela IA.');
+    if (!wantDiagram) {
+      lines = lines.filter(line => {
+        const t = line.trim();
+        return !/[─┬┼┤│╔╗╚╝═╦╠╣╩╬]/.test(t) &&
+               !/^[\sXxOo\d]{3,10}$/.test(t) &&
+               !/^\|[\s\-]+\|/.test(t);
+      });
+    }
 
-    // Build song object
-    const pl = getActivePl();
-    const song = newSong(parsed.title || pageTitle || 'Música Importada');
-    song.key = parsed.key || 'C';
-    song.capo = String(parsed.capo || '0');
-    song.sections = parsed.sections.map(sec => ({
-      id: uid(),
-      label: sec.label || 'Seção',
-      lines: (sec.lines || []).map(l => ({
-        id: uid(),
-        chords: l.chords || '',
-        lyrics: l.lyrics || ''
-      }))
-    }));
+    // Colapsar mais de 2 linhas em branco seguidas
+    let filtered = lines.join('\n').replace(/\n{3,}/g, '\n\n').trim();
 
-    // Ensure no empty sections
-    song.sections = song.sections.filter(s => s.lines.length > 0);
-    if (song.sections.length === 0) song.sections = [{ id: uid(), label: 'Verso 1', lines: [{ id: uid(), chords: '', lyrics: '' }] }];
+    // Preencher aba de texto
+    document.getElementById('importTitle').value = title;
+    document.getElementById('importText').value = filtered;
 
-    pl.songs.push(song);
-    state.activeSong = song.id;
-    setUrlStatus('success', `✓ "${song.title}" importada com ${song.sections.length} seções!`);
-    setTimeout(() => {
-      closeImportModal();
-      render();
-      showToast(`"${song.title}" importada do Cifra Club!`);
-    }, 800);
+    _pendingCifraUrl = url;
 
-  } catch (err) {
-    setUrlStatus('error', `✗ ${err.message}`);
+    // Importar direto
+    setUrlStatus('success', `✓ Cifra encontrada: "${title}"`);
+    setTimeout(() => { switchImportTab('text'); doImport(); }, 300);
+
+  } catch(err) {
+    setUrlStatus('error', `✗ Erro ao processar a página: ${err.message}`);
   } finally {
     btn.disabled = false;
   }
 }
 
-// ── TEXT IMPORT (manual paste) ────────────────────────────
+let _pendingCifraUrl = null;
+
+// Testa se uma única palavra é um acorde válido (notação BR + internacional)
+const SINGLE_CHORD_RE = /^[A-G][b#]?(?:maj(?:13|11|9|7)?|7M|7b5|7sus[24]|7\+|7|m(?:aj(?:13|11|9|7)?|13|11|9|7b5|7|6|m)?|13|11|9sus[24]|9|6\/9|6|5\+|5|4|2|sus[24]|dim7?|aug|°|ø|\+|add(?:9|4|2))?(?:\([^)]{1,16}\))?(?:\/[A-G][b#]?)?$/;
+
+function isChord(token) {
+  return SINGLE_CHORD_RE.test(token);
+}
+
 function isChordLine(line) {
   const stripped = line.trim();
   if (!stripped) return false;
-  // Remove todos os tokens de acorde reconhecidos + separadores permitidos
-  const positions = chordMatches(stripped);
-  if (positions.length === 0) return false;
-  // Apagar cada acorde encontrado e ver o que sobra
-  let remaining = stripped;
-  // Substituir de trás pra frente pra não bagunçar índices
-  const sorted = [...positions].sort((a, b) => b.pos - a.pos);
-  sorted.forEach(({ pos, chord }) => {
-    remaining = remaining.slice(0, pos) + ' '.repeat(chord.length) + remaining.slice(pos + chord.length);
-  });
-  // O que sobrar deve ser apenas espaços, barras, parênteses ou números soltos
-  const leftover = remaining.replace(/[\s|()]/g, '');
-  return leftover.length === 0;
+  // Separar por espaços — cada token deve ser um acorde válido
+  const tokens = stripped.split(/\s+/).filter(t => t.length > 0);
+  if (tokens.length === 0) return false;
+  // Pelo menos 1 token tem que ser acorde, e NENHUM pode não ser acorde
+  let chordCount = 0;
+  for (const token of tokens) {
+    if (isChord(token)) { chordCount++; }
+    else { return false; }
+  }
+  return chordCount > 0;
 }
 
 function doImport() {
@@ -2583,19 +2717,23 @@ function doImport() {
     }
 
     if (isChordLine(rawLine)) {
-      // Linha de cifra — pegar a letra da próxima linha (se não for cifra nem seção)
-      const nextRaw = rawLines[i + 1] ?? '';
+      const nextRaw   = rawLines[i + 1] ?? '';
       const nextTrimmed = nextRaw.trim();
       const nextIsChord = isChordLine(nextRaw);
       const nextIsSec = !!nextTrimmed.match(/^\[(.+)\]$/) ||
         !!nextTrimmed.match(/^(Verso|Refrão|Refrao|Ponte|Coro|Intro|Bridge|Chorus|Verse|Pre-?Chorus|Outro|Final)[\s\d]*:?$/i);
 
-      if (!nextIsChord && !nextIsSec && nextTrimmed) {
-        // Par cifra + letra
+      if (nextIsChord) {
+        // Two chord lines in a row — first chord gets no lyric,
+        // second chord will be processed next iteration with its lyric
+        currentSec.lines.push({ id: uid(), chords: rawLine, lyrics: '' });
+        i++;
+      } else if (!nextIsSec && nextTrimmed) {
+        // Chord + lyric pair
         currentSec.lines.push({ id: uid(), chords: rawLine, lyrics: nextTrimmed });
         i += 2;
       } else {
-        // Cifra sozinha (sem letra abaixo)
+        // Chord alone (blank line or section header follows)
         currentSec.lines.push({ id: uid(), chords: rawLine, lyrics: '' });
         i++;
       }
@@ -2614,11 +2752,26 @@ function doImport() {
   const detected = detectKey(song);
   if (detected) { song.key = detected; song.originalKey = detected; }
   snapshotOriginals(song);
+  if (_pendingCifraUrl) { song.cifraUrl = _pendingCifraUrl; _pendingCifraUrl = null; }
   pl.songs.push(song);
   state.activeSong = song.id;
   closeImportModal();
   render();
-  showToast(`"${title}" importada — Tom detectado: ${song.key}`);
+  showToast(`"${title}" importada — Tom: ${song.key}`);
+}
+
+// ── EXPORT MODAL ──────────────────────────────────────────
+function showExportModal(title, content) {
+  document.getElementById('exportModalTitle').textContent = title;
+  document.getElementById('exportContent').value = content;
+  document.getElementById('exportModal').classList.add('active');
+}
+function closeExportModal() {
+  document.getElementById('exportModal').classList.remove('active');
+}
+function copyExportContent() {
+  const content = document.getElementById('exportContent').value;
+  navigator.clipboard.writeText(content).then(() => showToast('Copiado! 📋'));
 }
 
 // ── PLAYLISTS ─────────────────────────────────────────────
@@ -2661,6 +2814,7 @@ function exportPlaylistPDF() {
 
   const date = new Date().toLocaleDateString('pt-BR', { day:'2-digit', month:'long', year:'numeric' });
 
+  // ── Song pages ──
   let songsHtml = '';
   pl.songs.forEach((song, idx) => {
     let sectionsHtml = '';
@@ -2669,33 +2823,37 @@ function exportPlaylistPDF() {
       sec.lines.forEach(line => {
         if (!line.chords && !line.lyrics) return;
         if (line.chords) {
-          linesHtml += `<div class="chord-row">${escHtml(line.chords)}</div>`;
+          // Envolve cada acorde em <span class="chord-token"> preservando espaços de alinhamento
+          const chordHtml = line.chords.replace(/(\S+)/g, (match) =>
+            `<span class="chord-token">${escHtml(match)}</span>`
+          );
+          linesHtml += `<div class="chord-row">${chordHtml}</div>`;
         }
         linesHtml += `<div class="lyric-row">${escHtml(line.lyrics || '\u00A0')}</div>`;
       });
       if (!linesHtml) return;
-      sectionsHtml += `
-        <div class="section">
-          <div class="section-label">${escHtml(sec.label)}</div>
-          ${linesHtml}
-        </div>`;
+      sectionsHtml += `<div class="section">
+        <div class="section-label">${escHtml(sec.label)}</div>
+        <div class="section-body">${linesHtml}</div>
+      </div>`;
     });
 
-    songsHtml += `
-      <div class="song ${idx > 0 ? 'page-break' : ''}">
-        <div class="song-header">
-          <div class="song-number">${idx + 1}</div>
-          <div class="song-title-block">
-            <div class="song-title">${escHtml(song.title)}</div>
-            <div class="song-meta-row">
-              <span class="meta-pill">Tom: <strong>${escHtml(song.key)}</strong></span>
-              ${song.capo && song.capo !== '0' ? `<span class="meta-pill">Capo ${escHtml(song.capo)}</span>` : ''}
-              ${song.bpm ? `<span class="meta-pill">♩ ${escHtml(song.bpm)} bpm</span>` : ''}
-            </div>
-          </div>
+    const pills = [
+      `<span class="pill pill-key">${escHtml(song.key)}</span>`,
+      song.capo && song.capo !== '0' ? `<span class="pill">Capo ${escHtml(song.capo)}</span>` : '',
+      song.bpm ? `<span class="pill">&#9834; ${escHtml(song.bpm)} BPM</span>` : '',
+    ].filter(Boolean).join('');
+
+    songsHtml += `<div class="song-page${idx > 0 ? ' page-break' : ''}">
+      <div class="song-header">
+        <div class="song-num">${String(idx + 1).padStart(2,'0')}</div>
+        <div class="song-header-main">
+          <h1 class="song-title">${escHtml(song.title)}</h1>
+          <div class="song-pills">${pills}</div>
         </div>
-        <div class="sections">${sectionsHtml}</div>
-      </div>`;
+      </div>
+      <div class="sections">${sectionsHtml}</div>
+    </div>`;
   });
 
   const html = `<!DOCTYPE html>
@@ -2703,201 +2861,254 @@ function exportPlaylistPDF() {
 <head>
 <meta charset="UTF-8">
 <title>${escHtml(pl.name)}</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  @page { size: A4; margin: 12mm 14mm 18mm; }
 
-  /* ── COVER ── */
-  .cover {
-    display: flex; flex-direction: column;
-    justify-content: center; align-items: flex-start;
-    padding: 80px 56px 60px;
-    background: #fff;
-    color: #1a1a1a;
-    position: relative;
-    page-break-after: always;
+  html { margin: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #fff; color: #0a0a0a;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
-  .cover-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
-    color: #c9a84c; margin-bottom: 24px; position: relative;
-  }
-  .cover-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 56px; font-weight: 900; line-height: 1.1;
-    color: #1a1a1a; position: relative;
-    margin-bottom: 32px; max-width: 600px;
-  }
-  .cover-divider {
-    width: 80px; height: 3px; background: #c9a84c;
-    margin-bottom: 32px; position: relative;
-  }
-  .cover-meta {
-    font-size: 14px; color: #6b6555; position: relative;
-    line-height: 2; font-family: 'IBM Plex Mono', monospace;
-  }
-  .cover-meta strong { color: #c9a84c; }
-  .cover-logo {
-    position: absolute; bottom: 48px; right: 72px;
-  }
-  .cover-logo img { width: 80px; height: auto; opacity: 0.5; }
 
   /* ── WATERMARK ── */
   .watermark {
-    position: fixed; bottom: 18px; right: 28px;
-    pointer-events: none;
+    position: fixed; bottom: 18px; right: 20px;
+    pointer-events: none; z-index: 999;
   }
-  .watermark img { width: 52px; height: auto; opacity: 0.18; }
+  .watermark img { width: 72px; height: auto; opacity: 0.18; filter: grayscale(1); }
 
-  /* ── INDEX ── */
-  .index-page {
-    padding: 64px 56px;
+  /* ══════════════════════
+     CAPA
+  ══════════════════════ */
+  .cover {
+    width: 100%; height: 100vh;
+    display: flex; flex-direction: column;
+    background: #fff; color: #0a0a0a;
+    position: relative;
     page-break-after: always;
   }
-  .index-title {
+  .cover-inner {
+    flex: 1; display: flex; flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 52px 52px;
+    position: relative; z-index: 1;
+  }
+  .cover-tag {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
-    color: #c9a84c; margin-bottom: 32px;
-    padding-bottom: 12px; border-bottom: 1px solid #e8e2d0;
+    font-size: 9pt; letter-spacing: 4px; text-transform: uppercase;
+    color: rgba(0,0,0,0.3); margin-bottom: 20px;
+  }
+  .cover-title {
+    font-size: 52pt; font-weight: 900; line-height: 0.95;
+    letter-spacing: -2px; color: #0a0a0a;
+    margin-bottom: 32px; max-width: 480px;
+    word-break: break-word;
+  }
+  .cover-divider {
+    width: 48px; height: 3px; background: #0a0a0a;
+    margin-bottom: 28px;
+  }
+  .cover-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9pt; color: rgba(0,0,0,0.35);
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .cover-meta span { color: rgba(0,0,0,0.65); }
+  .cover-footer {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 52px;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    position: relative; z-index: 1;
+  }
+  .cover-footer-brand {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8pt; letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(0,0,0,0.2);
+  }
+  .cover-footer-logo img {
+    width: 28px; opacity: 0.12;
   }
 
-  /* ── SONG PAGE ── */
+  /* ══════════════════════
+     ÍNDICE
+  ══════════════════════ */
+  .index-page {
+    width: 100%;
+    padding: 32px 0 0;
+    page-break-after: always;
+    display: flex; flex-direction: column;
+  }
+  .index-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8pt; letter-spacing: 4px; text-transform: uppercase;
+    color: #aaa; margin-bottom: 10px;
+  }
+  .index-heading {
+    font-size: 36pt; font-weight: 900; letter-spacing: -1.5px;
+    color: #0a0a0a; margin-bottom: 36px;
+    line-height: 1;
+  }
+  .index-table {
+    width: 100%; border-collapse: collapse;
+    table-layout: fixed;
+  }
+  .index-table tr { border-bottom: 1px solid #ebebeb; }
+  .index-table tr:first-child { border-top: 2px solid #0a0a0a; }
+  .index-table tr:last-child { border-bottom: 2px solid #0a0a0a; }
+  .index-table td { padding: 9px 0; vertical-align: middle; }
+  .idx-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8pt; font-weight: 600; color: #bbb;
+    width: 36px; white-space: nowrap;
+  }
+  .idx-name {
+    font-size: 11pt; font-weight: 500; color: #0a0a0a;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    padding-right: 12px;
+  }
+  .idx-fill { padding: 0 12px; }
+  .idx-fill-line { border-bottom: 1px solid #e8e8e8; height: 1px; display: block; }
+  .idx-key {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8pt; font-weight: 700;
+    background: #0a0a0a; color: #fff;
+    padding: 3px 8px; border-radius: 3px;
+    white-space: nowrap; width: 40px; text-align: center;
+  }
+  .idx-capo {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 7.5pt; color: #999;
+    padding-left: 8px; white-space: nowrap;
+    width: 56px;
+  }
+
+  /* ══════════════════════
+     PÁGINA DE MÚSICA
+  ══════════════════════ */
+  .song-page {
+    width: 100%;
+    padding: 0;
+    display: flex; flex-direction: column;
+  }
   .page-break { page-break-before: always; }
-  .song { padding: 52px 56px; min-height: 100vh; }
+
   .song-header {
     display: flex; align-items: flex-start; gap: 20px;
-    margin-bottom: 40px;
-    padding-bottom: 20px;
-    border-bottom: 2px solid #e8e2d0;
+    padding-bottom: 24px;
+    margin-bottom: 32px;
+    border-bottom: 3px solid #0a0a0a;
+    padding-top: 8px;
   }
-  .song-number {
-    font-family: 'Playfair Display', serif;
-    font-size: 48px; font-weight: 900; color: #e8e2d0;
-    line-height: 1; min-width: 56px;
-  }
-  .song-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 28px; font-weight: 700; color: #1a1a1a;
-    line-height: 1.2; margin-bottom: 10px;
-  }
-  .song-meta-row { display: flex; gap: 8px; flex-wrap: wrap; }
-  .meta-pill {
+  .song-num {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px; padding: 3px 10px;
-    border-radius: 20px; border: 1px solid #e8d5b0;
-    color: #8B4513; background: #fdf6ec;
+    font-size: 9pt; font-weight: 600; color: #ccc;
+    padding-top: 6px; min-width: 32px;
+    letter-spacing: 1px;
   }
-  .meta-pill strong { color: #6b3a10; }
+  .song-header-main { flex: 1; }
+  .song-title {
+    font-size: 28pt; font-weight: 900;
+    letter-spacing: -1px; color: #0a0a0a;
+    line-height: 1.0; margin-bottom: 14px;
+  }
+  .song-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+  .pill {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8pt; font-weight: 600;
+    padding: 4px 10px; border-radius: 2px;
+    border: 1.5px solid #0a0a0a; color: #0a0a0a;
+    text-transform: uppercase; letter-spacing: 1px;
+  }
+  .pill-key {
+    background: #0a0a0a; color: #fff; border-color: #0a0a0a;
+  }
 
-  /* ── SECTIONS ── */
-  .section { margin-bottom: 28px; }
+  /* ── SEÇÕES ── */
+  .sections { display: flex; flex-direction: column; gap: 20px; }
+  .section { }
   .section-label {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
-    color: #c9a84c; margin-bottom: 10px;
-    padding-bottom: 5px; border-bottom: 1px solid #f0ead8;
-    font-weight: 600;
+    font-size: 7pt; font-weight: 600;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: #bbb; margin-bottom: 10px;
+    display: flex; align-items: center; gap: 10px;
   }
+  .section-label::after {
+    content: ''; flex: 1; height: 1px; background: #ebebeb;
+  }
+  .section-body { padding-left: 0; }
   .chord-row {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px; color: #8B4513; font-weight: 700;
-    white-space: pre; line-height: 1.4;
+    font-size: 9pt; font-weight: 800; color: #0a0a0a;
+    white-space: pre-wrap; line-height: 1.2;
+    letter-spacing: 0.5px; overflow-wrap: break-word;
+  }
+  .chord-token {
+    font-size: 11pt; font-weight: 800;
   }
   .lyric-row {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 14px; color: #1a1a1a;
-    white-space: pre; line-height: 1.6;
-    margin-bottom: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 11.5pt; font-weight: 400; color: #1a1a1a;
+    white-space: pre-wrap; line-height: 1.6;
+    margin-bottom: 10px; overflow-wrap: break-word;
   }
 
-  @page {
-    margin: 16mm 14mm;
-    size: A4;
-  }
-  body {
-    font-family: 'IBM Plex Sans', sans-serif;
-    background: #fff; color: #1a1a1a;
-    padding: 0; font-size: 13px;
-  }
   @media print {
-    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .page-break { page-break-before: always; }
-    .song { padding: 20px 0; }
-    .index-page { padding: 28px 0; }
-    .cover { padding: 40px 0; }
-  }
-
-  /* ── INDEX DOTS PRINT-SAFE ── */
-  .index-row {
-    display: table;
-    width: 100%;
-    padding: 10px 0;
-    border-bottom: 1px dashed #e8e2d0;
-    border-collapse: collapse;
-  }
-  .index-num {
-    display: table-cell;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px; color: #c9a84c; font-weight: 600;
-    width: 32px; vertical-align: middle;
-  }
-  .index-name {
-    display: table-cell;
-    font-size: 14px; font-weight: 600; color: #1a1a1a;
-    vertical-align: middle; white-space: nowrap;
-    padding-right: 8px;
-  }
-  .index-dots {
-    display: table-cell;
-    width: 99%;
-    vertical-align: middle;
-    padding: 0 8px;
-  }
-  .index-dots-line {
-    border-bottom: 1px dotted #bbb;
-    height: 1px;
-    display: block;
-    margin-bottom: 4px;
-  }
-  .index-key {
-    display: table-cell;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px; color: #8B4513; font-weight: 600;
-    background: #fdf6ec; border: 1px solid #e8d5b0;
-    border-radius: 4px; padding: 3px 10px;
-    white-space: nowrap; vertical-align: middle;
+    body { background: #fff; }
+    .watermark { position: fixed; bottom: 10mm; right: 12mm; }
+    .cover { height: calc(297mm - 30mm); }
   }
 </style>
 </head>
 <body>
 
-<!-- MARCA D'ÁGUA (fixa em todas as páginas) -->
+<!-- WATERMARK -->
 <div class="watermark">
   <img src="https://i.imgur.com/WcaTixe.png" alt="">
 </div>
 
 <!-- CAPA -->
 <div class="cover">
-  <div class="cover-label">CifraSet — Repertório</div>
-  <div class="cover-title">${escHtml(pl.name)}</div>
-  <div class="cover-divider"></div>
-  <div class="cover-meta">
-    <strong>${pl.songs.length}</strong> música${pl.songs.length !== 1 ? 's' : ''}<br>
-    Gerado em <strong>${date}</strong>
+  <div class="cover-inner">
+    <div class="cover-tag">CifraSet &nbsp;/&nbsp; Repertório</div>
+    <h1 class="cover-title">${escHtml(pl.name)}</h1>
+    <div class="cover-divider"></div>
+    <div class="cover-meta">
+      <div>${pl.songs.length} música${pl.songs.length !== 1 ? 's' : ''}</div>
+      <div>Gerado em <span>${date}</span></div>
+    </div>
+  </div>
+  <div class="cover-footer">
+    <div class="cover-footer-brand">CifraSet</div>
+    <div class="cover-footer-logo"><img src="https://i.imgur.com/WcaTixe.png" alt=""></div>
   </div>
 </div>
 
 <!-- ÍNDICE -->
 <div class="index-page">
-  <div class="index-title">Índice</div>
-  ${pl.songs.map((song, i) => `
-    <div class="index-row">
-      <span class="index-num">${i+1}</span>
-      <span class="index-name">${escHtml(song.title)}</span>
-      <span class="index-dots"><span class="index-dots-line"></span></span>
-      <span class="index-key">${escHtml(song.key)}${song.capo && song.capo !== '0' ? ' · Capo '+song.capo : ''}</span>
-    </div>
-  `).join('')}
+  <div class="index-eyebrow">Conteúdo</div>
+  <div class="index-heading">Índice</div>
+  <table class="index-table">
+    <colgroup>
+      <col style="width:36px">
+      <col style="width:auto">
+      <col style="width:60px">
+      <col style="width:40px">
+      <col style="width:60px">
+    </colgroup>
+    ${pl.songs.map((song, i) => `<tr>
+      <td class="idx-num">${String(i+1).padStart(2,'0')}</td>
+      <td class="idx-name">${escHtml(song.title)}</td>
+      <td class="idx-fill"><span class="idx-fill-line"></span></td>
+      <td class="idx-key">${escHtml(song.key)}</td>
+      <td class="idx-capo">${song.capo && song.capo !== '0' ? `Capo ${escHtml(song.capo)}` : ''}</td>
+    </tr>`).join('')}
+  </table>
 </div>
 
 <!-- MÚSICAS -->
@@ -2910,8 +3121,8 @@ ${songsHtml}
   if (!w) { showToast('Permita pop-ups para gerar o PDF!'); return; }
   w.document.write(html);
   w.document.close();
-  w.onload = () => setTimeout(() => w.print(), 600);
-  showToast('PDF gerado! Em "Mais configurações", desmarque "Cabeçalhos e rodapés" 🎵');
+  w.onload = () => setTimeout(() => w.print(), 700);
+  showToast('PDF gerado! Desmarque "Cabeçalhos e rodapés" nas opções de impressão 🎵');
 }
 
 function escHtml(str = '') {
@@ -3032,13 +3243,13 @@ function restoreData(event) {
   reader.readAsText(file);
 }
 const CHORD_DATA = {
-  'C': {notes:'C-E-G', variants:['C','Cm','C7','Cmaj7','Csus4','Cdim']},
-  'D': {notes:'D-F#-A', variants:['D','Dm','D7','Dmaj7','Dsus4']},
-  'E': {notes:'E-G#-B', variants:['E','Em','E7','Emaj7','Esus4']},
-  'F': {notes:'F-A-C', variants:['F','Fm','F7','Fmaj7']},
-  'G': {notes:'G-B-D', variants:['G','Gm','G7','Gmaj7','Gsus4']},
-  'A': {notes:'A-C#-E', variants:['A','Am','A7','Amaj7','Asus4']},
-  'B': {notes:'B-D#-F#', variants:['B','Bm','B7','Bmaj7']},
+  'C': {variants:['C','Cm','C7','Cmaj7','Csus4','Cdim']},
+  'D': {variants:['D','Dm','D7','Dmaj7','Dsus4']},
+  'E': {variants:['E','Em','E7','Emaj7','Esus4']},
+  'F': {variants:['F','Fm','F7','Fmaj7']},
+  'G': {variants:['G','Gm','G7','Gmaj7','Gsus4']},
+  'A': {variants:['A','Am','A7','Amaj7','Asus4']},
+  'B': {variants:['B','Bm','B7','Bmaj7']},
 };
 const KEY_MAP = {'Dó (C)':'C','Ré (D)':'D','Mi (E)':'E','Fá (F)':'F','Sol (G)':'G','Lá (A)':'A','Si (B)':'B'};
 
@@ -3120,8 +3331,6 @@ function closeMobileDrawer() {
   document.body.style.overflow = '';
 }
 
-// Close drawer when a song is selected on mobile
-const _origRenderSongList = renderSongList;
 
 // ── KEYBOARD SHORTCUTS ────────────────────────────────────
 document.addEventListener('keydown', e => {
@@ -3139,8 +3348,7 @@ document.addEventListener('keydown', e => {
   }
 });
 
-// ── INIT ─────────────────────────────────────────────────
-// ── BLOCK PINCH ZOOM (iOS ignores user-scalable=no) ──────
+// ── INIT & BLOCK PINCH ZOOM (iOS ignores user-scalable=no) ──
 document.addEventListener('touchmove', function(e) {
   if (e.touches.length > 1) e.preventDefault();
 }, { passive: false });
