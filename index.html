@@ -692,6 +692,425 @@
   .ear-summary-tip:last-child { border-bottom: none; }
   .ear-summary-tip strong { color: var(--cream); }
 
+  /* ── ETOOL (Tire de Ouvido — Ferramenta) ── */
+  .etool-section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold); margin: 20px 0 10px;
+  }
+  .etool-tip {
+    font-size: 12px; color: var(--muted); line-height: 1.6;
+    background: var(--surface2); border-left: 3px solid var(--border);
+    padding: 10px 14px; border-radius: 0 8px 8px 0; margin-bottom: 14px;
+  }
+  .etool-tip strong { color: var(--text); }
+  .etool-scale-grid {
+    display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px;
+  }
+  .etool-scale-card {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 14px; border-radius: 10px;
+    border: 1px solid var(--border); background: var(--surface2);
+    cursor: pointer; transition: all 0.15s;
+  }
+  .etool-scale-card:hover { border-color: var(--gold); background: rgba(255,255,255,0.03); }
+  .etool-scale-card.selected { border-color: var(--cream); background: rgba(255,255,255,0.06); }
+  .etool-scale-emoji { font-size: 18px; flex-shrink: 0; }
+  .etool-scale-name { font-size: 13px; font-weight: 600; color: var(--cream); margin-bottom: 2px; font-family: 'IBM Plex Mono', monospace; }
+  .etool-scale-feel { font-size: 11px; color: var(--muted); }
+  .etool-header {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 14px; padding: 18px 20px; margin-bottom: 20px;
+  }
+  .etool-key-badge {
+    font-family: 'Syne', serif;
+    font-size: 42px; font-weight: 900; color: var(--gold); line-height: 1;
+  }
+  .etool-scale-badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px; font-weight: 700; color: var(--cream); margin-bottom: 2px;
+  }
+  .etool-scale-feel-sm { font-size: 11px; color: var(--muted); }
+  .etool-notes-strip {
+    display: flex; gap: 6px; flex-wrap: wrap; margin-top: 16px;
+    padding-top: 14px; border-top: 1px solid var(--border);
+  }
+  .etool-note-pill {
+    display: flex; flex-direction: column; align-items: center;
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 8px; padding: 6px 10px; min-width: 42px;
+  }
+  .etool-note-pill.root { border-color: var(--gold); background: rgba(212,212,212,0.07); }
+  .etool-note-pill.important { border-color: rgba(255,255,255,0.25); }
+  .etool-pill-note { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 700; color: var(--cream); }
+  .etool-note-pill.root .etool-pill-note { color: var(--gold); }
+  .etool-pill-pt { font-size: 9px; color: var(--muted); }
+  .etool-pill-degree { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--border); margin-top: 1px; }
+  .etool-tabs {
+    display: flex; gap: 4px; margin-bottom: 16px; flex-wrap: wrap;
+  }
+  .etool-tab {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 12px; font-weight: 600; padding: 7px 14px;
+    border-radius: 8px; border: 1px solid var(--border);
+    background: var(--surface2); color: var(--muted);
+    cursor: pointer; transition: all 0.15s;
+  }
+  .etool-tab:hover { color: var(--text); border-color: var(--muted); }
+  .etool-tab.active { background: rgba(255,255,255,0.07); color: var(--cream); border-color: var(--cream); }
+  .etool-panel { animation: etFadeIn 0.2s ease; }
+  @keyframes etFadeIn { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:none; } }
+  .etool-tip-box {
+    font-size: 12px; color: var(--muted); line-height: 1.65;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-left: 3px solid var(--gold); border-radius: 0 8px 8px 0;
+    padding: 12px 14px;
+  }
+  .etool-tip-box strong { color: var(--text); }
+  .etool-kb-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 8px; margin-top: 16px;
+  }
+  .etool-keyboard {
+    display: flex; gap: 4px; margin-bottom: 10px; flex-wrap: wrap;
+  }
+  .etool-kb-key {
+    display: flex; flex-direction: column; align-items: center;
+    border-radius: 6px; padding: 8px 4px; min-width: 36px;
+    border: 1px solid var(--border); font-family: 'IBM Plex Mono', monospace;
+    transition: all 0.15s; flex: 1;
+  }
+  .etool-kb-key.out-scale { background: var(--bg); opacity: 0.35; }
+  .etool-kb-key.in-scale { background: var(--surface2); border-color: rgba(255,255,255,0.2); }
+  .etool-kb-key.triad { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.4); }
+  .etool-kb-key.root { background: rgba(212,212,212,0.1); border-color: var(--gold); }
+  .etool-kb-note { font-size: 12px; font-weight: 700; color: var(--cream); }
+  .etool-kb-key.out-scale .etool-kb-note { color: var(--muted); }
+  .etool-kb-key.root .etool-kb-note { color: var(--gold); }
+  .etool-kb-pt { font-size: 8px; color: var(--muted); margin-top: 2px; }
+  .etool-kb-tag { font-size: 7px; color: var(--muted); margin-top: 2px; letter-spacing: 0.5px; }
+  .etool-kb-key.root .etool-kb-tag { color: var(--gold); }
+  .etool-legend {
+    display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 20px; font-size: 11px;
+  }
+  .etool-leg-item { display: flex; align-items: center; gap: 5px; }
+  .etool-leg-item::before { content:'■'; font-size: 10px; }
+  .etool-leg-item.root { color: var(--gold); }
+  .etool-leg-item.triad { color: rgba(255,255,255,0.6); }
+  .etool-leg-item.in-scale { color: var(--muted); }
+  .etool-leg-item.out-scale { color: var(--border); }
+  .etool-sec-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 10px;
+    padding-bottom: 6px; border-bottom: 1px solid var(--border);
+  }
+  .etool-degree-list { display: flex; flex-direction: column; gap: 4px; }
+  .etool-degree-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 9px 14px; background: var(--surface2);
+    border-radius: 8px; border: 1px solid transparent;
+    transition: border-color 0.15s;
+  }
+  .etool-degree-row:hover { border-color: var(--border); }
+  .etool-deg-num { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); min-width: 18px; }
+  .etool-deg-note { font-family: 'IBM Plex Mono', monospace; font-size: 18px; font-weight: 700; color: var(--text); min-width: 36px; }
+  .etool-deg-note.root { color: var(--gold); }
+  .etool-deg-note.triad { color: var(--cream); }
+  .etool-deg-pt { font-size: 11px; color: var(--muted); min-width: 32px; }
+  .etool-deg-tip { font-size: 11px; color: var(--muted); flex: 1; line-height: 1.4; }
+  .etool-avoid-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 6px; }
+  .etool-avoid-note {
+    font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 700;
+    padding: 4px 10px; border-radius: 6px;
+    background: rgba(224,82,82,0.08); border: 1px solid rgba(224,82,82,0.25); color: #e05252;
+  }
+  .etool-chord-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 8px; margin-bottom: 16px;
+  }
+  .etool-chord-card {
+    border: 1px solid var(--border); border-radius: 10px;
+    padding: 14px 12px; background: var(--surface2);
+    border-top: 3px solid var(--chord-color, var(--border));
+    transition: all 0.15s;
+  }
+  .etool-chord-card:hover { background: rgba(255,255,255,0.03); }
+  .etool-chord-roman { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); margin-bottom: 4px; }
+  .etool-chord-name { font-family: 'IBM Plex Mono', monospace; font-size: 22px; font-weight: 700; color: var(--chord-color, var(--cream)); margin-bottom: 4px; }
+  .etool-chord-quality { font-size: 10px; color: var(--muted); margin-bottom: 6px; font-family: 'IBM Plex Mono', monospace; }
+  .etool-chord-func { font-size: 11px; font-weight: 600; color: var(--cream); margin-bottom: 4px; }
+  .etool-chord-tip { font-size: 10px; color: var(--muted); line-height: 1.4; }
+  .etool-func-legend {
+    display: flex; flex-wrap: wrap; gap: 12px;
+    font-size: 11px; padding-top: 12px; border-top: 1px solid var(--border);
+  }
+  .etool-func-item { display: flex; align-items: center; gap: 5px; }
+  .etool-prog-card {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 16px; margin-bottom: 10px;
+  }
+  .etool-prog-name { font-size: 12px; font-weight: 600; color: var(--cream); margin-bottom: 4px; }
+  .etool-prog-formula { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); margin-bottom: 10px; letter-spacing: 1px; }
+  .etool-prog-chords { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+  .etool-prog-chord {
+    font-family: 'IBM Plex Mono', monospace; font-size: 16px; font-weight: 700;
+    color: var(--cream); background: var(--bg); border: 1px solid var(--border);
+    border-radius: 7px; padding: 5px 12px;
+  }
+  .etool-prog-arrow { color: var(--muted); font-size: 14px; }
+  .etool-prog-songs { font-size: 11px; color: var(--muted); font-style: italic; }
+  .etool-tips-grid { display: flex; flex-direction: column; gap: 8px; }
+  .etool-tip-card {
+    display: flex; gap: 14px; align-items: flex-start;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 16px;
+  }
+  .etool-tip-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+  .etool-tip-title { font-size: 12px; font-weight: 600; color: var(--cream); margin-bottom: 4px; }
+  .etool-tip-body { font-size: 11px; color: var(--muted); line-height: 1.6; }
+
+  /* ── ESCUTAR HOME MODE ── */
+  .etool-mode-card {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 14px; padding: 18px 20px;
+    margin-bottom: 4px;
+  }
+  .etool-mode-card.escutar-mode {
+    border-color: rgba(76,175,125,0.25);
+    background: rgba(76,175,125,0.04);
+  }
+  .etool-mode-header {
+    display: flex; align-items: flex-start; gap: 14px; margin-bottom: 16px;
+  }
+  .etool-mode-icon { font-size: 28px; flex-shrink: 0; margin-top: 2px; }
+  .etool-mode-title {
+    font-family: 'Syne', serif;
+    font-size: 16px; font-weight: 700; color: var(--cream); margin-bottom: 4px;
+  }
+  .etool-mode-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  .escutar-detect-area {
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 16px; margin-bottom: 12px;
+    text-align: center;
+  }
+  .escutar-detect-display {
+    display: flex; align-items: center; justify-content: center; gap: 16px;
+    margin-bottom: 8px;
+  }
+  .escutar-detect-note {
+    font-family: 'Syne', serif;
+    font-size: 52px; font-weight: 900; color: var(--border);
+    line-height: 1; transition: color 0.15s, text-shadow 0.15s;
+    min-width: 64px; text-align: center;
+  }
+  .escutar-detect-note.idle { font-size: 28px; font-weight: 300; opacity: 0.3; color: var(--muted); }
+  .escutar-detect-note.lit {
+    color: var(--green);
+    text-shadow: 0 0 24px rgba(76,175,125,0.4);
+  }
+  .escutar-detect-hz {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; color: var(--muted); min-height: 14px;
+  }
+  .escutar-wave-home {
+    width: 100%; height: 40px; display: block;
+    border-radius: 4px; opacity: 0.55; margin-bottom: 6px;
+  }
+  .escutar-detect-status {
+    font-size: 11px; color: var(--muted); font-style: italic;
+  }
+
+  .escutar-candidates { margin-bottom: 12px; }
+  .escutar-cand-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 8px;
+  }
+  .escutar-cand-list { display: flex; flex-direction: column; gap: 5px; }
+  .esc-cand-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 12px; border-radius: 8px;
+    border: 1px solid var(--border); background: var(--bg);
+    cursor: pointer; transition: all 0.15s;
+  }
+  .esc-cand-item:hover { border-color: var(--gold); background: rgba(255,255,255,0.03); }
+  .esc-cand-item.top { border-color: var(--green); background: rgba(76,175,125,0.06); }
+  .esc-cand-note {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 16px; font-weight: 700; color: var(--cream);
+    min-width: 36px; display: flex; flex-direction: column;
+  }
+  .esc-cand-item.top .esc-cand-note { color: var(--green); }
+  .esc-cand-pt { font-size: 9px; color: var(--muted); font-weight: 400; }
+  .esc-cand-bar-wrap {
+    flex: 1; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden;
+  }
+  .esc-cand-bar {
+    height: 100%; background: var(--muted); border-radius: 2px;
+    transition: width 0.3s ease;
+  }
+  .esc-cand-item.top .esc-cand-bar { background: var(--green); }
+  .esc-cand-count {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px; color: var(--muted); min-width: 24px; text-align: right;
+  }
+  .esc-cand-use {
+    font-size: 10px; color: var(--muted); font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.5px; transition: color 0.15s;
+  }
+  .esc-cand-item:hover .esc-cand-use { color: var(--gold); }
+  .esc-cand-item.top .esc-cand-use { color: var(--green); }
+
+  .etool-or-divider {
+    display: flex; align-items: center; gap: 12px;
+    margin: 20px 0 16px; color: var(--muted);
+    font-size: 11px; font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 1px; text-transform: uppercase;
+  }
+  .etool-or-divider::before, .etool-or-divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+
+  /* ── ESCUTAR TAB ── */
+  .escutar-main { display: flex; flex-direction: column; gap: 14px; }
+
+  .escutar-note-display {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 14px; padding: 20px 20px 12px;
+    text-align: center; position: relative;
+    overflow: hidden;
+  }
+  .escutar-note-big {
+    font-family: 'Syne', serif;
+    font-size: 64px; font-weight: 900; color: var(--border);
+    line-height: 1; margin-bottom: 4px;
+    transition: color 0.2s, text-shadow 0.2s;
+  }
+  .escutar-note-big.idle { font-size: 32px; font-weight: 300; opacity: 0.3; color: var(--muted); }
+  .escutar-note-big.active {
+    color: var(--gold);
+    text-shadow: 0 0 32px rgba(212,212,212,0.3);
+  }
+  .escutar-note-hz {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px; color: var(--muted); margin-bottom: 4px;
+    min-height: 16px;
+  }
+  .escutar-note-status {
+    font-size: 11px; color: var(--muted); margin-bottom: 10px; font-style: italic;
+  }
+  .escutar-waveform {
+    width: 100%; height: 48px; border-radius: 6px;
+    opacity: 0.6; display: block;
+  }
+
+  .escutar-mic-btn {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    padding: 14px 20px; border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--surface2); color: var(--muted);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 14px; font-weight: 600;
+    cursor: pointer; transition: all 0.25s;
+    width: 100%;
+  }
+  .escutar-mic-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .escutar-mic-btn.active {
+    background: rgba(76,175,125,0.1);
+    border-color: var(--green); color: var(--green);
+    animation: escPulse 2s ease-in-out infinite;
+  }
+  @keyframes escPulse {
+    0%,100%{ box-shadow: 0 0 0 0 rgba(76,175,125,0); }
+    50%    { box-shadow: 0 0 0 6px rgba(76,175,125,0.12); }
+  }
+  .escutar-mic-icon { font-size: 20px; }
+
+  .escutar-chord-result {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 14px; padding: 18px 20px;
+    border-left: 4px solid var(--gold);
+    animation: etFadeIn 0.25s ease;
+  }
+  .escutar-cr-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 8px;
+  }
+  .escutar-cr-chord {
+    font-family: 'Syne', serif;
+    font-size: 40px; font-weight: 900; color: var(--gold);
+    line-height: 1; margin-bottom: 4px;
+  }
+  .escutar-cr-sub {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; color: var(--muted); margin-bottom: 10px;
+  }
+  .escutar-cr-why {
+    font-size: 12px; color: var(--text); line-height: 1.65;
+    border-top: 1px solid var(--border); padding-top: 10px;
+  }
+  .escutar-cr-why strong { color: var(--cream); }
+
+  .escutar-chord-map-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 8px;
+  }
+  .escutar-chord-map {
+    display: flex; gap: 6px; flex-wrap: wrap;
+  }
+  .escutar-chord-pill {
+    display: flex; flex-direction: column; align-items: center;
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 10px; padding: 10px 12px; min-width: 56px;
+    transition: all 0.2s; cursor: default; flex: 1;
+  }
+  .escutar-chord-pill.likely {
+    border-color: rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.03);
+  }
+  .escutar-chord-pill.active {
+    border-color: var(--c, var(--gold));
+    background: rgba(255,255,255,0.07);
+    box-shadow: 0 0 16px rgba(212,212,212,0.15);
+    transform: translateY(-2px);
+  }
+  .escutar-pill-roman {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px; color: var(--muted); margin-bottom: 2px;
+  }
+  .escutar-chord-pill.active .escutar-pill-roman { color: var(--c, var(--gold)); }
+  .escutar-pill-name {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 15px; font-weight: 700; color: var(--text);
+    transition: color 0.2s;
+  }
+  .escutar-chord-pill.active .escutar-pill-name { color: var(--c, var(--gold)); font-size: 17px; }
+  .escutar-pill-func { font-size: 9px; color: var(--muted); margin-top: 3px; text-align: center; line-height: 1.3; }
+
+  .escutar-history-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 6px;
+  }
+  .escutar-history {
+    display: flex; gap: 5px; flex-wrap: wrap; min-height: 32px;
+  }
+  .esc-hist-note {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px; font-weight: 700; color: var(--muted);
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 6px; padding: 3px 8px;
+    display: flex; flex-direction: column; align-items: center; gap: 0;
+    animation: etFadeIn 0.15s ease;
+  }
+  .esc-hist-note:first-child { color: var(--cream); border-color: rgba(255,255,255,0.25); }
+  .esc-hist-pt { font-size: 8px; font-weight: 400; color: var(--muted); }
+
   /* ── MUSIC ANALYSIS MODAL ── */
   .analysis-overlay {
     position: fixed; inset: 0; z-index: 1100;
@@ -968,8 +1387,32 @@
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
     background: var(--bg);
+    overflow: hidden;
   }
   .screen.hidden { display: none; }
+
+  /* Auth screens: transparent, no overflow clip, above canvas */
+  #loginScreen, #registerScreen {
+    background: transparent;
+    overflow: visible;
+    z-index: 901;
+    isolation: auto; /* don't isolate stacking context */
+  }
+
+  /* Canvas fills screen, behind everything */
+  #musicCanvas {
+    position: fixed; inset: 0;
+    z-index: 899;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+  }
+  #musicCanvas.visible { opacity: 1; }
+
+  /* auth-box: no z-index, no isolation — backdrop-filter sees canvas */
+  .auth-box {
+    isolation: auto;
+  }
 
   /* INTRO */
   #introScreen { z-index: 999; }
@@ -991,8 +1434,13 @@
 
   /* AUTH */
   .auth-box {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 16px; padding: 40px 44px; width: 400px; max-width: 95vw;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px; padding: 40px 44px; width: 400px; max-width: 95vw;
+    backdrop-filter: blur(48px);
+    -webkit-backdrop-filter: blur(48px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    position: relative; /* required for backdrop-filter to apply */
   }
   .auth-logo {
     display: flex; justify-content: center;
@@ -1012,11 +1460,12 @@
     text-transform: uppercase; margin-bottom: 6px;
   }
   .auth-input {
-    width: 100%; background: var(--surface2); border: 1px solid var(--border);
+    width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
     border-radius: 8px; color: var(--text); font-family: 'IBM Plex Sans', sans-serif;
     font-size: 14px; padding: 10px 14px; outline: none; transition: border-color 0.2s;
   }
-  .auth-input:focus { border-color: var(--gold); }
+  .auth-input::placeholder { color: var(--muted); }
+  .auth-input:focus { border-color: rgba(255,255,255,0.3); }
   .auth-checkbox {
     display: flex; align-items: center; gap: 8px;
     margin: 16px 0 22px; cursor: pointer;
@@ -1035,6 +1484,103 @@
     color: var(--gold); cursor: pointer; text-decoration: none; font-weight: 600;
   }
   .auth-switch a:hover { text-decoration: underline; }
+
+  /* ── LOADING SPINNER OVERLAY ── */
+  #loadingSpinner {
+    position: fixed; inset: 0; z-index: 902;
+    display: none; align-items: center; justify-content: center;
+    pointer-events: none;
+  }
+  #loadingSpinner.active { display: flex; }
+  .spinner-ring {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.12);
+    border-top-color: rgba(255,255,255,0.7);
+    animation: spinnerRot 0.7s linear infinite;
+  }
+  @keyframes spinnerRot { to { transform: rotate(360deg); } }
+
+  /* ── HOME OVERLAY (sobre o canvas animado) ── */
+  #homeOverlay {
+    position: fixed; inset: 0; z-index: 902;
+    display: none; align-items: center; justify-content: center;
+    pointer-events: none;
+  }
+  #homeOverlay.active {
+    display: flex;
+    pointer-events: all;
+  }
+  .home-overlay-box {
+    text-align: center; max-width: 520px; padding: 20px; width: 100%;
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+    transition: opacity 0.5s cubic-bezier(0.22,1,0.36,1), transform 0.5s cubic-bezier(0.22,1,0.36,1);
+  }
+  #homeOverlay.active .home-overlay-box {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  .home-overlay-logo {
+    width: 160px; height: auto; object-fit: contain;
+    margin-bottom: 20px;
+    mix-blend-mode: lighten; filter: brightness(1.05);
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.6s ease 0.1s, transform 0.6s ease 0.1s;
+  }
+  #homeOverlay.active .home-overlay-logo {
+    opacity: 1; transform: translateY(0);
+  }
+  .home-overlay-welcome {
+    font-size: 14px; color: rgba(180,180,180,0.8); margin-bottom: 32px;
+    opacity: 0; transition: opacity 0.5s ease 0.2s;
+  }
+  #homeOverlay.active .home-overlay-welcome { opacity: 1; }
+  .home-overlay-welcome strong { color: rgba(230,230,230,0.95); }
+
+  .home-overlay-cards {
+    display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+  }
+  .home-overlay-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 16px; padding: 24px 18px; width: 140px;
+    cursor: pointer; transition: all 0.25s cubic-bezier(0.22,1,0.36,1);
+    text-align: center;
+    backdrop-filter: blur(48px);
+    -webkit-backdrop-filter: blur(48px);
+    opacity: 0;
+    transform: translateY(18px) scale(0.94);
+  }
+  #homeOverlay.active .home-overlay-card:nth-child(1) { transition-delay: 0.15s; opacity: 1; transform: none; }
+  #homeOverlay.active .home-overlay-card:nth-child(2) { transition-delay: 0.22s; opacity: 1; transform: none; }
+  #homeOverlay.active .home-overlay-card:nth-child(3) { transition-delay: 0.29s; opacity: 1; transform: none; }
+  #homeOverlay.active .home-overlay-card:nth-child(4) { transition-delay: 0.36s; opacity: 1; transform: none; }
+  #homeOverlay.active .home-overlay-card:nth-child(5) { transition-delay: 0.43s; opacity: 1; transform: none; }
+  .home-overlay-card,
+  #homeOverlay.active .home-overlay-card {
+    transition: opacity 0.45s cubic-bezier(0.22,1,0.36,1),
+                transform 0.45s cubic-bezier(0.22,1,0.36,1),
+                border-color 0.2s, background 0.2s, box-shadow 0.2s;
+  }
+  .home-overlay-card:hover {
+    border-color: rgba(255,255,255,0.18);
+    transform: translateY(-5px) !important;
+    background: rgba(255,255,255,0.07);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.35);
+  }
+  .home-overlay-card-icon { font-size: 28px; margin-bottom: 10px; }
+  .home-overlay-card-title { font-size: 12px; font-weight: 600; color: rgba(240,240,240,0.9); margin-bottom: 4px; }
+  .home-overlay-card-desc { font-size: 10px; color: rgba(130,130,130,0.9); line-height: 1.4; }
+
+  .home-overlay-logout {
+    margin-top: 28px; font-size: 11px; color: rgba(100,100,100,0.8);
+    cursor: pointer; text-decoration: underline;
+    opacity: 0; transition: opacity 0.4s ease 0.55s, color 0.2s;
+  }
+  #homeOverlay.active .home-overlay-logout { opacity: 1; }
+  .home-overlay-logout:hover { color: var(--red); }
 
   /* HOME */
   .home-box {
@@ -1214,7 +1760,7 @@
 
     /* App layout: stack vertically */
     .app { flex-direction: column; height: auto; overflow: visible; }
-    #appWrapper { height: 100dvh; overflow: hidden; }
+    #appWrapper { height: 100dvh; overflow: hidden; position: relative; z-index: 950; background: var(--bg); }
 
     /* Sidebar becomes a slide-in drawer from left */
     .sidebar {
@@ -1321,10 +1867,15 @@
   }
   .tuner-note-row { display: flex; align-items: flex-start; gap: 2px; }
   .tuner-note {
-    font-family: 'Syne', serif;
-    font-size: 96px; font-weight: 900; line-height: 1;
-    color: var(--cream); transition: color 0.25s, text-shadow 0.25s;
-    min-width: 100px; text-align: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 96px; font-weight: 700; line-height: 1;
+    color: var(--cream); transition: color 0.25s, text-shadow 0.25s, opacity 0.3s;
+    min-width: 100px; text-align: center; letter-spacing: -2px;
+  }
+  .tuner-note.idle {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 72px; font-weight: 100; opacity: 0.2;
+    color: var(--muted); letter-spacing: 0;
   }
   .tuner-note.in-tune {
     color: #4caf7d; text-shadow: 0 0 48px rgba(76,175,125,0.45);
@@ -1345,6 +1896,14 @@
     gap: 6px; margin-bottom: 20px;
   }
   .tuner-meter-svg { width: 100%; max-width: 320px; display: block; }
+  /* Smooth needle via CSS — eliminates frame-to-frame jitter */
+  #tunerNeedle {
+    transition: transform 0.18s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform-origin: 160px 148px;
+  }
+  #tunerArcFill {
+    transition: stroke-dashoffset 0.18s ease, stroke 0.25s ease;
+  }
   .tuner-cents {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 11px; color: var(--muted); letter-spacing: 1px; min-height: 16px;
@@ -1406,12 +1965,16 @@
 <body>
 
 <!-- ── INTRO SCREEN ── -->
+<canvas id="musicCanvas"></canvas>
+
 <div class="screen" id="introScreen">
   <img class="intro-logo-img" src="https://i.imgur.com/sS1yWEG.png" alt="CifraSet">
   <div class="intro-dev">Desenvolvido por: <strong>Felipe Reis Cruz</strong></div>
 </div>
 
 <!-- ── LOGIN SCREEN ── -->
+<canvas id="musicCanvas"></canvas>
+
 <div class="screen hidden" id="loginScreen">
   <div class="auth-box">
     <div class="auth-logo">
@@ -1436,6 +1999,47 @@
     <div class="auth-err" id="loginErr"></div>
     <button class="btn btn-primary" style="width:100%;padding:12px" onclick="doLogin()" id="loginBtn">Entrar</button>
     <div class="auth-switch">Não tem conta? <a onclick="showRegister()">Criar conta grátis</a></div>
+  </div>
+</div>
+
+<!-- ── LOADING SPINNER ── -->
+<div id="loadingSpinner">
+  <div class="spinner-ring"></div>
+</div>
+
+<!-- ── HOME OVERLAY (aparece sobre o canvas animado, sem mudar de tela) ── -->
+<div id="homeOverlay">
+  <div class="home-overlay-box">
+    <img class="home-overlay-logo" src="https://i.imgur.com/Nelv4ev.png" alt="CifraSet">
+    <div class="home-overlay-welcome">Olá, <strong id="homeOverlayUserName">músico</strong>! O que vamos fazer hoje?</div>
+    <div class="home-overlay-cards">
+      <div class="home-overlay-card" onclick="goMyPlaylists()">
+        <div class="home-overlay-card-icon">📚</div>
+        <div class="home-overlay-card-title">Minhas Playlists</div>
+        <div class="home-overlay-card-desc">Ver, abrir e gerenciar</div>
+      </div>
+      <div class="home-overlay-card" onclick="goJoinPlaylist()">
+        <div class="home-overlay-card-icon">🔗</div>
+        <div class="home-overlay-card-title">Entrar por Código</div>
+        <div class="home-overlay-card-desc">Acesse playlist compartilhada</div>
+      </div>
+      <div class="home-overlay-card" onclick="goCreatePlaylist()">
+        <div class="home-overlay-card-icon">🎵</div>
+        <div class="home-overlay-card-title">Nova Playlist</div>
+        <div class="home-overlay-card-desc">Crie e organize suas músicas</div>
+      </div>
+      <div class="home-overlay-card" onclick="openTuner()">
+        <div class="home-overlay-card-icon">🎸</div>
+        <div class="home-overlay-card-title">Afinador</div>
+        <div class="home-overlay-card-desc">Afine em tempo real</div>
+      </div>
+      <div class="home-overlay-card" onclick="openEarTraining()">
+        <div class="home-overlay-card-icon">👂</div>
+        <div class="home-overlay-card-title">Tire de Ouvido</div>
+        <div class="home-overlay-card-desc">Notas, escalas e acordes</div>
+      </div>
+    </div>
+    <div class="home-overlay-logout" onclick="doLogout()">Sair da conta</div>
   </div>
 </div>
 
@@ -1539,7 +2143,7 @@
 </div>
 
 <!-- APP (header + editor) shown after auth -->
-<div id="appWrapper" style="display:none;flex-direction:column;height:100vh">
+<div id="appWrapper" style="display:none;flex-direction:column;height:100vh;position:relative;z-index:950;background:var(--bg)">
 
 <!-- MOBILE DRAWER OVERLAY -->
 <div class="mobile-drawer-overlay" id="mobileDrawerOverlay" onclick="closeMobileDrawer()"></div>
@@ -1634,7 +2238,7 @@
       <div class="present-key" id="presentKey"></div>
     </div>
     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-      <button class="mic-btn" id="micScrollBtn" onclick="toggleMicScroll()" title="Modo Karaokê — destaca a linha que você está cantando e rola automaticamente">
+      <button class="mic-btn" id="micScrollBtn" onclick="toggleMicScroll()" title="Modo Karaokê" style="display:none">
         <span class="mic-icon">🎤</span>
         <span class="mic-label">Seguir Letra</span>
         <span class="mic-wave">
@@ -1816,6 +2420,15 @@ function showScreen(id) {
   ['introScreen','loginScreen','registerScreen','homeScreen','joinScreen','myPlaylistsScreen'].forEach(s => {
     document.getElementById(s).classList.add('hidden');
   });
+  // Hide overlay/spinner if navigating away
+  if (id !== null) {
+    document.getElementById('homeOverlay').classList.remove('active');
+    document.getElementById('loadingSpinner').classList.remove('active');
+  }
+  // Hide canvas when going to any real screen (app, join, myPlaylists, etc)
+  if (id && id !== 'loginScreen' && id !== 'registerScreen') {
+    MusicCanvas.hide();
+  }
   const w = document.getElementById('appWrapper');
   w.style.display = 'none';
   if (id === 'app') {
@@ -1835,6 +2448,7 @@ function runIntro(isDemo) {
       document.getElementById('introScreen').classList.add('hidden');
       if (isDemo) {
         showScreen('loginScreen');
+        MusicCanvas.show();
         const err = document.getElementById('loginErr');
         err.style.color = 'var(--gold)';
         err.textContent = '⚠️ Configure as credenciais do Firebase no código para usar o app.';
@@ -1852,7 +2466,8 @@ function checkAuth() {
     currentUser = saved;
     renderUserBadge();
     fetchAllMyPlaylists();
-    showHome();
+    MusicCanvas.show();
+    showHomeOverlay();
   } else {
     showLogin();
   }
@@ -1860,21 +2475,62 @@ function checkAuth() {
 
 // ── LOGIN / REGISTER ──────────────────────────────────────
 function showLogin() {
+  // Reseta qualquer estilo inline que tenha ficado de animações anteriores
+  const loginBox = document.querySelector('#loginScreen .auth-box');
+  if (loginBox) {
+    loginBox.style.transition = 'none';
+    loginBox.style.opacity = '1';
+    loginBox.style.transform = 'none';
+  }
   showScreen('loginScreen');
+  MusicCanvas.show();
   setTimeout(() => document.getElementById('loginUser').focus(), 100);
 }
 function showRegister() {
   showScreen('registerScreen');
+  MusicCanvas.show();
   setTimeout(() => document.getElementById('regName').focus(), 100);
 }
+function showHomeOverlay() {
+  if (!currentUser) { showLogin(); return; }
+  document.getElementById('homeOverlayUserName').textContent = currentUser.name || currentUser.username;
+  MusicCanvas.show();
+  const overlay = document.getElementById('homeOverlay');
+  overlay.classList.add('active');
+  // Reset card transitions so they re-animate each time
+  overlay.querySelectorAll('.home-overlay-card').forEach(c => {
+    c.style.transitionDelay = '';
+  });
+}
+
+function hideHomeOverlay() {
+  const overlay = document.getElementById('homeOverlay');
+  overlay.classList.remove('active');
+}
+
 function showHome() {
   if (!currentUser) { showLogin(); return; }
-  document.getElementById('homeUserName').textContent = currentUser.name || currentUser.username;
-  showScreen('homeScreen');
+  showScreen(null); // hide all screens + app
+  showHomeOverlay();
 }
-function goJoinPlaylist()  { showScreen('joinScreen'); document.getElementById('joinCode').value=''; document.getElementById('joinErr').textContent=''; }
-function goCreatePlaylist(){ showScreen('app'); if (state.playlists.length > 0) { openPlaylistModal(); } else { showCreatePlaylistFlow(); } }
-function goMyPlaylists()   { showMyPlaylistsScreen(); }
+function goJoinPlaylist()  {
+  hideHomeOverlay();
+  MusicCanvas.hide();
+  showScreen('joinScreen');
+  document.getElementById('joinCode').value='';
+  document.getElementById('joinErr').textContent='';
+}
+function goCreatePlaylist(){
+  hideHomeOverlay();
+  MusicCanvas.hide();
+  showScreen('app');
+  if (state.playlists.length > 0) { openPlaylistModal(); } else { showCreatePlaylistFlow(); }
+}
+function goMyPlaylists() {
+  hideHomeOverlay();
+  MusicCanvas.hide();
+  showMyPlaylistsScreen();
+}
 
 // Carrega todas as playlists do usuário em background e atualiza o state
 async function fetchAllMyPlaylists() {
@@ -1915,29 +2571,56 @@ async function doLogin() {
   const btn      = document.getElementById('loginBtn');
   errEl.textContent = '';
   if (!username || !pass) { errEl.textContent = 'Preencha usuário e senha.'; return; }
-  btn.textContent = 'Entrando…'; btn.disabled = true;
+
+  // Spinner aparece IMEDIATAMENTE ao clicar — este É o loading real
+  const loginBox = document.querySelector('#loginScreen .auth-box');
+  loginBox.style.transition = 'opacity 0.28s ease, transform 0.28s ease';
+  loginBox.style.opacity = '0';
+  loginBox.style.transform = 'translateY(-10px) scale(0.97)';
+  btn.disabled = true;
+  setTimeout(() => {
+    document.getElementById('loginScreen').classList.add('hidden');
+    document.getElementById('loadingSpinner').classList.add('active');
+  }, 250);
+
   try {
     const hash = await hashPassword(pass);
     const snap = await db.collection('users')
       .where('username', '==', username)
       .where('passwordHash', '==', hash)
       .limit(1).get();
+
     if (snap.empty) {
+      // Erro: esconde spinner, restaura card
+      document.getElementById('loadingSpinner').classList.remove('active');
+      document.getElementById('loginScreen').classList.remove('hidden');
+      loginBox.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+      loginBox.style.opacity = '1';
+      loginBox.style.transform = 'none';
       errEl.textContent = 'Usuário ou senha incorretos.';
-      btn.textContent = 'Entrar'; btn.disabled = false;
+      btn.disabled = false;
       return;
     }
+
     const doc = snap.docs[0];
     const d   = doc.data();
     currentUser = { uid: doc.id, username: d.username, name: d.name };
     saveSession(currentUser, remember);
     renderUserBadge();
     fetchAllMyPlaylists();
-    showHome();
+
+    // Login OK: spinner some imediatamente, menu aparece
+    document.getElementById('loadingSpinner').classList.remove('active');
+    showHomeOverlay();
+
   } catch(e) {
     console.error(e);
+    document.getElementById('loadingSpinner').classList.remove('active');
+    document.getElementById('loginScreen').classList.remove('hidden');
+    loginBox.style.opacity = '1';
+    loginBox.style.transform = 'none';
     errEl.textContent = 'Erro ao conectar. Verifique sua internet.';
-    btn.textContent = 'Entrar'; btn.disabled = false;
+    btn.disabled = false;
   }
 }
 
@@ -1972,8 +2655,21 @@ async function doRegister() {
     currentUser = { uid: docRef.id, username: user, name };
     saveSession(currentUser, true);
     renderUserBadge();
-    showHome();
-    showToast(`Bem-vindo, ${name}! 🎵`);
+
+    // Animate out register box → spinner → overlay
+    const regBox = document.querySelector('#registerScreen .auth-box');
+    regBox.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
+    regBox.style.opacity = '0';
+    regBox.style.transform = 'translateY(-16px) scale(0.97)';
+    setTimeout(() => {
+      document.getElementById('registerScreen').classList.add('hidden');
+      document.getElementById('loadingSpinner').classList.add('active');
+      setTimeout(() => {
+        document.getElementById('loadingSpinner').classList.remove('active');
+        showHomeOverlay();
+        showToast(`Bem-vindo, ${name}! 🎵`);
+      }, 900);
+    }, 380);
   } catch(e) {
     console.error(e);
     errEl.textContent = 'Erro ao criar conta. Tente novamente.';
@@ -1986,6 +2682,7 @@ function doLogout() {
   currentUser = null;
   currentPlDoc = null;
   state = { playlists: [], activePl: null, activeSong: null };
+  hideHomeOverlay();
   showLogin();
 }
 
@@ -2900,6 +3597,7 @@ function openPresent() {
   renderPresentBody(song);
   document.getElementById('presentOverlay').classList.add('active');
   document.getElementById('fontSizeDisplay').textContent = presentFontSize + 'px';
+  SmartScroll.start();
 }
 
 // ── MASTER CHORD REGEX ───────────────────────────────────
@@ -3699,7 +4397,7 @@ ${songsHtml}
     <!-- Note display -->
     <div class="tuner-note-display">
       <div class="tuner-note-row">
-        <div class="tuner-note" id="tunerNote">—</div>
+        <div class="tuner-note idle" id="tunerNote">—</div>
         <div class="tuner-octave" id="tunerOctave"></div>
       </div>
     </div>
@@ -3735,7 +4433,7 @@ ${songsHtml}
       <button class="tuner-string-btn" onclick="tunerSetTarget('E',329.63)">E<span>1ª corda</span></button>
     </div>
 
-    <button class="tuner-mic-btn" id="tunerMicBtn" onclick="tunerToggleMic()">
+    <button class="tuner-mic-btn" id="tunerMicBtn" onclick="tunerToggleMic()" style="display:none">
       <span class="tmic-icon">🎙</span>
       <span id="tunerMicLabel">Ativar Microfone</span>
     </button>
@@ -4331,12 +5029,11 @@ const Tuner = (() => {
 
   function freqToNote(freq) {
     if (freq <= 0) return null;
-    const semitones = 12 * Math.log2(freq / A4);
-    const semRound = Math.round(semitones);
-    const noteIdx = ((semRound % 12) + 12) % 12;
-    const octave = Math.floor(semRound / 12) + 4;
+    const midi = Math.round(69 + 12 * Math.log2(freq / A4));
+    const noteIdx = ((midi % 12) + 12) % 12;
+    const octave = Math.floor(midi / 12) - 1;
     const name = NOTE_NAMES[noteIdx];
-    const idealFreq = A4 * Math.pow(2, semRound / 12);
+    const idealFreq = A4 * Math.pow(2, (midi - 69) / 12);
     const cents = Math.round(1200 * Math.log2(freq / idealFreq));
     return { name, octave, cents, freq, idealFreq };
   }
@@ -4398,6 +5095,17 @@ const Tuner = (() => {
   let smoothFreq = 0;
   let lastGoodNote = null;
   const SILENCE_RMS = 0.006;
+  // Extra stability: ring buffer of recent cents values for median filtering
+  const CENTS_BUF_SIZE = 8;
+  let centsBuf = new Array(CENTS_BUF_SIZE).fill(0);
+  let centsBufIdx = 0;
+
+  function medianCents(val) {
+    centsBuf[centsBufIdx % CENTS_BUF_SIZE] = val;
+    centsBufIdx++;
+    const sorted = [...centsBuf].sort((a, b) => a - b);
+    return (sorted[Math.floor(CENTS_BUF_SIZE / 2) - 1] + sorted[Math.floor(CENTS_BUF_SIZE / 2)]) / 2;
+  }
 
   function updateUI(note) {
     const noteEl   = document.getElementById('tunerNote');
@@ -4409,18 +5117,17 @@ const Tuner = (() => {
     const status   = document.getElementById('tunerStatusMsg');
 
     if (!note) {
-      // Silence — fade needle to center
-      smoothCents = smoothCents * 0.85;
-      rotateNeedle(needle, smoothCents);
-      updateArc(arcFill, smoothCents);
+      // Silence — keep needle exactly where it is, don't drift
       return;
     }
 
-    smoothCents = smoothCents * 0.6 + note.cents * 0.4;
-    smoothFreq  = smoothFreq  * 0.7 + note.freq  * 0.3;
+    const medCents = medianCents(note.cents);
+    // Heavy lerp: only 12% of new value per frame → very smooth at 60fps
+    smoothCents = smoothCents * 0.88 + medCents * 0.12;
+    smoothFreq  = smoothFreq  * 0.85 + note.freq  * 0.15;
 
     const inTune = Math.abs(smoothCents) < 5;
-    const cls    = inTune ? 'in-tune' : note.cents > 0 ? 'sharp' : 'flat';
+    const cls    = inTune ? 'in-tune' : smoothCents > 0 ? 'sharp' : 'flat';
 
     noteEl.textContent   = note.name;
     noteEl.className     = 'tuner-note ' + cls;
@@ -4432,12 +5139,12 @@ const Tuner = (() => {
       centsEl.className   = 'tuner-cents in-tune';
       status.textContent  = 'Perfeito! 🎯';
     } else {
-      const dir = note.cents > 0 ? '▲ Alta' : '▼ Baixa';
-      centsEl.textContent = `${note.cents > 0 ? '+' : ''}${Math.round(smoothCents)}¢  ${dir}`;
+      const dir = smoothCents > 0 ? '▲ Alta' : '▼ Baixa';
+      centsEl.textContent = `${smoothCents > 0 ? '+' : ''}${Math.round(smoothCents)}¢  ${dir}`;
       centsEl.className   = 'tuner-cents off';
-      status.textContent  = Math.abs(note.cents) > 20
-        ? (note.cents > 0 ? 'Abaixe a corda' : 'Suba a corda')
-        : (note.cents > 0 ? 'Um pouco alta' : 'Um pouco baixa');
+      status.textContent  = Math.abs(smoothCents) > 20
+        ? (smoothCents > 0 ? 'Abaixe a corda' : 'Suba a corda')
+        : (smoothCents > 0 ? 'Um pouco alta' : 'Um pouco baixa');
     }
 
     rotateNeedle(needle, smoothCents);
@@ -4492,7 +5199,7 @@ const Tuner = (() => {
     if (rms < SILENCE_RMS) { updateUI(null); return; }
 
     const freq = detectPitch(buf, audioCtx.sampleRate);
-    if (freq <= 0 || freq < 60 || freq > 1500) { updateUI(null); return; }
+    if (freq <= 0 || freq < 70 || freq > 1500) { updateUI(null); return; }
 
     const note = freqToNote(freq);
     if (note) { lastGoodNote = note; updateUI(note); }
@@ -4534,7 +5241,7 @@ const Tuner = (() => {
     if (btn) { btn.classList.remove('running'); document.getElementById('tunerMicLabel').textContent = 'Ativar Microfone'; }
     // Reset display
     const n = document.getElementById('tunerNote');
-    if (n) { n.textContent = '—'; n.className = 'tuner-note'; }
+    if (n) { n.textContent = '—'; n.className = 'tuner-note idle'; }
     const o = document.getElementById('tunerOctave'); if (o) o.textContent = '';
     const f = document.getElementById('tunerFreq');   if (f) f.textContent = '';
     const c = document.getElementById('tunerCents');  if (c) { c.textContent = ''; c.className = 'tuner-cents'; }
@@ -4557,11 +5264,11 @@ const Tuner = (() => {
 
 function openTuner() {
   document.getElementById('tunerOverlay').classList.add('active');
-  // Tag buttons with data-target
   document.querySelectorAll('.tuner-string-btn').forEach(btn => {
     const match = btn.getAttribute('onclick').match(/tunerSetTarget\('([^']+)',([^)]+)\)/);
     if (match) btn.dataset.target = match[1] + parseFloat(match[2]);
   });
+  Tuner.start();
 }
 function closeTuner() {
   Tuner.stop();
@@ -4803,393 +5510,924 @@ document.addEventListener('keydown', e => {
 
 
 // ══════════════════════════════════════════════════════════
-// ── EAR TRAINING ENGINE ───────────────────────────────────
+// ── TIRE DE OUVIDO — FERRAMENTA DE REFERÊNCIA MUSICAL ────
 // ══════════════════════════════════════════════════════════
 
 const EarTraining = (() => {
 
-  // Teoria musical completa
   const ALL_NOTES = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
-  const NOTE_NAMES_PT = {
+  const NOTE_PT = {
     'C':'Dó','C#':'Dó#','D':'Ré','D#':'Ré#','E':'Mi',
     'F':'Fá','F#':'Fá#','G':'Sol','G#':'Sol#','A':'Lá','A#':'Lá#','B':'Si'
   };
 
   const SCALES = {
-    major:      { intervals:[0,2,4,5,7,9,11], name:'Maior',         feel:'Alegre, estável, luminosa' },
-    minor:      { intervals:[0,2,3,5,7,8,10], name:'Menor Natural', feel:'Melancólica, emocional, dramática' },
-    dorian:     { intervals:[0,2,3,5,7,9,10], name:'Dórica',        feel:'Sombria mas com esperança, jazzística' },
-    mixolydian: { intervals:[0,2,4,5,7,9,10], name:'Mixolídia',     feel:'Bluesy, rock, levemente instável' },
-    pentatonic_major: { intervals:[0,2,4,7,9],    name:'Pentatônica Maior', feel:'Universal, folk, country, pop' },
-    pentatonic_minor: { intervals:[0,3,5,7,10],   name:'Pentatônica Menor', feel:'Blues, rock, solo de guitarra' },
+    major:            { intervals:[0,2,4,5,7,9,11], name:'Maior',            feel:'Alegre, estável, luminosa',        emoji:'☀️' },
+    minor:            { intervals:[0,2,3,5,7,8,10], name:'Menor Natural',     feel:'Melancólica, emocional, dramática', emoji:'🌙' },
+    dorian:           { intervals:[0,2,3,5,7,9,10], name:'Dórica',            feel:'Sombria mas com esperança — jazz/funk', emoji:'🎷' },
+    mixolydian:       { intervals:[0,2,4,5,7,9,10], name:'Mixolídia',         feel:'Bluesy, rock, levemente instável', emoji:'🎸' },
+    pentatonic_major: { intervals:[0,2,4,7,9],      name:'Pentatônica Maior', feel:'Universal — folk, country, pop',  emoji:'🌿' },
+    pentatonic_minor: { intervals:[0,3,5,7,10],     name:'Pentatônica Menor', feel:'Blues, rock, solo de guitarra',   emoji:'🔥' },
   };
 
-  // Graus e suas funções
-  const CHORD_DEGREES = {
+  // Funções dos graus (maior e menor)
+  const DEGREE_INFO = {
     major: [
-      { degree:'I',   quality:'maior',    func:'Tônica',       role:'Casa — onde a música descansa e resolve' },
-      { degree:'ii',  quality:'menor',    func:'Supertônica',  role:'Passagem — leva suavemente para o IV ou V' },
-      { degree:'iii', quality:'menor',    func:'Mediante',     role:'Cor — substituto da tônica, toque melancólico' },
-      { degree:'IV',  quality:'maior',    func:'Subdominante', role:'Movimento — afasta da tônica sem criar tensão' },
-      { degree:'V',   quality:'maior',    func:'Dominante',    role:'Tensão máxima — quer resolver no I' },
-      { degree:'vi',  quality:'menor',    func:'Relativa',     role:'Emoção — relativa menor, muito usada em pop' },
-      { degree:'vii°',quality:'diminuto', func:'Sensível',     role:'Tensão extrema — raramente usado sozinho' },
-    ]
+      { roman:'I',    q:'maior',    color:'#7ec8a0', func:'Tônica',       tip:'Casa — onde tudo resolve e descansa' },
+      { roman:'ii',   q:'menor',    color:'#7ab0d4', func:'Supertônica',  tip:'Passagem — leva ao IV ou V com suavidade' },
+      { roman:'iii',  q:'menor',    color:'#7ab0d4', func:'Mediante',     tip:'Cor — substituto da tônica, mais melancólico' },
+      { roman:'IV',   q:'maior',    color:'#c49ee0', func:'Subdominante', tip:'Movimento — se afasta da tônica sem tensão' },
+      { roman:'V',    q:'maior',    color:'#f0a030', func:'Dominante',    tip:'Tensão máxima — quer resolver no I' },
+      { roman:'vi',   q:'menor',    color:'#7ec8a0', func:'Relativa',     tip:'Emoção — relativa menor, muito usada em pop' },
+      { roman:'vii°', q:'diminuto', color:'#e05252', func:'Sensível',     tip:'Tensão extrema — raramente usado sozinho' },
+    ],
+    minor: [
+      { roman:'i',    q:'menor',    color:'#7ec8a0', func:'Tônica',       tip:'Casa melancólica — ponto de repouso' },
+      { roman:'ii°',  q:'diminuto', color:'#e05252', func:'Supertônica',  tip:'Tensão — resolve no V ou VII' },
+      { roman:'III',  q:'maior',    color:'#7ab0d4', func:'Mediante',     tip:'Parente maior — traz leveza momentânea' },
+      { roman:'iv',   q:'menor',    color:'#c49ee0', func:'Subdominante', tip:'Movimento — afasta da tônica com peso' },
+      { roman:'V',    q:'maior',    color:'#f0a030', func:'Dominante',    tip:'Tensão — resolve na tônica (harmônica)' },
+      { roman:'VI',   q:'maior',    color:'#7ab0d4', func:'Subtônica maior',tip:'Estabilidade — muito comum no pop/rock' },
+      { roman:'VII',  q:'maior',    color:'#c49ee0', func:'Subtônica',    tip:'Alternativo — resolve na tônica com força' },
+    ],
   };
 
-  // Estado da sessão
-  let state = {
-    step: 0,       // 0=tom, 1=escala, 2=graus, 3=notas-alvo, 4=resultado
-    key: null,     // nota raiz escolhida
-    scaleType: null,
-    scaleNotes: [],
-    answers: [],   // { q, correct, chosen }
-    totalSteps: 4,
+  // Progressões comuns por tipo de escala
+  const COMMON_PROGRESSIONS = {
+    major: [
+      { name:'Pop clássico',   degrees:[0,4,5,3],  ex:'I – V – vi – IV',    songs:'Let Her Go, Someone Like You' },
+      { name:'Blues / Rock',   degrees:[0,3,4,0],  ex:'I – IV – V – I',     songs:'Johnny B. Goode, La Bamba' },
+      { name:'50s / Doo-Wop',  degrees:[0,5,3,4],  ex:'I – vi – IV – V',    songs:'Stand By Me, Earth Angel' },
+      { name:'Canon (Pachelbel)',degrees:[0,4,5,2,3,0,3,4], ex:'I – V – vi – iii – IV – I – IV – V', songs:'Million reasons, Axis of Awesome' },
+    ],
+    minor: [
+      { name:'Rock/Metal menor',degrees:[0,6,3,4],  ex:'i – VII – IV – V',   songs:'Stairway to Heaven (intro), Smoke' },
+      { name:'Pop menor',      degrees:[0,5,2,6],  ex:'i – VI – III – VII', songs:'Radioactive, Demons' },
+      { name:'Flamenco',       degrees:[0,6,5,4],  ex:'i – VII – VI – V',   songs:'Hit the Road Jack, Sultans of Swing' },
+      { name:'Blues menor',    degrees:[0,3,4,0],  ex:'i – iv – V – i',     songs:'The Thrill Is Gone, Still Got the Blues' },
+    ],
   };
+
+  // Posições de nota em cada instrumento (string fret notation: fret na posição)
+  // Simplificado para violão padrão (EADGBE)
+  const GUITAR_NOTES = {
+    'E': {string:1, fret:0}, 'F': {string:1, fret:1}, 'F#': {string:1, fret:2},
+    'G': {string:1, fret:3}, 'G#': {string:1, fret:4}, 'A': {string:1, fret:5},
+    'A#': {string:1, fret:6}, 'B': {string:1, fret:7}, 'C': {string:2, fret:3},
+    'C#': {string:2, fret:4}, 'D': {string:2, fret:5}, 'D#': {string:2, fret:6},
+  };
+
+  let state = { key: null, scaleType: null, scaleNotes: [], degreeInfo: [], activeTab: 'notas' };
 
   function getScaleNotes(root, scaleType) {
     const idx = ALL_NOTES.indexOf(root);
     return SCALES[scaleType].intervals.map(i => ALL_NOTES[(idx + i) % 12]);
   }
 
+  function getDegreeInfo(scaleType) {
+    if (scaleType === 'minor' || scaleType === 'dorian') return DEGREE_INFO.minor;
+    return DEGREE_INFO.major;
+  }
+
+  function getChordName(rootNote, quality) {
+    if (quality === 'maior') return rootNote;
+    if (quality === 'menor') return rootNote + 'm';
+    if (quality === 'diminuto') return rootNote + '°';
+    return rootNote;
+  }
+
   function render() {
     const el = document.getElementById('earContent');
     if (!el) return;
-
-    const stepBar = `<div class="ear-steps">${
-      Array.from({length: state.totalSteps}, (_,i) =>
-        `<div class="ear-step ${i < state.step ? 'done' : i === state.step ? 'active' : ''}"></div>`
-      ).join('')
-    }</div>`;
-
-    if (state.step === 0) { el.innerHTML = stepBar + renderStep0(); renderKeyGrid(state.key); }
-    else if (state.step === 1) el.innerHTML = stepBar + renderStep1();
-    else if (state.step === 2) el.innerHTML = stepBar + renderStep2();
-    else if (state.step === 3) el.innerHTML = stepBar + renderStep3();
-    else el.innerHTML = renderSummary();
+    if (!state.key || !state.scaleType) {
+      el.innerHTML = renderHome();
+    } else {
+      el.innerHTML = renderTool();
+    }
   }
 
-  // ── STEP 0: Qual o tom? ──────────────────────────────────
-  function renderStep0() {
+  // ── HOME: seleção de tom + escala ─────────────────────
+  function renderHome() {
     return `
       <div class="ear-header">
-        <div class="ear-eyebrow">Passo 1 de ${state.totalSteps}</div>
-        <div class="ear-title">Qual o tom da música?</div>
-        <div class="ear-subtitle">Toque a música e tente identificar a nota que soa como "casa" — a que parece resolver tudo.</div>
+        <div class="ear-eyebrow">Ferramenta</div>
+        <div class="ear-title">Tire de Ouvido</div>
+        <div class="ear-subtitle">Cante ou toque a música para descobrir o tom automaticamente — ou selecione o tom manualmente se já souber.</div>
       </div>
-      <div class="ear-hint">
-        💡 <strong>Dica:</strong> Tente cantarolar a melodia e parar numa nota que soe "resolvida". 
-        Em músicas com guitarra/violão, a nota mais grave da abertura costuma ser o tom.
-        Você também pode testar cantando <em>"dó ré mi fá sol lá si dó"</em> até achar a que encaixa.
+
+      <!-- MODO ESCUTAR: detectar tom pelo microfone -->
+      <div class="etool-mode-card escutar-mode" id="escutarModeCard">
+        <div class="etool-mode-header">
+          <span class="etool-mode-icon">🎤</span>
+          <div>
+            <div class="etool-mode-title">Descobrir o tom cantando</div>
+            <div class="etool-mode-desc">Ative o microfone, cante a melodia ou toque a música — a ferramenta detecta a nota tônica em tempo real.</div>
+          </div>
+        </div>
+
+        <!-- Área de detecção -->
+        <div class="escutar-detect-area" id="escDetectArea">
+          <div class="escutar-detect-display">
+            <div class="escutar-detect-note idle" id="escDetNote">·</div>
+            <div class="escutar-detect-hz" id="escDetHz"></div>
+          </div>
+          <canvas class="escutar-wave-home" id="escWaveHome" width="400" height="40"></canvas>
+          <div class="escutar-detect-status" id="escDetStatus">Pressione o botão para começar</div>
+        </div>
+
+        <!-- Candidatos a tônica detectados -->
+        <div class="escutar-candidates" id="escCandidates" style="display:none">
+          <div class="escutar-cand-label">Notas mais detectadas — toque para confirmar como tônica:</div>
+          <div class="escutar-cand-list" id="escCandList"></div>
+        </div>
+
+        <button class="escutar-mic-btn" id="escMicBtnHome" onclick="EscutarEngine.toggleHome()">
+          <span class="escutar-mic-icon" id="escMicIconHome">🎙</span>
+          <span id="escMicLabelHome">Ativar Microfone</span>
+        </button>
+      </div>
+
+      <!-- DIVISOR -->
+      <div class="etool-or-divider"><span>ou selecione o tom manualmente</span></div>
+
+      <!-- MODO MANUAL: escolher tom -->
+      <div class="etool-section-label">Tom da música</div>
+      <div class="etool-tip">
+        <strong>Dica:</strong> Cante a melodia e pare na nota que soa "resolvida" — essa costuma ser a tônica.
+        Em violão/guitarra, a nota mais grave da abertura geralmente é o tom.
       </div>
       <div class="ear-note-grid" id="keyGrid"></div>
-      <div id="keyResult" class="ear-result"></div>
+
+      <div class="etool-section-label" style="margin-top:8px">A música soa mais…</div>
+      <div class="etool-scale-grid" id="scaleGrid"></div>
+
+      <div id="homeStart" style="display:none;margin-top:8px">
+        <button class="btn btn-primary" style="width:100%" onclick="EarTraining.openTool()">Ver mapa completo →</button>
+      </div>
     `;
   }
 
-  function renderKeyGrid(selectedKey) {
+  function renderKeyGrid() {
     const grid = document.getElementById('keyGrid');
     if (!grid) return;
     grid.innerHTML = ALL_NOTES.map(n => `
-      <button class="ear-note-btn ${selectedKey === n ? 'selected' : ''}"
-              onclick="EarTraining.selectKey('${n}')">
-        ${n}<br><span style="font-size:9px;font-weight:400;opacity:0.6">${NOTE_NAMES_PT[n]}</span>
+      <button class="ear-note-btn ${state.key === n ? 'selected' : ''}" onclick="EarTraining.selectKey('${n}')">
+        ${n}<br><span style="font-size:9px;font-weight:400;opacity:0.6">${NOTE_PT[n]}</span>
       </button>`
     ).join('');
   }
 
+  function renderScaleGrid() {
+    const grid = document.getElementById('scaleGrid');
+    if (!grid) return;
+    grid.innerHTML = Object.entries(SCALES).map(([k, s]) => `
+      <div class="etool-scale-card ${state.scaleType === k ? 'selected' : ''}" onclick="EarTraining.selectScale('${k}')">
+        <span class="etool-scale-emoji">${s.emoji}</span>
+        <div>
+          <div class="etool-scale-name">${s.name}</div>
+          <div class="etool-scale-feel">${s.feel}</div>
+        </div>
+      </div>`
+    ).join('');
+  }
+
+  function checkReady() {
+    const btn = document.getElementById('homeStart');
+    if (btn) btn.style.display = (state.key && state.scaleType) ? 'block' : 'none';
+  }
+
   function selectKey(note) {
     state.key = note;
-    renderKeyGrid(note);
-
-    // Mostra o resultado/explicação da nota escolhida
-    const result = document.getElementById('keyResult');
-    if (!result) return;
-    result.className = 'ear-result show';
-    result.innerHTML = `
-      <div class="ear-result-title correct">Tom: ${note} (${NOTE_NAMES_PT[note]})</div>
-      <div class="ear-result-body">
-        Você escolheu <strong>${note}</strong> como tônica. 
-        Isso significa que todos os acordes e melodias da música giram em torno desta nota.
-        Ela é o ponto de repouso — quando a música resolve, ela volta para cá.<br><br>
-        <strong>Próximo passo:</strong> Vamos descobrir se é maior ou menor (e qual escala).
-      </div>
-      <div style="margin-top:16px">
-        <button class="btn btn-primary" onclick="EarTraining.goStep(1)">Continuar →</button>
-      </div>`;
+    renderKeyGrid();
+    checkReady();
   }
 
-  // ── STEP 1: Qual a escala? ───────────────────────────────
-  function renderStep1() {
-    return `
-      <div class="ear-header">
-        <div class="ear-eyebrow">Passo 2 de ${state.totalSteps}</div>
-        <div class="ear-title">Como a música <em>sente</em>?</div>
-        <div class="ear-subtitle">Com o tom <strong>${state.key}</strong> em mente, qual dessas descrições mais combina com a música?</div>
-      </div>
-      <div class="ear-hint">
-        💡 <strong>Dica:</strong> Feche os olhos e ouça. A música é alegre e luminosa? 
-        Ou carrega peso emocional? Isso vai te dizer se é maior ou menor.
-        Para escalas mais específicas, preste atenção em detalhes do som.
-      </div>
-      <div class="ear-scale-grid">
-        ${Object.entries(SCALES).map(([key, s]) => `
-          <div class="ear-scale-card" onclick="EarTraining.selectScale('${key}', this)">
-            <div class="ear-scale-name">${s.name}</div>
-            <div class="ear-scale-desc">${s.feel}</div>
-          </div>`).join('')}
-      </div>
-      <div id="scaleResult" class="ear-result"></div>
-    `;
-  }
-
-  function selectScale(scaleType, el) {
+  function selectScale(scaleType) {
     state.scaleType = scaleType;
-    state.scaleNotes = getScaleNotes(state.key, scaleType);
-
-    // Highlight selected card
-    document.querySelectorAll('.ear-scale-card').forEach(c => c.classList.remove('selected'));
-    if (el) el.classList.add('selected');
-
-    const result = document.getElementById('scaleResult');
-    if (!result) return;
-    result.className = 'ear-result show';
-    result.innerHTML = `
-      <div class="ear-result-title correct">${state.key} ${SCALES[scaleType].name}</div>
-      <div class="ear-result-body">
-        As notas da escala de <strong>${state.key} ${SCALES[scaleType].name}</strong> são:
-        <div class="ear-scale-display">
-          ${state.scaleNotes.map((n,i) => `<span class="ear-scale-chip ${i===0?'root':'highlight'}">${n}<br><span style="font-size:9px;opacity:0.6">${NOTE_NAMES_PT[n]}</span></span>`).join('')}
-        </div>
-        <strong>O que isso significa:</strong> Qualquer melodia ou solo nessa música provavelmente 
-        usa essas notas. Se você tocar qualquer combinação delas, vai soar "certo" na música.
-      </div>
-      <div style="margin-top:16px">
-        <button class="btn btn-primary" onclick="EarTraining.goStep(2)">Continuar →</button>
-      </div>`;
+    state.scaleNotes = state.key ? getScaleNotes(state.key, scaleType) : [];
+    renderScaleGrid();
+    checkReady();
   }
 
-  // ── STEP 2: Identifique os graus ─────────────────────────
-  function renderStep2() {
-    const degrees = CHORD_DEGREES.major; // simplificado para maior, adaptar para menor futuramente
-    const rootIdx = ALL_NOTES.indexOf(state.key);
-    const intervals = SCALES[state.scaleType]?.intervals || SCALES.major.intervals;
-    const chordRoots = intervals.slice(0,7).map((i,d) => ({
-      note: ALL_NOTES[(rootIdx + i) % 12],
-      degree: d,
-      roman: ['I','II','III','IV','V','VI','VII'][d],
-    }));
-
-    return `
-      <div class="ear-header">
-        <div class="ear-eyebrow">Passo 3 de ${state.totalSteps}</div>
-        <div class="ear-title">Os acordes da música</div>
-        <div class="ear-subtitle">Na escala de <strong>${state.key} ${SCALES[state.scaleType].name}</strong>, cada nota da escala gera um acorde. Veja como eles funcionam:</div>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:24px">
-        ${chordRoots.map(({note, degree, roman}) => {
-          const isMinorDegree = [1,2,5,6].includes(degree);
-          const isDim = degree === 6;
-          const quality = isDim ? '°' : isMinorDegree ? 'm' : '';
-          const fn = CHORD_DEGREES.major[degree];
-          const colors = ['#7ec8a0','#7ab0d4','#7ab0d4','#7ab0d4','#f0a030','#7ec8a0','#e05252'];
-          return `
-            <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;
-                        background:var(--surface2);border-radius:10px;border:1px solid var(--border)">
-              <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;
-                          color:var(--muted);min-width:28px">${roman}</div>
-              <div style="font-family:'IBM Plex Mono',monospace;font-size:18px;
-                          font-weight:700;color:${colors[degree]};min-width:52px">${note}${quality}</div>
-              <div style="flex:1">
-                <div style="font-size:12px;font-weight:600;color:var(--cream)">${fn?.func || ''}</div>
-                <div style="font-size:11px;color:var(--muted);margin-top:2px">${fn?.role || ''}</div>
-              </div>
-            </div>`;
-        }).join('')}
-      </div>
-      <div class="ear-hint" style="margin-bottom:20px">
-        💡 <strong>Como usar:</strong> Quando estiver tocando de ouvido, tente identificar qual "função" 
-        você está ouvindo — repouso (I/VI), tensão (V) ou movimento (IV). Isso vai te dizer qual acorde está tocando mesmo sem saber o nome.
-      </div>
-      <button class="btn btn-primary" onclick="EarTraining.goStep(3)">Continuar → Identificar notas</button>
-    `;
+  function openTool() {
+    if (!state.key || !state.scaleType) return;
+    state.scaleNotes = getScaleNotes(state.key, state.scaleType);
+    state.degreeInfo = getDegreeInfo(state.scaleType);
+    state.activeTab = 'notas';
+    window._etoolState = state;
+    render();
   }
 
-  // ── STEP 3: Quiz — notas alvo ────────────────────────────
-  let quizNotes = [];
-  let quizIdx = 0;
-  let quizScore = 0;
+  // ── TOOL: painel principal ────────────────────────────
+  function renderTool() {
+    const scale = SCALES[state.scaleType];
+    const notes = state.scaleNotes;
+    const isMinorFamily = ['minor','dorian'].includes(state.scaleType);
+    const isPenta = state.scaleType.startsWith('pentatonic');
 
-  function renderStep3() {
-    // Gera 4 perguntas de identificação de nota
-    quizNotes = generateQuiz();
-    quizIdx = 0;
-    quizScore = 0;
-    return renderQuizQuestion();
-  }
-
-  function generateQuiz() {
-    const questions = [];
-    const scaleNotes = state.scaleNotes;
-
-    // Q1: qual nota é a tônica?
-    const wrongOpts1 = ALL_NOTES.filter(n => n !== state.key).sort(() => Math.random()-0.5).slice(0,3);
-    questions.push({
-      q: `Qual dessas é a nota <strong>tônica</strong> (a "casa") da escala de ${state.key}?`,
-      hint: 'A tônica é a nota que dá nome ao tom. É o ponto de repouso e resolução da música.',
-      correct: state.key,
-      options: shuffle([state.key, ...wrongOpts1]),
-      explain: `<strong>${state.key} (${NOTE_NAMES_PT[state.key]})</strong> é a tônica — a nota central em torno da qual toda a música gravita. 
-                Quando uma melodia ou acorde "resolve", ele vai parar nesta nota.`,
-    });
-
-    // Q2: qual nota está na escala?
-    const notInScale = ALL_NOTES.filter(n => !scaleNotes.includes(n));
-    const inScaleNote = scaleNotes[Math.floor(Math.random() * (scaleNotes.length - 1)) + 1];
-    const wrongOpts2 = notInScale.sort(() => Math.random()-0.5).slice(0,3);
-    questions.push({
-      q: `Qual dessas notas <strong>pertence</strong> à escala de ${state.key} ${SCALES[state.scaleType].name}?`,
-      hint: 'As notas da escala são as que "soam bem" sobre os acordes da música. Tente cantar cada opção sobre a tônica.',
-      correct: inScaleNote,
-      options: shuffle([inScaleNote, ...wrongOpts2]),
-      explain: `<strong>${inScaleNote}</strong> faz parte da escala de ${state.key} ${SCALES[state.scaleType].name}. 
-                As notas da escala formam a "paleta" de sons disponíveis para melodias e solos nessa música.`,
-    });
-
-    // Q3: qual a nota dominante (5º grau)?
-    const dominant = scaleNotes[4];
-    const wrongOpts3 = ALL_NOTES.filter(n => n !== dominant).sort(() => Math.random()-0.5).slice(0,3);
-    questions.push({
-      q: `Na escala de <strong>${state.key}</strong>, qual é a nota <strong>dominante</strong> (5º grau)?`,
-      hint: 'O 5º grau é a nota que cria mais tensão e quer "puxar" de volta para a tônica. É a base do acorde V.',
-      correct: dominant,
-      options: shuffle([dominant, ...wrongOpts3]),
-      explain: `<strong>${dominant}</strong> é o 5º grau (dominante) de ${state.key}. 
-                O acorde formado sobre esta nota (${dominant} maior) cria a tensão que resolve naturalmente no I (${state.key}).
-                Esta é a progressão mais fundamental da música ocidental: V → I.`,
-    });
-
-    // Q4: qual nota está FORA da escala?
-    const outsideNote = notInScale[Math.floor(Math.random() * notInScale.length)];
-    const wrongOpts4 = scaleNotes.sort(() => Math.random()-0.5).slice(0,3);
-    questions.push({
-      q: `Qual dessas notas <strong>NÃO pertence</strong> à escala de ${state.key} ${SCALES[state.scaleType].name}?`,
-      hint: 'Notas fora da escala criam dissonância — elas "raspam" contra os acordes. São usadas propositalmente para criar tensão.',
-      correct: outsideNote,
-      options: shuffle([outsideNote, ...wrongOpts4]),
-      explain: `<strong>${outsideNote}</strong> está fora da escala de ${state.key} ${SCALES[state.scaleType].name}. 
-                Isso não significa que nunca aparece na música — notas "emprestadas" de outras tonalidades são usadas 
-                para criar surpresa e tensão. Mas se você tocar esta nota em cima dos acordes, vai soar dissonante.`,
-    });
-
-    return questions;
-  }
-
-  function renderQuizQuestion() {
-    const q = quizNotes[quizIdx];
-    return `
-      <div class="ear-header">
-        <div class="ear-eyebrow">Pergunta ${quizIdx + 1} de ${quizNotes.length}</div>
-        <div class="ear-title" style="font-size:18px">${q.q}</div>
-      </div>
-      <div class="ear-hint">${'💡 ' + q.hint}</div>
-      <div class="ear-note-grid" style="grid-template-columns:repeat(4,1fr)">
-        ${q.options.map(n => `
-          <button class="ear-note-btn" onclick="EarTraining.answerQuiz('${n}')">
-            ${n}<br><span style="font-size:9px;font-weight:400;opacity:0.6">${NOTE_NAMES_PT[n]}</span>
-          </button>`).join('')}
-      </div>
-      <div id="quizResult" class="ear-result"></div>
-    `;
-  }
-
-  function answerQuiz(chosen) {
-    const q = quizNotes[quizIdx];
-    const isCorrect = chosen === q.correct;
-    if (isCorrect) quizScore++;
-
-    state.answers.push({ q: q.q, correct: q.correct, chosen, isCorrect });
-
-    // Color the buttons
-    document.querySelectorAll('.ear-note-btn').forEach(btn => {
-      const n = btn.textContent.trim().split('\n')[0].trim();
-      btn.disabled = true;
-      if (n === q.correct) btn.classList.add('correct');
-      else if (n === chosen && !isCorrect) btn.classList.add('wrong');
-    });
-
-    const result = document.getElementById('quizResult');
-    if (result) {
-      result.className = 'ear-result show';
-      result.innerHTML = `
-        <div class="ear-result-title ${isCorrect ? 'correct' : 'wrong'}">${isCorrect ? '✓ Correto!' : '✗ Não era essa'}</div>
-        <div class="ear-result-body">${q.explain}</div>
-        <div style="margin-top:16px">
-          <button class="btn btn-primary" onclick="EarTraining.nextQuiz()">${quizIdx < quizNotes.length - 1 ? 'Próxima →' : 'Ver resultado →'}</button>
-        </div>`;
-    }
-  }
-
-  function nextQuiz() {
-    quizIdx++;
-    if (quizIdx >= quizNotes.length) {
-      goStep(4);
-    } else {
-      document.getElementById('earContent').innerHTML =
-        `<div class="ear-steps">${Array.from({length:state.totalSteps},(_,i)=>`<div class="ear-step ${i<state.step?'done':i===state.step?'active':''}"></div>`).join('')}</div>` +
-        renderQuizQuestion();
-    }
-  }
-
-  // ── STEP 4: Resumo / Aprendizado ─────────────────────────
-  function renderSummary() {
-    const pct = Math.round((quizScore / quizNotes.length) * 100);
-    const icon = pct === 100 ? '🎯' : pct >= 75 ? '🎵' : pct >= 50 ? '👂' : '🌱';
-    const title = pct === 100 ? 'Perfeito!' : pct >= 75 ? 'Muito bem!' : pct >= 50 ? 'Bom começo!' : 'Continue praticando!';
-
-    const tips = [
-      `<strong>O tom que você identificou: ${state.key} ${SCALES[state.scaleType]?.name || ''}</strong> — 
-       as notas ${state.scaleNotes.join(' · ')} são as que "pertencem" a essa música.`,
-      `<strong>Para tirar melodias de ouvido:</strong> Comece sempre encontrando a tônica (${state.key}). 
-       Depois use as notas da escala — especialmente ${state.scaleNotes[0]}, ${state.scaleNotes[2]} e ${state.scaleNotes[4]} 
-       (1º, 3º e 5º graus), que formam a tríade e aparecem em quase toda melodia.`,
-      `<strong>Para identificar acordes:</strong> Ouça a nota mais grave do acorde — ela costuma ser a raiz. 
-       Depois perceba se soa "maior" (alegre) ou "menor" (triste) para determinar a qualidade.`,
-      `<strong>Treino diário:</strong> Escolha uma música que você conhece bem e tente cantar a escala 
-       de ${state.key} por cima. Com o tempo, seus ouvidos vão reconhecer os padrões automaticamente.`,
+    const tabs = [
+      { id:'notas',       label:'🎵 Notas' },
+      { id:'acordes',     label:'🎸 Acordes' },
+      { id:'progressoes', label:'🔄 Progressões' },
+      { id:'melodia',     label:'✨ Dicas Melodia' },
+      { id:'escutar',     label:'🎤 Escutar' },
     ];
 
     return `
-      <div class="ear-summary">
-        <div class="ear-summary-icon">${icon}</div>
-        <div class="ear-summary-title">${title}</div>
-        <div class="ear-summary-score">${quizScore} de ${quizNotes.length} corretas • ${pct}%</div>
-        <div class="ear-summary-tips">
-          ${tips.map(t => `<div class="ear-summary-tip">${t}</div>`).join('')}
+      <div class="etool-header">
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+          <div>
+            <div class="etool-key-badge">${state.key}</div>
+          </div>
+          <div>
+            <div class="etool-scale-badge">${scale.name} ${scale.emoji}</div>
+            <div class="etool-scale-feel-sm">${scale.feel}</div>
+          </div>
+          <button class="btn btn-ghost btn-sm" onclick="EarTraining.restart()" style="margin-left:auto">Mudar tom</button>
         </div>
-        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-          <button class="btn btn-primary" onclick="EarTraining.restart()">Praticar de novo</button>
-          <button class="btn btn-ghost" onclick="closeEarTraining()">Voltar ao menu</button>
+        <div class="etool-notes-strip">
+          ${notes.map((n,i) => `
+            <div class="etool-note-pill ${i===0?'root':i===2||i===4?'important':''}">
+              <div class="etool-pill-note">${n}</div>
+              <div class="etool-pill-pt">${NOTE_PT[n]}</div>
+              <div class="etool-pill-degree">${i+1}°</div>
+            </div>`).join('')}
         </div>
-      </div>`;
+      </div>
+
+      <div class="etool-tabs">
+        ${tabs.map(t => `
+          <button class="etool-tab ${state.activeTab===t.id?'active':''}" onclick="EarTraining.setTab('${t.id}')">${t.label}</button>
+        `).join('')}
+      </div>
+
+      <div class="etool-panel" id="etoolPanel">
+        ${renderTab(state.activeTab)}
+      </div>
+    `;
   }
 
-  function shuffle(arr) {
-    return arr.sort(() => Math.random() - 0.5);
+  function setTab(tabId) {
+    // Stop listener if leaving escutar tab
+    if (state.activeTab === 'escutar' && tabId !== 'escutar') {
+      EscutarEngine.stop();
+    }
+    state.activeTab = tabId;
+    const panel = document.getElementById('etoolPanel');
+    if (panel) panel.innerHTML = renderTab(tabId);
+    document.querySelectorAll('.etool-tab').forEach(t => {
+      const map = { 'notas':'🎵', 'acordes':'🎸', 'progressoes':'🔄', 'melodia':'✨', 'escutar':'🎤' };
+      t.classList.toggle('active', t.textContent.includes(map[tabId]||''));
+    });
   }
 
-  function goStep(n) {
-    state.step = n;
-    render();
+  function renderTab(tabId) {
+    if (tabId === 'notas')       return renderTabNotas();
+    if (tabId === 'acordes')     return renderTabAcordes();
+    if (tabId === 'progressoes') return renderTabProgressoes();
+    if (tabId === 'melodia')     return renderTabMelodia();
+    if (tabId === 'escutar')     return renderTabEscutar();
+    return '';
+  }
+
+  // ── TAB: NOTAS ────────────────────────────────────────
+  function renderTabNotas() {
+    const notes = state.scaleNotes;
+    const tonic  = notes[0];
+    const third  = notes[2] || null;
+    const fifth  = notes[4] || null;
+    const all12  = ALL_NOTES;
+
+    // Mapa visual das 12 notas — estilo teclado horizontal
+    const keyboardMap = all12.map((n, i) => {
+      const inScale = notes.includes(n);
+      const isRoot  = n === tonic;
+      const isTriad = (n === third || n === fifth);
+      let cls = 'etool-kb-key';
+      if (isRoot)  cls += ' root';
+      else if (isTriad) cls += ' triad';
+      else if (inScale) cls += ' in-scale';
+      else cls += ' out-scale';
+      return `
+        <div class="${cls}">
+          <div class="etool-kb-note">${n}</div>
+          ${inScale ? `<div class="etool-kb-pt">${NOTE_PT[n]}</div>` : ''}
+          ${isRoot ? '<div class="etool-kb-tag">tônica</div>' : isTriad ? '<div class="etool-kb-tag">tríade</div>' : ''}
+        </div>`;
+    }).join('');
+
+    const outsideNotes = all12.filter(n => !notes.includes(n));
+
+    return `
+      <div class="etool-tip-box" style="margin-bottom:16px">
+        🎯 <strong>Notas seguras:</strong> Use qualquer nota abaixo para a melodia — todas vão soar bem.<br>
+        🔑 <strong>Começa e termina em ${tonic} (${NOTE_PT[tonic]})</strong> para dar sensação de conclusão.<br>
+        ⭐ <strong>Tríade (${tonic}-${third||'?'}-${fifth||'?'})</strong> = as mais fortes; aparecem em quase toda melodia.
+      </div>
+
+      <div class="etool-kb-label">Mapa das notas da escala</div>
+      <div class="etool-keyboard">${keyboardMap}</div>
+
+      <div class="etool-legend">
+        <span class="etool-leg-item root">● Tônica</span>
+        <span class="etool-leg-item triad">● Tríade</span>
+        <span class="etool-leg-item in-scale">● Na escala</span>
+        <span class="etool-leg-item out-scale">● Fora</span>
+      </div>
+
+      <div class="etool-sec-title">Notas da escala em ordem</div>
+      <div class="etool-degree-list">
+        ${notes.map((n,i) => `
+          <div class="etool-degree-row">
+            <div class="etool-deg-num">${i+1}°</div>
+            <div class="etool-deg-note ${i===0?'root':i===2||i===4?'triad':''}">${n}</div>
+            <div class="etool-deg-pt">${NOTE_PT[n]}</div>
+            <div class="etool-deg-tip">${[
+              'Tônica — começa e termina a frase aqui',
+              '2° grau — passagem suave',
+              '3° grau — define o caráter maior/menor',
+              '4° grau — subdominante, cria movimento',
+              '5° grau — dominante, cria tensão',
+              '6° grau — relativa, muito expressiva',
+              '7° grau — sensível, quer resolver',
+            ][i]||''}</div>
+          </div>`).join('')}
+      </div>
+
+      <div class="etool-sec-title" style="margin-top:20px">Notas para EVITAR (soam dissonantes)</div>
+      <div class="etool-avoid-row">
+        ${outsideNotes.map(n => `<span class="etool-avoid-note">${n}</span>`).join('')}
+      </div>
+      <div class="etool-tip-box" style="margin-top:10px;border-color:#e05252">
+        ⚠️ Essas notas "raspam" contra os acordes da música. Compositores experientes as usam de propósito para criar tensão — mas passam rapidinho por elas, não ficam parados.
+      </div>
+    `;
+  }
+
+  // ── TAB: ACORDES ──────────────────────────────────────
+  function renderTabAcordes() {
+    const notes = state.scaleNotes;
+    const dInfo = state.degreeInfo;
+    const isPenta = state.scaleType.startsWith('pentatonic');
+
+    if (isPenta) {
+      return `
+        <div class="etool-tip-box">
+          ℹ️ A escala pentatônica tem apenas 5 notas — ela não define acordes próprios. Use os acordes do tom equivalente:<br><br>
+          <strong>Se a música é ${state.key} Pentatônica Maior → use acordes de ${state.key} Maior</strong><br>
+          <strong>Se a música é ${state.key} Pentatônica Menor → use acordes de ${state.key} Menor</strong>
+        </div>
+        <div style="margin-top:12px">
+          <button class="btn btn-ghost btn-sm" onclick="EarTraining.selectScale('major');EarTraining.openTool()">Ver acordes de ${state.key} Maior</button>
+          &nbsp;
+          <button class="btn btn-ghost btn-sm" onclick="EarTraining.selectScale('minor');EarTraining.openTool()">Ver acordes de ${state.key} Menor</button>
+        </div>`;
+    }
+
+    const colorMap = { 'tônica':'#7ec8a0','relativa':'#7ec8a0','supertônica':'#7ab0d4','mediante':'#7ab0d4','subdominante':'#c49ee0','subtônica maior':'#c49ee0','subtônica':'#c49ee0','dominante':'#f0a030','sensível':'#e05252' };
+
+    return `
+      <div class="etool-tip-box" style="margin-bottom:16px">
+        🎸 Esses são os <strong>acordes naturais</strong> da música. Qualquer um deles vai soar bem juntos.<br>
+        Ouviu um acorde? Identifique a sensação (repouso / tensão / movimento) — isso te diz qual é.
+      </div>
+      <div class="etool-chord-grid">
+        ${notes.slice(0, dInfo.length).map((n, i) => {
+          const d = dInfo[i];
+          if (!d) return '';
+          const chordName = getChordName(n, d.q);
+          const clr = colorMap[d.func.toLowerCase()] || '#606060';
+          return `
+            <div class="etool-chord-card" style="--chord-color:${clr}">
+              <div class="etool-chord-roman">${d.roman}</div>
+              <div class="etool-chord-name">${chordName}</div>
+              <div class="etool-chord-quality">${d.q}</div>
+              <div class="etool-chord-func">${d.func}</div>
+              <div class="etool-chord-tip">${d.tip}</div>
+            </div>`;
+        }).join('')}
+      </div>
+      <div class="etool-func-legend">
+        <div class="etool-func-item" style="color:#7ec8a0">● Tônica — repouso</div>
+        <div class="etool-func-item" style="color:#c49ee0">● Subdominante — movimento</div>
+        <div class="etool-func-item" style="color:#f0a030">● Dominante — tensão</div>
+        <div class="etool-func-item" style="color:#7ab0d4">● Outros</div>
+      </div>
+    `;
+  }
+
+  // ── TAB: PROGRESSÕES ─────────────────────────────────
+  function renderTabProgressoes() {
+    const isPenta = state.scaleType.startsWith('pentatonic');
+    const isMinor = ['minor','dorian','pentatonic_minor'].includes(state.scaleType);
+    const progList = isMinor ? COMMON_PROGRESSIONS.minor : COMMON_PROGRESSIONS.major;
+    const notes = state.scaleNotes;
+    const dInfo = state.degreeInfo;
+
+    if (isPenta) {
+      return `<div class="etool-tip-box">Use as progressões do tom maior ou menor equivalente.</div>`;
+    }
+
+    return `
+      <div class="etool-tip-box" style="margin-bottom:16px">
+        🔄 <strong>Progressões comuns</strong> em músicas com o tom ${state.key}. Se reconhecer a sequência de sensações, você acha os acordes mais rápido.
+      </div>
+      ${progList.map(prog => {
+        const chords = prog.degrees.map(d => {
+          const n = notes[d];
+          if (!n || !dInfo[d]) return '?';
+          return getChordName(n, dInfo[d].q);
+        });
+        return `
+          <div class="etool-prog-card">
+            <div class="etool-prog-name">${prog.name}</div>
+            <div class="etool-prog-formula">${prog.ex}</div>
+            <div class="etool-prog-chords">
+              ${chords.map((c,i) => `<span class="etool-prog-chord">${c}</span>${i<chords.length-1?'<span class="etool-prog-arrow">→</span>':''}`).join('')}
+            </div>
+            <div class="etool-prog-songs">🎵 ${prog.songs}</div>
+          </div>`;
+      }).join('')}
+      <div class="etool-tip-box" style="margin-top:12px">
+        💡 <strong>Como usar:</strong> Toque a música e tente cantar "casa… tensão… movimento… casa". Quando identificar o padrão, você saberá a progressão — e daí é só mapear para os acordes do tom.
+      </div>
+    `;
+  }
+
+  // ── TAB: DICAS MELODIA ────────────────────────────────
+  function renderTabMelodia() {
+    const notes = state.scaleNotes;
+    const tonic = notes[0];
+    const third = notes[2] || notes[1];
+    const fifth  = notes[4] || notes[3];
+
+    const tips = [
+      {
+        icon: '1️⃣',
+        title: `Comece pela tônica: ${tonic} (${NOTE_PT[tonic]})`,
+        body: `A tônica é o seu "lar". Se você não sabe por onde começar, toque ${tonic} — ela quase sempre cabe como primeira ou última nota de uma frase melódica.`
+      },
+      {
+        icon: '⭐',
+        title: `Tríade: ${tonic} - ${third} - ${fifth}`,
+        body: `Essas 3 notas formam o "esqueleto" das melodias nesta tonalidade. Se você tocar só elas, já vai soar reconhecível. A maioria das melodias pop passa pela tríade.`
+      },
+      {
+        icon: '🎯',
+        title: 'Técnica: Cante antes de tocar',
+        body: `Tente cantarolar a melodia da música antes de ir para o instrumento. Depois compare a nota que você está cantando com as notas da escala. Quando "bater", você achou!`
+      },
+      {
+        icon: '🔍',
+        title: 'Técnica: Isole uma frase',
+        body: `Não tente tirar a música inteira de uma vez. Repita apenas os primeiros 2-4 segundos até achar a nota de início. Depois os 4 segundos seguintes, e assim por diante.`
+      },
+      {
+        icon: '📍',
+        title: 'Notas de apoio vs. notas de passagem',
+        body: `Notas de apoio (${tonic}, ${third}, ${fifth}) são onde a melodia "pousa". Notas de passagem são as outras — elas aparecem rápido e conectam as notas de apoio. Não fique nelas.`
+      },
+      {
+        icon: '🎵',
+        title: 'Contorno melódico',
+        body: `Toda melodia tem um contorno — sobe, desce, pica, flui. Antes de tocar, observe: a melodia está subindo? Descendo? Repetindo uma nota? Isso reduz muito as opções.`
+      },
+      {
+        icon: '🔁',
+        title: 'Padrões que se repetem',
+        body: `Músicas repetem padrões. Se você tirou um trecho, procure onde ele aparece de novo — talvez no refrão, transposto um pouco. Reconhecer o padrão economiza muito tempo.`
+      },
+      {
+        icon: '⚡',
+        title: 'Errou? Ouça o intervalo',
+        body: `Se a nota soou errada, ouça se a nota certa é mais ALTA ou mais BAIXA. Suba ou desça passo a passo pela escala (${notes.slice(0,3).join(' - ')}...) até achar.`
+      },
+    ];
+
+    return `
+      <div class="etool-tip-box" style="margin-bottom:16px">
+        ✨ Dicas práticas para tirar a melodia de ouvido em <strong>${state.key} ${SCALES[state.scaleType].name}</strong>
+      </div>
+      <div class="etool-tips-grid">
+        ${tips.map(t => `
+          <div class="etool-tip-card">
+            <div class="etool-tip-icon">${t.icon}</div>
+            <div>
+              <div class="etool-tip-title">${t.title}</div>
+              <div class="etool-tip-body">${t.body}</div>
+            </div>
+          </div>`).join('')}
+      </div>
+    `;
+  }
+
+  // ── TAB: ESCUTAR ──────────────────────────────────────
+  function renderTabEscutar() {
+    const notes = state.scaleNotes;
+    const dInfo = state.degreeInfo;
+    const isPenta = state.scaleType.startsWith('pentatonic');
+
+    // Build chord list for this scale
+    const scaleChords = notes.slice(0, dInfo.length).map((n, i) => {
+      const d = dInfo[i];
+      if (!d) return null;
+      return { root: n, quality: d.q, name: getChordName(n, d.q), roman: d.roman, func: d.func, color: ['#7ec8a0','#7ab0d4','#7ab0d4','#c49ee0','#f0a030','#7ec8a0','#e05252'][i] || '#606060' };
+    }).filter(Boolean);
+
+    return `
+      <div class="etool-tip-box" style="margin-bottom:16px">
+        🎤 <strong>Cante ou toque uma nota</strong> e a ferramenta detecta em tempo real qual acorde do tom de <strong>${state.key}</strong> melhor combina com ela.
+      </div>
+
+      <div class="escutar-main">
+        <!-- Visualizador de nota detectada -->
+        <div class="escutar-note-display" id="escNoteDsp">
+          <div class="escutar-note-big idle" id="escNoteMain">·</div>
+          <div class="escutar-note-hz" id="escNoteHz"></div>
+          <div class="escutar-note-status" id="escNoteStatus">Aguardando microfone…</div>
+          <canvas class="escutar-waveform" id="escWaveCanvas" width="320" height="48"></canvas>
+        </div>
+
+        <!-- Botão mic -->
+        <button class="escutar-mic-btn" id="escMicBtn" onclick="EscutarEngine.toggleChord()">
+          <span class="escutar-mic-icon" id="escMicIcon">🎙</span>
+          <span id="escMicLabel">Ativar Microfone</span>
+        </button>
+
+        <!-- Resultado: acorde sugerido -->
+        <div class="escutar-chord-result" id="escChordResult" style="display:none">
+          <div class="escutar-cr-label">ACORDE MAIS PROVÁVEL</div>
+          <div class="escutar-cr-chord" id="escCrChord">·</div>
+          <div class="escutar-cr-sub" id="escCrSub"></div>
+          <div class="escutar-cr-why" id="escCrWhy"></div>
+        </div>
+
+        <!-- Mapa de todos os acordes com destaque -->
+        <div class="escutar-chord-map-label">Acordes do tom — o mais provável fica destacado</div>
+        <div class="escutar-chord-map" id="escChordMap">
+          ${scaleChords.map((c,i) => `
+            <div class="escutar-chord-pill" id="escPill${i}" data-idx="${i}" style="--c:${c.color}">
+              <div class="escutar-pill-roman">${c.roman}</div>
+              <div class="escutar-pill-name">${c.name}</div>
+              <div class="escutar-pill-func">${c.func}</div>
+            </div>`).join('')}
+        </div>
+
+        <!-- Histórico de notas detectadas -->
+        <div class="escutar-history-label">Últimas notas detectadas</div>
+        <div class="escutar-history" id="escHistory"></div>
+      </div>
+    `;
   }
 
   function restart() {
-    state = { step:0, key:null, scaleType:null, scaleNotes:[], answers:[], totalSteps:4 };
-    quizIdx = 0; quizScore = 0; quizNotes = [];
+    if (typeof EscutarEngine !== 'undefined') EscutarEngine.stop();
+    state = { key: null, scaleType: null, scaleNotes: [], degreeInfo: [], activeTab: 'notas' };
+    window._etoolState = null;
     render();
+    // re-render grids after DOM update
+    setTimeout(() => { renderKeyGrid(); renderScaleGrid(); }, 0);
   }
 
-  return { render, selectKey, selectScale, answerQuiz, nextQuiz, goStep, restart };
+  return { render, selectKey, selectScale, openTool, setTab, restart };
+})();
+
+// ══════════════════════════════════════════════════════════
+// ── ESCUTAR ENGINE — detecção de tom / acorde em tempo real
+// ══════════════════════════════════════════════════════════
+const EscutarEngine = (() => {
+  let audioCtx = null, analyser = null, micStream = null, rafId = null;
+  let running = false;
+  let mode = 'home'; // 'home' = detectar tônica | 'chord' = detectar acorde
+
+  const ALL_NOTES = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+  const NOTE_PT = {'C':'Dó','C#':'Dó#','D':'Ré','D#':'Ré#','E':'Mi','F':'Fá','F#':'Fá#','G':'Sol','G#':'Sol#','A':'Lá','A#':'Lá#','B':'Si'};
+  const A4 = 440;
+  const SILENCE_RMS = 0.007;
+
+  // STATE
+  let smoothHz = 0;
+  let lastNoteName = null;
+  let noteHistory = [];       // chord mode history
+  let noteCounts = {};        // home mode: count of each note detected
+  let totalDetections = 0;
+  let waveCtxHome = null;
+  let waveCtxChord = null;
+  // Chord mode
+  let chordScores = new Array(8).fill(0);
+
+  // ── SHARED AUDIO UTILS ──────────────────────────────────
+  function getRms(buf) {
+    let s = 0; for (let i=0;i<buf.length;i++) s+=buf[i]*buf[i]; return Math.sqrt(s/buf.length);
+  }
+
+  function detectPitch(buf, sampleRate) {
+    const half = Math.floor(buf.length / 2);
+    const yin = new Float32Array(half);
+    let runSum = 0;
+    yin[0] = 1;
+    for (let tau=1;tau<half;tau++) {
+      let s=0; for(let i=0;i<half;i++){const d=buf[i]-buf[i+tau];s+=d*d;}
+      yin[tau]=s; runSum+=s; yin[tau]*=tau/runSum;
+    }
+    const THRESH=0.12; let tau=2;
+    while(tau<half){if(yin[tau]<THRESH){while(tau+1<half&&yin[tau+1]<yin[tau])tau++;break;}tau++;}
+    if(tau>=half||yin[tau]>=THRESH)return -1;
+    const x0=tau<1?tau:tau-1, x2=tau+1<half?tau+1:tau;
+    let bt;
+    if(x0===tau)bt=yin[tau]<=yin[x2]?tau:x2;
+    else if(x2===tau)bt=yin[tau]<=yin[x0]?tau:x0;
+    else{const s0=yin[x0],s1=yin[tau],s2=yin[x2];bt=tau+(s2-s0)/(2*(2*s1-s2-s0));}
+    return sampleRate/bt;
+  }
+
+  function freqToNote(freq) {
+    if (freq<=0) return null;
+    const midi=Math.round(69+12*Math.log2(freq/A4));
+    const idx=((midi%12)+12)%12, oct=Math.floor(midi/12)-1;
+    const ideal=A4*Math.pow(2,(midi-69)/12);
+    const cents=Math.round(1200*Math.log2(freq/ideal));
+    return { name:ALL_NOTES[idx], idx, oct, freq, cents };
+  }
+
+  function drawWave(buf, ctxRef, canvasId) {
+    if (!ctxRef.ctx) {
+      const c = document.getElementById(canvasId);
+      if (c) ctxRef.ctx = c.getContext('2d');
+    }
+    const ctx = ctxRef.ctx;
+    if (!ctx) return;
+    const W=ctx.canvas.width, H=ctx.canvas.height;
+    ctx.clearRect(0,0,W,H);
+    ctx.strokeStyle = running ? '#888' : '#333';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    const step = Math.floor(buf.length/W);
+    for (let x=0;x<W;x++){
+      const v=buf[x*step]||0, y=H/2+v*(H/2)*0.85;
+      x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    }
+    ctx.stroke();
+  }
+
+  // ── HOME MODE: detectar tônica ──────────────────────────
+  function loopHome() {
+    if (!running || mode !== 'home') return;
+    rafId = requestAnimationFrame(loopHome);
+    const buf = new Float32Array(analyser.fftSize);
+    analyser.getFloatTimeDomainData(buf);
+
+    const wRef = { ctx: waveCtxHome };
+    drawWave(buf, wRef, 'escWaveHome');
+    waveCtxHome = wRef.ctx;
+
+    const rms = getRms(buf);
+    const noteEl   = document.getElementById('escDetNote');
+    const hzEl     = document.getElementById('escDetHz');
+    const statusEl = document.getElementById('escDetStatus');
+
+    if (rms < SILENCE_RMS) {
+      if (noteEl) { noteEl.textContent = '·'; noteEl.className = 'escutar-detect-note idle'; }
+      return;
+    }
+
+    const freq = detectPitch(buf, audioCtx.sampleRate);
+    if (freq <= 0 || freq < 70 || freq > 1400) return;
+
+    const note = freqToNote(freq);
+    if (!note) return;
+
+    smoothHz = smoothHz * 0.7 + freq * 0.3;
+    if (noteEl) { noteEl.textContent = note.name; noteEl.className = 'escutar-detect-note lit'; }
+    if (hzEl)   hzEl.textContent = `${NOTE_PT[note.name]} · ${smoothHz.toFixed(0)} Hz`;
+    if (statusEl) statusEl.textContent = `Nota: ${note.name}${note.oct} · Cante algumas notas…`;
+
+    // Accumulate note counts (only count note changes to avoid bias on held notes)
+    if (note.name !== lastNoteName) {
+      lastNoteName = note.name;
+      noteCounts[note.name] = (noteCounts[note.name] || 0) + 1;
+      totalDetections++;
+      updateCandidates();
+    }
+  }
+
+  function updateCandidates() {
+    const cand = document.getElementById('escCandidates');
+    const list = document.getElementById('escCandList');
+    if (!cand || !list) return;
+
+    if (totalDetections < 3) return;
+    cand.style.display = 'block';
+
+    // Sort by count, top 6
+    const sorted = Object.entries(noteCounts)
+      .sort((a,b) => b[1]-a[1])
+      .slice(0, 6);
+    const max = sorted[0]?.[1] || 1;
+
+    list.innerHTML = sorted.map(([n, cnt]) => {
+      const pct = Math.round((cnt/max)*100);
+      const isTop = cnt === max;
+      return `
+        <div class="esc-cand-item ${isTop?'top':''}" onclick="EscutarEngine.confirmTonic('${n}')">
+          <div class="esc-cand-note">${n}<span class="esc-cand-pt">${NOTE_PT[n]}</span></div>
+          <div class="esc-cand-bar-wrap">
+            <div class="esc-cand-bar" style="width:${pct}%"></div>
+          </div>
+          <div class="esc-cand-count">${cnt}×</div>
+          <div class="esc-cand-use">Usar →</div>
+        </div>`;
+    }).join('');
+  }
+
+  function confirmTonic(noteName) {
+    stop();
+    // Pre-select this note in EarTraining
+    EarTraining.selectKey(noteName);
+    // Scroll to scale selection
+    const sg = document.getElementById('scaleGrid');
+    if (sg) sg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    showToast(`Tom ${noteName} selecionado! Escolha o tipo de escala.`);
+  }
+
+  // ── CHORD MODE: detectar acorde ─────────────────────────
+  function loopChord() {
+    if (!running || mode !== 'chord') return;
+    rafId = requestAnimationFrame(loopChord);
+    const buf = new Float32Array(analyser.fftSize);
+    analyser.getFloatTimeDomainData(buf);
+
+    const wRef = { ctx: waveCtxChord };
+    drawWave(buf, wRef, 'escWaveCanvas');
+    waveCtxChord = wRef.ctx;
+
+    const rms = getRms(buf);
+    const noteMain   = document.getElementById('escNoteMain');
+    const noteHz     = document.getElementById('escNoteHz');
+    const noteStatus = document.getElementById('escNoteStatus');
+
+    if (rms < SILENCE_RMS) {
+      for (let i=0;i<chordScores.length;i++) chordScores[i]*=0.9;
+      updateChordMap(-1);
+      if (noteMain) { noteMain.textContent='·'; noteMain.className='escutar-note-big idle'; }
+      if (noteStatus) noteStatus.textContent='Aguardando som…';
+      return;
+    }
+
+    const freq = detectPitch(buf, audioCtx.sampleRate);
+    if (freq<=0||freq<70||freq>1400) return;
+    const note = freqToNote(freq);
+    if (!note) return;
+
+    smoothHz = smoothHz*0.65+freq*0.35;
+    if (noteMain) { noteMain.textContent=note.name; noteMain.className='escutar-note-big active'; }
+    if (noteHz)   noteHz.textContent=`${NOTE_PT[note.name]} · ${smoothHz.toFixed(1)} Hz`;
+    if (noteStatus) noteStatus.textContent=`Nota: ${note.name}${note.oct}`;
+
+    const ts = window._etoolState;
+    if (!ts||!ts.scaleNotes.length) return;
+
+    // Score chords
+    const IQ = {'maior':[0,4,7],'menor':[0,3,7],'diminuto':[0,3,6]};
+    const newScores = ts.scaleNotes.slice(0,ts.degreeInfo.length).map((root,i)=>{
+      const d=ts.degreeInfo[i]; if(!d) return 0;
+      const ri=ALL_NOTES.indexOf(root), ivs=IQ[d.q]||[0,4,7];
+      const nm=((note.idx-ri)+120)%12;
+      if(nm===ivs[0]) return 10;
+      if(nm===ivs[1]) return 7;
+      if(nm===ivs[2]) return 6;
+      return 0;
+    });
+    for(let i=0;i<chordScores.length;i++){
+      const ns=newScores[i]||0;
+      chordScores[i]=chordScores[i]*0.72+ns*0.28;
+    }
+
+    // Track history
+    if (note.name !== lastNoteName) {
+      lastNoteName = note.name;
+      noteHistory.unshift({name:note.name,pt:NOTE_PT[note.name]});
+      if(noteHistory.length>16) noteHistory.pop();
+      const hel=document.getElementById('escHistory');
+      if(hel) hel.innerHTML=noteHistory.map(n=>`<span class="esc-hist-note">${n.name}<span class="esc-hist-pt">${n.pt}</span></span>`).join('');
+    }
+
+    let best=-1,bScore=0;
+    chordScores.forEach((s,i)=>{if(s>bScore){bScore=s;best=i;}});
+    updateChordMap(best);
+
+    if(best>=0&&bScore>2){
+      const chord=ts.scaleNotes[best], d=ts.degreeInfo[best];
+      if(!d||!chord) return;
+      const cName=chord+(d.q==='menor'?'m':d.q==='diminuto'?'°':'');
+      const cr=document.getElementById('escChordResult');
+      if(cr) cr.style.display='block';
+      const cc=document.getElementById('escCrChord');
+      if(cc) cc.textContent=cName;
+      const cs=document.getElementById('escCrSub');
+      if(cs) cs.textContent=`${d.roman} · ${d.func}`;
+      const cw=document.getElementById('escCrWhy');
+      if(cw){
+        const IQ2={'maior':[0,4,7],'menor':[0,3,7],'diminuto':[0,3,6]};
+        const ri=ALL_NOTES.indexOf(chord),ivs=IQ2[d.q]||[0,4,7];
+        const nm=((note.idx-ri)+120)%12;
+        const role=nm===ivs[0]?'a <strong>fundamental</strong>':nm===ivs[1]?'a <strong>terça</strong>':nm===ivs[2]?'a <strong>quinta</strong>':'uma nota do';
+        cw.innerHTML=`A nota <strong>${note.name}</strong> (${NOTE_PT[note.name]}) é ${role} do acorde <strong>${cName}</strong>. ${d.tip}`;
+      }
+    }
+  }
+
+  function updateChordMap(highlightIdx) {
+    document.querySelectorAll('.escutar-chord-pill').forEach((pill,i)=>{
+      const sc=chordScores[i]||0;
+      pill.classList.toggle('active',i===highlightIdx);
+      pill.classList.toggle('likely',i!==highlightIdx&&sc>3);
+    });
+  }
+
+  // ── SHARED START / STOP ──────────────────────────────────
+  async function startAudio() {
+    if (running) return true;
+    try {
+      // Request mic first — some browsers block AudioContext before getUserMedia
+      micStream = await navigator.mediaDevices.getUserMedia({
+        audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false },
+        video: false
+      });
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') await audioCtx.resume();
+      const src = audioCtx.createMediaStreamSource(micStream);
+      analyser  = audioCtx.createAnalyser();
+      analyser.fftSize = 2048;
+      analyser.smoothingTimeConstant = 0.5;
+      src.connect(analyser);
+      running = true;
+      smoothHz = 0; lastNoteName = null;
+      return true;
+    } catch(e) {
+      console.error('EscutarEngine mic error:', e);
+      const msg = e.name === 'NotAllowedError' || e.name === 'PermissionDeniedError'
+        ? '🎤 Permita o acesso ao microfone nas configurações do navegador.'
+        : '🎤 Não foi possível acessar o microfone: ' + e.message;
+      showToast(msg);
+      // cleanup partial state
+      if (micStream) { micStream.getTracks().forEach(t=>t.stop()); micStream=null; }
+      if (audioCtx)  { try{audioCtx.close();}catch(_){} audioCtx=null; }
+      return false;
+    }
+  }
+
+  function stop() {
+    running = false;
+    if (rafId) cancelAnimationFrame(rafId);
+    if (micStream){micStream.getTracks().forEach(t=>t.stop());micStream=null;}
+    if (audioCtx){try{audioCtx.close();}catch(e){}audioCtx=null;}
+    analyser=null; rafId=null; smoothHz=0; lastNoteName=null;
+    waveCtxHome=null; waveCtxChord=null;
+    // Reset home mic button
+    setBtnState('escMicBtnHome','escMicIconHome','escMicLabelHome',false);
+    setBtnState('escMicBtn','escMicIcon','escMicLabel',false);
+  }
+
+  function setBtnState(btnId, iconId, labelId, on) {
+    const btn=document.getElementById(btnId),icon=document.getElementById(iconId),label=document.getElementById(labelId);
+    if(!btn) return;
+    btn.classList.toggle('active',on);
+    if(icon)  icon.textContent = on?'⏹':'🎙';
+    if(label) label.textContent= on?'Parar':'Ativar Microfone';
+  }
+
+  // HOME mode toggle
+  async function toggleHome() {
+    if (running && mode==='home') { stop(); return; }
+    if (running) stop();
+    mode='home';
+    noteCounts={}; totalDetections=0; lastNoteName=null; smoothHz=0;
+    const ok = await startAudio();
+    if (!ok) return;
+    setBtnState('escMicBtnHome','escMicIconHome','escMicLabelHome',true);
+    const s=document.getElementById('escDetStatus');
+    if(s) s.textContent='Microfone ativo — cante a melodia!';
+    loopHome();
+  }
+
+  // CHORD mode toggle (used inside tool tab)
+  async function toggleChord() {
+    if (running && mode==='chord') { stop(); return; }
+    if (running) stop();
+    mode='chord';
+    chordScores=new Array(8).fill(0); noteHistory=[]; lastNoteName=null; smoothHz=0;
+    waveCtxChord=null;
+    const ok = await startAudio();
+    if (!ok) return;
+    setBtnState('escMicBtn','escMicIcon','escMicLabel',true);
+    const s=document.getElementById('escNoteStatus');
+    if(s) s.textContent='Microfone ativo — cante ou toque!';
+    loopChord();
+  }
+
+  return { toggleHome, toggleChord, confirmTonic, stop,
+           get isRunning() { return running; } };
 })();
 
 function openEarTraining() {
@@ -5200,12 +6438,13 @@ function openEarTraining() {
     EarTraining.restart();
   } catch(e) {
     console.error('openEarTraining error:', e);
-    console.error(e.stack);
     showToast('Erro: ' + e.message);
   }
 }
 
+
 function closeEarTraining() {
+  if (typeof EscutarEngine !== 'undefined') EscutarEngine.stop();
   document.getElementById('earTrainingScreen').classList.remove('active');
 }
 
@@ -5262,7 +6501,422 @@ document.addEventListener('gesturestart', function(e) {
   e.preventDefault();
 }, { passive: false });
 
+// ══════════════════════════════════════════════════════════
+// ── MUSIC CANVAS — fundo dinâmico das telas de auth/home ─
+// ══════════════════════════════════════════════════════════
+const MusicCanvas = (() => {
+  let canvas, ctx, W, H, raf;
+  let mouse = { x: -999, y: -999, vx: 0, vy: 0, px: 0, py: 0 };
+  let active = false;
+  let frame = 0;
+  let lastRipple = 0;
+
+  const GLYPHS   = ['♩','♪','♫','♬','♭','♯','𝄽','♮'];
+  const CLEFS    = ['𝄞','𝄢','𝄡','𝄞','𝄞'];
+
+  const PALETTE = [
+    [210,210,220],
+    [170,170,185],
+    [130,130,145],
+    [235,210,155],
+    [165,185,205],
+  ];
+
+  // ── Claves gigantes de fundo — sobem da base ao topo ──
+  const bgClefs = [];
+  class BgClef {
+    constructor() { this.reset(true); }
+    reset(init) {
+      this.glyph     = CLEFS[Math.floor(Math.random() * CLEFS.length)];
+      this.size      = 55 + Math.random() * 290;
+      this.x         = 0.05 * W + Math.random() * 0.9 * W;
+      this.vy        = -(0.12 + Math.random() * 0.18);   // mais rápido
+      this.vx        = (Math.random() - 0.5) * 0.05;
+      this.rot       = (Math.random() - 0.5) * 0.0007;
+      this.angle     = (Math.random() - 0.5) * 0.3;
+      this.peakAlpha = (0.02 + Math.random() * 0.032) * (1 + (1 - this.size/345) * 0.5);
+      // Init: espalha pelo percurso inteiro para não aparecerem todas juntas
+      this.y = init
+        ? H + this.size - Math.random() * (H + this.size * 2)
+        : H + this.size;
+    }
+    update() {
+      this.x     += this.vx;
+      this.y     += this.vy;
+      this.angle += this.rot;
+      if (this.y < -this.size * 1.2) this.reset(false);
+    }
+    draw() {
+      // fade-in: y desce de H+size até H  →  t de 0→1
+      // fade-out: y sobe de 0 até -size   →  t de 1→0
+      const FADE = H * 0.22;
+      let a = this.peakAlpha;
+      // entrando pelo baixo
+      if (this.y > H - FADE) a *= Math.max(0, 1 - (this.y - (H - FADE)) / FADE);
+      // saindo pelo topo
+      if (this.y < FADE)     a *= Math.max(0, this.y / FADE);
+      if (a < 0.001) return;
+
+      ctx.save();
+      ctx.globalAlpha  = a;
+      ctx.fillStyle    = '#c8cade';
+      ctx.font         = `${this.size}px serif`;
+      ctx.textAlign    = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.translate(this.x, this.y);
+      ctx.rotate(this.angle);
+      ctx.fillText(this.glyph, 0, 0);
+      ctx.restore();
+    }
+  }
+
+  // ── Micro notas de fundo — camada lááá atrás ───────────
+  const microNotes = [];
+  const MICRO_GLYPHS = ['♩','♪','♫','♬','♭','♯','○','◦','·'];
+  class MicroNote {
+    constructor() { this.reset(true); }
+    reset(init) {
+      this.glyph = MICRO_GLYPHS[Math.floor(Math.random() * MICRO_GLYPHS.length)];
+      this.size  = 6 + Math.random() * 10;              // minúsculas
+      this.x     = Math.random() * W;
+      this.y     = init ? Math.random() * H : H + 20;
+      this.vy    = -(0.08 + Math.random() * 0.14);      // lentíssimas
+      this.vx    = (Math.random() - 0.5) * 0.06;
+      this.alpha = 0.04 + Math.random() * 0.07;         // quase invisíveis
+      this.wobble = Math.random() * Math.PI * 2;
+      this.wobbleSpeed = 0.005 + Math.random() * 0.008;
+      this.angle = (Math.random() - 0.5) * 0.5;
+      this.rot   = (Math.random() - 0.5) * 0.002;
+    }
+    update() {
+      this.wobble += this.wobbleSpeed;
+      this.x += this.vx + Math.sin(this.wobble) * 0.12;
+      this.y += this.vy;
+      this.angle += this.rot;
+      if (this.y < -30) this.reset(false);
+    }
+    draw() {
+      ctx.save();
+      ctx.globalAlpha  = this.alpha;
+      ctx.fillStyle    = 'rgba(195,198,218,1)';
+      ctx.font         = `${this.size}px serif`;
+      ctx.textBaseline = 'middle';
+      ctx.translate(this.x, this.y);
+      ctx.rotate(this.angle);
+      ctx.fillText(this.glyph, 0, 0);
+      ctx.restore();
+    }
+  }
+
+  // ── Orbs de luz suaves ─────────────────────────────────
+  const orbs = [];
+  class Orb {
+    constructor() { this.reset(true); }
+    reset(init) {
+      this.x  = Math.random() * W;
+      this.y  = Math.random() * H;
+      this.r  = 140 + Math.random() * 240;
+      this.vx = (Math.random() - 0.5) * 0.25;
+      this.vy = (Math.random() - 0.5) * 0.18;
+      const c = PALETTE[Math.floor(Math.random() * PALETTE.length)];
+      this.col = c;
+      this.alpha = 0.025 + Math.random() * 0.04;
+      this.pulseSpeed = 0.002 + Math.random() * 0.003;
+      this.pulseOff   = Math.random() * Math.PI * 2;
+    }
+    update() {
+      this.x += this.vx; this.y += this.vy;
+      if (mouse.x > 0) {
+        const dx = mouse.x - this.x, dy = mouse.y - this.y;
+        const d  = Math.sqrt(dx*dx + dy*dy);
+        if (d > 1) { this.vx += dx/d * 0.006; this.vy += dy/d * 0.005; }
+      }
+      this.vx *= 0.996; this.vy *= 0.996;
+      if (this.x < -this.r) this.x = W + this.r;
+      if (this.x > W+this.r) this.x = -this.r;
+      if (this.y < -this.r) this.y = H + this.r;
+      if (this.y > H+this.r) this.y = -this.r;
+    }
+    draw() {
+      const pulse = 1 + Math.sin(frame * this.pulseSpeed + this.pulseOff) * 0.12;
+      const r = this.r * pulse;
+      const [cr,cg,cb] = this.col;
+      const g = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, r);
+      g.addColorStop(0,   `rgba(${cr},${cg},${cb},${this.alpha})`);
+      g.addColorStop(0.5, `rgba(${cr},${cg},${cb},${this.alpha*0.35})`);
+      g.addColorStop(1,   `rgba(${cr},${cg},${cb},0)`);
+      ctx.save(); ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(this.x, this.y, r, 0, Math.PI*2);
+      ctx.fill(); ctx.restore();
+    }
+  }
+
+  // ── Partituras onduladas ───────────────────────────────
+  const waveStaffs = [];
+  class WaveStaff {
+    constructor(baseY, scale) {
+      this.baseY   = baseY;
+      this.scale   = scale ?? 1;
+      this.amp     = (18 + Math.random() * 30) * this.scale;
+      this.freq    = 0.002 + Math.random() * 0.0038;
+      this.phase   = Math.random() * Math.PI * 2;
+      this.speed   = 0.0025 + Math.random() * 0.004;
+      this.alpha   = (0.07 + Math.random() * 0.08) * Math.min(this.scale + 0.3, 1.4);
+      this.lineGap = (5.5 + Math.random() * 4) * this.scale;
+      this.color   = Math.random() < 0.22 ? [235,205,145] : [210,210,230];
+      this.lineW   = 0.55 + this.scale * 0.45;
+      // clave no início
+      this.clefGlyph = CLEFS[Math.floor(Math.random() * CLEFS.length)];
+      this.clefSize  = (24 + Math.random() * 18) * this.scale;
+      this.clefX     = 16 + Math.random() * 55;
+    }
+    update() { this.phase += this.speed; }
+    draw() {
+      const [cr,cg,cb] = this.color;
+      for (let l = 0; l < 5; l++) {
+        const yOff = (l - 2) * this.lineGap;
+        ctx.save();
+        ctx.strokeStyle = `rgba(${cr},${cg},${cb},${this.alpha})`;
+        ctx.lineWidth   = this.lineW;
+        ctx.beginPath();
+        for (let x = 0; x <= W; x += 2) {
+          const y = this.baseY + yOff + Math.sin(x * this.freq + this.phase) * this.amp;
+          x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+        ctx.restore();
+      }
+      const clefY = this.baseY + Math.sin(this.clefX * this.freq + this.phase) * this.amp;
+      ctx.save();
+      ctx.globalAlpha = this.alpha * 1.9;
+      ctx.fillStyle   = `rgb(${cr},${cg},${cb})`;
+      ctx.font        = `${this.clefSize}px serif`;
+      ctx.textBaseline = 'middle';
+      ctx.fillText(this.clefGlyph, this.clefX, clefY);
+      ctx.restore();
+    }
+  }
+
+  // ── Notas flutuantes pequenas ──────────────────────────
+  const particles = [];
+  const MAX_MOUSE_PARTICLES = 38;
+  class Particle {
+    constructor(x, y, fromMouse) {
+      this.x = x ?? Math.random() * W;
+      this.y = y ?? H + 20 + Math.random() * 60;
+      this.glyph = GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+      this.size  = fromMouse ? 13 + Math.random()*18 : 8 + Math.random()*12;
+      this.baseSize = this.size;
+      const c = PALETTE[Math.floor(Math.random() * PALETTE.length)];
+      this.col = `rgb(${c[0]},${c[1]},${c[2]})`;
+      this.alpha = fromMouse ? 0.82 + Math.random()*0.18 : 0.08 + Math.random()*0.1;
+      this.baseAlpha = this.alpha;
+      this.vx = (Math.random()-0.5) * (fromMouse ? 2.2 : 0.28);
+      this.vy = -(0.2 + Math.random() * (fromMouse ? 1.1 : 0.36));
+      this.rot = (Math.random()-0.5) * 0.05;
+      this.angle = Math.random() * Math.PI * 2;
+      this.life  = 1;
+      this.decay = fromMouse ? 0.012+Math.random()*0.007 : 0.0006+Math.random()*0.0007;
+      this.fromMouse = fromMouse;
+      this.wobble = Math.random() * Math.PI * 2;
+      this.wobbleSpeed = 0.011 + Math.random() * 0.017;
+    }
+    update() {
+      this.wobble += this.wobbleSpeed;
+      this.x += this.vx + Math.sin(this.wobble) * 0.2;
+      this.y += this.vy; this.vy += 0.0014;
+      this.angle += this.rot;
+      this.life  -= this.decay;
+      this.alpha  = this.baseAlpha * Math.min(1, this.life * 3) * this.life;
+      this.size   = this.baseSize * (0.6 + this.life * 0.4);
+    }
+    draw() {
+      ctx.save();
+      ctx.globalAlpha = Math.max(0, this.alpha);
+      ctx.fillStyle   = this.col;
+      ctx.font        = `${this.size}px serif`;
+      ctx.translate(this.x, this.y); ctx.rotate(this.angle);
+      ctx.fillText(this.glyph, 0, 0);
+      ctx.restore();
+    }
+    get dead() { return this.life <= 0 || this.y < -120; }
+  }
+
+  // ── Ripple ─────────────────────────────────────────────
+  const ripples = [];
+  class Ripple {
+    constructor(x, y) {
+      this.x=x; this.y=y; this.r=0;
+      this.maxR=90+Math.random()*130; this.life=1;
+      this.speed=1.8+Math.random()*1.4;
+    }
+    update() { this.r+=this.speed; this.life=1-this.r/this.maxR; }
+    draw() {
+      ctx.save(); ctx.globalAlpha=Math.max(0,0.28*this.life);
+      ctx.strokeStyle='rgba(210,210,230,1)'; ctx.lineWidth=0.7;
+      ctx.beginPath(); ctx.arc(this.x,this.y,this.r,0,Math.PI*2); ctx.stroke();
+      ctx.restore();
+    }
+    get dead() { return this.life<=0; }
+  }
+
+  function buildScene() {
+    particles.length=0; orbs.length=0; waveStaffs.length=0;
+    ripples.length=0; bgClefs.length=0; microNotes.length=0;
+
+    // Micro notas de fundo — poucas, bem espalhadas
+    for (let i = 0; i < 35; i++) microNotes.push(new MicroNote());
+
+    // Claves: apenas 6, tamanhos bem variados
+    for (let i = 0; i < 6; i++) bgClefs.push(new BgClef());
+
+    // Orbs de luz: 5
+    for (let i = 0; i < 5; i++) orbs.push(new Orb());
+
+    // Partituras: apenas 3 — uma grande, uma média, uma pequena
+    // Posições e fases diferentes para nunca estarem sincronizadas
+    waveStaffs.push(new WaveStaff(H * 0.28, 1.4));   // grande
+    waveStaffs.push(new WaveStaff(H * 0.62, 0.7));   // média
+    waveStaffs.push(new WaveStaff(H * 0.82, 0.42));  // pequena
+
+    // Seed particles
+    for (let i=0; i<28; i++) {
+      const p = new Particle();
+      p.y = Math.random()*H; p.life = 0.15+Math.random()*0.85;
+      particles.push(p);
+    }
+  }
+
+  function init() {
+    canvas = document.getElementById('musicCanvas');
+    if (!canvas) return;
+    ctx = canvas.getContext('2d');
+    resize();
+    window.addEventListener('resize', resize);
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('click', onMouseClick);
+  }
+
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+    if (active) buildScene();
+  }
+
+  function onMouseMove(e) {
+    mouse.px=mouse.x; mouse.py=mouse.y;
+    mouse.x=e.clientX; mouse.y=e.clientY;
+    mouse.vx=mouse.x-mouse.px; mouse.vy=mouse.y-mouse.py;
+    const speed = Math.sqrt(mouse.vx*mouse.vx+mouse.vy*mouse.vy);
+    if (speed > 5 && active) {
+      const mc = particles.filter(p=>p.fromMouse).length;
+      if (mc < MAX_MOUSE_PARTICLES && Math.random() < Math.min(speed/18, 0.7))
+        particles.push(new Particle(mouse.x+(Math.random()-0.5)*20, mouse.y+(Math.random()-0.5)*20, true));
+    }
+    const now = Date.now();
+    if (speed > 15 && now - lastRipple > 115 && active) {
+      ripples.push(new Ripple(mouse.x, mouse.y)); lastRipple = now;
+    }
+  }
+
+  function onMouseClick(e) {
+    if (!active) return;
+    for (let i=0;i<8;i++) particles.push(new Particle(e.clientX, e.clientY, true));
+    ripples.push(new Ripple(e.clientX,e.clientY));
+    ripples.push(new Ripple(e.clientX,e.clientY));
+  }
+
+  function loop() {
+    if (!active) { raf=null; return; }
+    raf = requestAnimationFrame(loop);
+    frame++;
+
+    // Fundo neutro escuro — cinza-azulado profundo, não preto puro
+    ctx.clearRect(0,0,W,H);
+    const bg = ctx.createLinearGradient(0,0,W,H);
+    bg.addColorStop(0,   '#13131a');
+    bg.addColorStop(0.4, '#111119');
+    bg.addColorStop(1,   '#0f0f16');
+    ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
+
+    // Grain suave
+    if (frame%3===0) {
+      ctx.save(); ctx.globalAlpha=0.016; ctx.fillStyle='#ffffff';
+      for (let i=0;i<130;i++) ctx.fillRect(Math.random()*W,Math.random()*H,1,1);
+      ctx.restore();
+    }
+
+    // Micro notas de fundo (camada mais profunda)
+    if (frame % 22 === 0 && microNotes.length < 40)
+      microNotes.push(new MicroNote());
+    for (let i = microNotes.length-1; i>=0; i--) {
+      microNotes[i].update(); microNotes[i].draw();
+    }
+
+    // Claves gigantes de fundo (primeiro, atrás de tudo)
+    bgClefs.forEach(c => { c.update(); c.draw(); });
+
+    // Orbs
+    orbs.forEach(o => { o.update(); o.draw(); });
+
+    // Partituras onduladas
+    waveStaffs.forEach(s => { s.update(); s.draw(); });
+
+    // Mouse glow
+    if (mouse.x > 0) {
+      const mg = ctx.createRadialGradient(mouse.x,mouse.y,0,mouse.x,mouse.y,200);
+      mg.addColorStop(0,  'rgba(220,220,240,0.06)');
+      mg.addColorStop(0.4,'rgba(220,200,140,0.025)');
+      mg.addColorStop(1,  'rgba(0,0,0,0)');
+      ctx.fillStyle=mg; ctx.fillRect(0,0,W,H);
+    }
+
+    // Replenish particles
+    if (frame%28===0 && particles.filter(p=>!p.fromMouse).length<30)
+      particles.push(new Particle(Math.random()*W, H+20));
+
+    // Hard cap — mata mouse-particles mais antigos
+    if (particles.length > 115) {
+      for (let i=0; i<particles.length && particles.length>88; i++) {
+        if (particles[i].fromMouse) { particles.splice(i,1); i--; }
+      }
+    }
+
+    for (let i=particles.length-1;i>=0;i--) {
+      particles[i].update(); particles[i].draw();
+      if (particles[i].dead) particles.splice(i,1);
+    }
+    for (let i=ripples.length-1;i>=0;i--) {
+      ripples[i].update(); ripples[i].draw();
+      if (ripples[i].dead) ripples.splice(i,1);
+    }
+
+    // Vignette
+    const vg = ctx.createRadialGradient(W/2,H/2,H*0.08,W/2,H/2,H*0.9);
+    vg.addColorStop(0,'rgba(0,0,0,0)');
+    vg.addColorStop(1,'rgba(0,0,0,0.52)');
+    ctx.fillStyle=vg; ctx.fillRect(0,0,W,H);
+  }
+
+  function show() {
+    if (!canvas) init();
+    buildScene();
+    active=true;
+    canvas.classList.add('visible');
+    if (raf) cancelAnimationFrame(raf);
+    raf=null; loop();
+  }
+
+  function hide() {
+    active=false;
+    canvas.classList.remove('visible');
+  }
+
+  return { show, hide, init };
+})();
+
 window.addEventListener('DOMContentLoaded', () => {
+  MusicCanvas.init();
   const isDemo = firebaseConfig.apiKey.includes('DEMO') || firebaseConfig.apiKey.includes('SUBSTITUA');
   runIntro(isDemo);
 });
@@ -5276,7 +6930,7 @@ window.addEventListener('DOMContentLoaded', () => {
     <!-- Note display -->
     <div class="tuner-note-display">
       <div class="tuner-note-row">
-        <div class="tuner-note" id="tunerNote">—</div>
+        <div class="tuner-note idle" id="tunerNote">—</div>
         <div class="tuner-octave" id="tunerOctave"></div>
       </div>
     </div>
@@ -5312,7 +6966,7 @@ window.addEventListener('DOMContentLoaded', () => {
       <button class="tuner-string-btn" onclick="tunerSetTarget('E',329.63)">E<span>1ª corda</span></button>
     </div>
 
-    <button class="tuner-mic-btn" id="tunerMicBtn" onclick="tunerToggleMic()">
+    <button class="tuner-mic-btn" id="tunerMicBtn" onclick="tunerToggleMic()" style="display:none">
       <span class="tmic-icon">🎙</span>
       <span id="tunerMicLabel">Ativar Microfone</span>
     </button>
