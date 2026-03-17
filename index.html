@@ -376,7 +376,7 @@
   .present-overlay {
     position: fixed; inset: 0;
     background: #0a0908;
-    z-index: 1000;
+    z-index: 1060;
     display: none; flex-direction: column;
     overflow-y: auto;
   }
@@ -1277,7 +1277,7 @@
   /* ── MODAL ── */
   .modal-overlay {
     position: fixed; inset: 0; background: rgba(0,0,0,0.7);
-    z-index: 200; display: none; align-items: center; justify-content: center;
+    z-index: 1050; display: none; align-items: center; justify-content: center;
   }
   .modal-overlay.active { display: flex; }
   .modal {
@@ -1396,7 +1396,13 @@
     background: transparent;
     overflow: visible;
     z-index: 901;
-    isolation: auto; /* don't isolate stacking context */
+    isolation: auto;
+  }
+
+  /* Join & MyPlaylists: also transparent over canvas */
+  #joinScreen, #myPlaylistsScreen {
+    background: transparent;
+    z-index: 901;
   }
 
   /* Canvas fills screen, behind everything */
@@ -1571,6 +1577,12 @@
     box-shadow: 0 12px 32px rgba(0,0,0,0.35);
   }
   .home-overlay-card-icon { font-size: 28px; margin-bottom: 10px; }
+  .home-overlay-card-icon img {
+    width: 40px; height: 40px; object-fit: contain;
+    filter: brightness(0.9);
+    transition: filter 0.2s;
+  }
+  .home-overlay-card:hover .home-overlay-card-icon img { filter: brightness(1.15); }
   .home-overlay-card-title { font-size: 12px; font-weight: 600; color: rgba(240,240,240,0.9); margin-bottom: 4px; }
   .home-overlay-card-desc { font-size: 10px; color: rgba(130,130,130,0.9); line-height: 1.4; }
 
@@ -1610,8 +1622,13 @@
 
   /* JOIN PLAYLIST */
   .join-box {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 16px; padding: 36px 40px; width: 400px; max-width: 95vw;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px; padding: 36px 40px; width: 400px; max-width: 95vw;
+    backdrop-filter: blur(48px);
+    -webkit-backdrop-filter: blur(48px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    animation: cardEntrance 0.35s cubic-bezier(0.22,1,0.36,1) both;
   }
   .join-title {
     font-family: 'Syne', serif;
@@ -1630,9 +1647,14 @@
 
   /* MY PLAYLISTS SCREEN */
   .mypl-box {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 16px; padding: 28px 32px; width: 520px; max-width: 96vw;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px; padding: 28px 32px; width: 520px; max-width: 96vw;
     max-height: 85vh; overflow-y: auto;
+    backdrop-filter: blur(48px);
+    -webkit-backdrop-filter: blur(48px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    animation: cardEntrance 0.35s cubic-bezier(0.22,1,0.36,1) both;
   }
   .mypl-header {
     display: flex; align-items: center; justify-content: space-between;
@@ -1644,12 +1666,12 @@
   }
   .mypl-list { display: flex; flex-direction: column; gap: 10px; }
   .mypl-item {
-    background: var(--surface2); border: 1px solid var(--border);
+    background: rgba(31,31,31,0.7); border: 1px solid rgba(255,255,255,0.08);
     border-radius: 10px; padding: 14px 16px;
     display: flex; align-items: center; gap: 12px;
     transition: border-color 0.2s;
   }
-  .mypl-item:hover { border-color: rgba(255,255,255,0.1); }
+  .mypl-item:hover { border-color: rgba(255,255,255,0.15); }
   .mypl-item-info { flex: 1; min-width: 0; }
   .mypl-item-name {
     font-size: 14px; font-weight: 600; color: var(--cream);
@@ -1836,8 +1858,42 @@
     backdrop-filter: blur(12px);
     z-index: 1000;
     display: none; align-items: center; justify-content: center;
+    transition: opacity 0.3s ease;
   }
   .tuner-overlay.active { display: flex; }
+  .tuner-overlay.active .tuner-box {
+    animation: tunerEntrance 0.35s cubic-bezier(0.22,1,0.36,1) both;
+  }
+  @keyframes cardEntrance {
+    from { opacity: 0; transform: translateY(18px) scale(0.97); }
+    to   { opacity: 1; transform: none; }
+  }
+  @keyframes cardExit {
+    from { opacity: 1; transform: translateY(0) scale(1); }
+    to   { opacity: 0; transform: translateY(12px) scale(0.97); }
+  }
+  .card-exiting { animation: cardExit 0.22s cubic-bezier(0.4,0,1,1) both !important; }
+  @keyframes tunerEntrance {
+    from { opacity: 0; transform: translateY(20px) scale(0.97); }
+    to   { opacity: 1; transform: none; }
+  }
+  .tuner-overlay.exiting .tuner-box {
+    animation: cardExit 0.22s cubic-bezier(0.4,0,1,1) both !important;
+  }
+  /* On canvas background — more glass effect */
+  .tuner-overlay.from-home .tuner-box {
+    background: rgba(18,18,22,0.7);
+    backdrop-filter: blur(48px);
+    -webkit-backdrop-filter: blur(48px);
+    border-color: rgba(255,255,255,0.1);
+    box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+  }
+  /* When opened from home overlay — transparent background, canvas shows through */
+  .tuner-overlay.from-home {
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
 
   .tuner-box {
     background: var(--surface);
@@ -1911,30 +1967,55 @@
   }
   .tuner-cents.in-tune { color: #4caf7d; }
   .tuner-cents.off { color: #f0a030; }
-  .tuner-strings {
-    display: flex; gap: 6px; flex-wrap: wrap;
-    justify-content: center; margin-bottom: 24px;
+  /* ── CHROMATIC SCALE BAR ── */
+  .tuner-chromatic-wrap {
+    width: 100%; margin-bottom: 20px;
+    user-select: none;
   }
-  .tuner-string-btn {
+  .tuner-chromatic-track {
+    position: relative; height: 36px;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 10px; overflow: hidden;
+  }
+  .tuner-chromatic-notes {
+    display: flex; height: 100%; align-items: center;
+  }
+  .tuner-chromatic-note {
+    flex: 1; text-align: center;
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px; font-weight: 700;
-    padding: 7px 14px; border-radius: 8px;
-    border: 1px solid var(--border);
-    background: var(--surface2); color: var(--muted);
-    cursor: pointer; transition: all 0.18s;
-    display: flex; flex-direction: column; align-items: center; gap: 1px;
-    min-width: 48px;
+    font-size: 11px; font-weight: 600; color: var(--muted);
+    position: relative; z-index: 1;
+    transition: color 0.12s;
+    line-height: 1;
   }
-  .tuner-string-btn span {
-    font-size: 9px; font-weight: 400; letter-spacing: 1px;
-    color: var(--muted); text-transform: uppercase;
+  .tuner-chromatic-note.sharp-note { font-size: 9px; color: rgba(100,100,100,0.6); }
+  .tuner-chromatic-note.active-note { color: var(--cream); }
+  /* Sliding indicator */
+  .tuner-chromatic-indicator {
+    position: absolute; top: 0; bottom: 0;
+    width: calc(100% / 12);
+    background: rgba(240,160,48,0.18);
+    border-left: 2px solid #f0a030;
+    border-right: 2px solid #f0a030;
+    border-radius: 6px;
+    transition: left 0.12s cubic-bezier(0.22,1,0.36,1), background 0.2s;
+    pointer-events: none;
   }
-  .tuner-string-btn:hover { border-color: #f0a030; color: #f0a030; }
-  .tuner-string-btn.target {
-    border-color: #f0a030; color: #f0a030;
-    background: rgba(240,160,48,0.08);
+  .tuner-chromatic-indicator.in-tune {
+    background: rgba(76,175,125,0.2);
+    border-color: #4caf7d;
   }
-  .tuner-string-btn.target span { color: #f0a030; }
+  /* Tick marks */
+  .tuner-chromatic-ticks {
+    display: flex; height: 5px; margin-top: 3px; padding: 0 2px;
+  }
+  .tuner-chromatic-tick {
+    flex: 1; display: flex; justify-content: center;
+  }
+  .tuner-chromatic-tick::after {
+    content: ''; width: 1px; height: 4px;
+    background: var(--border); display: block;
+  }
   .tuner-mic-btn {
     display: flex; align-items: center; gap: 8px;
     padding: 13px 32px; border-radius: 12px;
@@ -2014,27 +2095,27 @@
     <div class="home-overlay-welcome">Olá, <strong id="homeOverlayUserName">músico</strong>! O que vamos fazer hoje?</div>
     <div class="home-overlay-cards">
       <div class="home-overlay-card" onclick="goMyPlaylists()">
-        <div class="home-overlay-card-icon">📚</div>
+        <div class="home-overlay-card-icon"><img src="https://i.imgur.com/cdpK40G.png" alt="Minhas Playlists"></div>
         <div class="home-overlay-card-title">Minhas Playlists</div>
         <div class="home-overlay-card-desc">Ver, abrir e gerenciar</div>
       </div>
       <div class="home-overlay-card" onclick="goJoinPlaylist()">
-        <div class="home-overlay-card-icon">🔗</div>
+        <div class="home-overlay-card-icon"><img src="https://i.imgur.com/9l834dW.png" alt="Entrar por Código" style="width:52px;height:52px"></div>
         <div class="home-overlay-card-title">Entrar por Código</div>
         <div class="home-overlay-card-desc">Acesse playlist compartilhada</div>
       </div>
       <div class="home-overlay-card" onclick="goCreatePlaylist()">
-        <div class="home-overlay-card-icon">🎵</div>
+        <div class="home-overlay-card-icon"><img src="https://i.imgur.com/CpeprJX.png" alt="Nova Playlist"></div>
         <div class="home-overlay-card-title">Nova Playlist</div>
         <div class="home-overlay-card-desc">Crie e organize suas músicas</div>
       </div>
       <div class="home-overlay-card" onclick="openTuner()">
-        <div class="home-overlay-card-icon">🎸</div>
+        <div class="home-overlay-card-icon"><img src="https://i.imgur.com/fscjlpX.png" alt="Afinador"></div>
         <div class="home-overlay-card-title">Afinador</div>
         <div class="home-overlay-card-desc">Afine em tempo real</div>
       </div>
       <div class="home-overlay-card" onclick="openEarTraining()">
-        <div class="home-overlay-card-icon">👂</div>
+        <div class="home-overlay-card-icon"><img src="https://i.imgur.com/5TZPF7h.png" alt="Tire de Ouvido"></div>
         <div class="home-overlay-card-title">Tire de Ouvido</div>
         <div class="home-overlay-card-desc">Notas, escalas e acordes</div>
       </div>
@@ -2117,7 +2198,7 @@
 <div class="screen hidden" id="joinScreen">
   <div class="join-box">
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:24px">
-      <button class="btn btn-ghost btn-sm" onclick="showHome()">← Voltar</button>
+      <button class="btn btn-ghost btn-sm" onclick="backToHome()">← Voltar</button>
     </div>
     <div class="join-title">Acessar Playlist</div>
     <div class="join-sub">Digite o código de 4 caracteres compartilhado com você</div>
@@ -2134,7 +2215,7 @@
 <div class="screen hidden" id="myPlaylistsScreen">
   <div class="mypl-box">
     <div class="mypl-header">
-      <button class="btn btn-ghost btn-sm" onclick="showHome()">← Início</button>
+      <button class="btn btn-ghost btn-sm" onclick="backToHome()">← Início</button>
       <div class="mypl-title">Minhas Playlists</div>
       <button class="btn btn-primary btn-sm" onclick="showHome(); setTimeout(goCreatePlaylist,50)">+ Nova</button>
     </div>
@@ -2425,8 +2506,9 @@ function showScreen(id) {
     document.getElementById('homeOverlay').classList.remove('active');
     document.getElementById('loadingSpinner').classList.remove('active');
   }
-  // Hide canvas when going to any real screen (app, join, myPlaylists, etc)
-  if (id && id !== 'loginScreen' && id !== 'registerScreen') {
+  // Hide canvas only when going to the full app — keep it for glass screens
+  if (id && id !== 'loginScreen' && id !== 'registerScreen'
+         && id !== 'joinScreen'  && id !== 'myPlaylistsScreen') {
     MusicCanvas.hide();
   }
   const w = document.getElementById('appWrapper');
@@ -2508,17 +2590,53 @@ function hideHomeOverlay() {
   overlay.classList.remove('active');
 }
 
+function backToHome() {
+  const screens = ['joinScreen','myPlaylistsScreen'];
+  let found = false;
+  screens.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && !el.classList.contains('hidden')) {
+      found = true;
+      const box = el.querySelector('.join-box, .mypl-box');
+      if (box) box.classList.add('card-exiting');
+      setTimeout(() => {
+        el.classList.add('hidden');
+        if (box) box.classList.remove('card-exiting');
+      }, 220);
+    }
+  });
+  setTimeout(() => showHomeOverlay(), found ? 180 : 0);
+}
+
 function showHome() {
   if (!currentUser) { showLogin(); return; }
   showScreen(null); // hide all screens + app
   showHomeOverlay();
 }
-function goJoinPlaylist()  {
-  hideHomeOverlay();
-  MusicCanvas.hide();
-  showScreen('joinScreen');
-  document.getElementById('joinCode').value='';
-  document.getElementById('joinErr').textContent='';
+function goJoinPlaylist() {
+  const homeOver = document.getElementById('homeOverlay');
+  if (homeOver && homeOver.classList.contains('active')) {
+    homeOver.style.transition = 'opacity 0.22s ease';
+    homeOver.style.opacity = '0';
+    setTimeout(() => {
+      homeOver.classList.remove('active');
+      homeOver.style.opacity = '';
+      homeOver.style.transition = '';
+      // Show joinScreen transparent over canvas (don't hide canvas)
+      ['introScreen','loginScreen','registerScreen','homeScreen','myPlaylistsScreen'].forEach(s => {
+        document.getElementById(s).classList.add('hidden');
+      });
+      document.getElementById('appWrapper').style.display = 'none';
+      document.getElementById('joinScreen').classList.remove('hidden');
+      document.getElementById('joinCode').value = '';
+      document.getElementById('joinErr').textContent = '';
+    }, 220);
+  } else {
+    hideHomeOverlay();
+    showScreen('joinScreen');
+    document.getElementById('joinCode').value = '';
+    document.getElementById('joinErr').textContent = '';
+  }
 }
 function goCreatePlaylist(){
   hideHomeOverlay();
@@ -2527,9 +2645,25 @@ function goCreatePlaylist(){
   if (state.playlists.length > 0) { openPlaylistModal(); } else { showCreatePlaylistFlow(); }
 }
 function goMyPlaylists() {
-  hideHomeOverlay();
-  MusicCanvas.hide();
-  showMyPlaylistsScreen();
+  const homeOver = document.getElementById('homeOverlay');
+  if (homeOver && homeOver.classList.contains('active')) {
+    homeOver.style.transition = 'opacity 0.22s ease';
+    homeOver.style.opacity = '0';
+    setTimeout(() => {
+      homeOver.classList.remove('active');
+      homeOver.style.opacity = '';
+      homeOver.style.transition = '';
+      // Show myPlaylistsScreen transparent over canvas
+      ['introScreen','loginScreen','registerScreen','homeScreen','joinScreen'].forEach(s => {
+        document.getElementById(s).classList.add('hidden');
+      });
+      document.getElementById('appWrapper').style.display = 'none';
+      showMyPlaylistsScreen();
+    }, 220);
+  } else {
+    hideHomeOverlay();
+    showMyPlaylistsScreen();
+  }
 }
 
 // Carrega todas as playlists do usuário em background e atualiza o state
@@ -3250,11 +3384,6 @@ function renderEditor() {
           <span class="ctrl-label">Capo</span>
           <select ${canEdit ? `onchange="updateSongField('capo',this.value)"` : 'disabled'}>${capoOpts}</select>
         </div>
-        <div class="ctrl-group">
-          <span class="ctrl-label">BPM</span>
-          <input type="text" class="small" style="width:54px" value="${esc(song.bpm)}"
-            placeholder="120" ${canEdit ? `oninput="updateSongField('bpm',this.value)"` : 'readonly'}>
-        </div>
         ${canEdit ? `
         <div class="ctrl-group">
           <span class="ctrl-label">Semitom</span>
@@ -3426,6 +3555,7 @@ function deleteSection(secId) {
 function addNewSong() {
   if (!canEdit) { showToast('Acesso somente leitura.'); return; }
   const pl = getActivePl();
+  if (!pl) { showToast('Crie ou abra uma playlist primeiro!'); openPlaylistModal(); return; }
   const song = newSong('Nova Música ' + (pl.songs.length + 1));
   pl.songs.push(song);
   state.activeSong = song.id;
@@ -4423,14 +4553,33 @@ ${songsHtml}
       <div class="tuner-cents" id="tunerCents"></div>
     </div>
 
-    <!-- Guitar string reference buttons -->
-    <div class="tuner-strings">
-      <button class="tuner-string-btn" onclick="tunerSetTarget('E',82.41)">E<span>6ª corda</span></button>
-      <button class="tuner-string-btn" onclick="tunerSetTarget('A',110)">A<span>5ª corda</span></button>
-      <button class="tuner-string-btn" onclick="tunerSetTarget('D',146.83)">D<span>4ª corda</span></button>
-      <button class="tuner-string-btn" onclick="tunerSetTarget('G',196)">G<span>3ª corda</span></button>
-      <button class="tuner-string-btn" onclick="tunerSetTarget('B',246.94)">B<span>2ª corda</span></button>
-      <button class="tuner-string-btn" onclick="tunerSetTarget('E',329.63)">E<span>1ª corda</span></button>
+    <!-- Chromatic scale bar -->
+    <div class="tuner-chromatic-wrap">
+      <div class="tuner-chromatic-track">
+        <div class="tuner-chromatic-indicator" id="tunerChromaIndicator"></div>
+        <div class="tuner-chromatic-notes" id="tunerChromaNotes">
+          <div class="tuner-chromatic-note" data-note="A">A</div>
+          <div class="tuner-chromatic-note sharp-note" data-note="A#">A#</div>
+          <div class="tuner-chromatic-note" data-note="B">B</div>
+          <div class="tuner-chromatic-note" data-note="C">C</div>
+          <div class="tuner-chromatic-note sharp-note" data-note="C#">C#</div>
+          <div class="tuner-chromatic-note" data-note="D">D</div>
+          <div class="tuner-chromatic-note sharp-note" data-note="D#">D#</div>
+          <div class="tuner-chromatic-note" data-note="E">E</div>
+          <div class="tuner-chromatic-note" data-note="F">F</div>
+          <div class="tuner-chromatic-note sharp-note" data-note="F#">F#</div>
+          <div class="tuner-chromatic-note" data-note="G">G</div>
+          <div class="tuner-chromatic-note sharp-note" data-note="G#">G#</div>
+        </div>
+      </div>
+      <div class="tuner-chromatic-ticks">
+        <div class="tuner-chromatic-tick"></div><div class="tuner-chromatic-tick"></div>
+        <div class="tuner-chromatic-tick"></div><div class="tuner-chromatic-tick"></div>
+        <div class="tuner-chromatic-tick"></div><div class="tuner-chromatic-tick"></div>
+        <div class="tuner-chromatic-tick"></div><div class="tuner-chromatic-tick"></div>
+        <div class="tuner-chromatic-tick"></div><div class="tuner-chromatic-tick"></div>
+        <div class="tuner-chromatic-tick"></div><div class="tuner-chromatic-tick"></div>
+      </div>
     </div>
 
     <button class="tuner-mic-btn" id="tunerMicBtn" onclick="tunerToggleMic()" style="display:none">
@@ -5150,8 +5299,28 @@ const Tuner = (() => {
     rotateNeedle(needle, smoothCents);
     updateArc(arcFill, smoothCents);
 
-    // Highlight matching string button
-    highlightTargetBtn(note.name);
+    // Update chromatic scale bar
+    updateChromaticBar(note.name, inTune);
+  }
+
+  // Order of notes in the chromatic bar (matches HTML order)
+  const CHROMA_ORDER = ['A','A#','B','C','C#','D','D#','E','F','F#','G','G#'];
+
+  function updateChromaticBar(noteName, inTune) {
+    const indicator = document.getElementById('tunerChromaIndicator');
+    const noteEls   = document.querySelectorAll('.tuner-chromatic-note');
+    if (!indicator || !noteEls.length) return;
+
+    const idx = CHROMA_ORDER.indexOf(noteName);
+    if (idx < 0) return;
+
+    const pct = (idx / 12) * 100;
+    indicator.style.left  = pct + '%';
+    indicator.className   = 'tuner-chromatic-indicator' + (inTune ? ' in-tune' : '');
+
+    noteEls.forEach((el, i) => {
+      el.classList.toggle('active-note', i === idx);
+    });
   }
 
   function rotateNeedle(needle, cents) {
@@ -5174,19 +5343,7 @@ const Tuner = (() => {
     arc.style.strokeDashoffset = (totalArc - filled).toFixed(1);
   }
 
-  function highlightTargetBtn(noteName) {
-    // highlight based on targetNote if set, else auto-match
-    document.querySelectorAll('.tuner-string-btn').forEach(btn => {
-      btn.classList.remove('target');
-    });
-    if (targetNote) {
-      // keep user-selected highlighted if note matches
-      document.querySelectorAll('.tuner-string-btn').forEach(btn => {
-        if (btn.dataset.target === targetNote.name + targetNote.freq) btn.classList.add('target');
-      });
-    }
-  }
-
+  
   function loop() {
     if (!running) return;
     rafId = requestAnimationFrame(loop);
@@ -5263,22 +5420,44 @@ const Tuner = (() => {
 })();
 
 function openTuner() {
-  document.getElementById('tunerOverlay').classList.add('active');
-  document.querySelectorAll('.tuner-string-btn').forEach(btn => {
-    const match = btn.getAttribute('onclick').match(/tunerSetTarget\('([^']+)',([^)]+)\)/);
-    if (match) btn.dataset.target = match[1] + parseFloat(match[2]);
-  });
+  const overlay  = document.getElementById('tunerOverlay');
+  const homeOver = document.getElementById('homeOverlay');
+  const fromHome = homeOver && homeOver.classList.contains('active');
+
+  if (fromHome) {
+    // Hide home buttons with fade, show tuner on canvas background
+    homeOver.style.transition = 'opacity 0.25s ease';
+    homeOver.style.opacity = '0';
+    setTimeout(() => {
+      homeOver.classList.remove('active');
+      homeOver.style.opacity = '';
+      homeOver.style.transition = '';
+    }, 250);
+    overlay.classList.add('from-home');
+  } else {
+    overlay.classList.remove('from-home');
+  }
+
+  overlay.classList.add('active');
+
   Tuner.start();
 }
+
 function closeTuner() {
   Tuner.stop();
-  document.getElementById('tunerOverlay').classList.remove('active');
+  const overlay  = document.getElementById('tunerOverlay');
+  const fromHome = overlay.classList.contains('from-home');
+  overlay.classList.add('exiting');
+  setTimeout(() => {
+    overlay.classList.remove('active', 'exiting');
+    if (fromHome) {
+      overlay.classList.remove('from-home');
+      if (typeof showHomeOverlay === 'function') showHomeOverlay();
+    }
+  }, 220);
 }
 function tunerToggleMic() { Tuner.toggle(); }
-function tunerSetTarget(name, freq) {
-  document.querySelectorAll('.tuner-string-btn').forEach(btn => btn.classList.remove('target'));
-  event.currentTarget.classList.add('target');
-}
+
 
 
 // ══════════════════════════════════════════════════════════
@@ -5606,6 +5785,7 @@ const EarTraining = (() => {
     }
   }
 
+
   // ── HOME: seleção de tom + escala ─────────────────────
   function renderHome() {
     return `
@@ -5768,10 +5948,8 @@ const EarTraining = (() => {
   }
 
   function setTab(tabId) {
-    // Stop listener if leaving escutar tab
-    if (state.activeTab === 'escutar' && tabId !== 'escutar') {
-      EscutarEngine.stop();
-    }
+    // Stop listeners when leaving tabs
+    if (state.activeTab === 'escutar' && tabId !== 'escutar') EscutarEngine.stop();
     state.activeTab = tabId;
     const panel = document.getElementById('etoolPanel');
     if (panel) panel.innerHTML = renderTab(tabId);
@@ -6021,6 +6199,7 @@ const EarTraining = (() => {
     `;
   }
 
+
   // ── TAB: ESCUTAR ──────────────────────────────────────
   function renderTabEscutar() {
     const notes = state.scaleNotes;
@@ -6116,6 +6295,14 @@ const EscutarEngine = (() => {
   // Chord mode
   let chordScores = new Array(8).fill(0);
 
+  // Pitch stability / hysteresis
+  const FREQ_BUF_SIZE = 16;     // median over last N frames
+  let freqBuf = [];              // ring buffer of recent valid freqs
+  let stableNote = null;         // the confirmed stable note
+  let stableCount = 0;           // frames the candidate has held
+  const STABLE_FRAMES = 10;      // frames needed to confirm a new note
+  const CHANGE_CENTS = 40;       // cents tolerance before considering a new note
+
   // ── SHARED AUDIO UTILS ──────────────────────────────────
   function getRms(buf) {
     let s = 0; for (let i=0;i<buf.length;i++) s+=buf[i]*buf[i]; return Math.sqrt(s/buf.length);
@@ -6148,6 +6335,41 @@ const EscutarEngine = (() => {
     const ideal=A4*Math.pow(2,(midi-69)/12);
     const cents=Math.round(1200*Math.log2(freq/ideal));
     return { name:ALL_NOTES[idx], idx, oct, freq, cents };
+  }
+
+  // Returns median of freqBuf, or -1 if not enough samples
+  function medianFreq(freq) {
+    freqBuf.push(freq);
+    if (freqBuf.length > FREQ_BUF_SIZE) freqBuf.shift();
+    if (freqBuf.length < 3) return -1;
+    const sorted = [...freqBuf].sort((a,b)=>a-b);
+    return sorted[Math.floor(sorted.length/2)];
+  }
+
+  // Voting window: keep last STABLE_FRAMES note readings.
+  // Only switch stable note when a different note wins > 70% of the window.
+  let voteWindow = [];   // ring of last STABLE_FRAMES note names
+  let candidateNote = null;
+  function stabilizeNote(note) {
+    voteWindow.push(note.name);
+    if (voteWindow.length > STABLE_FRAMES) voteWindow.shift();
+
+    // Count votes for each note in the window
+    const votes = {};
+    for (const n of voteWindow) votes[n] = (votes[n] || 0) + 1;
+
+    // Find winner
+    let winner = null, maxV = 0;
+    for (const [n, v] of Object.entries(votes)) {
+      if (v > maxV) { winner = n; maxV = v; }
+    }
+
+    const threshold = STABLE_FRAMES * 0.70; // 70% majority
+    if (winner && maxV >= threshold && winner !== stableNote) {
+      stableNote = winner;
+      return true; // confirmed new note
+    }
+    return false;
   }
 
   function drawWave(buf, ctxRef, canvasId) {
@@ -6191,19 +6413,29 @@ const EscutarEngine = (() => {
       return;
     }
 
-    const freq = detectPitch(buf, audioCtx.sampleRate);
-    if (freq <= 0 || freq < 70 || freq > 1400) return;
+    const rawFreq = detectPitch(buf, audioCtx.sampleRate);
+    if (rawFreq <= 0 || rawFreq < 70 || rawFreq > 1400) {
+      // silence/invalid — slowly drain freqBuf
+      if (freqBuf.length > 0) freqBuf.pop();
+      return;
+    }
+
+    // Median filter to remove outliers
+    const freq = medianFreq(rawFreq);
+    if (freq < 0) return;
 
     const note = freqToNote(freq);
     if (!note) return;
 
-    smoothHz = smoothHz * 0.7 + freq * 0.3;
+    // Smooth Hz display only
+    smoothHz = smoothHz === 0 ? freq : smoothHz * 0.92 + freq * 0.08;
     if (noteEl) { noteEl.textContent = note.name; noteEl.className = 'escutar-detect-note lit'; }
     if (hzEl)   hzEl.textContent = `${NOTE_PT[note.name]} · ${smoothHz.toFixed(0)} Hz`;
     if (statusEl) statusEl.textContent = `Nota: ${note.name}${note.oct} · Cante algumas notas…`;
 
-    // Accumulate note counts (only count note changes to avoid bias on held notes)
-    if (note.name !== lastNoteName) {
+    // Only register a note change after hysteresis confirms stability
+    const confirmed = stabilizeNote(note);
+    if (confirmed && note.name !== lastNoteName) {
       lastNoteName = note.name;
       noteCounts[note.name] = (noteCounts[note.name] || 0) + 1;
       totalDetections++;
@@ -6359,10 +6591,11 @@ const EscutarEngine = (() => {
       const src = audioCtx.createMediaStreamSource(micStream);
       analyser  = audioCtx.createAnalyser();
       analyser.fftSize = 2048;
-      analyser.smoothingTimeConstant = 0.5;
+      analyser.smoothingTimeConstant = 0.85;
       src.connect(analyser);
       running = true;
       smoothHz = 0; lastNoteName = null;
+      freqBuf = []; stableNote = null; stableCount = 0; candidateNote = null; voteWindow = [];
       return true;
     } catch(e) {
       console.error('EscutarEngine mic error:', e);
@@ -6402,7 +6635,7 @@ const EscutarEngine = (() => {
     if (running && mode==='home') { stop(); return; }
     if (running) stop();
     mode='home';
-    noteCounts={}; totalDetections=0; lastNoteName=null; smoothHz=0;
+    noteCounts={}; totalDetections=0; lastNoteName=null; smoothHz=0; freqBuf=[]; stableNote=null; stableCount=0; candidateNote=null; voteWindow=[];
     const ok = await startAudio();
     if (!ok) return;
     setBtnState('escMicBtnHome','escMicIconHome','escMicLabelHome',true);
@@ -6430,6 +6663,10 @@ const EscutarEngine = (() => {
            get isRunning() { return running; } };
 })();
 
+
+// ── GRAVAR CIFRA ENGINE ──────────────────────────────────────────────────────
+
+
 function openEarTraining() {
   try {
     const screen = document.getElementById('earTrainingScreen');
@@ -6445,7 +6682,13 @@ function openEarTraining() {
 
 function closeEarTraining() {
   if (typeof EscutarEngine !== 'undefined') EscutarEngine.stop();
-  document.getElementById('earTrainingScreen').classList.remove('active');
+  const screen = document.getElementById('earTrainingScreen');
+  const box = screen.querySelector('.ear-box');
+  if (box) box.classList.add('card-exiting');
+  setTimeout(() => {
+    screen.classList.remove('active');
+    if (box) box.classList.remove('card-exiting');
+  }, 220);
 }
 
 // ── TOAST ─────────────────────────────────────────────────
@@ -6956,14 +7199,33 @@ window.addEventListener('DOMContentLoaded', () => {
       <div class="tuner-cents" id="tunerCents"></div>
     </div>
 
-    <!-- Guitar string reference buttons -->
-    <div class="tuner-strings">
-      <button class="tuner-string-btn" onclick="tunerSetTarget('E',82.41)">E<span>6ª corda</span></button>
-      <button class="tuner-string-btn" onclick="tunerSetTarget('A',110)">A<span>5ª corda</span></button>
-      <button class="tuner-string-btn" onclick="tunerSetTarget('D',146.83)">D<span>4ª corda</span></button>
-      <button class="tuner-string-btn" onclick="tunerSetTarget('G',196)">G<span>3ª corda</span></button>
-      <button class="tuner-string-btn" onclick="tunerSetTarget('B',246.94)">B<span>2ª corda</span></button>
-      <button class="tuner-string-btn" onclick="tunerSetTarget('E',329.63)">E<span>1ª corda</span></button>
+    <!-- Chromatic scale bar -->
+    <div class="tuner-chromatic-wrap">
+      <div class="tuner-chromatic-track">
+        <div class="tuner-chromatic-indicator" id="tunerChromaIndicator"></div>
+        <div class="tuner-chromatic-notes" id="tunerChromaNotes">
+          <div class="tuner-chromatic-note" data-note="A">A</div>
+          <div class="tuner-chromatic-note sharp-note" data-note="A#">A#</div>
+          <div class="tuner-chromatic-note" data-note="B">B</div>
+          <div class="tuner-chromatic-note" data-note="C">C</div>
+          <div class="tuner-chromatic-note sharp-note" data-note="C#">C#</div>
+          <div class="tuner-chromatic-note" data-note="D">D</div>
+          <div class="tuner-chromatic-note sharp-note" data-note="D#">D#</div>
+          <div class="tuner-chromatic-note" data-note="E">E</div>
+          <div class="tuner-chromatic-note" data-note="F">F</div>
+          <div class="tuner-chromatic-note sharp-note" data-note="F#">F#</div>
+          <div class="tuner-chromatic-note" data-note="G">G</div>
+          <div class="tuner-chromatic-note sharp-note" data-note="G#">G#</div>
+        </div>
+      </div>
+      <div class="tuner-chromatic-ticks">
+        <div class="tuner-chromatic-tick"></div><div class="tuner-chromatic-tick"></div>
+        <div class="tuner-chromatic-tick"></div><div class="tuner-chromatic-tick"></div>
+        <div class="tuner-chromatic-tick"></div><div class="tuner-chromatic-tick"></div>
+        <div class="tuner-chromatic-tick"></div><div class="tuner-chromatic-tick"></div>
+        <div class="tuner-chromatic-tick"></div><div class="tuner-chromatic-tick"></div>
+        <div class="tuner-chromatic-tick"></div><div class="tuner-chromatic-tick"></div>
+      </div>
     </div>
 
     <button class="tuner-mic-btn" id="tunerMicBtn" onclick="tunerToggleMic()" style="display:none">
