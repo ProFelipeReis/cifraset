@@ -519,29 +519,335 @@
   }
   .hud-heard em { color: var(--cream); font-style: normal; }
 
-  /* Karaoke highlighted line */
-  .present-line.karaoke-active .present-lyric {
-    color: #ffffff !important;
-    text-shadow: 0 0 20px rgba(255,255,255,0.6);
-    transition: color 0.2s, text-shadow 0.2s;
-  }
-  .present-line.karaoke-active .present-chord {
-    color: #ffc84a !important;
-    text-shadow: 0 0 24px rgba(255,200,74,0.7);
-  }
+  /* Karaoke — destaque por seção */
   .present-line {
     transition: opacity 0.3s;
-    border-left: 3px solid transparent;
-    padding-left: 8px;
-    margin-left: -11px;
   }
-  .present-line.karaoke-active {
-    border-left-color: #ffffff;
+  .present-section {
+    transition: opacity 0.35s;
+  }
+  .present-section.karaoke-active .present-lyric {
+    color: #ffffff;
+    text-shadow: 0 0 18px rgba(255,255,255,0.45);
+  }
+  .present-section.karaoke-active .present-chord {
+    color: #ffc84a;
+    text-shadow: 0 0 20px rgba(255,200,74,0.6);
+  }
+  .present-section.karaoke-active {
     opacity: 1 !important;
   }
-  .karaoke-dim .present-line:not(.karaoke-active) {
-    opacity: 0.35;
+  .karaoke-dim .present-section:not(.karaoke-active) {
+    opacity: 0.25;
   }
+
+
+  /* ── EAR TRAINING ── */
+  .ear-screen {
+    position: fixed; inset: 0; z-index: 950;
+    background: var(--bg);
+    display: none; flex-direction: column;
+    align-items: center; justify-content: flex-start;
+    overflow-y: auto; padding: 40px 20px 60px;
+  }
+  .ear-screen.active { display: flex; }
+  .ear-box {
+    width: 100%; max-width: 600px;
+  }
+  .ear-back {
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 32px;
+  }
+  .ear-header {
+    margin-bottom: 36px;
+  }
+  .ear-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 8px;
+  }
+  .ear-title {
+    font-family: 'Syne', serif;
+    font-size: 28px; font-weight: 900; color: var(--cream);
+    margin-bottom: 6px;
+  }
+  .ear-subtitle { font-size: 14px; color: var(--muted); line-height: 1.5; }
+
+  /* Steps */
+  .ear-steps {
+    display: flex; gap: 0; margin-bottom: 36px;
+  }
+  .ear-step {
+    flex: 1; height: 3px; background: var(--border);
+    transition: background 0.3s;
+  }
+  .ear-step.done { background: var(--gold); }
+  .ear-step.active { background: var(--cream); }
+
+  /* Question */
+  .ear-question {
+    font-family: 'Syne', serif;
+    font-size: 20px; font-weight: 700; color: var(--cream);
+    margin-bottom: 20px; line-height: 1.3;
+  }
+  .ear-hint {
+    font-size: 13px; color: var(--muted); margin-bottom: 24px;
+    line-height: 1.6; padding: 12px 16px;
+    background: var(--surface2); border-radius: 8px;
+    border-left: 3px solid var(--border);
+  }
+  .ear-hint strong { color: var(--text); }
+
+  /* Note grid */
+  .ear-note-grid {
+    display: grid; grid-template-columns: repeat(6, 1fr);
+    gap: 8px; margin-bottom: 24px;
+  }
+  .ear-note-btn {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 15px; font-weight: 700;
+    padding: 14px 4px; border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--surface2); color: var(--text);
+    cursor: pointer; transition: all 0.15s;
+    text-align: center;
+  }
+  .ear-note-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(255,255,255,0.04); }
+  .ear-note-btn.selected { border-color: var(--cream); background: rgba(255,255,255,0.08); color: var(--cream); }
+  .ear-note-btn.correct { border-color: #4caf7d; background: rgba(76,175,125,0.12); color: #4caf7d; }
+  .ear-note-btn.wrong { border-color: #e05252; background: rgba(224,82,82,0.1); color: #e05252; }
+
+  /* Scale cards */
+  .ear-scale-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 10px; margin-bottom: 24px;
+  }
+  .ear-scale-card {
+    padding: 14px 16px; border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    cursor: pointer; transition: all 0.15s;
+  }
+  .ear-scale-card:hover { border-color: var(--gold); background: rgba(255,255,255,0.04); }
+  .ear-scale-card.selected { border-color: var(--cream); background: rgba(255,255,255,0.06); }
+  .ear-scale-card.correct { border-color: #4caf7d; background: rgba(76,175,125,0.1); }
+  .ear-scale-card.wrong { border-color: #e05252; background: rgba(224,82,82,0.08); }
+  .ear-scale-name {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px; font-weight: 700; color: var(--cream); margin-bottom: 4px;
+  }
+  .ear-scale-desc { font-size: 11px; color: var(--muted); line-height: 1.4; }
+
+  /* Result panel */
+  .ear-result {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px 24px; margin-bottom: 20px;
+    display: none;
+  }
+  .ear-result.show { display: block; }
+  .ear-result-title {
+    font-family: 'Syne', serif;
+    font-size: 16px; font-weight: 700; margin-bottom: 12px;
+  }
+  .ear-result-title.correct { color: #4caf7d; }
+  .ear-result-title.wrong { color: #e05252; }
+  .ear-result-body { font-size: 13px; color: var(--text); line-height: 1.7; }
+  .ear-result-body strong { color: var(--cream); }
+
+  /* Scale display */
+  .ear-scale-display {
+    display: flex; gap: 6px; flex-wrap: wrap; margin: 12px 0;
+  }
+  .ear-scale-chip {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px; font-weight: 700;
+    padding: 4px 12px; border-radius: 20px;
+    background: var(--bg); border: 1px solid var(--border);
+    color: var(--muted);
+  }
+  .ear-scale-chip.root { color: var(--gold); border-color: var(--gold); background: rgba(212,212,212,0.06); }
+  .ear-scale-chip.highlight { color: var(--cream); border-color: rgba(255,255,255,0.25); }
+
+  /* Summary */
+  .ear-summary {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 16px; padding: 28px 32px; text-align: center;
+  }
+  .ear-summary-icon { font-size: 48px; margin-bottom: 12px; }
+  .ear-summary-title {
+    font-family: 'Syne', serif;
+    font-size: 22px; font-weight: 800; color: var(--cream);
+    margin-bottom: 8px;
+  }
+  .ear-summary-score { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+  .ear-summary-tips {
+    text-align: left; background: var(--bg);
+    border-radius: 10px; padding: 16px 20px;
+    margin-bottom: 20px;
+  }
+  .ear-summary-tip {
+    font-size: 13px; color: var(--text); line-height: 1.7;
+    padding: 6px 0; border-bottom: 1px solid var(--border);
+  }
+  .ear-summary-tip:last-child { border-bottom: none; }
+  .ear-summary-tip strong { color: var(--cream); }
+
+  /* ── MUSIC ANALYSIS MODAL ── */
+  .analysis-overlay {
+    position: fixed; inset: 0; z-index: 1100;
+    background: rgba(0,0,0,0.85);
+    display: none; align-items: flex-start; justify-content: center;
+    overflow-y: auto; padding: 40px 20px;
+    backdrop-filter: blur(4px);
+  }
+  .analysis-overlay.active { display: flex; }
+  .analysis-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    width: 100%; max-width: 740px;
+    padding: 36px 40px;
+    position: relative;
+  }
+  .analysis-close {
+    position: absolute; top: 18px; right: 20px;
+    background: none; border: none; color: var(--muted);
+    font-size: 18px; cursor: pointer; line-height: 1;
+    transition: color 0.15s;
+  }
+  .analysis-close:hover { color: var(--cream); }
+  .analysis-title {
+    font-family: 'Syne', serif;
+    font-size: 22px; font-weight: 800;
+    color: var(--cream); margin-bottom: 4px;
+  }
+  .analysis-subtitle {
+    font-size: 12px; color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .analysis-key-block {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    display: flex; gap: 24px; align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .analysis-key-note {
+    font-family: 'Syne', serif;
+    font-size: 52px; font-weight: 900;
+    color: var(--gold); line-height: 1;
+    min-width: 60px;
+  }
+  .analysis-key-info { flex: 1; min-width: 200px; }
+  .analysis-key-label {
+    font-size: 11px; color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .analysis-key-name {
+    font-size: 16px; font-weight: 600; color: var(--cream);
+    margin-bottom: 8px;
+  }
+  .analysis-scale-notes {
+    display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px;
+  }
+  .scale-note-chip {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px; font-weight: 700;
+    padding: 3px 10px; border-radius: 20px;
+    border: 1px solid var(--border);
+    color: var(--muted); background: var(--bg);
+    transition: all 0.15s;
+  }
+  .scale-note-chip.tonic {
+    color: var(--gold); border-color: var(--gold);
+    background: rgba(212,212,212,0.08);
+  }
+  .scale-note-chip.active {
+    color: var(--cream); border-color: rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.06);
+  }
+  .analysis-key-desc {
+    font-size: 13px; color: var(--text); line-height: 1.6;
+  }
+  .analysis-section-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--gold);
+    margin: 28px 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .analysis-section-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+  .analysis-sec-header {
+    display: flex; align-items: center;
+    gap: 12px; margin-bottom: 12px;
+  }
+  .analysis-sec-name {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gold);
+  }
+  .analysis-sec-chords {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px; color: var(--muted);
+    flex: 1;
+  }
+  .analysis-sec-func {
+    font-size: 10px; font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 1px; text-transform: uppercase;
+    padding: 2px 8px; border-radius: 4px;
+    border: 1px solid;
+  }
+  .analysis-sec-func.tonic-feel    { color: #7ec8a0; border-color: #7ec8a0; background: rgba(126,200,160,0.08); }
+  .analysis-sec-func.dominant-feel { color: #f0a030; border-color: #f0a030; background: rgba(240,160,48,0.08); }
+  .analysis-sec-func.subdominant-feel { color: #7ab0d4; border-color: #7ab0d4; background: rgba(122,176,212,0.08); }
+  .analysis-sec-func.mixed-feel    { color: var(--muted); border-color: var(--border); }
+  .analysis-chord-row {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px;
+  }
+  .analysis-chord-pill {
+    display: flex; flex-direction: column; align-items: center;
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 8px; padding: 6px 12px; gap: 2px;
+    min-width: 48px;
+  }
+  .analysis-chord-pill.tonic-chord { border-color: #7ec8a0; }
+  .analysis-chord-pill.dominant-chord { border-color: #f0a030; }
+  .analysis-chord-pill.subdominant-chord { border-color: #7ab0d4; }
+  .analysis-chord-name {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px; font-weight: 700; color: var(--cream);
+  }
+  .analysis-chord-degree {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px; color: var(--muted); letter-spacing: 1px;
+  }
+  .analysis-sec-why {
+    font-size: 13px; color: var(--text); line-height: 1.65;
+    border-top: 1px solid var(--border);
+    padding-top: 10px; margin-top: 2px;
+  }
+  .analysis-sec-why strong { color: var(--cream); }
+  .analysis-legend {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    margin-top: 24px; padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--muted); }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
 
   /* ── SCROLLBAR ── */
   ::-webkit-scrollbar { width: 6px; }
@@ -1193,6 +1499,11 @@
         <div class="home-card-title">Afinador</div>
         <div class="home-card-desc">Afine seu instrumento em tempo real</div>
       </div>
+      <div class="home-card" onclick="openEarTraining()">
+        <div class="home-card-icon">👂</div>
+        <div class="home-card-title">Tire de Ouvido</div>
+        <div class="home-card-desc">Descubra notas, escalas e acordes</div>
+      </div>
     </div>
     <div class="home-logout" onclick="doLogout()">Sair da conta</div>
   </div>
@@ -1339,6 +1650,7 @@
         <div class="font-size-display" id="fontSizeDisplay">20px</div>
         <button class="font-ctrl-btn" onclick="changePresentFont(2)">A+</button>
       </div>
+      <button class="btn btn-ghost btn-sm" onclick="openMusicAnalysis()" title="Análise musical da música">🎼 Análise</button>
       <button class="btn btn-ghost btn-sm" onclick="closePresent()">✕ Fechar</button>
     </div>
   </div>
@@ -3431,6 +3743,7 @@ ${songsHtml}
   </div>
 </div>
 
+
 </body>
 </html>`;
 
@@ -3633,27 +3946,23 @@ function toggleChordRef() {
 // ══════════════════════════════════════════════════════════
 // ══════════════════════════════════════════════════════════
 // ══════════════════════════════════════════════════════════
-// ── KARAOKE ENGINE v13 — Next-line word anticipation ───────
+// ── KARAOKE ENGINE v16 ─────────────────────────────────────
 // ══════════════════════════════════════════════════════════
 //
-//  IDEIA CENTRAL:
-//  O sistema sempre sabe quais palavras estão na PRÓXIMA linha.
-//  Quando você fala uma dessas palavras → avança.
-//  Quando você fala uma palavra da linha ATUAL → confirma/fica.
-//  Palavra não encontrada em nenhuma das duas → ignora.
+//  FLUXO por palavra ouvida:
+//  1. Linha ATUAL           → fica (não mexe no pending)
+//  2. Linha +1 ou +2        → move SE seguro (mesma seção, à frente)
+//  3. Qualquer outro lugar  → ARRISCADO: exige 2 palavras
 //
-//  Para saltar de seção (refrão, etc.): a palavra falada
-//  precisa não existir na seção atual E existir na outra seção.
-//  Aí vai para a linha mais próxima dessa seção que contém ela.
+//  MOVIMENTO ARRISCADO = destino acima OU outra seção.
+//  Regra: a 2ª palavra tem que existir na mesma linha que a 1ª.
+//  pendingRisky = { targetIdx, word, ts }
+//    - targetIdx: índice da linha candidata
+//    - word: a 1ª palavra que gerou o candidato
+//    - ts: timestamp para expiração
 //
-//  Anti-fragmento-parcial: ignora palavra se for prefixo
-//  de algo na linha atual ou próxima.
-//
-//  Regras mantidas:
-//  - Mesma seção: só avança, nunca volta
-//  - Seção diferente: pode ir para qualquer lugar
-//  - Palavra por palavra em tempo real
-//  - Debounce: 400ms
+//  Janela: 15s (para permitir pausas longas entre palavras)
+//  Debounce: 400ms entre ativações
 // ══════════════════════════════════════════════════════════
 
 const SmartScroll = (() => {
@@ -3662,10 +3971,11 @@ const SmartScroll = (() => {
   let recognition    = null;
   let lineIndex      = [];
   let currentLine    = -1;
-  let lastWord       = '';
   let lastActivation = 0;
   let lastFragment   = '';
   let pendingRestart = null;
+  // { targetIdx: number, word: string, ts: number } | null
+  let pendingRisky   = null;
 
   // ── Normaliza ─────────────────────────────────────────
   const EQUIV = {
@@ -3696,81 +4006,131 @@ const SmartScroll = (() => {
     return norm(text).split(' ').map(w => EQUIV[w] || w).join(' ');
   }
 
-  // Retorna Set de palavras de uma linha normalizada
   function lineWords(lineNorm) {
     return new Set(lineNorm.split(' ').filter(w => w.length >= 2));
   }
 
-  // Verifica se W é prefixo de alguma palavra MAIOR na linha
   function isPrefixInLine(lineNorm, w) {
     return lineNorm.split(' ').some(lw => lw !== w && lw.startsWith(w));
+  }
+
+  // Movimento arriscado = destino ACIMA da linha atual
+  // (+1 e +2 são sempre seguros, mesmo sendo outra seção — é progressão natural)
+  function isRisky(targetIdx) {
+    if (currentLine < 0) return false;
+    return targetIdx < currentLine;
+  }
+
+  // Tenta mover para targetIdx com a palavra w.
+  // Se for arriscado: exige que uma 2ª palavra diferente bata na mesma linha.
+  // Retorna true se ativou a linha.
+  function tryMove(targetIdx, w) {
+    if (!isRisky(targetIdx)) {
+      pendingRisky = null;
+      activateLine(targetIdx);
+      return true;
+    }
+
+    const WINDOW_MS = 15000;
+    const now = Date.now();
+    const targetWords = lineWords(lineIndex[targetIdx].normText);
+
+    // Já há pending para este mesmo target?
+    if (
+      pendingRisky &&
+      pendingRisky.targetIdx === targetIdx &&
+      pendingRisky.word !== w &&
+      (now - pendingRisky.ts) < WINDOW_MS
+    ) {
+      // 2ª palavra diferente batendo na mesma linha → confirma
+      console.log('[risky] CONFIRM target='+targetIdx+' word1='+pendingRisky.word+' word2='+w);
+      pendingRisky = null;
+      activateLine(targetIdx);
+      return true;
+    }
+
+    // 1ª palavra (ou mesma palavra de novo): registra/renova pending
+    if (pendingRisky && pendingRisky.targetIdx === targetIdx) {
+      pendingRisky.ts = now;
+      console.log('[risky] RENEW target='+targetIdx+' word='+pendingRisky.word+' newWord='+w);
+    } else {
+      console.log('[risky] NEW target='+targetIdx+' word='+w+' (prev='+(pendingRisky?'target='+pendingRisky.targetIdx:'null')+')');
+      pendingRisky = { targetIdx, word: w, ts: now };
+    }
+    return false;
   }
 
   // ── Processa UMA palavra ──────────────────────────────
   function processWord(rawWord) {
     const w = normWord(rawWord);
     if (!w || w.length < 2) return;
-    if (w === lastWord) return;
-
     const n = lineIndex.length;
+    const curIdx   = currentLine;
+    const next1Idx = curIdx + 1;
+    const next2Idx = curIdx + 2;
+    const curLine   = curIdx   >= 0 && curIdx   < n ? lineIndex[curIdx]   : null;
+    const next1Line = next1Idx < n ? lineIndex[next1Idx] : null;
+    const next2Line = next2Idx < n ? lineIndex[next2Idx] : null;
 
-    // Linha atual e próxima
-    const curIdx  = currentLine;
-    const nextIdx = currentLine + 1;
-    const curLine  = curIdx  >= 0 && curIdx  < n ? lineIndex[curIdx]  : null;
-    const nextLine = nextIdx >= 0 && nextIdx < n ? lineIndex[nextIdx] : null;
+    // Ignora prefixos parciais (Chrome completando a palavra)
+    if (curLine   && isPrefixInLine(curLine.normText,   w)) return;
+    if (next1Line && isPrefixInLine(next1Line.normText, w)) return;
+    if (next2Line && isPrefixInLine(next2Line.normText, w)) return;
 
-    // Ignora prefixos parciais (Chrome ainda completando a palavra)
-    if (curLine  && isPrefixInLine(curLine.normText,  w)) return;
-    if (nextLine && isPrefixInLine(nextLine.normText, w)) return;
 
-    lastWord = w;
-
-    // ── Sem posição ainda: busca a primeira linha que contém a palavra
+    // ── Sem posição: vai para a primeira linha que contém a palavra
     if (!curLine) {
       for (let i = 0; i < n; i++) {
-        if (lineWords(lineIndex[i].normText).has(w)) {
-          activateLine(i);
-          return;
-        }
+        if (lineWords(lineIndex[i].normText).has(w)) { activateLine(i); return; }
       }
       return;
     }
 
-    const curWords  = lineWords(curLine.normText);
-    const nextWords = nextLine ? lineWords(nextLine.normText) : new Set();
-    const curSec    = curLine.sectionIdx;
+    const curWords   = lineWords(curLine.normText);
+    const next1Words = next1Line ? lineWords(next1Line.normText) : new Set();
+    const next2Words = next2Line ? lineWords(next2Line.normText) : new Set();
 
-    // ── A. Palavra está na PRÓXIMA linha (mesma seção) → avança
-    if (nextLine && nextLine.sectionIdx === curSec && nextWords.has(w)) {
-      activateLine(nextIdx);
-      return;
-    }
-
-    // ── B. Palavra está na linha ATUAL → fica (confirma)
+    // ── 1. Linha atual → fica, não mexe no pending
     if (curWords.has(w)) return;
 
-    // ── C. Palavra não existe em nenhuma linha da seção atual
-    //      → salto para outra seção (refrão, segunda parte, etc.)
-    //      Vai para a linha mais PRÓXIMA que contém a palavra
-    const inCurSec = lineIndex
-      .some(l => l.sectionIdx === curSec && lineWords(l.normText).has(w));
+    // ── 2. Linha +1 → tenta mover (pode ser arriscado se mudou de seção)
+    if (next1Words.has(w)) { tryMove(next1Idx, w); return; }
 
-    if (!inCurSec) {
-      let closest = -1, closestDist = Infinity;
-      for (let i = 0; i < n; i++) {
-        if (lineIndex[i].sectionIdx === curSec) continue;
-        if (!lineWords(lineIndex[i].normText).has(w)) continue;
-        const dist = Math.abs(i - curIdx);
-        if (dist < closestDist) { closestDist = dist; closest = i; }
+    // ── 3. Linha +2 → tenta mover
+    if (next2Words.has(w)) { tryMove(next2Idx, w); return; }
+
+    // ── 4. Busca global
+    const WINDOW_MS = 15000;
+    const now = Date.now();
+
+    // Se há pending ativo, verifica PRIMEIRO se esta palavra também
+    // existe naquela linha candidata — se sim, confirma direto.
+    if (pendingRisky && (now - pendingRisky.ts) < WINDOW_MS) {
+      const pl = lineIndex[pendingRisky.targetIdx];
+      if (pl && lineWords(pl.normText).has(w) && pendingRisky.word !== w) {
+        const t = pendingRisky.targetIdx;
+        pendingRisky = null;
+        activateLine(t);
+        return;
       }
-      if (closest >= 0) { activateLine(closest); return; }
     }
 
-    // ── D. Não encontrou → fica
+    // Encontra a linha mais próxima que contém esta palavra,
+    // medindo distância absoluta de curIdx (ignora linha atual)
+    let target = -1;
+    let bestDist = Infinity;
+    for (let i = 0; i < n; i++) {
+      if (i === curIdx) continue;
+      if (!lineWords(lineIndex[i].normText).has(w)) continue;
+      const dist = Math.abs(i - curIdx);
+      if (dist < bestDist) { bestDist = dist; target = i; }
+    }
+    if (target < 0) return;
+
+    tryMove(target, w);
   }
 
-  // ── Ativa linha e rola ────────────────────────────────
+  // ── Ativa linha (destaca a seção inteira) ───────────
   function activateLine(idx) {
     if (idx < 0 || idx >= lineIndex.length) return;
     const now = Date.now();
@@ -3780,19 +4140,29 @@ const SmartScroll = (() => {
     const body = document.getElementById('presentBody');
     if (!body) return;
 
-    body.querySelectorAll('.karaoke-active')
-        .forEach(e => e.classList.remove('karaoke-active'));
+    const newSecIdx = lineIndex[idx].sectionIdx;
+    const curSecIdx = currentLine >= 0 ? lineIndex[currentLine].sectionIdx : -1;
 
-    const el = lineIndex[idx].el;
-    el.classList.add('karaoke-active');
-    body.classList.add('karaoke-dim');
+    // Só atualiza destaque se mudou de seção
+    if (newSecIdx !== curSecIdx) {
+      body.querySelectorAll('.present-section.karaoke-active')
+          .forEach(e => e.classList.remove('karaoke-active'));
 
-    const overlay = document.getElementById('presentOverlay');
-    if (overlay) {
-      const oRect  = overlay.getBoundingClientRect();
-      const eRect  = el.getBoundingClientRect();
-      const target = overlay.scrollTop + (eRect.top - oRect.top) - overlay.clientHeight * 0.28;
-      overlay.scrollTo({ top: Math.max(0, target), behavior: 'smooth' });
+      // Encontra o .present-section correspondente pelo índice
+      const sections = body.querySelectorAll('.present-section');
+      const secEl = sections[newSecIdx];
+      if (secEl) {
+        secEl.classList.add('karaoke-active');
+        body.classList.add('karaoke-dim');
+
+        const overlay = document.getElementById('presentOverlay');
+        if (overlay) {
+          const oRect  = overlay.getBoundingClientRect();
+          const eRect  = secEl.getBoundingClientRect();
+          const target = overlay.scrollTop + (eRect.top - oRect.top) - overlay.clientHeight * 0.15;
+          overlay.scrollTo({ top: Math.max(0, target), behavior: 'smooth' });
+        }
+      }
     }
 
     currentLine    = idx;
@@ -3829,22 +4199,15 @@ const SmartScroll = (() => {
     if (active) return;
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SR) {
-      showToast('⚠ Reconhecimento de voz não suportado. Use Chrome ou Safari 14.1+.');
-      setHud('paused', 'Não suportado', 'Use Chrome ou Safari 14.1+');
+      showToast('⚠ Use o Google Chrome para o modo karaokê.');
+      setHud('paused', 'Não suportado', 'Use o Google Chrome.');
       return;
     }
-
     buildLineIndex();
     if (!lineIndex.length) {
       showToast('Esta música não tem letra para seguir.');
       return;
     }
-
-    // Safari iOS: continuous=true funciona desde 14.1, mas pode parar
-    // sozinho após silêncio — o onend com restart automático cobre isso.
-    // interimResults=true funciona em Safari moderno e é necessário para
-    // resposta palavra por palavra sem esperar a frase terminar.
-    const isSafariIOS = /iP(hone|ad|od)/.test(navigator.userAgent);
 
     recognition = new SR();
     recognition.lang            = 'pt-BR';
@@ -3852,18 +4215,27 @@ const SmartScroll = (() => {
     recognition.interimResults  = true;
     recognition.maxAlternatives = 1;
 
+    // Flag para distinguir o primeiro start dos restarts automáticos
+    let firstStart = true;
+
     recognition.onstart = () => {
-      if (!active) currentLine = -1; // só reseta na primeira vez
-      active         = true;
-      lastWord       = '';
-      lastFragment   = '';
-      lastActivation = 0;
+      active = true;
+      if (firstStart) {
+        firstStart     = false;
+        currentLine    = -1;
+        lastFragment   = '';
+        lastActivation = 0;
+        pendingRisky   = null;
+      } else {
+        // Restart automático: preserva posição e pending, só reseta fragmento
+        lastFragment = '';
+      }
       document.getElementById('micScrollBtn')?.classList.add('active');
       document.getElementById('smartScrollHud')?.classList.add('visible');
-      setHud('listening', 'Ouvindo…', 'Comece a cantar 🎤');
+      setHud('listening', currentLine >= 0 ? 'Seguindo…' : 'Ouvindo…', undefined);
     };
 
-    const onResult = (event) => {
+    recognition.onresult = (event) => {
       const result   = event.results[event.results.length - 1];
       const fragment = result[0].transcript.trim();
       if (!fragment) return;
@@ -3873,12 +4245,13 @@ const SmartScroll = (() => {
       const newWords = curr.slice(prev.length);
 
       if (result.isFinal) {
+        // Reseta tudo para o próximo ciclo
         lastFragment = '';
-        lastWord     = '';
       } else {
         lastFragment = fragment;
       }
 
+      // Processa cada palavra nova individualmente — 1 palavra já basta
       for (const word of newWords) {
         if (word.trim()) processWord(word.trim());
       }
@@ -3887,59 +4260,22 @@ const SmartScroll = (() => {
              `<em>${curr.slice(-4).join(' ')}</em>`);
     };
 
-    // Guarda referência para reusar no restart do Safari
-    recognition.onresult = onResult;
+    recognition.onerror = (e) => {
+      if (e.error === 'not-allowed') { showToast('🎤 Permita o microfone!'); stop(); }
+    };
 
-    function makeNewRec() {
-      const r = new SR();
-      r.lang            = 'pt-BR';
-      r.continuous      = true;
-      r.interimResults  = true;
-      r.maxAlternatives = 1;
-      r.onresult = onResult;
-      r.onerror  = onError;
-      r.onend    = onEnd;
-      return r;
-    }
-
-    function onError(e) {
-      if (e.error === 'not-allowed') {
-        showToast('🎤 Permita o acesso ao microfone!');
-        stop();
-        return;
-      }
-      // outros erros: reinicia
-      if (active) {
-        clearTimeout(pendingRestart);
-        pendingRestart = setTimeout(() => {
-          if (!active) return;
-          try { recognition = makeNewRec(); recognition.start(); } catch(err) {}
-        }, 300);
-      }
-    }
-
-    function onEnd() {
+    recognition.onend = () => {
       if (!active) return;
-      // Safari/iOS para após silêncio — reinicia automaticamente
       clearTimeout(pendingRestart);
       pendingRestart = setTimeout(() => {
-        if (!active) return;
-        try {
-          if (isSafariIOS) recognition = makeNewRec();
-          recognition.start();
-        } catch(e) {}
-      }, isSafariIOS ? 80 : 200);
-    }
-
-    recognition.onerror = onError;
-    recognition.onend   = onEnd;
+        if (active) try { recognition.start(); } catch(e) {}
+      }, 200);
+    };
 
     try {
       recognition.start();
       showToast('🎤 Modo karaokê ativado! Comece a cantar.');
-    } catch(e) {
-      showToast('Erro ao iniciar reconhecimento de voz.');
-    }
+    } catch(e) { showToast('Erro ao iniciar reconhecimento.'); }
   }
 
   function stop() {
@@ -3948,7 +4284,7 @@ const SmartScroll = (() => {
     if (recognition) { try { recognition.abort(); } catch(e) {} recognition = null; }
     const body = document.getElementById('presentBody');
     if (body) {
-      body.querySelectorAll('.karaoke-active')
+      body.querySelectorAll('.present-section.karaoke-active')
           .forEach(e => e.classList.remove('karaoke-active'));
       body.classList.remove('karaoke-dim');
     }
@@ -3965,7 +4301,7 @@ const SmartScroll = (() => {
     currentLine = -1;
     const body = document.getElementById('presentBody');
     if (body) {
-      body.querySelectorAll('.karaoke-active')
+      body.querySelectorAll('.present-section.karaoke-active')
           .forEach(e => e.classList.remove('karaoke-active'));
       body.classList.remove('karaoke-dim');
     }
@@ -4237,6 +4573,642 @@ function tunerSetTarget(name, freq) {
   event.currentTarget.classList.add('target');
 }
 
+
+// ══════════════════════════════════════════════════════════
+// ── MUSIC ANALYSIS ENGINE ─────────────────────────────────
+// ══════════════════════════════════════════════════════════
+
+const SCALE_INTERVALS = {
+  major:      [0,2,4,5,7,9,11],
+  minor:      [0,2,3,5,7,8,10],
+  dorian:     [0,2,3,5,7,9,10],
+  mixolydian: [0,2,4,5,7,9,10],
+};
+
+const SCALE_NAMES = {
+  major:      'Maior (Jônica)',
+  minor:      'Menor Natural (Eólica)',
+  dorian:     'Dórica',
+  mixolydian: 'Mixolídia',
+};
+
+const SCALE_DESC = {
+  major:      'A escala mais comum na música popular. Soa alegre, estável e resolvida. Ideal para músicas animadas ou românticas.',
+  minor:      'Escala que transmite emoção, melancolia e profundidade. Muito usada em baladas e músicas dramáticas.',
+  dorian:     'Uma escala menor com o 6º grau elevado, dando um toque de esperança dentro da tristeza. Comum no blues e jazz.',
+  mixolydian: 'Escala maior com o 7º grau abaixado — soa levemente "bluesy". Muito usada no rock, funk e forró.',
+};
+
+// Graus da escala maior: I ii iii IV V vi vii°
+const DEGREE_NAMES  = ['I','II','III','IV','V','VI','VII'];
+const DEGREE_ROMAN  = ['I','ii','iii','IV','V','vi','vii°'];
+const DEGREE_FUNC   = ['Tônica','Supertônica','Mediante','Subdominante','Dominante','Relativa menor','Sensível'];
+const DEGREE_COLOR  = ['tonic-chord','subdominant-chord','subdominant-chord','subdominant-chord','dominant-chord','tonic-chord','dominant-chord'];
+
+function getScaleNotes(root, scaleType) {
+  const rootIdx = NOTES.indexOf(NOTE_ALT[root] || root);
+  if (rootIdx === -1) return [];
+  return SCALE_INTERVALS[scaleType].map(i => NOTES[(rootIdx + i) % 12]);
+}
+
+function detectBestScale(song) {
+  // Coleta todos os acordes da música
+  const chordList = [];
+  for (const sec of song.sections) {
+    for (const line of sec.lines) {
+      if (!line.chords) continue;
+      chordMatches(line.chords).forEach(({chord}) => {
+        const r = chord.match(/^[A-G][b#]?/)?.[0];
+        if (r) chordList.push(NOTE_ALT[r] || r);
+      });
+    }
+  }
+
+  // Extrai a nota raiz do tom (ex: "F#m" → "F#", "Bb" → "A#")
+  const rawKey = (song.key || 'C').replace(/m$/, '');
+  const cleanRoot = NOTE_ALT[rawKey] || rawKey || 'C';
+
+  let bestScale = 'major', bestScore = -1;
+  for (const [scaleName, intervals] of Object.entries(SCALE_INTERVALS)) {
+    const scaleNotes = new Set(intervals.map(i => NOTES[(NOTES.indexOf(cleanRoot) + i + 12) % 12]));
+    let score = 0;
+    chordList.forEach(r => { if (scaleNotes.has(r)) score++; });
+    if (score > bestScore) { bestScore = score; bestScale = scaleName; }
+  }
+  return { root: cleanRoot, scale: bestScale };
+}
+
+function getDegree(chord, root, scaleType) {
+  const scaleNotes = getScaleNotes(root, scaleType);
+  const chordRoot = NOTE_ALT[chord.match(/^[A-G][b#]?/)?.[0]] || chord.match(/^[A-G][b#]?/)?.[0];
+  const idx = scaleNotes.indexOf(chordRoot);
+  return idx; // -1 = fora da escala
+}
+
+function chordFunction(degreeIdx) {
+  if (degreeIdx === 0 || degreeIdx === 5) return 'tonic-feel';
+  if (degreeIdx === 4 || degreeIdx === 6) return 'dominant-feel';
+  if (degreeIdx === 1 || degreeIdx === 2 || degreeIdx === 3) return 'subdominant-feel';
+  return 'mixed-feel';
+}
+
+function chordFunctionLabel(feel) {
+  if (feel === 'tonic-feel')      return 'Repouso';
+  if (feel === 'dominant-feel')   return 'Tensão';
+  if (feel === 'subdominant-feel') return 'Movimento';
+  return 'Cromático';
+}
+
+function sectionFeeling(chords, root, scaleType) {
+  let tonic = 0, dominant = 0, sub = 0, out = 0;
+  chords.forEach(c => {
+    const d = getDegree(c, root, scaleType);
+    if (d === -1) { out++; return; }
+    const f = chordFunction(d);
+    if (f === 'tonic-feel') tonic++;
+    else if (f === 'dominant-feel') dominant++;
+    else sub++;
+  });
+  const total = tonic + dominant + sub + out;
+  if (!total) return 'mixed-feel';
+  if (dominant / total > 0.4) return 'dominant-feel';
+  if (tonic / total > 0.5) return 'tonic-feel';
+  if (sub / total > 0.4) return 'subdominant-feel';
+  return 'mixed-feel';
+}
+
+function buildSectionWhy(sectionName, chords, root, scaleType, feeling) {
+  const uniqueChords = [...new Set(chords)];
+  const inScale = uniqueChords.filter(c => getDegree(c, root, scaleType) !== -1);
+  const outScale = uniqueChords.filter(c => getDegree(c, root, scaleType) === -1);
+
+  const feelText = {
+    'tonic-feel':       'Esta seção <strong>resolve e descansa</strong> — predominam acordes de repouso que dão estabilidade.',
+    'dominant-feel':    'Esta seção cria <strong>tensão e expectativa</strong> — os acordes pedem resolução, empurrando a música pra frente.',
+    'subdominant-feel': 'Esta seção tem <strong>movimento e fluxo</strong> — acordes de passagem que conectam e geram progressão.',
+    'mixed-feel':       'Esta seção <strong>mistura funções</strong> — alternando tensão e repouso para criar interesse musical.',
+  }[feeling] || '';
+
+  let why = feelText;
+
+  // Explica os acordes dentro da escala
+  if (inScale.length > 0) {
+    const degreeList = inScale.map(c => {
+      const d = getDegree(c, root, scaleType);
+      return `<strong>${c}</strong> (${DEGREE_ROMAN[d]} grau — ${DEGREE_FUNC[d]})`;
+    }).join(', ');
+    why += ` Os acordes ${degreeList} pertencem à escala de ${root} ${SCALE_NAMES[scaleType].split(' ')[0].toLowerCase()}.`;
+  }
+
+  // Explica acordes fora da escala
+  if (outScale.length > 0) {
+    why += ` O acorde <strong>${outScale.join(', ')}</strong> é emprestado de outra tonalidade, adicionando cor e surpresa à progressão.`;
+  }
+
+  return why;
+}
+
+function renderAnalysis(song) {
+  const { root, scale } = detectBestScale(song);
+  const scaleNotes = getScaleNotes(root, scale);
+  const isMinor = scale === 'minor' || scale === 'dorian';
+
+  // ── Key block
+  let html = `
+    <div class="analysis-key-block">
+      <div class="analysis-key-note">${root}${isMinor ? 'm' : ''}</div>
+      <div class="analysis-key-info">
+        <div class="analysis-key-label">Tom da música</div>
+        <div class="analysis-key-name">${root} ${SCALE_NAMES[scale]}</div>
+        <div class="analysis-scale-notes">
+          ${scaleNotes.map((n,i) => `<span class="scale-note-chip ${i===0?'tonic':'active'}">${n}</span>`).join('')}
+        </div>
+        <div class="analysis-key-desc">${SCALE_DESC[scale]}</div>
+      </div>
+    </div>`;
+
+  // ── Per-section analysis
+  html += `<div class="analysis-section-title">Análise por Seção</div>`;
+
+  song.sections.forEach(sec => {
+    const sectionChords = [];
+    sec.lines.forEach(line => {
+      if (!line.chords) return;
+      chordMatches(line.chords).forEach(({chord}) => {
+        const r = chord.match(/^[A-G][b#]?/)?.[0];
+        if (r) sectionChords.push(chord);
+      });
+    });
+    if (sectionChords.length === 0) return;
+
+    const uniqueChords = [...new Set(sectionChords)];
+    const feeling = sectionFeeling(uniqueChords, root, scale);
+    const feelLabel = chordFunctionLabel(feeling);
+    const why = buildSectionWhy(sec.label, sectionChords, root, scale, feeling);
+
+    const chordPills = uniqueChords.map(c => {
+      const d = getDegree(c, root, scale);
+      const colorClass = d !== -1 ? DEGREE_COLOR[d] : 'mixed-feel';
+      const degLabel = d !== -1 ? DEGREE_ROMAN[d] : '※';
+      return `<div class="analysis-chord-pill ${colorClass}">
+        <span class="analysis-chord-name">${c}</span>
+        <span class="analysis-chord-degree">${degLabel}</span>
+      </div>`;
+    }).join('');
+
+    html += `
+      <div class="analysis-section-card">
+        <div class="analysis-sec-header">
+          <span class="analysis-sec-name">${sec.label}</span>
+          <span class="analysis-sec-func ${feeling}">${feelLabel}</span>
+        </div>
+        <div class="analysis-chord-row">${chordPills}</div>
+        <div class="analysis-sec-why">${why}</div>
+      </div>`;
+  });
+
+  // ── Legend
+  html += `
+    <div class="analysis-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#7ec8a0"></div> Repouso (Tônica)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#f0a030"></div> Tensão (Dominante)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#7ab0d4"></div> Movimento (Subdominante)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--border)"></div> ※ Emprestado / Cromático</div>
+    </div>`;
+
+  return html;
+}
+
+function openMusicAnalysis() {
+  try {
+    const song = getSong(state.activeSong);
+    if (!song) { showToast('Nenhuma música selecionada.'); return; }
+    document.getElementById('analysisSongTitle').textContent = song.title || 'Análise Musical';
+    document.getElementById('analysisContent').innerHTML = renderAnalysis(song);
+    document.getElementById('analysisOverlay').classList.add('active');
+  } catch(e) {
+    console.error('openMusicAnalysis error:', e);
+    showToast('Erro ao abrir análise: ' + e.message);
+  }
+}
+
+function closeMusicAnalysis() {
+  document.getElementById('analysisOverlay').classList.remove('active');
+}
+
+// Fechar com ESC
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeMusicAnalysis();
+});
+
+
+// ══════════════════════════════════════════════════════════
+// ── EAR TRAINING ENGINE ───────────────────────────────────
+// ══════════════════════════════════════════════════════════
+
+const EarTraining = (() => {
+
+  // Teoria musical completa
+  const ALL_NOTES = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+  const NOTE_NAMES_PT = {
+    'C':'Dó','C#':'Dó#','D':'Ré','D#':'Ré#','E':'Mi',
+    'F':'Fá','F#':'Fá#','G':'Sol','G#':'Sol#','A':'Lá','A#':'Lá#','B':'Si'
+  };
+
+  const SCALES = {
+    major:      { intervals:[0,2,4,5,7,9,11], name:'Maior',         feel:'Alegre, estável, luminosa' },
+    minor:      { intervals:[0,2,3,5,7,8,10], name:'Menor Natural', feel:'Melancólica, emocional, dramática' },
+    dorian:     { intervals:[0,2,3,5,7,9,10], name:'Dórica',        feel:'Sombria mas com esperança, jazzística' },
+    mixolydian: { intervals:[0,2,4,5,7,9,10], name:'Mixolídia',     feel:'Bluesy, rock, levemente instável' },
+    pentatonic_major: { intervals:[0,2,4,7,9],    name:'Pentatônica Maior', feel:'Universal, folk, country, pop' },
+    pentatonic_minor: { intervals:[0,3,5,7,10],   name:'Pentatônica Menor', feel:'Blues, rock, solo de guitarra' },
+  };
+
+  // Graus e suas funções
+  const CHORD_DEGREES = {
+    major: [
+      { degree:'I',   quality:'maior',    func:'Tônica',       role:'Casa — onde a música descansa e resolve' },
+      { degree:'ii',  quality:'menor',    func:'Supertônica',  role:'Passagem — leva suavemente para o IV ou V' },
+      { degree:'iii', quality:'menor',    func:'Mediante',     role:'Cor — substituto da tônica, toque melancólico' },
+      { degree:'IV',  quality:'maior',    func:'Subdominante', role:'Movimento — afasta da tônica sem criar tensão' },
+      { degree:'V',   quality:'maior',    func:'Dominante',    role:'Tensão máxima — quer resolver no I' },
+      { degree:'vi',  quality:'menor',    func:'Relativa',     role:'Emoção — relativa menor, muito usada em pop' },
+      { degree:'vii°',quality:'diminuto', func:'Sensível',     role:'Tensão extrema — raramente usado sozinho' },
+    ]
+  };
+
+  // Estado da sessão
+  let state = {
+    step: 0,       // 0=tom, 1=escala, 2=graus, 3=notas-alvo, 4=resultado
+    key: null,     // nota raiz escolhida
+    scaleType: null,
+    scaleNotes: [],
+    answers: [],   // { q, correct, chosen }
+    totalSteps: 4,
+  };
+
+  function getScaleNotes(root, scaleType) {
+    const idx = ALL_NOTES.indexOf(root);
+    return SCALES[scaleType].intervals.map(i => ALL_NOTES[(idx + i) % 12]);
+  }
+
+  function render() {
+    const el = document.getElementById('earContent');
+    if (!el) return;
+
+    const stepBar = `<div class="ear-steps">${
+      Array.from({length: state.totalSteps}, (_,i) =>
+        `<div class="ear-step ${i < state.step ? 'done' : i === state.step ? 'active' : ''}"></div>`
+      ).join('')
+    }</div>`;
+
+    if (state.step === 0) { el.innerHTML = stepBar + renderStep0(); renderKeyGrid(state.key); }
+    else if (state.step === 1) el.innerHTML = stepBar + renderStep1();
+    else if (state.step === 2) el.innerHTML = stepBar + renderStep2();
+    else if (state.step === 3) el.innerHTML = stepBar + renderStep3();
+    else el.innerHTML = renderSummary();
+  }
+
+  // ── STEP 0: Qual o tom? ──────────────────────────────────
+  function renderStep0() {
+    return `
+      <div class="ear-header">
+        <div class="ear-eyebrow">Passo 1 de ${state.totalSteps}</div>
+        <div class="ear-title">Qual o tom da música?</div>
+        <div class="ear-subtitle">Toque a música e tente identificar a nota que soa como "casa" — a que parece resolver tudo.</div>
+      </div>
+      <div class="ear-hint">
+        💡 <strong>Dica:</strong> Tente cantarolar a melodia e parar numa nota que soe "resolvida". 
+        Em músicas com guitarra/violão, a nota mais grave da abertura costuma ser o tom.
+        Você também pode testar cantando <em>"dó ré mi fá sol lá si dó"</em> até achar a que encaixa.
+      </div>
+      <div class="ear-note-grid" id="keyGrid"></div>
+      <div id="keyResult" class="ear-result"></div>
+    `;
+  }
+
+  function renderKeyGrid(selectedKey) {
+    const grid = document.getElementById('keyGrid');
+    if (!grid) return;
+    grid.innerHTML = ALL_NOTES.map(n => `
+      <button class="ear-note-btn ${selectedKey === n ? 'selected' : ''}"
+              onclick="EarTraining.selectKey('${n}')">
+        ${n}<br><span style="font-size:9px;font-weight:400;opacity:0.6">${NOTE_NAMES_PT[n]}</span>
+      </button>`
+    ).join('');
+  }
+
+  function selectKey(note) {
+    state.key = note;
+    renderKeyGrid(note);
+
+    // Mostra o resultado/explicação da nota escolhida
+    const result = document.getElementById('keyResult');
+    if (!result) return;
+    result.className = 'ear-result show';
+    result.innerHTML = `
+      <div class="ear-result-title correct">Tom: ${note} (${NOTE_NAMES_PT[note]})</div>
+      <div class="ear-result-body">
+        Você escolheu <strong>${note}</strong> como tônica. 
+        Isso significa que todos os acordes e melodias da música giram em torno desta nota.
+        Ela é o ponto de repouso — quando a música resolve, ela volta para cá.<br><br>
+        <strong>Próximo passo:</strong> Vamos descobrir se é maior ou menor (e qual escala).
+      </div>
+      <div style="margin-top:16px">
+        <button class="btn btn-primary" onclick="EarTraining.goStep(1)">Continuar →</button>
+      </div>`;
+  }
+
+  // ── STEP 1: Qual a escala? ───────────────────────────────
+  function renderStep1() {
+    return `
+      <div class="ear-header">
+        <div class="ear-eyebrow">Passo 2 de ${state.totalSteps}</div>
+        <div class="ear-title">Como a música <em>sente</em>?</div>
+        <div class="ear-subtitle">Com o tom <strong>${state.key}</strong> em mente, qual dessas descrições mais combina com a música?</div>
+      </div>
+      <div class="ear-hint">
+        💡 <strong>Dica:</strong> Feche os olhos e ouça. A música é alegre e luminosa? 
+        Ou carrega peso emocional? Isso vai te dizer se é maior ou menor.
+        Para escalas mais específicas, preste atenção em detalhes do som.
+      </div>
+      <div class="ear-scale-grid">
+        ${Object.entries(SCALES).map(([key, s]) => `
+          <div class="ear-scale-card" onclick="EarTraining.selectScale('${key}', this)">
+            <div class="ear-scale-name">${s.name}</div>
+            <div class="ear-scale-desc">${s.feel}</div>
+          </div>`).join('')}
+      </div>
+      <div id="scaleResult" class="ear-result"></div>
+    `;
+  }
+
+  function selectScale(scaleType, el) {
+    state.scaleType = scaleType;
+    state.scaleNotes = getScaleNotes(state.key, scaleType);
+
+    // Highlight selected card
+    document.querySelectorAll('.ear-scale-card').forEach(c => c.classList.remove('selected'));
+    if (el) el.classList.add('selected');
+
+    const result = document.getElementById('scaleResult');
+    if (!result) return;
+    result.className = 'ear-result show';
+    result.innerHTML = `
+      <div class="ear-result-title correct">${state.key} ${SCALES[scaleType].name}</div>
+      <div class="ear-result-body">
+        As notas da escala de <strong>${state.key} ${SCALES[scaleType].name}</strong> são:
+        <div class="ear-scale-display">
+          ${state.scaleNotes.map((n,i) => `<span class="ear-scale-chip ${i===0?'root':'highlight'}">${n}<br><span style="font-size:9px;opacity:0.6">${NOTE_NAMES_PT[n]}</span></span>`).join('')}
+        </div>
+        <strong>O que isso significa:</strong> Qualquer melodia ou solo nessa música provavelmente 
+        usa essas notas. Se você tocar qualquer combinação delas, vai soar "certo" na música.
+      </div>
+      <div style="margin-top:16px">
+        <button class="btn btn-primary" onclick="EarTraining.goStep(2)">Continuar →</button>
+      </div>`;
+  }
+
+  // ── STEP 2: Identifique os graus ─────────────────────────
+  function renderStep2() {
+    const degrees = CHORD_DEGREES.major; // simplificado para maior, adaptar para menor futuramente
+    const rootIdx = ALL_NOTES.indexOf(state.key);
+    const intervals = SCALES[state.scaleType]?.intervals || SCALES.major.intervals;
+    const chordRoots = intervals.slice(0,7).map((i,d) => ({
+      note: ALL_NOTES[(rootIdx + i) % 12],
+      degree: d,
+      roman: ['I','II','III','IV','V','VI','VII'][d],
+    }));
+
+    return `
+      <div class="ear-header">
+        <div class="ear-eyebrow">Passo 3 de ${state.totalSteps}</div>
+        <div class="ear-title">Os acordes da música</div>
+        <div class="ear-subtitle">Na escala de <strong>${state.key} ${SCALES[state.scaleType].name}</strong>, cada nota da escala gera um acorde. Veja como eles funcionam:</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:24px">
+        ${chordRoots.map(({note, degree, roman}) => {
+          const isMinorDegree = [1,2,5,6].includes(degree);
+          const isDim = degree === 6;
+          const quality = isDim ? '°' : isMinorDegree ? 'm' : '';
+          const fn = CHORD_DEGREES.major[degree];
+          const colors = ['#7ec8a0','#7ab0d4','#7ab0d4','#7ab0d4','#f0a030','#7ec8a0','#e05252'];
+          return `
+            <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;
+                        background:var(--surface2);border-radius:10px;border:1px solid var(--border)">
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;
+                          color:var(--muted);min-width:28px">${roman}</div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:18px;
+                          font-weight:700;color:${colors[degree]};min-width:52px">${note}${quality}</div>
+              <div style="flex:1">
+                <div style="font-size:12px;font-weight:600;color:var(--cream)">${fn?.func || ''}</div>
+                <div style="font-size:11px;color:var(--muted);margin-top:2px">${fn?.role || ''}</div>
+              </div>
+            </div>`;
+        }).join('')}
+      </div>
+      <div class="ear-hint" style="margin-bottom:20px">
+        💡 <strong>Como usar:</strong> Quando estiver tocando de ouvido, tente identificar qual "função" 
+        você está ouvindo — repouso (I/VI), tensão (V) ou movimento (IV). Isso vai te dizer qual acorde está tocando mesmo sem saber o nome.
+      </div>
+      <button class="btn btn-primary" onclick="EarTraining.goStep(3)">Continuar → Identificar notas</button>
+    `;
+  }
+
+  // ── STEP 3: Quiz — notas alvo ────────────────────────────
+  let quizNotes = [];
+  let quizIdx = 0;
+  let quizScore = 0;
+
+  function renderStep3() {
+    // Gera 4 perguntas de identificação de nota
+    quizNotes = generateQuiz();
+    quizIdx = 0;
+    quizScore = 0;
+    return renderQuizQuestion();
+  }
+
+  function generateQuiz() {
+    const questions = [];
+    const scaleNotes = state.scaleNotes;
+
+    // Q1: qual nota é a tônica?
+    const wrongOpts1 = ALL_NOTES.filter(n => n !== state.key).sort(() => Math.random()-0.5).slice(0,3);
+    questions.push({
+      q: `Qual dessas é a nota <strong>tônica</strong> (a "casa") da escala de ${state.key}?`,
+      hint: 'A tônica é a nota que dá nome ao tom. É o ponto de repouso e resolução da música.',
+      correct: state.key,
+      options: shuffle([state.key, ...wrongOpts1]),
+      explain: `<strong>${state.key} (${NOTE_NAMES_PT[state.key]})</strong> é a tônica — a nota central em torno da qual toda a música gravita. 
+                Quando uma melodia ou acorde "resolve", ele vai parar nesta nota.`,
+    });
+
+    // Q2: qual nota está na escala?
+    const notInScale = ALL_NOTES.filter(n => !scaleNotes.includes(n));
+    const inScaleNote = scaleNotes[Math.floor(Math.random() * (scaleNotes.length - 1)) + 1];
+    const wrongOpts2 = notInScale.sort(() => Math.random()-0.5).slice(0,3);
+    questions.push({
+      q: `Qual dessas notas <strong>pertence</strong> à escala de ${state.key} ${SCALES[state.scaleType].name}?`,
+      hint: 'As notas da escala são as que "soam bem" sobre os acordes da música. Tente cantar cada opção sobre a tônica.',
+      correct: inScaleNote,
+      options: shuffle([inScaleNote, ...wrongOpts2]),
+      explain: `<strong>${inScaleNote}</strong> faz parte da escala de ${state.key} ${SCALES[state.scaleType].name}. 
+                As notas da escala formam a "paleta" de sons disponíveis para melodias e solos nessa música.`,
+    });
+
+    // Q3: qual a nota dominante (5º grau)?
+    const dominant = scaleNotes[4];
+    const wrongOpts3 = ALL_NOTES.filter(n => n !== dominant).sort(() => Math.random()-0.5).slice(0,3);
+    questions.push({
+      q: `Na escala de <strong>${state.key}</strong>, qual é a nota <strong>dominante</strong> (5º grau)?`,
+      hint: 'O 5º grau é a nota que cria mais tensão e quer "puxar" de volta para a tônica. É a base do acorde V.',
+      correct: dominant,
+      options: shuffle([dominant, ...wrongOpts3]),
+      explain: `<strong>${dominant}</strong> é o 5º grau (dominante) de ${state.key}. 
+                O acorde formado sobre esta nota (${dominant} maior) cria a tensão que resolve naturalmente no I (${state.key}).
+                Esta é a progressão mais fundamental da música ocidental: V → I.`,
+    });
+
+    // Q4: qual nota está FORA da escala?
+    const outsideNote = notInScale[Math.floor(Math.random() * notInScale.length)];
+    const wrongOpts4 = scaleNotes.sort(() => Math.random()-0.5).slice(0,3);
+    questions.push({
+      q: `Qual dessas notas <strong>NÃO pertence</strong> à escala de ${state.key} ${SCALES[state.scaleType].name}?`,
+      hint: 'Notas fora da escala criam dissonância — elas "raspam" contra os acordes. São usadas propositalmente para criar tensão.',
+      correct: outsideNote,
+      options: shuffle([outsideNote, ...wrongOpts4]),
+      explain: `<strong>${outsideNote}</strong> está fora da escala de ${state.key} ${SCALES[state.scaleType].name}. 
+                Isso não significa que nunca aparece na música — notas "emprestadas" de outras tonalidades são usadas 
+                para criar surpresa e tensão. Mas se você tocar esta nota em cima dos acordes, vai soar dissonante.`,
+    });
+
+    return questions;
+  }
+
+  function renderQuizQuestion() {
+    const q = quizNotes[quizIdx];
+    return `
+      <div class="ear-header">
+        <div class="ear-eyebrow">Pergunta ${quizIdx + 1} de ${quizNotes.length}</div>
+        <div class="ear-title" style="font-size:18px">${q.q}</div>
+      </div>
+      <div class="ear-hint">${'💡 ' + q.hint}</div>
+      <div class="ear-note-grid" style="grid-template-columns:repeat(4,1fr)">
+        ${q.options.map(n => `
+          <button class="ear-note-btn" onclick="EarTraining.answerQuiz('${n}')">
+            ${n}<br><span style="font-size:9px;font-weight:400;opacity:0.6">${NOTE_NAMES_PT[n]}</span>
+          </button>`).join('')}
+      </div>
+      <div id="quizResult" class="ear-result"></div>
+    `;
+  }
+
+  function answerQuiz(chosen) {
+    const q = quizNotes[quizIdx];
+    const isCorrect = chosen === q.correct;
+    if (isCorrect) quizScore++;
+
+    state.answers.push({ q: q.q, correct: q.correct, chosen, isCorrect });
+
+    // Color the buttons
+    document.querySelectorAll('.ear-note-btn').forEach(btn => {
+      const n = btn.textContent.trim().split('\n')[0].trim();
+      btn.disabled = true;
+      if (n === q.correct) btn.classList.add('correct');
+      else if (n === chosen && !isCorrect) btn.classList.add('wrong');
+    });
+
+    const result = document.getElementById('quizResult');
+    if (result) {
+      result.className = 'ear-result show';
+      result.innerHTML = `
+        <div class="ear-result-title ${isCorrect ? 'correct' : 'wrong'}">${isCorrect ? '✓ Correto!' : '✗ Não era essa'}</div>
+        <div class="ear-result-body">${q.explain}</div>
+        <div style="margin-top:16px">
+          <button class="btn btn-primary" onclick="EarTraining.nextQuiz()">${quizIdx < quizNotes.length - 1 ? 'Próxima →' : 'Ver resultado →'}</button>
+        </div>`;
+    }
+  }
+
+  function nextQuiz() {
+    quizIdx++;
+    if (quizIdx >= quizNotes.length) {
+      goStep(4);
+    } else {
+      document.getElementById('earContent').innerHTML =
+        `<div class="ear-steps">${Array.from({length:state.totalSteps},(_,i)=>`<div class="ear-step ${i<state.step?'done':i===state.step?'active':''}"></div>`).join('')}</div>` +
+        renderQuizQuestion();
+    }
+  }
+
+  // ── STEP 4: Resumo / Aprendizado ─────────────────────────
+  function renderSummary() {
+    const pct = Math.round((quizScore / quizNotes.length) * 100);
+    const icon = pct === 100 ? '🎯' : pct >= 75 ? '🎵' : pct >= 50 ? '👂' : '🌱';
+    const title = pct === 100 ? 'Perfeito!' : pct >= 75 ? 'Muito bem!' : pct >= 50 ? 'Bom começo!' : 'Continue praticando!';
+
+    const tips = [
+      `<strong>O tom que você identificou: ${state.key} ${SCALES[state.scaleType]?.name || ''}</strong> — 
+       as notas ${state.scaleNotes.join(' · ')} são as que "pertencem" a essa música.`,
+      `<strong>Para tirar melodias de ouvido:</strong> Comece sempre encontrando a tônica (${state.key}). 
+       Depois use as notas da escala — especialmente ${state.scaleNotes[0]}, ${state.scaleNotes[2]} e ${state.scaleNotes[4]} 
+       (1º, 3º e 5º graus), que formam a tríade e aparecem em quase toda melodia.`,
+      `<strong>Para identificar acordes:</strong> Ouça a nota mais grave do acorde — ela costuma ser a raiz. 
+       Depois perceba se soa "maior" (alegre) ou "menor" (triste) para determinar a qualidade.`,
+      `<strong>Treino diário:</strong> Escolha uma música que você conhece bem e tente cantar a escala 
+       de ${state.key} por cima. Com o tempo, seus ouvidos vão reconhecer os padrões automaticamente.`,
+    ];
+
+    return `
+      <div class="ear-summary">
+        <div class="ear-summary-icon">${icon}</div>
+        <div class="ear-summary-title">${title}</div>
+        <div class="ear-summary-score">${quizScore} de ${quizNotes.length} corretas • ${pct}%</div>
+        <div class="ear-summary-tips">
+          ${tips.map(t => `<div class="ear-summary-tip">${t}</div>`).join('')}
+        </div>
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+          <button class="btn btn-primary" onclick="EarTraining.restart()">Praticar de novo</button>
+          <button class="btn btn-ghost" onclick="closeEarTraining()">Voltar ao menu</button>
+        </div>
+      </div>`;
+  }
+
+  function shuffle(arr) {
+    return arr.sort(() => Math.random() - 0.5);
+  }
+
+  function goStep(n) {
+    state.step = n;
+    render();
+  }
+
+  function restart() {
+    state = { step:0, key:null, scaleType:null, scaleNotes:[], answers:[], totalSteps:4 };
+    quizIdx = 0; quizScore = 0; quizNotes = [];
+    render();
+  }
+
+  return { render, selectKey, selectScale, answerQuiz, nextQuiz, goStep, restart };
+})();
+
+function openEarTraining() {
+  try {
+    const screen = document.getElementById('earTrainingScreen');
+    if (!screen) { showToast('earTrainingScreen não encontrado'); return; }
+    screen.classList.add('active');
+    EarTraining.restart();
+  } catch(e) {
+    console.error('openEarTraining error:', e);
+    console.error(e.stack);
+    showToast('Erro: ' + e.message);
+  }
+}
+
+function closeEarTraining() {
+  document.getElementById('earTrainingScreen').classList.remove('active');
+}
+
 // ── TOAST ─────────────────────────────────────────────────
 function showToast(msg) {
   const t = document.getElementById('toast');
@@ -4345,6 +5317,26 @@ window.addEventListener('DOMContentLoaded', () => {
       <span id="tunerMicLabel">Ativar Microfone</span>
     </button>
     <div class="tuner-status" id="tunerStatusMsg">Toque uma nota para detectar a afinação</div>
+  </div>
+</div>
+
+<!-- EAR TRAINING SCREEN -->
+<div class="ear-screen" id="earTrainingScreen">
+  <div class="ear-box">
+    <div class="ear-back">
+      <button class="btn btn-ghost btn-sm" onclick="closeEarTraining()">← Voltar</button>
+    </div>
+    <div id="earContent"></div>
+  </div>
+</div>
+
+<!-- MUSIC ANALYSIS MODAL -->
+<div class="analysis-overlay" id="analysisOverlay">
+  <div class="analysis-box">
+    <button class="analysis-close" onclick="closeMusicAnalysis()">✕</button>
+    <div class="analysis-title" id="analysisSongTitle"></div>
+    <div class="analysis-subtitle">Análise Musical • Teoria Aplicada</div>
+    <div id="analysisContent"></div>
   </div>
 </div>
 
