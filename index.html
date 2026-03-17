@@ -406,8 +406,9 @@
   .present-line { margin-bottom: 16px; }
   .present-chord {
     font-family: 'IBM Plex Mono', monospace;
-    color: var(--gold); font-weight: 700;
+    color: #f0a030; font-weight: 700;
     white-space: pre; display: block; line-height: 1.4;
+    text-shadow: 0 0 18px rgba(240,160,48,0.25);
   }
   .present-lyric {
     font-family: 'IBM Plex Mono', monospace;
@@ -419,8 +420,9 @@
   .chord-token { display: inline-flex; flex-direction: column; align-items: flex-start; flex-shrink: 0; }
   .ct-chord {
     font-family: 'IBM Plex Mono', monospace;
-    color: var(--gold); font-weight: 700;
+    color: #f0a030; font-weight: 700;
     line-height: 1.3; white-space: pre; display: block;
+    text-shadow: 0 0 14px rgba(240,160,48,0.2);
   }
   .ct-chord-empty { visibility: hidden; display: block; white-space: pre; }
   .ct-lyric {
@@ -442,6 +444,96 @@
   .font-size-display {
     font-family: 'IBM Plex Mono', monospace; font-size: 11px;
     color: var(--muted); min-width: 30px; text-align: center;
+  }
+
+  /* ── SMART SCROLL / MIC MODE ── */
+  .mic-btn {
+    display: flex; align-items: center; gap: 7px;
+    padding: 7px 14px; border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface2); color: var(--muted);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 12px; font-weight: 600;
+    cursor: pointer; transition: all 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .mic-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .mic-btn.active {
+    background: rgba(76,175,125,0.12);
+    border-color: var(--green);
+    color: var(--green);
+  }
+  .mic-btn.active .mic-icon { animation: micPulse 1s ease-in-out infinite; }
+  @keyframes micPulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.7; }
+  }
+  .mic-icon { font-size: 15px; line-height: 1; }
+
+  /* Waveform indicator */
+  .mic-wave {
+    display: none; align-items: center; gap: 2px; height: 16px;
+  }
+  .mic-btn.active .mic-wave { display: flex; }
+  .mic-btn.active .mic-label { display: none; }
+  .mic-wave-bar {
+    width: 3px; border-radius: 2px;
+    background: var(--green);
+    animation: waveBar 0.6s ease-in-out infinite;
+    transform-origin: bottom;
+  }
+  .mic-wave-bar:nth-child(1) { animation-delay: 0s; height: 4px; }
+  .mic-wave-bar:nth-child(2) { animation-delay: 0.1s; height: 10px; }
+  .mic-wave-bar:nth-child(3) { animation-delay: 0.2s; height: 14px; }
+  .mic-wave-bar:nth-child(4) { animation-delay: 0.3s; height: 8px; }
+  .mic-wave-bar:nth-child(5) { animation-delay: 0.4s; height: 5px; }
+  @keyframes waveBar {
+    0%, 100% { transform: scaleY(0.4); opacity: 0.5; }
+    50% { transform: scaleY(1); opacity: 1; }
+  }
+
+  /* Smart scroll HUD */
+  .smart-scroll-hud {
+    position: absolute;
+    bottom: 24px; left: 50%; transform: translateX(-50%);
+    background: rgba(13,13,13,0.92);
+    border: 1px solid var(--border);
+    border-radius: 12px; padding: 10px 20px;
+    display: none; align-items: center; gap: 16px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; color: var(--muted);
+    backdrop-filter: blur(8px);
+    z-index: 20; white-space: nowrap;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    transition: opacity 0.3s;
+  }
+  .smart-scroll-hud.visible { display: flex; }
+  .hud-indicator {
+    display: flex; align-items: center; gap: 6px;
+  }
+  .hud-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--green);
+    animation: hudPulse 1.5s ease-in-out infinite;
+  }
+  @keyframes hudPulse {
+    0%, 100% { opacity: 0.4; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.1); }
+  }
+  .hud-dot.paused { background: var(--muted); animation: none; }
+  .hud-dot.listening { background: #f0a030; }
+  .hud-sep { color: var(--border); }
+  .hud-progress {
+    display: flex; align-items: center; gap: 6px;
+  }
+  .hud-progress-track {
+    width: 80px; height: 3px;
+    background: var(--border); border-radius: 2px;
+    overflow: hidden;
+  }
+  .hud-progress-fill {
+    height: 100%; background: var(--green);
+    border-radius: 2px; transition: width 0.5s ease;
   }
 
   /* ── SCROLLBAR ── */
@@ -877,6 +969,125 @@
     .home-card-icon { font-size: 24px; }
     .home-card-title { font-size: 12px; }
   }
+
+  /* ── TUNER MODAL ── */
+  .tuner-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(12px);
+    z-index: 500;
+    display: none; align-items: center; justify-content: center;
+  }
+  .tuner-overlay.active { display: flex; }
+
+  .tuner-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 40px 44px 36px;
+    width: 440px; max-width: 95vw;
+    display: flex; flex-direction: column; align-items: center;
+    position: relative;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+  }
+  .tuner-close {
+    position: absolute; top: 16px; right: 18px;
+    background: none; border: none; color: var(--muted);
+    font-size: 18px; cursor: pointer; padding: 4px 8px;
+    border-radius: 6px; transition: color 0.15s;
+  }
+  .tuner-close:hover { color: var(--cream); }
+  .tuner-header-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 24px; align-self: flex-start;
+  }
+  .tuner-note-display {
+    display: flex; flex-direction: column; align-items: center;
+    margin-bottom: 4px;
+  }
+  .tuner-note-row { display: flex; align-items: flex-start; gap: 2px; }
+  .tuner-note {
+    font-family: 'Syne', serif;
+    font-size: 96px; font-weight: 900; line-height: 1;
+    color: var(--cream); transition: color 0.25s, text-shadow 0.25s;
+    min-width: 100px; text-align: center;
+  }
+  .tuner-note.in-tune {
+    color: #4caf7d; text-shadow: 0 0 48px rgba(76,175,125,0.45);
+  }
+  .tuner-note.sharp { color: #f0a030; text-shadow: 0 0 40px rgba(240,160,48,0.35); }
+  .tuner-note.flat  { color: #e05252; text-shadow: 0 0 40px rgba(224,82,82,0.3); }
+  .tuner-octave {
+    font-family: 'IBM Plex Mono', monospace; font-size: 24px;
+    color: var(--muted); margin-top: 10px; font-weight: 500;
+  }
+  .tuner-freq {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px; color: var(--muted); margin-top: 2px; margin-bottom: 20px;
+    letter-spacing: 1px; min-height: 18px;
+  }
+  .tuner-meter-wrap {
+    width: 100%; display: flex; flex-direction: column; align-items: center;
+    gap: 6px; margin-bottom: 20px;
+  }
+  .tuner-meter-svg { width: 100%; max-width: 320px; display: block; }
+  .tuner-cents {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; color: var(--muted); letter-spacing: 1px; min-height: 16px;
+    transition: color 0.2s;
+  }
+  .tuner-cents.in-tune { color: #4caf7d; }
+  .tuner-cents.off { color: #f0a030; }
+  .tuner-strings {
+    display: flex; gap: 6px; flex-wrap: wrap;
+    justify-content: center; margin-bottom: 24px;
+  }
+  .tuner-string-btn {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px; font-weight: 700;
+    padding: 7px 14px; border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface2); color: var(--muted);
+    cursor: pointer; transition: all 0.18s;
+    display: flex; flex-direction: column; align-items: center; gap: 1px;
+    min-width: 48px;
+  }
+  .tuner-string-btn span {
+    font-size: 9px; font-weight: 400; letter-spacing: 1px;
+    color: var(--muted); text-transform: uppercase;
+  }
+  .tuner-string-btn:hover { border-color: #f0a030; color: #f0a030; }
+  .tuner-string-btn.target {
+    border-color: #f0a030; color: #f0a030;
+    background: rgba(240,160,48,0.08);
+  }
+  .tuner-string-btn.target span { color: #f0a030; }
+  .tuner-mic-btn {
+    display: flex; align-items: center; gap: 8px;
+    padding: 13px 32px; border-radius: 12px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 14px; font-weight: 700;
+    cursor: pointer; transition: all 0.2s;
+    border: 2px solid var(--border);
+    background: var(--surface2); color: var(--text);
+    letter-spacing: 0.3px;
+  }
+  .tuner-mic-btn:hover { border-color: #4caf7d; color: #4caf7d; }
+  .tuner-mic-btn.running {
+    background: rgba(76,175,125,0.1); border-color: #4caf7d; color: #4caf7d;
+  }
+  .tuner-mic-btn .tmic-icon { font-size: 18px; }
+  .tuner-status {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; color: var(--muted);
+    margin-top: 10px; letter-spacing: 1px; min-height: 16px; text-align: center;
+  }
+  #tunerNeedle {
+    transition: transform 0.1s cubic-bezier(0.25,0.46,0.45,0.94);
+    transform-origin: 160px 148px;
+  }
+
 </style>
 </head>
 <body>
@@ -1014,6 +1225,7 @@
   <img src="https://i.imgur.com/Nelv4ev.png" alt="CifraSet" style="height:36px;width:auto;object-fit:contain;mix-blend-mode:lighten;filter:brightness(1.1)">
   <div class="header-actions">
     <div class="user-badge" id="userBadge"></div>
+    <button class="btn btn-ghost btn-sm" onclick="openTuner()" title="Afinador cromático" style="gap:5px">🎸 Afinador</button>
     <button class="btn btn-ghost btn-sm" id="btnImportarLetra" onclick="openImportModal()">⬆ Importar Letra</button>
     <button class="btn btn-primary btn-sm" id="btnNovaMusicaHeader" onclick="addNewSong()">+ Nova Música</button>
     <button class="btn btn-ghost btn-sm" onclick="doLogout()" title="Sair da conta" style="color:var(--muted)">⏻ Sair</button>
@@ -1078,6 +1290,59 @@
 
 </div><!-- /appWrapper -->
 
+<!-- TUNER MODAL -->
+<div class="tuner-overlay" id="tunerOverlay">
+  <div class="tuner-box">
+    <button class="tuner-close" onclick="closeTuner()">✕</button>
+    <div class="tuner-header-label">🎸 Afinador Cromático</div>
+
+    <!-- Note display -->
+    <div class="tuner-note-display">
+      <div class="tuner-note-row">
+        <div class="tuner-note" id="tunerNote">—</div>
+        <div class="tuner-octave" id="tunerOctave"></div>
+      </div>
+    </div>
+    <div class="tuner-freq" id="tunerFreq"></div>
+
+    <!-- Meter arc SVG -->
+    <div class="tuner-meter-wrap">
+      <svg class="tuner-meter-svg" viewBox="0 0 320 170" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 30 148 A 130 130 0 0 1 290 148" stroke="#2a2a2a" stroke-width="6" stroke-linecap="round" fill="none"/>
+        <path id="tunerArcFill" d="M 30 148 A 130 130 0 0 1 290 148" stroke="#2a2a2a" stroke-width="6" stroke-linecap="round" fill="none" stroke-dasharray="407" stroke-dashoffset="407"/>
+        <line x1="160" y1="18" x2="160" y2="34" stroke="#3a3a3a" stroke-width="2" stroke-linecap="round"/>
+        <line x1="65" y1="45" x2="73" y2="57" stroke="#2a2a2a" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="255" y1="45" x2="247" y2="57" stroke="#2a2a2a" stroke-width="1.5" stroke-linecap="round"/>
+        <g id="tunerNeedle">
+          <line x1="160" y1="148" x2="160" y2="32" stroke="#505050" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="160" cy="148" r="6" fill="#1f1f1f" stroke="#505050" stroke-width="2"/>
+          <circle cx="160" cy="34" r="4" fill="#505050"/>
+        </g>
+        <text x="18" y="165" font-family="IBM Plex Mono,monospace" font-size="10" fill="#404040">−50¢</text>
+        <text x="143" y="13" font-family="IBM Plex Mono,monospace" font-size="10" fill="#404040">0¢</text>
+        <text x="302" y="165" font-family="IBM Plex Mono,monospace" font-size="10" fill="#404040" text-anchor="end">+50¢</text>
+      </svg>
+      <div class="tuner-cents" id="tunerCents"></div>
+    </div>
+
+    <!-- Guitar string reference buttons -->
+    <div class="tuner-strings">
+      <button class="tuner-string-btn" onclick="tunerSetTarget('E',82.41)">E<span>6ª corda</span></button>
+      <button class="tuner-string-btn" onclick="tunerSetTarget('A',110)">A<span>5ª corda</span></button>
+      <button class="tuner-string-btn" onclick="tunerSetTarget('D',146.83)">D<span>4ª corda</span></button>
+      <button class="tuner-string-btn" onclick="tunerSetTarget('G',196)">G<span>3ª corda</span></button>
+      <button class="tuner-string-btn" onclick="tunerSetTarget('B',246.94)">B<span>2ª corda</span></button>
+      <button class="tuner-string-btn" onclick="tunerSetTarget('E',329.63)">E<span>1ª corda</span></button>
+    </div>
+
+    <button class="tuner-mic-btn" id="tunerMicBtn" onclick="tunerToggleMic()">
+      <span class="tmic-icon">🎙</span>
+      <span id="tunerMicLabel">Ativar Microfone</span>
+    </button>
+    <div class="tuner-status" id="tunerStatusMsg">Toque uma nota para detectar a afinação</div>
+  </div>
+</div>
+
 <!-- CHORD REFERENCE PANEL -->
 <div class="chord-ref-panel" id="chordRefPanel">
   <div class="chord-ref-title">Referência de Acordes</div>
@@ -1098,7 +1363,18 @@
       <div class="present-title" id="presentTitle"></div>
       <div class="present-key" id="presentKey"></div>
     </div>
-    <div style="display:flex;gap:10px;align-items:center">
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <button class="mic-btn" id="micScrollBtn" onclick="toggleMicScroll()" title="Modo Rolagem Inteligente — o site rola automaticamente conforme você toca">
+        <span class="mic-icon">🎙</span>
+        <span class="mic-label">Rolagem Auto</span>
+        <span class="mic-wave">
+          <span class="mic-wave-bar"></span>
+          <span class="mic-wave-bar"></span>
+          <span class="mic-wave-bar"></span>
+          <span class="mic-wave-bar"></span>
+          <span class="mic-wave-bar"></span>
+        </span>
+      </button>
       <div class="font-control">
         <button class="font-ctrl-btn" onclick="changePresentFont(-2)">A−</button>
         <div class="font-size-display" id="fontSizeDisplay">20px</div>
@@ -1107,7 +1383,24 @@
       <button class="btn btn-ghost btn-sm" onclick="closePresent()">✕ Fechar</button>
     </div>
   </div>
-  <div class="present-body" id="presentBody"></div>
+  <div class="present-body" id="presentBody" style="position:relative"></div>
+
+  <!-- Smart Scroll HUD -->
+  <div class="smart-scroll-hud" id="smartScrollHud">
+    <div class="hud-indicator">
+      <div class="hud-dot" id="hudDot"></div>
+      <span id="hudStatus">Ouvindo…</span>
+    </div>
+    <span class="hud-sep">|</span>
+    <div class="hud-progress">
+      <span id="hudPct">0%</span>
+      <div class="hud-progress-track">
+        <div class="hud-progress-fill" id="hudProgressFill" style="width:0%"></div>
+      </div>
+    </div>
+    <span class="hud-sep">|</span>
+    <span id="hudBpm">— bpm</span>
+  </div>
 </div>
 
 <!-- IMPORT MODAL -->
@@ -2337,6 +2630,7 @@ let presentFontSize = 20;
 function openPresent() {
   const song = getSong(state.activeSong);
   if (!song) return;
+  SmartScroll.reset();
   document.getElementById('presentTitle').textContent = song.title;
   document.getElementById('presentKey').textContent = `Tom: ${song.key}${song.capo && song.capo!=='0' ? ' • Capo '+song.capo:''}${song.bpm?' • ♩ '+song.bpm+' bpm':''}`;
   renderPresentBody(song);
@@ -2439,6 +2733,7 @@ function renderPresentBody(song) {
 }
 
 function closePresent() {
+  SmartScroll.reset();
   document.getElementById('presentOverlay').classList.remove('active');
 }
 
@@ -3320,6 +3615,561 @@ function toggleChordRef() {
   if (panel.classList.contains('open')) renderChordRef();
 }
 
+// ══════════════════════════════════════════════════════════
+// ── SMART SCROLL ENGINE (Mic-based auto-scroll) ───────────
+// ══════════════════════════════════════════════════════════
+
+const SmartScroll = (() => {
+  // ── State ──────────────────────────────────────────────
+  let active = false;
+  let audioCtx = null;
+  let analyser = null;
+  let micStream = null;
+  let animFrame = null;
+
+  // Scroll tracking
+  let scrollProgress = 0;      // 0..1 fraction through song
+  let scrollVelocity = 0;      // px/sec current target
+  let lastScrollY = 0;
+  let targetScrollY = 0;
+  let currentScrollY = 0;
+  let totalScrollH = 0;
+
+  // Audio analysis state
+  let energyHistory = [];       // rolling RMS energy window
+  const ENERGY_WIN = 30;        // frames to average (~0.5s)
+
+  let onsetTimes = [];          // timestamps of detected beats/onsets
+  const ONSET_WIN = 8000;       // ms window for BPM calc
+  const ONSET_THRESH_MULT = 1.6; // energy spike threshold multiplier
+
+  let estimatedBpm = 0;
+  let songDurationEstMs = 0;    // estimated total song time (ms)
+  let songStartTime = 0;        // when mic was activated
+  let lastFrameTime = 0;
+
+  // Silence / pause detection
+  let silenceStart = 0;
+  let isSilent = false;
+  let silenceThreshold = 0.008; // RMS below this = silence
+  const SILENCE_HOLD_MS = 1200; // ms of silence before pausing scroll
+
+  // Smoothing
+  let smoothedEnergy = 0;
+  let baselineEnergy = 0;       // adaptive noise floor
+
+  // ── Helpers ────────────────────────────────────────────
+  function getRms(buf) {
+    let sum = 0;
+    for (let i = 0; i < buf.length; i++) sum += buf[i] * buf[i];
+    return Math.sqrt(sum / buf.length);
+  }
+
+  function estimateSongDuration(song) {
+    // Heuristic: count total lines, estimate ~2-4s per line at 80-100 bpm
+    let lineCount = 0;
+    for (const sec of song.sections) lineCount += sec.lines.filter(l => l.lyrics || l.chords).length;
+    const secCount = song.sections.length;
+
+    // If BPM is set, use it; otherwise guess 80
+    const bpm = parseInt(song.bpm) || 80;
+    // Average ~2 beats per lyric line, 4 beats per bar
+    const beatsPerLine = 4;
+    const msPerBeat = 60000 / bpm;
+    // Add section headers as 4-beat gaps
+    return (lineCount * beatsPerLine + secCount * 8) * msPerBeat;
+  }
+
+  function updateBpmEstimate(now) {
+    // Remove old onsets outside window
+    onsetTimes = onsetTimes.filter(t => now - t < ONSET_WIN);
+    if (onsetTimes.length < 3) return;
+
+    // Calculate median inter-onset interval
+    const gaps = [];
+    for (let i = 1; i < onsetTimes.length; i++) gaps.push(onsetTimes[i] - onsetTimes[i-1]);
+    gaps.sort((a,b) => a-b);
+    const medGap = gaps[Math.floor(gaps.length / 2)];
+    if (medGap < 200 || medGap > 2000) return; // sanity range 30-300 bpm
+
+    const raw = Math.round(60000 / medGap);
+    // Snap to musically common values
+    const snapped = snapBpm(raw);
+    estimatedBpm = estimatedBpm ? estimatedBpm * 0.85 + snapped * 0.15 : snapped;
+
+    // Update HUD
+    const hudBpm = document.getElementById('hudBpm');
+    if (hudBpm) hudBpm.textContent = Math.round(estimatedBpm) + ' bpm';
+  }
+
+  function snapBpm(bpm) {
+    // Musical doubling/halving to land in 50-200 range
+    while (bpm < 50) bpm *= 2;
+    while (bpm > 200) bpm /= 2;
+    return bpm;
+  }
+
+  function calcScrollVelocity() {
+    const overlay = document.getElementById('presentOverlay');
+    if (!overlay) return 0;
+    const body = document.getElementById('presentBody');
+    if (!body) return 0;
+
+    totalScrollH = body.scrollHeight - overlay.clientHeight + 80;
+    if (totalScrollH <= 0) return 0;
+
+    // Use estimated BPM if available, else song BPM or default 80
+    const song = getSong(state.activeSong);
+    const bpm = estimatedBpm || parseInt(song?.bpm) || 80;
+
+    // Re-estimate song duration using live BPM
+    if (estimatedBpm > 0 && song) {
+      let lineCount = 0;
+      for (const sec of song.sections) lineCount += sec.lines.filter(l => l.lyrics || l.chords).length;
+      const secCount = song.sections.length;
+      const msPerBeat = 60000 / estimatedBpm;
+      songDurationEstMs = (lineCount * 4 + secCount * 8) * msPerBeat;
+    }
+
+    if (songDurationEstMs <= 0) return 0;
+
+    // px/ms velocity
+    return totalScrollH / songDurationEstMs;
+  }
+
+  // ── Audio loop ─────────────────────────────────────────
+  function audioLoop(timestamp) {
+    if (!active) return;
+    animFrame = requestAnimationFrame(audioLoop);
+
+    const now = performance.now();
+    const dt = lastFrameTime ? now - lastFrameTime : 16;
+    lastFrameTime = now;
+
+    // ── 1. Read audio ──
+    const buf = new Float32Array(analyser.fftSize);
+    analyser.getFloatTimeDomainData(buf);
+    const rms = getRms(buf);
+
+    // Adaptive noise floor (slow rise, fast fall)
+    baselineEnergy = Math.max(baselineEnergy * 0.998 + rms * 0.002, silenceThreshold * 0.5);
+    const relEnergy = rms / Math.max(baselineEnergy, 0.0001);
+    smoothedEnergy = smoothedEnergy * 0.85 + rms * 0.15;
+
+    // Rolling energy history for onset detection
+    energyHistory.push(rms);
+    if (energyHistory.length > ENERGY_WIN) energyHistory.shift();
+    const avgEnergy = energyHistory.reduce((a,b) => a+b, 0) / energyHistory.length;
+
+    // ── 2. Onset detection (energy spike) ──
+    if (rms > avgEnergy * ONSET_THRESH_MULT && rms > 0.015) {
+      const lastOnset = onsetTimes[onsetTimes.length - 1] || 0;
+      if (now - lastOnset > 150) { // min 150ms between onsets
+        onsetTimes.push(now);
+        updateBpmEstimate(now);
+      }
+    }
+
+    // ── 3. Silence detection ──
+    if (rms < silenceThreshold && smoothedEnergy < silenceThreshold * 1.5) {
+      if (!isSilent) {
+        if (!silenceStart) silenceStart = now;
+        else if (now - silenceStart > SILENCE_HOLD_MS) {
+          isSilent = true;
+          updateHud('paused', 'Pausado…');
+        }
+      }
+    } else {
+      silenceStart = 0;
+      if (isSilent) {
+        isSilent = false;
+        updateHud('active', 'Ouvindo…');
+      }
+    }
+
+    // ── 4. Scroll ──
+    if (!isSilent) {
+      const vel = calcScrollVelocity(); // px/ms
+      currentScrollY += vel * dt;
+      currentScrollY = Math.max(0, Math.min(currentScrollY, totalScrollH));
+
+      // Smooth scroll: lerp toward target
+      const overlay = document.getElementById('presentOverlay');
+      if (overlay) {
+        const delta = currentScrollY - overlay.scrollTop;
+        overlay.scrollTop += delta * 0.04; // very smooth lerp
+      }
+
+      // Progress
+      const pct = totalScrollH > 0 ? Math.min(1, currentScrollY / totalScrollH) : 0;
+      updateProgress(pct);
+    }
+  }
+
+  function updateHud(state, label) {
+    const dot = document.getElementById('hudDot');
+    const status = document.getElementById('hudStatus');
+    if (!dot || !status) return;
+    dot.className = 'hud-dot' + (state === 'paused' ? ' paused' : state === 'listening' ? ' listening' : '');
+    status.textContent = label;
+  }
+
+  function updateProgress(pct) {
+    const fill = document.getElementById('hudProgressFill');
+    const pctEl = document.getElementById('hudPct');
+    if (fill) fill.style.width = (pct * 100).toFixed(1) + '%';
+    if (pctEl) pctEl.textContent = Math.round(pct * 100) + '%';
+  }
+
+  // ── Public API ─────────────────────────────────────────
+  async function start() {
+    if (active) return;
+
+    // Request mic
+    try {
+      micStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+    } catch(e) {
+      showToast('🎙 Permita o acesso ao microfone para usar a rolagem automática!');
+      return;
+    }
+
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const source = audioCtx.createMediaStreamSource(micStream);
+
+    analyser = audioCtx.createAnalyser();
+    analyser.fftSize = 2048;
+    analyser.smoothingTimeConstant = 0.5;
+    source.connect(analyser);
+
+    // Reset state
+    energyHistory = [];
+    onsetTimes = [];
+    estimatedBpm = 0;
+    smoothedEnergy = 0;
+    baselineEnergy = 0.01;
+    isSilent = false;
+    silenceStart = 0;
+    currentScrollY = 0;
+    lastFrameTime = 0;
+
+    // Scroll the overlay back to top
+    const overlay = document.getElementById('presentOverlay');
+    if (overlay) overlay.scrollTop = 0;
+
+    // Estimate song duration
+    const song = getSong(state.activeSong);
+    if (song) songDurationEstMs = estimateSongDuration(song);
+
+    active = true;
+    songStartTime = performance.now();
+
+    // Update UI
+    const btn = document.getElementById('micScrollBtn');
+    if (btn) btn.classList.add('active');
+    const hud = document.getElementById('smartScrollHud');
+    if (hud) hud.classList.add('visible');
+
+    updateHud('listening', 'Calibrando…');
+    setTimeout(() => { if (active) updateHud('active', 'Ouvindo…'); }, 2000);
+
+    animFrame = requestAnimationFrame(audioLoop);
+    showToast('🎙 Rolagem automática ativada! Comece a tocar.');
+  }
+
+  function stop() {
+    active = false;
+    if (animFrame) { cancelAnimationFrame(animFrame); animFrame = null; }
+    if (micStream) { micStream.getTracks().forEach(t => t.stop()); micStream = null; }
+    if (audioCtx) { audioCtx.close().catch(()=>{}); audioCtx = null; }
+    analyser = null;
+
+    const btn = document.getElementById('micScrollBtn');
+    if (btn) btn.classList.remove('active');
+    const hud = document.getElementById('smartScrollHud');
+    if (hud) hud.classList.remove('visible');
+
+    showToast('🎙 Rolagem automática desativada.');
+  }
+
+  function toggle() {
+    if (active) stop(); else start();
+  }
+
+  function reset() {
+    if (active) stop();
+    estimatedBpm = 0;
+    onsetTimes = [];
+    currentScrollY = 0;
+    const overlay = document.getElementById('presentOverlay');
+    if (overlay) overlay.scrollTop = 0;
+  }
+
+  return { start, stop, toggle, reset, get isActive() { return active; } };
+})();
+
+function toggleMicScroll() { SmartScroll.toggle(); }
+
+// Stop mic if user closes presentation
+const _origClosePresent = typeof closePresent === 'function' ? closePresent : null;
+// Will be patched after closePresent is defined (see below)
+
+// ── END SMART SCROLL ENGINE ───────────────────────────────
+
+// ══════════════════════════════════════════════════════════
+// ── CHROMATIC TUNER ───────────────────────────────────────
+// ══════════════════════════════════════════════════════════
+const Tuner = (() => {
+  let audioCtx = null, analyser = null, micStream = null, rafId = null;
+  let running = false;
+  let targetNote = null; // { name, freq } — when user clicks a string
+
+  const NOTE_NAMES = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+  const A4 = 440;
+
+  function freqToNote(freq) {
+    if (freq <= 0) return null;
+    const semitones = 12 * Math.log2(freq / A4);
+    const semRound = Math.round(semitones);
+    const noteIdx = ((semRound % 12) + 12) % 12;
+    const octave = Math.floor(semRound / 12) + 4;
+    const name = NOTE_NAMES[noteIdx];
+    const idealFreq = A4 * Math.pow(2, semRound / 12);
+    const cents = Math.round(1200 * Math.log2(freq / idealFreq));
+    return { name, octave, cents, freq, idealFreq };
+  }
+
+  // YIN pitch detection — reliable for guitar/voice
+  function detectPitch(buf, sampleRate) {
+    const bufLen = buf.length;
+    const half = Math.floor(bufLen / 2);
+    const yin = new Float32Array(half);
+    let runningSum = 0;
+
+    yin[0] = 1;
+    for (let tau = 1; tau < half; tau++) {
+      let sum = 0;
+      for (let i = 0; i < half; i++) {
+        const diff = buf[i] - buf[i + tau];
+        sum += diff * diff;
+      }
+      yin[tau] = sum;
+      runningSum += sum;
+      yin[tau] *= tau / runningSum;
+    }
+
+    // Find first dip below threshold
+    const THRESH = 0.15;
+    let tau = 2;
+    while (tau < half) {
+      if (yin[tau] < THRESH) {
+        while (tau + 1 < half && yin[tau + 1] < yin[tau]) tau++;
+        break;
+      }
+      tau++;
+    }
+    if (tau >= half || yin[tau] >= THRESH) return -1;
+
+    // Parabolic interpolation for accuracy
+    const x0 = tau < 1 ? tau : tau - 1;
+    const x2 = tau + 1 < half ? tau + 1 : tau;
+    let betterTau;
+    if (x0 === tau) betterTau = yin[tau] <= yin[x2] ? tau : x2;
+    else if (x2 === tau) betterTau = yin[tau] <= yin[x0] ? tau : x0;
+    else {
+      const s0 = yin[x0], s1 = yin[tau], s2 = yin[x2];
+      betterTau = tau + (s2 - s0) / (2 * (2 * s1 - s2 - s0));
+    }
+
+    return sampleRate / betterTau;
+  }
+
+  // RMS to gate silence
+  function getRms(buf) {
+    let s = 0;
+    for (let i = 0; i < buf.length; i++) s += buf[i] * buf[i];
+    return Math.sqrt(s / buf.length);
+  }
+
+  // Smooth needle angle with lerp
+  let smoothCents = 0;
+  let smoothFreq = 0;
+  let lastGoodNote = null;
+  const SILENCE_RMS = 0.006;
+
+  function updateUI(note) {
+    const noteEl   = document.getElementById('tunerNote');
+    const octaveEl = document.getElementById('tunerOctave');
+    const freqEl   = document.getElementById('tunerFreq');
+    const centsEl  = document.getElementById('tunerCents');
+    const needle   = document.getElementById('tunerNeedle');
+    const arcFill  = document.getElementById('tunerArcFill');
+    const status   = document.getElementById('tunerStatusMsg');
+
+    if (!note) {
+      // Silence — fade needle to center
+      smoothCents = smoothCents * 0.85;
+      rotateNeedle(needle, smoothCents);
+      updateArc(arcFill, smoothCents);
+      return;
+    }
+
+    smoothCents = smoothCents * 0.6 + note.cents * 0.4;
+    smoothFreq  = smoothFreq  * 0.7 + note.freq  * 0.3;
+
+    const inTune = Math.abs(smoothCents) < 5;
+    const cls    = inTune ? 'in-tune' : note.cents > 0 ? 'sharp' : 'flat';
+
+    noteEl.textContent   = note.name;
+    noteEl.className     = 'tuner-note ' + cls;
+    octaveEl.textContent = note.octave;
+    freqEl.textContent   = smoothFreq.toFixed(1) + ' Hz';
+
+    if (inTune) {
+      centsEl.textContent = '✓ Afinado';
+      centsEl.className   = 'tuner-cents in-tune';
+      status.textContent  = 'Perfeito! 🎯';
+    } else {
+      const dir = note.cents > 0 ? '▲ Alta' : '▼ Baixa';
+      centsEl.textContent = `${note.cents > 0 ? '+' : ''}${Math.round(smoothCents)}¢  ${dir}`;
+      centsEl.className   = 'tuner-cents off';
+      status.textContent  = Math.abs(note.cents) > 20
+        ? (note.cents > 0 ? 'Abaixe a corda' : 'Suba a corda')
+        : (note.cents > 0 ? 'Um pouco alta' : 'Um pouco baixa');
+    }
+
+    rotateNeedle(needle, smoothCents);
+    updateArc(arcFill, smoothCents);
+
+    // Highlight matching string button
+    highlightTargetBtn(note.name);
+  }
+
+  function rotateNeedle(needle, cents) {
+    // Map -50..+50 cents → -75°..+75° rotation
+    const deg = Math.max(-75, Math.min(75, cents * 1.5));
+    if (needle) needle.style.transform = `rotate(${deg}deg)`;
+  }
+
+  function updateArc(arc, cents) {
+    if (!arc) return;
+    // Arc length ≈ 407 units (half circle)
+    const totalArc = 407;
+    const half = totalArc / 2;
+    const pct = Math.max(-1, Math.min(1, cents / 50));
+    const inTune = Math.abs(cents) < 5;
+    const color = inTune ? '#4caf7d' : (cents > 0 ? '#f0a030' : '#e05252');
+    arc.style.stroke = color;
+    // Draw from center outward
+    const filled = Math.abs(pct) * half;
+    arc.style.strokeDashoffset = (totalArc - filled).toFixed(1);
+  }
+
+  function highlightTargetBtn(noteName) {
+    // highlight based on targetNote if set, else auto-match
+    document.querySelectorAll('.tuner-string-btn').forEach(btn => {
+      btn.classList.remove('target');
+    });
+    if (targetNote) {
+      // keep user-selected highlighted if note matches
+      document.querySelectorAll('.tuner-string-btn').forEach(btn => {
+        if (btn.dataset.target === targetNote.name + targetNote.freq) btn.classList.add('target');
+      });
+    }
+  }
+
+  function loop() {
+    if (!running) return;
+    rafId = requestAnimationFrame(loop);
+
+    const bufSize = analyser.fftSize;
+    const buf = new Float32Array(bufSize);
+    analyser.getFloatTimeDomainData(buf);
+
+    const rms = getRms(buf);
+    if (rms < SILENCE_RMS) { updateUI(null); return; }
+
+    const freq = detectPitch(buf, audioCtx.sampleRate);
+    if (freq <= 0 || freq < 60 || freq > 1500) { updateUI(null); return; }
+
+    const note = freqToNote(freq);
+    if (note) { lastGoodNote = note; updateUI(note); }
+  }
+
+  async function start() {
+    if (running) return;
+    try {
+      micStream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false }, video: false });
+    } catch(e) {
+      document.getElementById('tunerStatusMsg').textContent = '⚠ Permita o acesso ao microfone.';
+      return;
+    }
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 44100 });
+    analyser = audioCtx.createAnalyser();
+    analyser.fftSize = 2048;
+    analyser.smoothingTimeConstant = 0;
+    const src = audioCtx.createMediaStreamSource(micStream);
+    src.connect(analyser);
+
+    running = true;
+    smoothCents = 0; smoothFreq = 0; lastGoodNote = null;
+
+    const btn = document.getElementById('tunerMicBtn');
+    if (btn) { btn.classList.add('running'); document.getElementById('tunerMicLabel').textContent = 'Parar Microfone'; }
+    document.getElementById('tunerStatusMsg').textContent = 'Toque uma corda…';
+
+    rafId = requestAnimationFrame(loop);
+  }
+
+  function stop() {
+    running = false;
+    if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+    if (micStream) { micStream.getTracks().forEach(t => t.stop()); micStream = null; }
+    if (audioCtx) { audioCtx.close().catch(()=>{}); audioCtx = null; }
+    analyser = null;
+
+    const btn = document.getElementById('tunerMicBtn');
+    if (btn) { btn.classList.remove('running'); document.getElementById('tunerMicLabel').textContent = 'Ativar Microfone'; }
+    // Reset display
+    const n = document.getElementById('tunerNote');
+    if (n) { n.textContent = '—'; n.className = 'tuner-note'; }
+    const o = document.getElementById('tunerOctave'); if (o) o.textContent = '';
+    const f = document.getElementById('tunerFreq');   if (f) f.textContent = '';
+    const c = document.getElementById('tunerCents');  if (c) { c.textContent = ''; c.className = 'tuner-cents'; }
+    document.getElementById('tunerStatusMsg').textContent = 'Toque uma nota para detectar a afinação';
+    const needle = document.getElementById('tunerNeedle');
+    if (needle) needle.style.transform = 'rotate(0deg)';
+    const arc = document.getElementById('tunerArcFill');
+    if (arc) { arc.style.strokeDashoffset = '407'; arc.style.stroke = '#2a2a2a'; }
+  }
+
+  function setTarget(name, freq) {
+    targetNote = { name, freq };
+    document.querySelectorAll('.tuner-string-btn').forEach(btn => {
+      btn.classList.toggle('target', btn.dataset.target === name + freq);
+    });
+  }
+
+  return { start, stop, toggle() { running ? stop() : start(); }, get running() { return running; } };
+})();
+
+function openTuner() {
+  document.getElementById('tunerOverlay').classList.add('active');
+  // Tag buttons with data-target
+  document.querySelectorAll('.tuner-string-btn').forEach(btn => {
+    const match = btn.getAttribute('onclick').match(/tunerSetTarget\('([^']+)',([^)]+)\)/);
+    if (match) btn.dataset.target = match[1] + parseFloat(match[2]);
+  });
+}
+function closeTuner() {
+  Tuner.stop();
+  document.getElementById('tunerOverlay').classList.remove('active');
+}
+function tunerToggleMic() { Tuner.toggle(); }
+function tunerSetTarget(name, freq) {
+  document.querySelectorAll('.tuner-string-btn').forEach(btn => btn.classList.remove('target'));
+  event.currentTarget.classList.add('target');
+}
+
 // ── TOAST ─────────────────────────────────────────────────
 function showToast(msg) {
   const t = document.getElementById('toast');
@@ -3356,6 +4206,7 @@ document.addEventListener('keydown', e => {
     closePlaylistModal();
     closeConfirm(false);
     closeExportModal();
+    closeTuner();
     // If on a pre-app screen, go back to home
     if (!document.getElementById('myPlaylistsScreen').classList.contains('hidden') ||
         !document.getElementById('joinScreen').classList.contains('hidden')) {
