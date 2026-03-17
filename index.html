@@ -407,13 +407,15 @@
   .present-chord {
     font-family: 'IBM Plex Mono', monospace;
     color: #f0a030; font-weight: 700;
-    white-space: pre; display: block; line-height: 1.4;
-    text-shadow: 0 0 18px rgba(240,160,48,0.25);
+    white-space: pre; display: block; line-height: 1.3;
+    text-shadow: 0 0 18px rgba(240,160,48,0.22);
+    letter-spacing: 0;
   }
   .present-lyric {
     font-family: 'IBM Plex Mono', monospace;
-    color: var(--cream); line-height: 1.5;
-    white-space: pre; display: block;
+    color: var(--cream); font-weight: 400;
+    line-height: 1.5; white-space: pre; display: block;
+    letter-spacing: 0;
   }
   /* keep inline token styles for editor preview if used */
   .inline-line { display: flex; flex-wrap: nowrap; align-items: flex-end; overflow-x: auto; }
@@ -446,7 +448,7 @@
     color: var(--muted); min-width: 30px; text-align: center;
   }
 
-  /* ── SMART SCROLL / MIC MODE ── */
+  /* ── SMART SCROLL / KARAOKE MODE ── */
   .mic-btn {
     display: flex; align-items: center; gap: 7px;
     padding: 7px 14px; border-radius: 8px;
@@ -455,85 +457,90 @@
     font-family: 'IBM Plex Sans', sans-serif;
     font-size: 12px; font-weight: 600;
     cursor: pointer; transition: all 0.2s;
-    position: relative; overflow: hidden;
   }
   .mic-btn:hover { border-color: var(--gold); color: var(--gold); }
   .mic-btn.active {
     background: rgba(76,175,125,0.12);
-    border-color: var(--green);
-    color: var(--green);
+    border-color: var(--green); color: var(--green);
   }
-  .mic-btn.active .mic-icon { animation: micPulse 1s ease-in-out infinite; }
+  .mic-btn.active .mic-icon { animation: micPulse 1.2s ease-in-out infinite; }
   @keyframes micPulse {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.2); opacity: 0.7; }
+    0%,100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.25); opacity: 0.7; }
   }
   .mic-icon { font-size: 15px; line-height: 1; }
-
-  /* Waveform indicator */
-  .mic-wave {
-    display: none; align-items: center; gap: 2px; height: 16px;
-  }
+  .mic-wave { display: none; align-items: center; gap: 2px; height: 16px; }
   .mic-btn.active .mic-wave { display: flex; }
   .mic-btn.active .mic-label { display: none; }
   .mic-wave-bar {
-    width: 3px; border-radius: 2px;
-    background: var(--green);
-    animation: waveBar 0.6s ease-in-out infinite;
-    transform-origin: bottom;
+    width: 3px; border-radius: 2px; background: var(--green);
+    animation: waveBar 0.6s ease-in-out infinite; transform-origin: bottom;
   }
-  .mic-wave-bar:nth-child(1) { animation-delay: 0s; height: 4px; }
-  .mic-wave-bar:nth-child(2) { animation-delay: 0.1s; height: 10px; }
-  .mic-wave-bar:nth-child(3) { animation-delay: 0.2s; height: 14px; }
-  .mic-wave-bar:nth-child(4) { animation-delay: 0.3s; height: 8px; }
-  .mic-wave-bar:nth-child(5) { animation-delay: 0.4s; height: 5px; }
+  .mic-wave-bar:nth-child(1){animation-delay:0s;height:4px}
+  .mic-wave-bar:nth-child(2){animation-delay:0.1s;height:10px}
+  .mic-wave-bar:nth-child(3){animation-delay:0.2s;height:14px}
+  .mic-wave-bar:nth-child(4){animation-delay:0.3s;height:8px}
+  .mic-wave-bar:nth-child(5){animation-delay:0.4s;height:5px}
   @keyframes waveBar {
-    0%, 100% { transform: scaleY(0.4); opacity: 0.5; }
-    50% { transform: scaleY(1); opacity: 1; }
+    0%,100%{transform:scaleY(0.4);opacity:0.5}
+    50%{transform:scaleY(1);opacity:1}
   }
 
-  /* Smart scroll HUD */
+  /* Karaoke HUD strip */
   .smart-scroll-hud {
-    position: absolute;
-    bottom: 24px; left: 50%; transform: translateX(-50%);
-    background: rgba(13,13,13,0.92);
-    border: 1px solid var(--border);
-    border-radius: 12px; padding: 10px 20px;
+    position: sticky; bottom: 0; left: 0; right: 0;
+    background: rgba(10,9,8,0.96);
+    border-top: 1px solid rgba(240,160,48,0.15);
+    padding: 10px 48px;
     display: none; align-items: center; gap: 16px;
     font-family: 'IBM Plex Mono', monospace;
     font-size: 11px; color: var(--muted);
     backdrop-filter: blur(8px);
-    z-index: 20; white-space: nowrap;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-    transition: opacity 0.3s;
+    z-index: 20; flex-wrap: wrap;
   }
   .smart-scroll-hud.visible { display: flex; }
-  .hud-indicator {
-    display: flex; align-items: center; gap: 6px;
-  }
+  .hud-indicator { display: flex; align-items: center; gap: 6px; }
   .hud-dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: var(--green);
-    animation: hudPulse 1.5s ease-in-out infinite;
+    width: 8px; height: 8px; border-radius: 50%; background: var(--green);
+    animation: hudPulse 1.5s ease-in-out infinite; flex-shrink: 0;
   }
   @keyframes hudPulse {
-    0%, 100% { opacity: 0.4; transform: scale(0.8); }
-    50% { opacity: 1; transform: scale(1.1); }
+    0%,100%{opacity:0.4;transform:scale(0.8)}
+    50%{opacity:1;transform:scale(1.1)}
   }
   .hud-dot.paused { background: var(--muted); animation: none; }
   .hud-dot.listening { background: #f0a030; }
   .hud-sep { color: var(--border); }
-  .hud-progress {
-    display: flex; align-items: center; gap: 6px;
+  .hud-heard {
+    flex: 1; min-width: 0;
+    color: var(--muted); font-size: 11px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    font-style: italic;
   }
-  .hud-progress-track {
-    width: 80px; height: 3px;
-    background: var(--border); border-radius: 2px;
-    overflow: hidden;
+  .hud-heard em { color: var(--cream); font-style: normal; }
+
+  /* Karaoke highlighted line */
+  .present-line.karaoke-active .present-lyric {
+    color: #ffffff !important;
+    text-shadow: 0 0 20px rgba(255,255,255,0.6);
+    transition: color 0.2s, text-shadow 0.2s;
   }
-  .hud-progress-fill {
-    height: 100%; background: var(--green);
-    border-radius: 2px; transition: width 0.5s ease;
+  .present-line.karaoke-active .present-chord {
+    color: #ffc84a !important;
+    text-shadow: 0 0 24px rgba(255,200,74,0.7);
+  }
+  .present-line {
+    transition: opacity 0.3s;
+    border-left: 3px solid transparent;
+    padding-left: 8px;
+    margin-left: -11px;
+  }
+  .present-line.karaoke-active {
+    border-left-color: #ffffff;
+    opacity: 1 !important;
+  }
+  .karaoke-dim .present-line:not(.karaoke-active) {
+    opacity: 0.35;
   }
 
   /* ── SCROLLBAR ── */
@@ -975,7 +982,7 @@
     position: fixed; inset: 0;
     background: rgba(0,0,0,0.85);
     backdrop-filter: blur(12px);
-    z-index: 500;
+    z-index: 1000;
     display: none; align-items: center; justify-content: center;
   }
   .tuner-overlay.active { display: flex; }
@@ -1181,6 +1188,11 @@
         <div class="home-card-title">Minhas Playlists</div>
         <div class="home-card-desc">Ver, abrir e gerenciar permissões</div>
       </div>
+      <div class="home-card" onclick="openTuner()">
+        <div class="home-card-icon">🎸</div>
+        <div class="home-card-title">Afinador</div>
+        <div class="home-card-desc">Afine seu instrumento em tempo real</div>
+      </div>
     </div>
     <div class="home-logout" onclick="doLogout()">Sair da conta</div>
   </div>
@@ -1290,59 +1302,6 @@
 
 </div><!-- /appWrapper -->
 
-<!-- TUNER MODAL -->
-<div class="tuner-overlay" id="tunerOverlay">
-  <div class="tuner-box">
-    <button class="tuner-close" onclick="closeTuner()">✕</button>
-    <div class="tuner-header-label">🎸 Afinador Cromático</div>
-
-    <!-- Note display -->
-    <div class="tuner-note-display">
-      <div class="tuner-note-row">
-        <div class="tuner-note" id="tunerNote">—</div>
-        <div class="tuner-octave" id="tunerOctave"></div>
-      </div>
-    </div>
-    <div class="tuner-freq" id="tunerFreq"></div>
-
-    <!-- Meter arc SVG -->
-    <div class="tuner-meter-wrap">
-      <svg class="tuner-meter-svg" viewBox="0 0 320 170" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M 30 148 A 130 130 0 0 1 290 148" stroke="#2a2a2a" stroke-width="6" stroke-linecap="round" fill="none"/>
-        <path id="tunerArcFill" d="M 30 148 A 130 130 0 0 1 290 148" stroke="#2a2a2a" stroke-width="6" stroke-linecap="round" fill="none" stroke-dasharray="407" stroke-dashoffset="407"/>
-        <line x1="160" y1="18" x2="160" y2="34" stroke="#3a3a3a" stroke-width="2" stroke-linecap="round"/>
-        <line x1="65" y1="45" x2="73" y2="57" stroke="#2a2a2a" stroke-width="1.5" stroke-linecap="round"/>
-        <line x1="255" y1="45" x2="247" y2="57" stroke="#2a2a2a" stroke-width="1.5" stroke-linecap="round"/>
-        <g id="tunerNeedle">
-          <line x1="160" y1="148" x2="160" y2="32" stroke="#505050" stroke-width="2.5" stroke-linecap="round"/>
-          <circle cx="160" cy="148" r="6" fill="#1f1f1f" stroke="#505050" stroke-width="2"/>
-          <circle cx="160" cy="34" r="4" fill="#505050"/>
-        </g>
-        <text x="18" y="165" font-family="IBM Plex Mono,monospace" font-size="10" fill="#404040">−50¢</text>
-        <text x="143" y="13" font-family="IBM Plex Mono,monospace" font-size="10" fill="#404040">0¢</text>
-        <text x="302" y="165" font-family="IBM Plex Mono,monospace" font-size="10" fill="#404040" text-anchor="end">+50¢</text>
-      </svg>
-      <div class="tuner-cents" id="tunerCents"></div>
-    </div>
-
-    <!-- Guitar string reference buttons -->
-    <div class="tuner-strings">
-      <button class="tuner-string-btn" onclick="tunerSetTarget('E',82.41)">E<span>6ª corda</span></button>
-      <button class="tuner-string-btn" onclick="tunerSetTarget('A',110)">A<span>5ª corda</span></button>
-      <button class="tuner-string-btn" onclick="tunerSetTarget('D',146.83)">D<span>4ª corda</span></button>
-      <button class="tuner-string-btn" onclick="tunerSetTarget('G',196)">G<span>3ª corda</span></button>
-      <button class="tuner-string-btn" onclick="tunerSetTarget('B',246.94)">B<span>2ª corda</span></button>
-      <button class="tuner-string-btn" onclick="tunerSetTarget('E',329.63)">E<span>1ª corda</span></button>
-    </div>
-
-    <button class="tuner-mic-btn" id="tunerMicBtn" onclick="tunerToggleMic()">
-      <span class="tmic-icon">🎙</span>
-      <span id="tunerMicLabel">Ativar Microfone</span>
-    </button>
-    <div class="tuner-status" id="tunerStatusMsg">Toque uma nota para detectar a afinação</div>
-  </div>
-</div>
-
 <!-- CHORD REFERENCE PANEL -->
 <div class="chord-ref-panel" id="chordRefPanel">
   <div class="chord-ref-title">Referência de Acordes</div>
@@ -1364,9 +1323,9 @@
       <div class="present-key" id="presentKey"></div>
     </div>
     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-      <button class="mic-btn" id="micScrollBtn" onclick="toggleMicScroll()" title="Modo Rolagem Inteligente — o site rola automaticamente conforme você toca">
-        <span class="mic-icon">🎙</span>
-        <span class="mic-label">Rolagem Auto</span>
+      <button class="mic-btn" id="micScrollBtn" onclick="toggleMicScroll()" title="Modo Karaokê — destaca a linha que você está cantando e rola automaticamente">
+        <span class="mic-icon">🎤</span>
+        <span class="mic-label">Seguir Letra</span>
         <span class="mic-wave">
           <span class="mic-wave-bar"></span>
           <span class="mic-wave-bar"></span>
@@ -1383,23 +1342,16 @@
       <button class="btn btn-ghost btn-sm" onclick="closePresent()">✕ Fechar</button>
     </div>
   </div>
-  <div class="present-body" id="presentBody" style="position:relative"></div>
+  <div class="present-body" id="presentBody"></div>
 
-  <!-- Smart Scroll HUD -->
+  <!-- Karaoke HUD strip -->
   <div class="smart-scroll-hud" id="smartScrollHud">
     <div class="hud-indicator">
       <div class="hud-dot" id="hudDot"></div>
-      <span id="hudStatus">Ouvindo…</span>
+      <span id="hudStatus">Pronto</span>
     </div>
     <span class="hud-sep">|</span>
-    <div class="hud-progress">
-      <span id="hudPct">0%</span>
-      <div class="hud-progress-track">
-        <div class="hud-progress-fill" id="hudProgressFill" style="width:0%"></div>
-      </div>
-    </div>
-    <span class="hud-sep">|</span>
-    <span id="hudBpm">— bpm</span>
+    <div class="hud-heard" id="hudHeard">Ouvindo o que você canta…</div>
   </div>
 </div>
 
@@ -2707,9 +2659,10 @@ function buildInlineLine(chords, lyrics, lyricSize) {
 function renderPresentBody(song) {
   const body = document.getElementById('presentBody');
   body.innerHTML = '';
-  const cs = Math.round(presentFontSize * 0.78);
-  const ls = presentFontSize;
-  song.sections.forEach(sec => {
+  // IMPORTANT: chord and lyric MUST use the same font-size so that
+  // monospace character widths match and chords align over the right syllables.
+  const fs = presentFontSize;
+  song.sections.forEach((sec, secIdx) => {
     const sdiv = document.createElement('div');
     sdiv.className = 'present-section';
     sdiv.innerHTML = `<div class="present-section-label">${esc(sec.label)}</div>`;
@@ -2717,14 +2670,14 @@ function renderPresentBody(song) {
       if (!line.chords && !line.lyrics) return;
       const ldiv = document.createElement('div');
       ldiv.className = 'present-line';
-      // Render as two stacked pre lines — same mono font guarantees alignment
+      ldiv.dataset.sectionIdx = secIdx;
       if (line.chords) {
         ldiv.innerHTML =
-          `<div class="present-chord" style="font-size:${cs}px">${esc(line.chords)}</div>` +
-          `<div class="present-lyric" style="font-size:${ls}px">${esc(line.lyrics || '\u00A0')}</div>`;
+          `<div class="present-chord" style="font-size:${fs}px">${esc(line.chords)}</div>` +
+          `<div class="present-lyric" style="font-size:${fs}px">${esc(line.lyrics || '\u00A0')}</div>`;
       } else {
         ldiv.innerHTML =
-          `<div class="present-lyric" style="font-size:${ls}px">${esc(line.lyrics)}</div>`;
+          `<div class="present-lyric" style="font-size:${fs}px">${esc(line.lyrics)}</div>`;
       }
       sdiv.appendChild(ldiv);
     });
@@ -3425,6 +3378,59 @@ function exportPlaylistPDF() {
 <!-- MÚSICAS -->
 ${songsHtml}
 
+<!-- TUNER MODAL -->
+<div class="tuner-overlay" id="tunerOverlay">
+  <div class="tuner-box">
+    <button class="tuner-close" onclick="closeTuner()">✕</button>
+    <div class="tuner-header-label">🎸 Afinador Cromático</div>
+
+    <!-- Note display -->
+    <div class="tuner-note-display">
+      <div class="tuner-note-row">
+        <div class="tuner-note" id="tunerNote">—</div>
+        <div class="tuner-octave" id="tunerOctave"></div>
+      </div>
+    </div>
+    <div class="tuner-freq" id="tunerFreq"></div>
+
+    <!-- Meter arc SVG -->
+    <div class="tuner-meter-wrap">
+      <svg class="tuner-meter-svg" viewBox="0 0 320 170" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 30 148 A 130 130 0 0 1 290 148" stroke="#2a2a2a" stroke-width="6" stroke-linecap="round" fill="none"/>
+        <path id="tunerArcFill" d="M 30 148 A 130 130 0 0 1 290 148" stroke="#2a2a2a" stroke-width="6" stroke-linecap="round" fill="none" stroke-dasharray="407" stroke-dashoffset="407"/>
+        <line x1="160" y1="18" x2="160" y2="34" stroke="#3a3a3a" stroke-width="2" stroke-linecap="round"/>
+        <line x1="65" y1="45" x2="73" y2="57" stroke="#2a2a2a" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="255" y1="45" x2="247" y2="57" stroke="#2a2a2a" stroke-width="1.5" stroke-linecap="round"/>
+        <g id="tunerNeedle">
+          <line x1="160" y1="148" x2="160" y2="32" stroke="#505050" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="160" cy="148" r="6" fill="#1f1f1f" stroke="#505050" stroke-width="2"/>
+          <circle cx="160" cy="34" r="4" fill="#505050"/>
+        </g>
+        <text x="18" y="165" font-family="IBM Plex Mono,monospace" font-size="10" fill="#404040">−50¢</text>
+        <text x="143" y="13" font-family="IBM Plex Mono,monospace" font-size="10" fill="#404040">0¢</text>
+        <text x="302" y="165" font-family="IBM Plex Mono,monospace" font-size="10" fill="#404040" text-anchor="end">+50¢</text>
+      </svg>
+      <div class="tuner-cents" id="tunerCents"></div>
+    </div>
+
+    <!-- Guitar string reference buttons -->
+    <div class="tuner-strings">
+      <button class="tuner-string-btn" onclick="tunerSetTarget('E',82.41)">E<span>6ª corda</span></button>
+      <button class="tuner-string-btn" onclick="tunerSetTarget('A',110)">A<span>5ª corda</span></button>
+      <button class="tuner-string-btn" onclick="tunerSetTarget('D',146.83)">D<span>4ª corda</span></button>
+      <button class="tuner-string-btn" onclick="tunerSetTarget('G',196)">G<span>3ª corda</span></button>
+      <button class="tuner-string-btn" onclick="tunerSetTarget('B',246.94)">B<span>2ª corda</span></button>
+      <button class="tuner-string-btn" onclick="tunerSetTarget('E',329.63)">E<span>1ª corda</span></button>
+    </div>
+
+    <button class="tuner-mic-btn" id="tunerMicBtn" onclick="tunerToggleMic()">
+      <span class="tmic-icon">🎙</span>
+      <span id="tunerMicLabel">Ativar Microfone</span>
+    </button>
+    <div class="tuner-status" id="tunerStatusMsg">Toque uma nota para detectar a afinação</div>
+  </div>
+</div>
+
 </body>
 </html>`;
 
@@ -3616,290 +3622,353 @@ function toggleChordRef() {
 }
 
 // ══════════════════════════════════════════════════════════
-// ── SMART SCROLL ENGINE (Mic-based auto-scroll) ───────────
+// ══════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
+// ── KARAOKE ENGINE v13 — Next-line word anticipation ───────
+// ══════════════════════════════════════════════════════════
+//
+//  IDEIA CENTRAL:
+//  O sistema sempre sabe quais palavras estão na PRÓXIMA linha.
+//  Quando você fala uma dessas palavras → avança.
+//  Quando você fala uma palavra da linha ATUAL → confirma/fica.
+//  Palavra não encontrada em nenhuma das duas → ignora.
+//
+//  Para saltar de seção (refrão, etc.): a palavra falada
+//  precisa não existir na seção atual E existir na outra seção.
+//  Aí vai para a linha mais próxima dessa seção que contém ela.
+//
+//  Anti-fragmento-parcial: ignora palavra se for prefixo
+//  de algo na linha atual ou próxima.
+//
+//  Regras mantidas:
+//  - Mesma seção: só avança, nunca volta
+//  - Seção diferente: pode ir para qualquer lugar
+//  - Palavra por palavra em tempo real
+//  - Debounce: 400ms
 // ══════════════════════════════════════════════════════════
 
 const SmartScroll = (() => {
-  // ── State ──────────────────────────────────────────────
-  let active = false;
-  let audioCtx = null;
-  let analyser = null;
-  let micStream = null;
-  let animFrame = null;
 
-  // Scroll tracking
-  let scrollProgress = 0;      // 0..1 fraction through song
-  let scrollVelocity = 0;      // px/sec current target
-  let lastScrollY = 0;
-  let targetScrollY = 0;
-  let currentScrollY = 0;
-  let totalScrollH = 0;
+  let active         = false;
+  let recognition    = null;
+  let lineIndex      = [];
+  let currentLine    = -1;
+  let lastWord       = '';
+  let lastActivation = 0;
+  let lastFragment   = '';
+  let pendingRestart = null;
 
-  // Audio analysis state
-  let energyHistory = [];       // rolling RMS energy window
-  const ENERGY_WIN = 30;        // frames to average (~0.5s)
+  // ── Normaliza ─────────────────────────────────────────
+  const EQUIV = {
+    'pra':'para','pro':'para','pros':'para','pras':'para',
+    'prum':'para','pruma':'para',
+    'ta':'esta','tou':'estou',
+    'ce':'voce',
+    'tava':'estava','tavam':'estavam',
+    'tive':'estive',
+    'ne':'nao','neh':'nao',
+  };
 
-  let onsetTimes = [];          // timestamps of detected beats/onsets
-  const ONSET_WIN = 8000;       // ms window for BPM calc
-  const ONSET_THRESH_MULT = 1.6; // energy spike threshold multiplier
-
-  let estimatedBpm = 0;
-  let songDurationEstMs = 0;    // estimated total song time (ms)
-  let songStartTime = 0;        // when mic was activated
-  let lastFrameTime = 0;
-
-  // Silence / pause detection
-  let silenceStart = 0;
-  let isSilent = false;
-  let silenceThreshold = 0.008; // RMS below this = silence
-  const SILENCE_HOLD_MS = 1200; // ms of silence before pausing scroll
-
-  // Smoothing
-  let smoothedEnergy = 0;
-  let baselineEnergy = 0;       // adaptive noise floor
-
-  // ── Helpers ────────────────────────────────────────────
-  function getRms(buf) {
-    let sum = 0;
-    for (let i = 0; i < buf.length; i++) sum += buf[i] * buf[i];
-    return Math.sqrt(sum / buf.length);
+  function norm(str) {
+    return (str || '')
+      .toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9\s]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
   }
 
-  function estimateSongDuration(song) {
-    // Heuristic: count total lines, estimate ~2-4s per line at 80-100 bpm
-    let lineCount = 0;
-    for (const sec of song.sections) lineCount += sec.lines.filter(l => l.lyrics || l.chords).length;
-    const secCount = song.sections.length;
-
-    // If BPM is set, use it; otherwise guess 80
-    const bpm = parseInt(song.bpm) || 80;
-    // Average ~2 beats per lyric line, 4 beats per bar
-    const beatsPerLine = 4;
-    const msPerBeat = 60000 / bpm;
-    // Add section headers as 4-beat gaps
-    return (lineCount * beatsPerLine + secCount * 8) * msPerBeat;
+  function normWord(w) {
+    const n = norm(w);
+    return EQUIV[n] || n;
   }
 
-  function updateBpmEstimate(now) {
-    // Remove old onsets outside window
-    onsetTimes = onsetTimes.filter(t => now - t < ONSET_WIN);
-    if (onsetTimes.length < 3) return;
-
-    // Calculate median inter-onset interval
-    const gaps = [];
-    for (let i = 1; i < onsetTimes.length; i++) gaps.push(onsetTimes[i] - onsetTimes[i-1]);
-    gaps.sort((a,b) => a-b);
-    const medGap = gaps[Math.floor(gaps.length / 2)];
-    if (medGap < 200 || medGap > 2000) return; // sanity range 30-300 bpm
-
-    const raw = Math.round(60000 / medGap);
-    // Snap to musically common values
-    const snapped = snapBpm(raw);
-    estimatedBpm = estimatedBpm ? estimatedBpm * 0.85 + snapped * 0.15 : snapped;
-
-    // Update HUD
-    const hudBpm = document.getElementById('hudBpm');
-    if (hudBpm) hudBpm.textContent = Math.round(estimatedBpm) + ' bpm';
+  function normLine(text) {
+    return norm(text).split(' ').map(w => EQUIV[w] || w).join(' ');
   }
 
-  function snapBpm(bpm) {
-    // Musical doubling/halving to land in 50-200 range
-    while (bpm < 50) bpm *= 2;
-    while (bpm > 200) bpm /= 2;
-    return bpm;
+  // Retorna Set de palavras de uma linha normalizada
+  function lineWords(lineNorm) {
+    return new Set(lineNorm.split(' ').filter(w => w.length >= 2));
   }
 
-  function calcScrollVelocity() {
-    const overlay = document.getElementById('presentOverlay');
-    if (!overlay) return 0;
-    const body = document.getElementById('presentBody');
-    if (!body) return 0;
-
-    totalScrollH = body.scrollHeight - overlay.clientHeight + 80;
-    if (totalScrollH <= 0) return 0;
-
-    // Use estimated BPM if available, else song BPM or default 80
-    const song = getSong(state.activeSong);
-    const bpm = estimatedBpm || parseInt(song?.bpm) || 80;
-
-    // Re-estimate song duration using live BPM
-    if (estimatedBpm > 0 && song) {
-      let lineCount = 0;
-      for (const sec of song.sections) lineCount += sec.lines.filter(l => l.lyrics || l.chords).length;
-      const secCount = song.sections.length;
-      const msPerBeat = 60000 / estimatedBpm;
-      songDurationEstMs = (lineCount * 4 + secCount * 8) * msPerBeat;
-    }
-
-    if (songDurationEstMs <= 0) return 0;
-
-    // px/ms velocity
-    return totalScrollH / songDurationEstMs;
+  // Verifica se W é prefixo de alguma palavra MAIOR na linha
+  function isPrefixInLine(lineNorm, w) {
+    return lineNorm.split(' ').some(lw => lw !== w && lw.startsWith(w));
   }
 
-  // ── Audio loop ─────────────────────────────────────────
-  function audioLoop(timestamp) {
-    if (!active) return;
-    animFrame = requestAnimationFrame(audioLoop);
+  // ── Processa UMA palavra ──────────────────────────────
+  function processWord(rawWord) {
+    const w = normWord(rawWord);
+    if (!w || w.length < 2) return;
+    if (w === lastWord) return;
 
-    const now = performance.now();
-    const dt = lastFrameTime ? now - lastFrameTime : 16;
-    lastFrameTime = now;
+    const n = lineIndex.length;
 
-    // ── 1. Read audio ──
-    const buf = new Float32Array(analyser.fftSize);
-    analyser.getFloatTimeDomainData(buf);
-    const rms = getRms(buf);
+    // Linha atual e próxima
+    const curIdx  = currentLine;
+    const nextIdx = currentLine + 1;
+    const curLine  = curIdx  >= 0 && curIdx  < n ? lineIndex[curIdx]  : null;
+    const nextLine = nextIdx >= 0 && nextIdx < n ? lineIndex[nextIdx] : null;
 
-    // Adaptive noise floor (slow rise, fast fall)
-    baselineEnergy = Math.max(baselineEnergy * 0.998 + rms * 0.002, silenceThreshold * 0.5);
-    const relEnergy = rms / Math.max(baselineEnergy, 0.0001);
-    smoothedEnergy = smoothedEnergy * 0.85 + rms * 0.15;
+    // Ignora prefixos parciais (Chrome ainda completando a palavra)
+    if (curLine  && isPrefixInLine(curLine.normText,  w)) return;
+    if (nextLine && isPrefixInLine(nextLine.normText, w)) return;
 
-    // Rolling energy history for onset detection
-    energyHistory.push(rms);
-    if (energyHistory.length > ENERGY_WIN) energyHistory.shift();
-    const avgEnergy = energyHistory.reduce((a,b) => a+b, 0) / energyHistory.length;
+    lastWord = w;
 
-    // ── 2. Onset detection (energy spike) ──
-    if (rms > avgEnergy * ONSET_THRESH_MULT && rms > 0.015) {
-      const lastOnset = onsetTimes[onsetTimes.length - 1] || 0;
-      if (now - lastOnset > 150) { // min 150ms between onsets
-        onsetTimes.push(now);
-        updateBpmEstimate(now);
-      }
-    }
-
-    // ── 3. Silence detection ──
-    if (rms < silenceThreshold && smoothedEnergy < silenceThreshold * 1.5) {
-      if (!isSilent) {
-        if (!silenceStart) silenceStart = now;
-        else if (now - silenceStart > SILENCE_HOLD_MS) {
-          isSilent = true;
-          updateHud('paused', 'Pausado…');
+    // ── Sem posição ainda: busca a primeira linha que contém a palavra
+    if (!curLine) {
+      for (let i = 0; i < n; i++) {
+        if (lineWords(lineIndex[i].normText).has(w)) {
+          activateLine(i);
+          return;
         }
       }
-    } else {
-      silenceStart = 0;
-      if (isSilent) {
-        isSilent = false;
-        updateHud('active', 'Ouvindo…');
-      }
-    }
-
-    // ── 4. Scroll ──
-    if (!isSilent) {
-      const vel = calcScrollVelocity(); // px/ms
-      currentScrollY += vel * dt;
-      currentScrollY = Math.max(0, Math.min(currentScrollY, totalScrollH));
-
-      // Smooth scroll: lerp toward target
-      const overlay = document.getElementById('presentOverlay');
-      if (overlay) {
-        const delta = currentScrollY - overlay.scrollTop;
-        overlay.scrollTop += delta * 0.04; // very smooth lerp
-      }
-
-      // Progress
-      const pct = totalScrollH > 0 ? Math.min(1, currentScrollY / totalScrollH) : 0;
-      updateProgress(pct);
-    }
-  }
-
-  function updateHud(state, label) {
-    const dot = document.getElementById('hudDot');
-    const status = document.getElementById('hudStatus');
-    if (!dot || !status) return;
-    dot.className = 'hud-dot' + (state === 'paused' ? ' paused' : state === 'listening' ? ' listening' : '');
-    status.textContent = label;
-  }
-
-  function updateProgress(pct) {
-    const fill = document.getElementById('hudProgressFill');
-    const pctEl = document.getElementById('hudPct');
-    if (fill) fill.style.width = (pct * 100).toFixed(1) + '%';
-    if (pctEl) pctEl.textContent = Math.round(pct * 100) + '%';
-  }
-
-  // ── Public API ─────────────────────────────────────────
-  async function start() {
-    if (active) return;
-
-    // Request mic
-    try {
-      micStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
-    } catch(e) {
-      showToast('🎙 Permita o acesso ao microfone para usar a rolagem automática!');
       return;
     }
 
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    const source = audioCtx.createMediaStreamSource(micStream);
+    const curWords  = lineWords(curLine.normText);
+    const nextWords = nextLine ? lineWords(nextLine.normText) : new Set();
+    const curSec    = curLine.sectionIdx;
 
-    analyser = audioCtx.createAnalyser();
-    analyser.fftSize = 2048;
-    analyser.smoothingTimeConstant = 0.5;
-    source.connect(analyser);
+    // ── A. Palavra está na PRÓXIMA linha (mesma seção) → avança
+    if (nextLine && nextLine.sectionIdx === curSec && nextWords.has(w)) {
+      activateLine(nextIdx);
+      return;
+    }
 
-    // Reset state
-    energyHistory = [];
-    onsetTimes = [];
-    estimatedBpm = 0;
-    smoothedEnergy = 0;
-    baselineEnergy = 0.01;
-    isSilent = false;
-    silenceStart = 0;
-    currentScrollY = 0;
-    lastFrameTime = 0;
+    // ── B. Palavra está na linha ATUAL → fica (confirma)
+    if (curWords.has(w)) return;
 
-    // Scroll the overlay back to top
+    // ── C. Palavra não existe em nenhuma linha da seção atual
+    //      → salto para outra seção (refrão, segunda parte, etc.)
+    //      Vai para a linha mais PRÓXIMA que contém a palavra
+    const inCurSec = lineIndex
+      .some(l => l.sectionIdx === curSec && lineWords(l.normText).has(w));
+
+    if (!inCurSec) {
+      let closest = -1, closestDist = Infinity;
+      for (let i = 0; i < n; i++) {
+        if (lineIndex[i].sectionIdx === curSec) continue;
+        if (!lineWords(lineIndex[i].normText).has(w)) continue;
+        const dist = Math.abs(i - curIdx);
+        if (dist < closestDist) { closestDist = dist; closest = i; }
+      }
+      if (closest >= 0) { activateLine(closest); return; }
+    }
+
+    // ── D. Não encontrou → fica
+  }
+
+  // ── Ativa linha e rola ────────────────────────────────
+  function activateLine(idx) {
+    if (idx < 0 || idx >= lineIndex.length) return;
+    const now = Date.now();
+    if (idx === currentLine) return;
+    if (now - lastActivation < 400) return;
+
+    const body = document.getElementById('presentBody');
+    if (!body) return;
+
+    body.querySelectorAll('.karaoke-active')
+        .forEach(e => e.classList.remove('karaoke-active'));
+
+    const el = lineIndex[idx].el;
+    el.classList.add('karaoke-active');
+    body.classList.add('karaoke-dim');
+
     const overlay = document.getElementById('presentOverlay');
-    if (overlay) overlay.scrollTop = 0;
+    if (overlay) {
+      const oRect  = overlay.getBoundingClientRect();
+      const eRect  = el.getBoundingClientRect();
+      const target = overlay.scrollTop + (eRect.top - oRect.top) - overlay.clientHeight * 0.28;
+      overlay.scrollTo({ top: Math.max(0, target), behavior: 'smooth' });
+    }
 
-    // Estimate song duration
-    const song = getSong(state.activeSong);
-    if (song) songDurationEstMs = estimateSongDuration(song);
+    currentLine    = idx;
+    lastActivation = now;
+  }
 
-    active = true;
-    songStartTime = performance.now();
+  function setHud(dotState, status, heard) {
+    const dot     = document.getElementById('hudDot');
+    const statEl  = document.getElementById('hudStatus');
+    const heardEl = document.getElementById('hudHeard');
+    if (dot) dot.className = 'hud-dot'
+      + (dotState === 'paused'    ? ' paused'    :
+         dotState === 'listening' ? ' listening' : '');
+    if (statEl)  statEl.textContent = status;
+    if (heardEl && heard !== undefined) heardEl.innerHTML = heard;
+  }
 
-    // Update UI
-    const btn = document.getElementById('micScrollBtn');
-    if (btn) btn.classList.add('active');
-    const hud = document.getElementById('smartScrollHud');
-    if (hud) hud.classList.add('visible');
+  function buildLineIndex() {
+    lineIndex = [];
+    document.querySelectorAll('#presentBody .present-line').forEach(el => {
+      const text = (el.querySelector('.present-lyric')?.textContent || '').trim();
+      if (text && text !== '\u00A0') {
+        lineIndex.push({
+          text,
+          normText:   normLine(text),
+          sectionIdx: parseInt(el.dataset.sectionIdx ?? '0'),
+          el
+        });
+      }
+    });
+  }
 
-    updateHud('listening', 'Calibrando…');
-    setTimeout(() => { if (active) updateHud('active', 'Ouvindo…'); }, 2000);
+  function start() {
+    if (active) return;
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SR) {
+      showToast('⚠ Reconhecimento de voz não suportado. Use Chrome ou Safari 14.1+.');
+      setHud('paused', 'Não suportado', 'Use Chrome ou Safari 14.1+');
+      return;
+    }
 
-    animFrame = requestAnimationFrame(audioLoop);
-    showToast('🎙 Rolagem automática ativada! Comece a tocar.');
+    buildLineIndex();
+    if (!lineIndex.length) {
+      showToast('Esta música não tem letra para seguir.');
+      return;
+    }
+
+    // Safari iOS: continuous=true funciona desde 14.1, mas pode parar
+    // sozinho após silêncio — o onend com restart automático cobre isso.
+    // interimResults=true funciona em Safari moderno e é necessário para
+    // resposta palavra por palavra sem esperar a frase terminar.
+    const isSafariIOS = /iP(hone|ad|od)/.test(navigator.userAgent);
+
+    recognition = new SR();
+    recognition.lang            = 'pt-BR';
+    recognition.continuous      = true;
+    recognition.interimResults  = true;
+    recognition.maxAlternatives = 1;
+
+    recognition.onstart = () => {
+      if (!active) currentLine = -1; // só reseta na primeira vez
+      active         = true;
+      lastWord       = '';
+      lastFragment   = '';
+      lastActivation = 0;
+      document.getElementById('micScrollBtn')?.classList.add('active');
+      document.getElementById('smartScrollHud')?.classList.add('visible');
+      setHud('listening', 'Ouvindo…', 'Comece a cantar 🎤');
+    };
+
+    const onResult = (event) => {
+      const result   = event.results[event.results.length - 1];
+      const fragment = result[0].transcript.trim();
+      if (!fragment) return;
+
+      const prev     = lastFragment.split(' ').filter(Boolean);
+      const curr     = fragment.split(' ').filter(Boolean);
+      const newWords = curr.slice(prev.length);
+
+      if (result.isFinal) {
+        lastFragment = '';
+        lastWord     = '';
+      } else {
+        lastFragment = fragment;
+      }
+
+      for (const word of newWords) {
+        if (word.trim()) processWord(word.trim());
+      }
+
+      setHud('', currentLine >= 0 ? 'Seguindo…' : 'Ouvindo…',
+             `<em>${curr.slice(-4).join(' ')}</em>`);
+    };
+
+    // Guarda referência para reusar no restart do Safari
+    recognition.onresult = onResult;
+
+    function makeNewRec() {
+      const r = new SR();
+      r.lang            = 'pt-BR';
+      r.continuous      = true;
+      r.interimResults  = true;
+      r.maxAlternatives = 1;
+      r.onresult = onResult;
+      r.onerror  = onError;
+      r.onend    = onEnd;
+      return r;
+    }
+
+    function onError(e) {
+      if (e.error === 'not-allowed') {
+        showToast('🎤 Permita o acesso ao microfone!');
+        stop();
+        return;
+      }
+      // outros erros: reinicia
+      if (active) {
+        clearTimeout(pendingRestart);
+        pendingRestart = setTimeout(() => {
+          if (!active) return;
+          try { recognition = makeNewRec(); recognition.start(); } catch(err) {}
+        }, 300);
+      }
+    }
+
+    function onEnd() {
+      if (!active) return;
+      // Safari/iOS para após silêncio — reinicia automaticamente
+      clearTimeout(pendingRestart);
+      pendingRestart = setTimeout(() => {
+        if (!active) return;
+        try {
+          if (isSafariIOS) recognition = makeNewRec();
+          recognition.start();
+        } catch(e) {}
+      }, isSafariIOS ? 80 : 200);
+    }
+
+    recognition.onerror = onError;
+    recognition.onend   = onEnd;
+
+    try {
+      recognition.start();
+      showToast('🎤 Modo karaokê ativado! Comece a cantar.');
+    } catch(e) {
+      showToast('Erro ao iniciar reconhecimento de voz.');
+    }
   }
 
   function stop() {
     active = false;
-    if (animFrame) { cancelAnimationFrame(animFrame); animFrame = null; }
-    if (micStream) { micStream.getTracks().forEach(t => t.stop()); micStream = null; }
-    if (audioCtx) { audioCtx.close().catch(()=>{}); audioCtx = null; }
-    analyser = null;
-
-    const btn = document.getElementById('micScrollBtn');
-    if (btn) btn.classList.remove('active');
-    const hud = document.getElementById('smartScrollHud');
-    if (hud) hud.classList.remove('visible');
-
-    showToast('🎙 Rolagem automática desativada.');
+    clearTimeout(pendingRestart);
+    if (recognition) { try { recognition.abort(); } catch(e) {} recognition = null; }
+    const body = document.getElementById('presentBody');
+    if (body) {
+      body.querySelectorAll('.karaoke-active')
+          .forEach(e => e.classList.remove('karaoke-active'));
+      body.classList.remove('karaoke-dim');
+    }
+    document.getElementById('micScrollBtn')?.classList.remove('active');
+    document.getElementById('smartScrollHud')?.classList.remove('visible');
+    currentLine = -1;
+    showToast('🎤 Modo karaokê desativado.');
   }
 
-  function toggle() {
-    if (active) stop(); else start();
-  }
+  function toggle() { active ? stop() : start(); }
 
   function reset() {
     if (active) stop();
-    estimatedBpm = 0;
-    onsetTimes = [];
-    currentScrollY = 0;
+    currentLine = -1;
+    const body = document.getElementById('presentBody');
+    if (body) {
+      body.querySelectorAll('.karaoke-active')
+          .forEach(e => e.classList.remove('karaoke-active'));
+      body.classList.remove('karaoke-dim');
+    }
     const overlay = document.getElementById('presentOverlay');
     if (overlay) overlay.scrollTop = 0;
   }
@@ -3909,11 +3978,9 @@ const SmartScroll = (() => {
 
 function toggleMicScroll() { SmartScroll.toggle(); }
 
-// Stop mic if user closes presentation
-const _origClosePresent = typeof closePresent === 'function' ? closePresent : null;
-// Will be patched after closePresent is defined (see below)
+// ── END KARAOKE ENGINE ────────────────────────────────────
 
-// ── END SMART SCROLL ENGINE ───────────────────────────────
+
 
 // ══════════════════════════════════════════════════════════
 // ── CHROMATIC TUNER ───────────────────────────────────────
@@ -4228,5 +4295,58 @@ window.addEventListener('DOMContentLoaded', () => {
   runIntro(isDemo);
 });
 </script>
+<!-- TUNER MODAL -->
+<div class="tuner-overlay" id="tunerOverlay">
+  <div class="tuner-box">
+    <button class="tuner-close" onclick="closeTuner()">✕</button>
+    <div class="tuner-header-label">🎸 Afinador Cromático</div>
+
+    <!-- Note display -->
+    <div class="tuner-note-display">
+      <div class="tuner-note-row">
+        <div class="tuner-note" id="tunerNote">—</div>
+        <div class="tuner-octave" id="tunerOctave"></div>
+      </div>
+    </div>
+    <div class="tuner-freq" id="tunerFreq"></div>
+
+    <!-- Meter arc SVG -->
+    <div class="tuner-meter-wrap">
+      <svg class="tuner-meter-svg" viewBox="0 0 320 170" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 30 148 A 130 130 0 0 1 290 148" stroke="#2a2a2a" stroke-width="6" stroke-linecap="round" fill="none"/>
+        <path id="tunerArcFill" d="M 30 148 A 130 130 0 0 1 290 148" stroke="#2a2a2a" stroke-width="6" stroke-linecap="round" fill="none" stroke-dasharray="407" stroke-dashoffset="407"/>
+        <line x1="160" y1="18" x2="160" y2="34" stroke="#3a3a3a" stroke-width="2" stroke-linecap="round"/>
+        <line x1="65" y1="45" x2="73" y2="57" stroke="#2a2a2a" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="255" y1="45" x2="247" y2="57" stroke="#2a2a2a" stroke-width="1.5" stroke-linecap="round"/>
+        <g id="tunerNeedle">
+          <line x1="160" y1="148" x2="160" y2="32" stroke="#505050" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="160" cy="148" r="6" fill="#1f1f1f" stroke="#505050" stroke-width="2"/>
+          <circle cx="160" cy="34" r="4" fill="#505050"/>
+        </g>
+        <text x="18" y="165" font-family="IBM Plex Mono,monospace" font-size="10" fill="#404040">−50¢</text>
+        <text x="143" y="13" font-family="IBM Plex Mono,monospace" font-size="10" fill="#404040">0¢</text>
+        <text x="302" y="165" font-family="IBM Plex Mono,monospace" font-size="10" fill="#404040" text-anchor="end">+50¢</text>
+      </svg>
+      <div class="tuner-cents" id="tunerCents"></div>
+    </div>
+
+    <!-- Guitar string reference buttons -->
+    <div class="tuner-strings">
+      <button class="tuner-string-btn" onclick="tunerSetTarget('E',82.41)">E<span>6ª corda</span></button>
+      <button class="tuner-string-btn" onclick="tunerSetTarget('A',110)">A<span>5ª corda</span></button>
+      <button class="tuner-string-btn" onclick="tunerSetTarget('D',146.83)">D<span>4ª corda</span></button>
+      <button class="tuner-string-btn" onclick="tunerSetTarget('G',196)">G<span>3ª corda</span></button>
+      <button class="tuner-string-btn" onclick="tunerSetTarget('B',246.94)">B<span>2ª corda</span></button>
+      <button class="tuner-string-btn" onclick="tunerSetTarget('E',329.63)">E<span>1ª corda</span></button>
+    </div>
+
+    <button class="tuner-mic-btn" id="tunerMicBtn" onclick="tunerToggleMic()">
+      <span class="tmic-icon">🎙</span>
+      <span id="tunerMicLabel">Ativar Microfone</span>
+    </button>
+    <div class="tuner-status" id="tunerStatusMsg">Toque uma nota para detectar a afinação</div>
+  </div>
+</div>
+
 </body>
 </html>
