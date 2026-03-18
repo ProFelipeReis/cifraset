@@ -411,6 +411,7 @@
     text-shadow: 0 0 18px rgba(240,160,48,0.22);
     letter-spacing: 0;
   }
+
   .present-lyric {
     font-family: 'IBM Plex Mono', monospace;
     color: var(--cream); font-weight: 400;
@@ -545,7 +546,7 @@
   /* ── EAR TRAINING ── */
   .ear-screen {
     position: fixed; inset: 0; z-index: 950;
-    background: var(--bg);
+    background: transparent;
     display: none; flex-direction: column;
     align-items: center; justify-content: flex-start;
     overflow-y: auto; padding: 40px 20px 60px;
@@ -553,6 +554,13 @@
   .ear-screen.active { display: flex; }
   .ear-box {
     width: 100%; max-width: 600px;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px; padding: 36px 40px;
+    backdrop-filter: blur(48px);
+    -webkit-backdrop-filter: blur(48px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    animation: cardEntrance 0.35s cubic-bezier(0.22,1,0.36,1) both;
   }
   .ear-back {
     display: flex; align-items: center; gap: 8px;
@@ -593,8 +601,8 @@
   .ear-hint {
     font-size: 13px; color: var(--muted); margin-bottom: 24px;
     line-height: 1.6; padding: 12px 16px;
-    background: var(--surface2); border-radius: 8px;
-    border-left: 3px solid var(--border);
+    background: rgba(255,255,255,0.03); border-radius: 8px;
+    border-left: 3px solid rgba(255,255,255,0.12);
   }
   .ear-hint strong { color: var(--text); }
 
@@ -607,8 +615,8 @@
     font-family: 'IBM Plex Mono', monospace;
     font-size: 15px; font-weight: 700;
     padding: 14px 4px; border-radius: 10px;
-    border: 1px solid var(--border);
-    background: var(--surface2); color: var(--text);
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.03); color: var(--text);
     cursor: pointer; transition: all 0.15s;
     text-align: center;
   }
@@ -624,8 +632,8 @@
   }
   .ear-scale-card {
     padding: 14px 16px; border-radius: 10px;
-    border: 1px solid var(--border);
-    background: var(--surface2);
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.03);
     cursor: pointer; transition: all 0.15s;
   }
   .ear-scale-card:hover { border-color: var(--gold); background: rgba(255,255,255,0.04); }
@@ -640,7 +648,7 @@
 
   /* Result panel */
   .ear-result {
-    background: var(--surface2); border: 1px solid var(--border);
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
     border-radius: 12px; padding: 20px 24px; margin-bottom: 20px;
     display: none;
   }
@@ -662,7 +670,7 @@
     font-family: 'IBM Plex Mono', monospace;
     font-size: 12px; font-weight: 700;
     padding: 4px 12px; border-radius: 20px;
-    background: var(--bg); border: 1px solid var(--border);
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
     color: var(--muted);
   }
   .ear-scale-chip.root { color: var(--gold); border-color: var(--gold); background: rgba(212,212,212,0.06); }
@@ -670,7 +678,7 @@
 
   /* Summary */
   .ear-summary {
-    background: var(--surface2); border: 1px solid var(--border);
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
     border-radius: 16px; padding: 28px 32px; text-align: center;
   }
   .ear-summary-icon { font-size: 48px; margin-bottom: 12px; }
@@ -681,7 +689,7 @@
   }
   .ear-summary-score { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
   .ear-summary-tips {
-    text-align: left; background: var(--bg);
+    text-align: left; background: rgba(255,255,255,0.02);
     border-radius: 10px; padding: 16px 20px;
     margin-bottom: 20px;
   }
@@ -710,7 +718,7 @@
   .etool-scale-card {
     display: flex; align-items: center; gap: 12px;
     padding: 12px 14px; border-radius: 10px;
-    border: 1px solid var(--border); background: var(--surface2);
+    border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03);
     cursor: pointer; transition: all 0.15s;
   }
   .etool-scale-card:hover { border-color: var(--gold); background: rgba(255,255,255,0.03); }
@@ -719,7 +727,7 @@
   .etool-scale-name { font-size: 13px; font-weight: 600; color: var(--cream); margin-bottom: 2px; font-family: 'IBM Plex Mono', monospace; }
   .etool-scale-feel { font-size: 11px; color: var(--muted); }
   .etool-header {
-    background: var(--surface2); border: 1px solid var(--border);
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
     border-radius: 14px; padding: 18px 20px; margin-bottom: 20px;
   }
   .etool-key-badge {
@@ -737,7 +745,7 @@
   }
   .etool-note-pill {
     display: flex; flex-direction: column; align-items: center;
-    background: var(--bg); border: 1px solid var(--border);
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
     border-radius: 8px; padding: 6px 10px; min-width: 42px;
   }
   .etool-note-pill.root { border-color: var(--gold); background: rgba(212,212,212,0.07); }
@@ -752,8 +760,8 @@
   .etool-tab {
     font-family: 'IBM Plex Sans', sans-serif;
     font-size: 12px; font-weight: 600; padding: 7px 14px;
-    border-radius: 8px; border: 1px solid var(--border);
-    background: var(--surface2); color: var(--muted);
+    border-radius: 8px; border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.03); color: var(--muted);
     cursor: pointer; transition: all 0.15s;
   }
   .etool-tab:hover { color: var(--text); border-color: var(--muted); }
@@ -762,14 +770,14 @@
   @keyframes etFadeIn { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:none; } }
   .etool-tip-box {
     font-size: 12px; color: var(--muted); line-height: 1.65;
-    background: var(--surface2); border: 1px solid var(--border);
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
     border-left: 3px solid var(--gold); border-radius: 0 8px 8px 0;
     padding: 12px 14px;
   }
   .etool-tip-box strong { color: var(--text); }
   .etool-kb-label {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    font-size: 8px; letter-spacing: 2px; text-transform: uppercase;
     color: var(--muted); margin-bottom: 8px; margin-top: 16px;
   }
   .etool-keyboard {
@@ -802,14 +810,14 @@
   .etool-leg-item.out-scale { color: var(--border); }
   .etool-sec-title {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    font-size: 8px; letter-spacing: 2px; text-transform: uppercase;
     color: var(--muted); margin-bottom: 10px;
     padding-bottom: 6px; border-bottom: 1px solid var(--border);
   }
   .etool-degree-list { display: flex; flex-direction: column; gap: 4px; }
   .etool-degree-row {
     display: flex; align-items: center; gap: 12px;
-    padding: 9px 14px; background: var(--surface2);
+    padding: 9px 14px; background: rgba(255,255,255,0.03);
     border-radius: 8px; border: 1px solid transparent;
     transition: border-color 0.15s;
   }
@@ -831,9 +839,9 @@
     gap: 8px; margin-bottom: 16px;
   }
   .etool-chord-card {
-    border: 1px solid var(--border); border-radius: 10px;
-    padding: 14px 12px; background: var(--surface2);
-    border-top: 3px solid var(--chord-color, var(--border));
+    border: 1px solid rgba(255,255,255,0.08); border-radius: 10px;
+    padding: 14px 12px; background: rgba(255,255,255,0.03);
+    border-top: 3px solid var(--chord-color, rgba(255,255,255,0.15));
     transition: all 0.15s;
   }
   .etool-chord-card:hover { background: rgba(255,255,255,0.03); }
@@ -848,7 +856,7 @@
   }
   .etool-func-item { display: flex; align-items: center; gap: 5px; }
   .etool-prog-card {
-    background: var(--surface2); border: 1px solid var(--border);
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
     border-radius: 10px; padding: 14px 16px; margin-bottom: 10px;
   }
   .etool-prog-name { font-size: 12px; font-weight: 600; color: var(--cream); margin-bottom: 4px; }
@@ -856,7 +864,7 @@
   .etool-prog-chords { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
   .etool-prog-chord {
     font-family: 'IBM Plex Mono', monospace; font-size: 16px; font-weight: 700;
-    color: var(--cream); background: var(--bg); border: 1px solid var(--border);
+    color: var(--cream); background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12);
     border-radius: 7px; padding: 5px 12px;
   }
   .etool-prog-arrow { color: var(--muted); font-size: 14px; }
@@ -864,7 +872,7 @@
   .etool-tips-grid { display: flex; flex-direction: column; gap: 8px; }
   .etool-tip-card {
     display: flex; gap: 14px; align-items: flex-start;
-    background: var(--surface2); border: 1px solid var(--border);
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
     border-radius: 10px; padding: 14px 16px;
   }
   .etool-tip-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
@@ -873,7 +881,7 @@
 
   /* ── ESCUTAR HOME MODE ── */
   .etool-mode-card {
-    background: var(--surface2); border: 1px solid var(--border);
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
     border-radius: 14px; padding: 18px 20px;
     margin-bottom: 4px;
   }
@@ -892,7 +900,7 @@
   .etool-mode-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
 
   .escutar-detect-area {
-    background: var(--bg); border: 1px solid var(--border);
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
     border-radius: 10px; padding: 14px 16px; margin-bottom: 12px;
     text-align: center;
   }
@@ -926,7 +934,7 @@
   .escutar-candidates { margin-bottom: 12px; }
   .escutar-cand-label {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    font-size: 8px; letter-spacing: 2px; text-transform: uppercase;
     color: var(--muted); margin-bottom: 8px;
   }
   .escutar-cand-list { display: flex; flex-direction: column; gap: 5px; }
@@ -1037,7 +1045,7 @@
   }
   .escutar-cr-label {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+    font-size: 8px; letter-spacing: 3px; text-transform: uppercase;
     color: var(--muted); margin-bottom: 8px;
   }
   .escutar-cr-chord {
@@ -1057,7 +1065,7 @@
 
   .escutar-chord-map-label {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    font-size: 8px; letter-spacing: 2px; text-transform: uppercase;
     color: var(--muted); margin-bottom: 8px;
   }
   .escutar-chord-map {
@@ -1065,7 +1073,7 @@
   }
   .escutar-chord-pill {
     display: flex; flex-direction: column; align-items: center;
-    background: var(--bg); border: 1px solid var(--border);
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
     border-radius: 10px; padding: 10px 12px; min-width: 56px;
     transition: all 0.2s; cursor: default; flex: 1;
   }
@@ -1081,7 +1089,7 @@
   }
   .escutar-pill-roman {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 9px; color: var(--muted); margin-bottom: 2px;
+    font-size: 8px; color: var(--muted); margin-bottom: 2px;
   }
   .escutar-chord-pill.active .escutar-pill-roman { color: var(--c, var(--gold)); }
   .escutar-pill-name {
@@ -1094,7 +1102,7 @@
 
   .escutar-history-label {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    font-size: 8px; letter-spacing: 2px; text-transform: uppercase;
     color: var(--muted); margin-bottom: 6px;
   }
   .escutar-history {
@@ -1239,7 +1247,7 @@
   }
   .analysis-chord-pill {
     display: flex; flex-direction: column; align-items: center;
-    background: var(--bg); border: 1px solid var(--border);
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
     border-radius: 8px; padding: 6px 12px; gap: 2px;
     min-width: 48px;
   }
@@ -1252,7 +1260,7 @@
   }
   .analysis-chord-degree {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 9px; color: var(--muted); letter-spacing: 1px;
+    font-size: 8px; color: var(--muted); letter-spacing: 1px;
   }
   .analysis-sec-why {
     font-size: 13px; color: var(--text); line-height: 1.65;
@@ -1267,6 +1275,223 @@
   }
   .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--muted); }
   .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+  /* ── AUTO SCROLL BPM ── */
+  .autoscroll-bar {
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 10px; padding: 6px 10px;
+    backdrop-filter: blur(8px);
+  }
+  .autoscroll-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--muted); white-space: nowrap;
+  }
+  .autoscroll-bpm-display {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px; font-weight: 700; color: var(--cream);
+    min-width: 36px; text-align: center; line-height: 1;
+  }
+  .autoscroll-bpm-display.running { color: #4caf7d; }
+  .as-btn {
+    width: 24px; height: 24px; border-radius: 6px;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+    color: var(--cream); font-size: 14px; font-weight: 700;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s; line-height: 1; padding: 0;
+  }
+  .as-btn:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.25); }
+  .as-toggle {
+    padding: 5px 10px; border-radius: 7px;
+    font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase;
+    border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.05);
+    color: var(--muted); cursor: pointer; transition: all 0.2s; white-space: nowrap;
+  }
+  .as-toggle:hover { border-color: rgba(255,255,255,0.3); color: var(--cream); }
+  .as-toggle.active {
+    background: rgba(76,175,125,0.15); border-color: #4caf7d;
+    color: #4caf7d;
+  }
+
+  /* ── CHORD DIAGRAM TOOLTIP ── */
+  /* ── SHARE MODAL ── */
+  .share-overlay {
+    position: fixed; inset: 0; z-index: 1200;
+    background: rgba(0,0,0,0.75); backdrop-filter: blur(8px);
+    display: none; align-items: flex-end; justify-content: center;
+    padding-bottom: 0;
+  }
+  .share-overlay.active { display: flex; }
+  .share-sheet {
+    background: #18181f; border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px 20px 0 0; padding: 20px 24px 32px;
+    width: 100%; max-width: 480px;
+    animation: sheetUp 0.32s cubic-bezier(0.22,1,0.36,1) both;
+  }
+  @keyframes sheetUp {
+    from { transform: translateY(100%); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+  }
+  .share-sheet.exiting {
+    animation: sheetDown 0.22s cubic-bezier(0.4,0,1,1) both;
+  }
+  @keyframes sheetDown {
+    from { transform: translateY(0);    opacity: 1; }
+    to   { transform: translateY(100%); opacity: 0; }
+  }
+  .share-handle {
+    width: 36px; height: 4px; border-radius: 2px;
+    background: rgba(255,255,255,0.15); margin: 0 auto 16px;
+  }
+  .share-title {
+    font-family: 'Syne', serif; font-size: 16px; font-weight: 700;
+    color: var(--cream); margin-bottom: 4px;
+  }
+  .share-sub { font-size: 11px; color: var(--muted); margin-bottom: 20px; }
+  .share-options { display: flex; flex-direction: column; gap: 8px; }
+  .share-option {
+    display: flex; align-items: center; gap: 14px;
+    padding: 13px 16px; border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.07);
+    background: rgba(255,255,255,0.03);
+    cursor: pointer; transition: all 0.18s;
+  }
+  .share-option:hover { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.15); }
+  .share-option-icon {
+    width: 38px; height: 38px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .share-option-info { flex: 1; min-width: 0; }
+  .share-option-title { font-size: 13px; font-weight: 600; color: var(--cream); }
+  .share-option-desc  { font-size: 11px; color: var(--muted); margin-top: 1px; }
+  .share-option-arrow { color: var(--muted); font-size: 14px; }
+  .share-link-row {
+    display: flex; gap: 8px; align-items: center; margin-top: 8px;
+  }
+  .share-link-input {
+    flex: 1; font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+    padding: 8px 12px; border-radius: 8px;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+    color: var(--muted); outline: none;
+  }
+  .share-link-copy {
+    padding: 8px 14px; border-radius: 8px;
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+    color: var(--cream); font-size: 12px; font-weight: 600;
+    cursor: pointer; transition: all 0.15s; font-family: 'IBM Plex Sans', sans-serif;
+    white-space: nowrap;
+  }
+  .share-link-copy:hover { background: rgba(255,255,255,0.14); }
+  .share-divider {
+    height: 1px; background: rgba(255,255,255,0.06); margin: 12px 0;
+  }
+
+  /* ── PUBLIC VIEWER ── */
+  #publicViewOverlay {
+    position: fixed; inset: 0; z-index: 2000;
+    background: var(--bg); display: none;
+    flex-direction: column;
+  }
+  .pv-header {
+    display: flex; align-items: center; gap: 16px;
+    padding: 14px 24px; border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    position: sticky; top: 0; z-index: 10;
+  }
+  .pv-logo { height: 28px; width: auto; object-fit: contain; mix-blend-mode: lighten; }
+  .pv-playlist-name {
+    font-family: 'Syne', serif; font-size: 16px; font-weight: 700;
+    color: var(--cream); flex: 1;
+  }
+  .pv-playlist-meta { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; }
+  .pv-body {
+    display: flex; flex: 1; overflow: hidden;
+    height: calc(100vh - 57px);
+  }
+  .pv-sidebar {
+    width: 240px; min-width: 240px; overflow-y: auto;
+    border-right: 1px solid var(--border);
+    background: var(--surface);
+    padding: 8px 0;
+  }
+  .pv-song-btn {
+    width: 100%; display: flex; align-items: center; gap: 10px;
+    padding: 10px 16px; background: none; border: none;
+    cursor: pointer; text-align: left; transition: background 0.15s;
+    border-left: 3px solid transparent;
+  }
+  .pv-song-btn:hover { background: var(--surface2); }
+  .pv-song-btn.active { background: var(--surface2); border-left-color: var(--gold); }
+  .pv-song-num { font-family: 'IBM Plex Mono',monospace; font-size: 10px; color: var(--muted); min-width: 20px; }
+  .pv-song-title { font-size: 12px; font-weight: 500; color: var(--cream); flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pv-song-key { font-family: 'IBM Plex Mono',monospace; font-size: 10px; color: var(--muted); }
+  .pv-main { flex: 1; overflow-y: auto; padding: 32px 40px; }
+  .pv-song-header { margin-bottom: 28px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+  .pv-song-name { font-family: 'Syne',serif; font-size: 26px; font-weight: 900; color: var(--cream); margin-bottom: 4px; }
+  .pv-song-info { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono',monospace; }
+  .pv-section { margin-bottom: 28px; }
+  .pv-section-label {
+    font-family: 'IBM Plex Mono',monospace; font-size: 10px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 10px;
+    padding-bottom: 6px; border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .pv-line { margin-bottom: 12px; }
+  .pv-chord {
+    font-family: 'IBM Plex Mono',monospace; color: #f0a030;
+    font-weight: 700; white-space: pre; line-height: 1.3;
+    text-shadow: 0 0 16px rgba(240,160,48,0.2);
+  }
+
+  .pv-lyric {
+    font-family: 'IBM Plex Mono',monospace; color: var(--text);
+    line-height: 1.6; white-space: pre-wrap;
+  }
+  .pv-read-only-badge {
+    font-family: 'IBM Plex Mono',monospace; font-size: 9px;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--muted); padding: 3px 8px;
+    border: 1px solid var(--border); border-radius: 4px;
+  }
+  @media (max-width: 600px) {
+    .pv-sidebar { display: none; }
+    .pv-main { padding: 20px 16px; }
+  }
+
+  /* ── CHORD TOOLTIP (Raphael.chord) ── */
+  .chord-token {
+    display: inline;
+    font-family: 'IBM Plex Mono', monospace;
+    color: #f0a030; font-weight: 700;
+    white-space: pre;
+    cursor: help;
+    border-bottom: 1px dotted rgba(240,160,48,0.5);
+    transition: color 0.1s;
+  }
+  .chord-token:hover { color: #ffd066; }
+
+  #rcTooltip {
+    position: fixed; z-index: 9999;
+    display: none;
+    background: #111118;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    padding: 5px;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.8);
+  }
+  #rcTooltip.visible { display: block; }
+  #rcDiagContainer {
+    width: 130px; height: 130px;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #111118;
+  }
+  #rcDiagContainer svg { display: block; background: #111118; }
+
+  body > svg { display: none !important; }
 
   /* ── SCROLLBAR ── */
   ::-webkit-scrollbar { width: 6px; }
@@ -1492,20 +1717,7 @@
   .auth-switch a:hover { text-decoration: underline; }
 
   /* ── LOADING SPINNER OVERLAY ── */
-  #loadingSpinner {
-    position: fixed; inset: 0; z-index: 902;
-    display: none; align-items: center; justify-content: center;
-    pointer-events: none;
-  }
-  #loadingSpinner.active { display: flex; }
-  .spinner-ring {
-    width: 36px; height: 36px;
-    border-radius: 50%;
-    border: 2px solid rgba(255,255,255,0.12);
-    border-top-color: rgba(255,255,255,0.7);
-    animation: spinnerRot 0.7s linear infinite;
-  }
-  @keyframes spinnerRot { to { transform: rotate(360deg); } }
+
 
   /* ── HOME OVERLAY (sobre o canvas animado) ── */
   #homeOverlay {
@@ -1528,8 +1740,9 @@
     transform: translateY(0) scale(1);
   }
   .home-overlay-logo {
-    width: 160px; height: auto; object-fit: contain;
-    margin-bottom: 20px;
+    width: 210px; height: auto; object-fit: contain;
+    margin-bottom: 16px;
+    margin-top: -40px;
     mix-blend-mode: lighten; filter: brightness(1.05);
     opacity: 0;
     transform: translateY(-10px);
@@ -1547,15 +1760,17 @@
 
   .home-overlay-cards {
     display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+    max-width: 296px; margin: 0 auto;
   }
   .home-overlay-card {
     background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.09);
+    border: 1px solid rgba(255,255,255,0.08);
     border-radius: 16px; padding: 24px 18px; width: 140px;
     cursor: pointer; transition: all 0.25s cubic-bezier(0.22,1,0.36,1);
     text-align: center;
-    backdrop-filter: blur(48px);
-    -webkit-backdrop-filter: blur(48px);
+    backdrop-filter: blur(24px) saturate(1.4);
+    -webkit-backdrop-filter: blur(24px) saturate(1.4);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
     opacity: 0;
     transform: translateY(18px) scale(0.94);
   }
@@ -1571,10 +1786,11 @@
                 border-color 0.2s, background 0.2s, box-shadow 0.2s;
   }
   .home-overlay-card:hover {
-    border-color: rgba(255,255,255,0.18);
+    border-color: rgba(255,255,255,0.15);
     transform: translateY(-5px) !important;
-    background: rgba(255,255,255,0.07);
-    box-shadow: 0 12px 32px rgba(0,0,0,0.35);
+    background: rgba(255,255,255,0.04);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+    transition-delay: 0s !important;
   }
   .home-overlay-card-icon { font-size: 28px; margin-bottom: 10px; }
   .home-overlay-card-icon img {
@@ -1854,8 +2070,9 @@
   /* ── TUNER MODAL ── */
   .tuner-overlay {
     position: fixed; inset: 0;
-    background: rgba(0,0,0,0.85);
-    backdrop-filter: blur(12px);
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
     z-index: 1000;
     display: none; align-items: center; justify-content: center;
     transition: opacity 0.3s ease;
@@ -1880,30 +2097,19 @@
   .tuner-overlay.exiting .tuner-box {
     animation: cardExit 0.22s cubic-bezier(0.4,0,1,1) both !important;
   }
-  /* On canvas background — more glass effect */
-  .tuner-overlay.from-home .tuner-box {
-    background: rgba(18,18,22,0.7);
-    backdrop-filter: blur(48px);
-    -webkit-backdrop-filter: blur(48px);
-    border-color: rgba(255,255,255,0.1);
-    box-shadow: 0 24px 64px rgba(0,0,0,0.5);
-  }
-  /* When opened from home overlay — transparent background, canvas shows through */
-  .tuner-overlay.from-home {
-    background: transparent;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-  }
+  /* from-home: sem override — usa o mesmo glass do tuner-box padrão */
 
   .tuner-box {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 24px;
-    padding: 40px 44px 36px;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    padding: 36px 40px;
     width: 440px; max-width: 95vw;
     display: flex; flex-direction: column; align-items: center;
     position: relative;
-    box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+    backdrop-filter: blur(48px);
+    -webkit-backdrop-filter: blur(48px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
   }
   .tuner-close {
     position: absolute; top: 16px; right: 18px;
@@ -1915,7 +2121,7 @@
   .tuner-header-label {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--muted); margin-bottom: 24px; align-self: flex-start;
+    color: var(--muted); margin-bottom: 20px; align-self: flex-start;
   }
   .tuner-note-display {
     display: flex; flex-direction: column; align-items: center;
@@ -1923,14 +2129,14 @@
   }
   .tuner-note-row { display: flex; align-items: flex-start; gap: 2px; }
   .tuner-note {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 96px; font-weight: 700; line-height: 1;
+    font-family: 'Syne', serif;
+    font-size: 96px; font-weight: 900; line-height: 1;
     color: var(--cream); transition: color 0.25s, text-shadow 0.25s, opacity 0.3s;
     min-width: 100px; text-align: center; letter-spacing: -2px;
   }
   .tuner-note.idle {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 72px; font-weight: 100; opacity: 0.2;
+    font-family: 'Syne', serif;
+    font-size: 72px; font-weight: 400; opacity: 0.2;
     color: var(--muted); letter-spacing: 0;
   }
   .tuner-note.in-tune {
@@ -1974,7 +2180,7 @@
   }
   .tuner-chromatic-track {
     position: relative; height: 36px;
-    background: var(--surface2); border: 1px solid var(--border);
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
     border-radius: 10px; overflow: hidden;
   }
   .tuner-chromatic-notes {
@@ -2022,8 +2228,8 @@
     font-family: 'IBM Plex Sans', sans-serif;
     font-size: 14px; font-weight: 700;
     cursor: pointer; transition: all 0.2s;
-    border: 2px solid var(--border);
-    background: var(--surface2); color: var(--text);
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.03); color: var(--text);
     letter-spacing: 0.3px;
   }
   .tuner-mic-btn:hover { border-color: #4caf7d; color: #4caf7d; }
@@ -2041,7 +2247,2854 @@
     transform-origin: 160px 148px;
   }
 
+
+  /* ── PLAYLISTS OVERLAY ── */
+  #playlistsOverlay {
+    position: fixed; inset: 0; z-index: 960;
+    display: none; align-items: center; justify-content: center;
+    pointer-events: none;
+  }
+  #playlistsOverlay.active {
+    display: flex;
+    pointer-events: all;
+  }
+  .plov-box {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px; padding: 28px 32px;
+    width: 520px; max-width: 96vw;
+    max-height: 85vh; overflow-y: auto;
+    backdrop-filter: blur(48px);
+    -webkit-backdrop-filter: blur(48px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    opacity: 0; transform: translateY(18px) scale(0.97);
+    transition: opacity 0.35s cubic-bezier(0.22,1,0.36,1), transform 0.35s cubic-bezier(0.22,1,0.36,1);
+  }
+  #playlistsOverlay.active .plov-box {
+    opacity: 1; transform: none;
+  }
+  .plov-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 24px; gap: 12px;
+  }
+  .plov-title {
+    font-family: 'Syne', serif;
+    font-size: 20px; color: var(--cream); font-weight: 700; flex: 1; text-align: center;
+  }
+  .plov-list { display: flex; flex-direction: column; gap: 10px; }
+  .plov-item {
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px; padding: 14px 16px;
+    display: flex; align-items: center; gap: 12px;
+    transition: border-color 0.15s;
+  }
+  .plov-item:hover { border-color: rgba(255,255,255,0.15); }
+  .plov-item-info { flex: 1; min-width: 0; }
+  .plov-item-name {
+    font-size: 14px; font-weight: 600; color: var(--cream);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .plov-item-meta { font-size: 11px; color: var(--muted); margin-top: 3px; }
+  .plov-code {
+    font-family: 'IBM Plex Mono', monospace; font-size: 14px; font-weight: 700;
+    color: var(--gold); background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1); border-radius: 6px;
+    padding: 4px 10px; cursor: pointer; letter-spacing: 2px;
+    transition: background 0.15s; flex-shrink: 0;
+  }
+  .plov-code:hover { background: rgba(255,255,255,0.08); }
+  .plov-inline-perm {
+    display: flex; gap: 3px; flex-shrink: 0;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 7px; padding: 3px;
+  }
+  .plov-inline-btn {
+    background: none; border: none;
+    border-radius: 5px; padding: 4px 7px;
+    font-size: 13px; cursor: pointer;
+    transition: all 0.15s; opacity: 0.35;
+  }
+  .plov-inline-btn:hover { opacity: 0.7; background: rgba(255,255,255,0.06); }
+  .plov-inline-btn.active { opacity: 1; background: rgba(255,255,255,0.1); }
+  .plov-empty {
+    text-align: center; padding: 40px 20px; color: var(--muted); font-size: 13px;
+  }
+  /* view create */
+  #plovViewList, #plovViewCreate {
+    transition: opacity 0.2s ease;
+  }
+  .plov-create-body { display: flex; flex-direction: column; gap: 16px; }
+  .plov-name-input {
+    width: 100%;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px; color: var(--cream);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 16px; padding: 14px 16px; outline: none;
+    transition: border-color 0.15s;
+  }
+  .plov-name-input:focus { border-color: rgba(255,255,255,0.35); }
+  .plov-name-input::placeholder { color: var(--muted); }
+  .plov-create-footer {
+    display: flex; gap: 8px; justify-content: flex-end;
+  }
+  .plov-perm-row {
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .plov-perm-label {
+    font-size: 11px; color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 1px; text-transform: uppercase;
+  }
+  .plov-perm-toggle {
+    display: flex; gap: 6px;
+  }
+  .plov-perm-btn {
+    flex: 1; padding: 9px 12px; border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface2); color: var(--muted);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13px; font-weight: 500;
+    cursor: pointer; transition: all 0.18s;
+  }
+  .plov-perm-btn:hover { border-color: rgba(255,255,255,0.2); color: var(--text); }
+  .plov-perm-btn.active { border-color: var(--gold); color: var(--cream); background: rgba(212,212,212,0.06); }
+  .plov-perm-hint {
+    font-size: 11px; color: var(--muted); font-style: italic;
+  }
 </style>
+<!-- Raphael + chord plugin for diagrams -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.3.0/raphael.min.js"></script>
+<script>
+/*!
+ * Chord 0.1.0 - Raphael plugin
+ *
+ * Copyright (c) 2011 Justin D'Arcangelo (http://twitter.com/justindarc)
+ * Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
+ */
+
+(function(Raphael) {
+  
+  Raphael.chord = function(elementOrPosition, data, labelOrVariant) {
+    return new Chord(elementOrPosition, data, labelOrVariant);
+  };
+  
+  Raphael.chord.find = function(root, name, variation) {
+    if (!root) {
+      return undefined;
+    }
+    
+    if (!name) {
+      name = 'maj';
+    }
+    
+    if (!variation || variation < 1) {
+      variation = 1;
+    }
+    
+    for (var i = 0; i < Raphael.chord.data.length; i++) {
+      var chordObject = Raphael.chord.data[i];
+      
+      for (var j = 0; j < chordObject.root.length; j++) {
+        if (root === chordObject.root[j]) {
+          for (var k = 0; k < chordObject.types.length; k++) {
+            if (name === chordObject.types[k].name) {
+              if (variation > chordObject.types[k].variations.length) {
+                variation = chordObject.types[k].variations.length;
+              }
+              
+              return chordObject.types[k].variations[variation - 1];
+            }
+          }
+        }
+      }
+    }
+    
+    return undefined;
+  };
+  
+  Raphael.chord.data = [{
+    root: ['A'],
+    types: [{
+      name: 'maj',
+      variations: [
+        [-1,  0,  2,  2,  2,  0],
+        [ 5,  4,  2,  2,  2, -1],
+        [ 5,  7,  7,  6,  5,  5],
+        [ 9, -1,  7,  9, 10, -1],
+        [-1, -1,  7,  9, 10,  9],
+        [12, -1, 11,  9, 10, -1],
+        [-1, 12, 11,  9, 10,  9]
+      ]
+    }, {
+      name: '5',
+      variations: [
+        [-1,  0,  2,  2, -1, -1],
+        [-1,  0,  2,  2,  5,  5],
+        [ 5,  7,  7, -1, -1, -1],
+        [-1, -1,  7,  9, 10, -1]
+      ]
+    }, {
+      name: '6',
+      variations: [
+        [-1,  0,  2,  2,  2,  2],
+        [ 5, -1,  4,  6,  2, -1],
+        [ 5,  7, -1,  6,  7,  5]
+      ]
+    }, {
+      name: '7',
+      variations: [
+        [-1,  0,  2,  0,  2,  0],
+        [-1,  0,  2,  2,  2,  1],
+        [ 5,  7,  5,  6,  5,  5],
+        [ 5,  7, -1,  6,  8, -1],
+        [-1, -1,  7,  9,  8,  9],
+        [-1, 10, -1,  9, 10,  9]
+      ]
+    }, {
+      name: 'maj7',
+      variations: [
+        [-1,  0,  2,  1,  2,  0],
+        [-1,  0,  2,  2,  2,  4],
+        [-1, -1,  7,  6,  5,  4],
+        [-1, 12, 11,  9,  9,  9]
+      ]
+    }, {
+      name: '9',
+      variations: [
+        [-1,  0,  2,  4,  2,  3],
+        [ 5,  4,  5,  4,  5, -1],
+        [ 5,  7,  5,  6,  5,  7],
+        [-1, 12, 11, 12, 12, 12]
+      ]
+    }, {
+      name: 'maj9',
+      variations: [
+        [-1,  0,  2,  4,  2,  4],
+        [ 5, -1,  6,  6, -1,  7]
+      ]
+    }, {
+      name: '11',
+      variations: [
+        [-1,  0,  0,  0,  2,  0],
+        [ 5,  5,  5,  6,  5,  7],
+        [-1, -1,  7,  7,  8,  9],
+        [-1, 12, 11, 12, 10, 10]
+      ]
+    }, {
+      name: '13',
+      variations: [
+        [-1,  0,  2,  0,  2,  2],
+        [-1, -1,  5,  2,  2,  2],
+        [ 5,  7,  5,  6,  7,  5]
+      ]
+    }, {
+      name: 'maj13',
+      variations: [
+        [-1,  0,  2,  1,  2,  2],
+        [ 5,  4,  4,  4,  5,  4]
+      ]
+    }, {
+      name: 'min',
+      variations: [
+        [-1,  0,  2,  2,  1,  0],
+        [-1,  3,  2,  2,  5, -1],
+        [ 5,  7,  7,  5,  5,  5],
+        [-1, -1,  7,  5,  5,  8],
+        [-1,  7, 10,  9, 10, -1],
+        [-1, -1,  7,  9, 10,  8],
+        [-1, 12, 10,  9, 10, -1]
+      ]
+    }, {
+      name: 'min6',
+      variations: [
+        [-1,  0,  2,  2,  1,  2],
+        [ 5, -1,  4,  5,  5,  5],
+        [-1, -1,  7,  9,  7,  8],
+        [-1, 12, -1, 11, 13, 12]
+      ]
+    }, {
+      name: 'min7',
+      variations: [
+        [-1,  0,  2,  0,  1,  0],
+        [ 5,  7,  5,  5,  8,  5],
+        [ 5, -1,  5,  5,  5, -1],
+        [-1, 12, 10, 12, 10, 12]
+      ]
+    }, {
+      name: 'min9',
+      variations: [
+        [ 5,  3,  2,  0,  0,  0],
+        [-1,  0,  2,  4,  1,  0],
+        [-1,  0,  5,  5,  0,  0],
+        [ 5, -1,  5,  5,  5,  7]
+      ]
+    }, {
+      name: 'min11',
+      variations: [
+        [-1,  0,  0,  0,  1,  0],
+        [-1,  7,  7,  7,  8,  8]
+      ]
+    }, {
+      name: 'min13',
+      variations: [
+        [-1,  0,  2,  0,  1,  2],
+        [ 5,  7,  5,  5,  7,  5]
+      ]
+    }, {
+      name: 'min(maj7)',
+      variations: [
+        [-1,  0,  2,  2,  1,  4],
+        [ 5,  7,  6,  5,  5,  5]
+      ]
+    }, {
+      name: 'sus2',
+      variations: [
+        [-1,  0,  2,  2,  0,  0],
+        [ 5, -1, -1,  4,  5,  5],
+        [-1, -1,  7,  9, 10,  7],
+        [-1, 12,  9,  9, 10, -1]
+      ]
+    }, {
+      name: 'sus4',
+      variations: [
+        [-1,  0,  2,  2,  3,  0],
+        [ 5,  7,  7,  7,  5,  5],
+        [-1,  7,  7,  7, 10, 10]
+      ]
+    }, {
+      name: 'dim',
+      variations: [
+        [-1,  0,  1,  2,  1,  2],
+        [ 5, -1,  4,  5,  4, -1]
+      ]
+    }, {
+      name: 'aug',
+      variations: [
+        [-1,  0,  3,  2,  2,  1],
+        [ 5, -1,  7,  6,  6, -1],
+        [-1, -1, 11, 10, 10,  9],
+        [-1, 12, 11, 10, 10, -1]
+      ]
+    }, {
+      name: '6/9',
+      variations: [
+        [-1,  0,  4,  4,  2,  0],
+        [ 5,  2,  2,  2,  2,  2],
+        [ 5,  7, -1,  6,  7,  7],
+        [-1,  9,  9,  9, 10,  9]
+      ]
+    }, {
+      name: '7sus4',
+      variations: [
+        [-1,  0,  2,  0,  3,  0],
+        [ 5,  7,  5,  7,  5,  5]
+      ]
+    }, {
+      name: '7b5',
+      variations: [
+        [-1,  0,  1,  2,  2,  3],
+        [-1,  6,  7,  6,  8, -1]
+      ]
+    }, {
+      name: '7b9',
+      variations: [
+        [ 5,  4, -1,  3,  5,  3],
+        [ 5,  7,  8,  6,  5,  5],
+        [ 5,  7,  5,  6,  5,  6],
+        [ 0, 12, 11, 12, 11, 12]
+      ]
+    }, {
+      name: '9sus4',
+      variations: [
+        [ 5, -1,  5,  4,  3, -1],
+        [-1, -1,  7,  7,  8,  7],
+        [-1, 12, -1, 12, 12, 10],
+        [-1, 12, 12, 12, 12, 12]
+      ]
+    }, {
+      name: 'add9',
+      variations: [
+        [-1,  0,  2,  4,  2,  0],
+        [-1, -1,  7,  6,  5,  7],
+        [-1, -1,  9,  9, 10,  9],
+        [-1, 12, 11,  9, 12, -1]
+      ]
+    }, {
+      name: 'aug9',
+      variations: [
+        [ 5, -1,  5,  6,  6,  7],
+        [-1, 10,  9, 10, 10, 11]
+      ]
+    }]
+  }, {
+    root: ['A#', 'Bb'],
+    types: [{
+      name: 'maj',
+      variations: [
+        [-1,  1,  3,  3,  3,  1],
+        [ 6,  5,  3,  3,  3, -1],
+        [-1, -1,  3,  3,  3,  6],
+        [ 6,  8,  8,  7,  6,  6],
+        [10, -1,  8, 10, 11, -1],
+        [-1, -1,  8, 10, 11, 10],
+        [-1, 13, 12, 10, 11, 10]
+      ]
+    }, {
+      name: '5',
+      variations: [
+        [-1,  1,  3,  3, -1, -1],
+        [-1, -1,  3,  3,  6,  6],
+        [ 6,  8,  8, -1, -1, -1],
+        [-1, -1,  8, 10, 11, -1]
+      ]
+    }, {
+      name: '6',
+      variations: [
+        [-1,  1,  3,  3,  3,  3],
+        [ 6,  5,  3,  3,  3,  3],
+        [ 6, -1,  5,  7,  6, -1],
+        [ 6,  8, -1,  7,  8,  6]
+      ]
+    }, {
+      name: '7',
+      variations: [
+        [-1,  1,  3,  1,  3,  1],
+        [ 4, -1,  3,  3,  3, -1],
+        [-1,  1,  3,  3,  3,  4],
+        [ 6,  8,  6,  7,  6,  6],
+        [ 6,  8, -1,  7,  9, -1],
+        [-1, -1,  8, 10,  9, 10]
+      ]
+    }, {
+      name: 'maj7',
+      variations: [
+        [-1,  1,  3,  2,  3,  1],
+        [-1, -1,  8,  7,  6,  5],
+        [ 6, -1,  7,  7,  6, -1],
+        [-1, -1,  8, 10, 10, 10]
+      ]
+    }, {
+      name: '9',
+      variations: [
+        [-1,  1,  0,  1,  1,  1],
+        [ 6, -1,  6,  5,  3, -1],
+        [ 6,  8,  6,  7,  6,  8],
+        [10, -1,  8, 10,  9,  8]
+      ]
+    }, {
+      name: 'maj9',
+      variations: [
+        [-1,  1,  0,  2,  1,  1],
+        [ 6, -1,  7,  7, -1,  8]
+      ]
+    }, {
+      name: '11',
+      variations: [
+        [-1,  1,  1,  1,  3,  1],
+        [ 6,  6,  6,  7,  6,  8],
+        [-1, -1,  8,  8,  9, 10],
+        [10, -1, -1, 10,  9, 11]
+      ]
+    }, {
+      name: '13',
+      variations: [
+        [-1,  1, -1,  1,  3,  3],
+        [ 6,  8,  6,  7,  8,  6],
+        [ 6, -1,  6,  7,  8,  8]
+      ]
+    }, {
+      name: 'maj13',
+      variations: [
+        [-1,  1, -1,  2,  3,  3],
+        [ 6, -1,  7,  7,  8,  8]
+      ]
+    }, {
+      name: 'min',
+      variations: [
+        [-1,  1,  3,  3,  2,  1],
+        [-1, -1,  3,  6,  6,  6],
+        [-1,  4,  3,  3,  6, -1],
+        [ 6,  8,  8,  6,  6,  6],
+        [-1, -1,  8,  6,  6,  9],
+        [-1, -1,  8, 10, 11,  9],
+        [-1, 13, 11, 10, 11, -1]
+      ]
+    }, {
+      name: 'min6',
+      variations: [
+        [-1,  1,  3,  0,  2, -1],
+        [ 6, -1,  5,  6,  6, -1],
+        [ 6,  8,  8,  6,  8,  6],
+        [-1, -1, 11, 12, 11, 13]
+      ]
+    }, {
+      name: 'min7',
+      variations: [
+        [-1,  1,  3,  1,  2,  1],
+        [ 6,  8,  6,  6,  9,  6],
+        [ 6, -1,  6,  6,  6, -1],
+        [-1, -1,  8, 10,  9,  9]
+      ]
+    }, {
+      name: 'min9',
+      variations: [
+        [ 6, -1,  6,  6,  6,  8],
+        [-1, 13, 11, 13, 13, -1]
+      ]
+    }, {
+      name: 'min11',
+      variations: [
+        [-1,  1,  1,  1,  2,  1],
+        [-1,  8,  8,  8,  9,  9]
+      ]
+    }, {
+      name: 'min13',
+      variations: [
+        [-1,  1, -1,  1,  2,  3],
+        [ 6,  8,  6,  6,  8,  6]
+      ]
+    }, {
+      name: 'min(maj7)',
+      variations: [
+        [-1,  1,  3,  2,  2,  1],
+        [-1, -1,  8, 10, 10,  9]
+      ]
+    }, {
+      name: 'sus2',
+      variations: [
+        [-1,  1,  3,  3,  1,  1],
+        [ 6, -1, -1,  5,  6,  6],
+        [-1, -1,  8, 10, 11,  8],
+        [-1, 13, 10, 10, 11, -1]
+      ]
+    }, {
+      name: 'sus4',
+      variations: [
+        [-1,  1,  1,  3,  4,  1],
+        [ 6,  8,  8,  8,  6,  6],
+        [-1,  8,  8,  8, 11, 11],
+        [-1, -1, 13, 10, 11, 13]
+      ]
+    }, {
+      name: 'dim',
+      variations: [
+        [ 6, -1,  5,  6,  5, -1],
+        [ 6,  7,  8,  6,  8,  6]
+      ]
+    }, {
+      name: 'aug',
+      variations: [
+        [-1,  1,  0,  3,  3,  2],
+        [ 6, -1,  8,  7,  7, -1],
+        [-1, -1,  8,  7,  7,  6],
+        [-1, -1,  8,  7,  7, 10]
+      ]
+    }, {
+      name: '6/9',
+      variations: [
+        [-1,  1,  0,  0,  1,  1],
+        [ 6,  3,  3,  3,  3,  3],
+        [-1,  5,  5,  5,  6,  6],
+        [-1, 10, 10, 10, 11, 10]
+      ]
+    }, {
+      name: '7sus4',
+      variations: [
+        [-1,  1,  3,  1,  4,  1],
+        [-1, -1,  8, 10,  9, 11]
+      ]
+    }, {
+      name: '7b5',
+      variations: [
+        [-1,  1,  0,  1,  3,  0],
+        [-1, -1,  8,  9,  9, 10]
+      ]
+    }, {
+      name: '7b9',
+      variations: [
+        [-1,  1,  0,  1,  0,  1],
+        [ 6,  5, -1,  4,  6,  4],
+        [ 6,  8,  9,  7,  6,  6],
+        [ 6,  8,  9,  7, -1, -1],
+        [ 6,  8,  6,  7,  6,  7],
+        [-1, 13, -1, 13, 12, 10],
+        [-1, 13, 12, 13, 12, 13]
+      ]
+    }, {
+      name: '9sus4',
+      variations: [
+        [-1,  1,  1,  1,  1,  1],
+        [ 6, -1,  6,  5,  4, -1],
+        [ 6,  8,  6,  8,  6,  8],
+        [-1, 13, -1, 13, 13, 12]
+      ]
+    }, {
+      name: 'add9',
+      variations: [
+        [-1,  1,  1,  1,  1, -1],
+        [-1,  1,  3,  5,  3,  1],
+        [-1, -1,  8,  7,  6,  8],
+        [-1, -1, 10, 10, 11, 10]
+      ]
+    }, {
+      name: 'aug9',
+      variations: [
+        [-1,  1,  0,  1,  1,  2],
+        [ 6, -1,  6,  7,  7,  8]
+      ]
+    }]
+  }, {
+    root: ['B'],
+    types: [{
+      name: 'maj',
+      variations: [
+        [-1,  2,  4,  4,  4,  2],
+        [ 7,  6,  4,  4,  4, -1],
+        [-1, -1,  4,  4,  4,  7],
+        [ 7,  9,  9,  8,  7,  7],
+        [11, -1,  9, 11, 12, -1],
+        [-1, -1,  9, 11, 12, 11]
+      ]
+    }, {
+      name: '5',
+      variations: [
+        [-1,  2,  4,  4, -1, -1],
+        [-1, -1,  4,  4,  7,  7],
+        [ 7,  9,  9, -1, -1, -1],
+        [-1, -1,  9, 11, 12, -1]
+      ]
+    }, {
+      name: '6',
+      variations: [
+        [ 2,  2,  1,  1,  0, -1],
+        [-1,  2,  4,  4,  4,  4],
+        [ 7, -1,  6,  8,  7, -1],
+        [ 7,  9, -1,  8,  9,  7]
+      ]
+    }, {
+      name: '7',
+      variations: [
+        [-1,  2,  1,  2,  0,  2],
+        [-1,  2,  4,  4,  4,  5],
+        [-1,  2,  4,  2,  4,  2],
+        [ 7,  9,  7,  8,  7,  7],
+        [ 7,  9,  7,  8, 10,  7],
+        [-1, -1,  9, 11, 10, 11]
+      ]
+    }, {
+      name: 'maj7',
+      variations: [
+        [ 2,  2,  1,  3,  0, -1],
+        [-1,  2,  4,  3,  4,  2],
+        [-1, -1,  9,  8,  7,  6],
+        [ 7, -1,  8,  8,  7, -1]
+      ]
+    }, {
+      name: '9',
+      variations: [
+        [-1,  2,  1,  2,  2,  2],
+        [ 7, -1,  7,  6,  4, -1],
+        [ 7,  6,  7,  6, -1, -1],
+        [ 7,  9,  7,  8,  7,  9]
+      ]
+    }, {
+      name: 'maj9',
+      variations: [
+        [-1,  2,  1,  3,  2,  2],
+        [ 7, -1,  8,  8, -1,  9]
+      ]
+    }, {
+      name: '11',
+      variations: [
+        [-1,  2,  1,  2,  2,  0],
+        [-1,  1,  1,  1,  3,  1],
+        [ 7,  7,  7,  8,  7,  9],
+        [-1, -1,  9,  9, 10, 11]
+      ]
+    }, {
+      name: '13',
+      variations: [
+        [-1,  2,  1,  2,  2,  4],
+        [-1,  2, -1,  2,  4,  4],
+        [ 7, -1,  7,  8,  9, -1],
+        [-1, 12, 13, 13, 12, -1]
+      ]
+    }, {
+      name: 'maj13',
+      variations: [
+        [-1,  2, -1,  3,  4,  4],
+        [ 7, -1,  8,  8,  9, -1]
+      ]
+    }, {
+      name: 'min',
+      variations: [
+        [-1,  2,  4,  4,  3,  2],
+        [-1,  5,  4,  4,  3, -1],
+        [-1,  5,  4,  4,  7, -1],
+        [ 7,  9,  9,  7,  7,  7],
+        [-1,  9, 12, 11, 12, -1],
+        [-1, -1,  9, 11, 12, 10],
+        [10, -1,  9, 11, 12, -1]
+      ]
+    }, {
+      name: 'min6',
+      variations: [
+        [-1,  2, -1,  1,  3,  2],
+        [-1,  2,  4, -1,  3,  4],
+        [ 7, -1,  6,  7,  7,  7],
+        [ 7,  9,  9,  7,  9,  7]
+      ]
+    }, {
+      name: 'min7',
+      variations: [
+        [-1,  2,  0,  2,  0,  2],
+        [-1,  2,  4,  2,  3,  2],
+        [ 7, -1,  7,  7,  7, -1],
+        [ 7,  9,  7,  7, 10,  7]
+      ]
+    }, {
+      name: 'min9',
+      variations: [
+        [-1,  2,  0,  2,  2,  2],
+        [ 7, -1,  7,  7,  7, 10]
+      ]
+    }, {
+      name: 'min11',
+      variations: [
+        [-1,  2,  2,  2,  3,  2],
+        [ 7,  7,  7,  7,  7,  7]
+      ]
+    }, {
+      name: 'min13',
+      variations: [
+        [-1,  2, -1,  2,  3,  4],
+        [ 7,  9,  7,  7,  9,  7]
+      ]
+    }, {
+      name: 'min(maj7)',
+      variations: [
+        [-1,  2, -1,  3,  3,  2],
+        [ 7,  9,  8,  7,  7,  7]
+      ]
+    }, {
+      name: 'sus2',
+      variations: [
+        [-1,  2,  4,  4,  2,  2],
+        [ 7, -1, -1,  6,  7,  7],
+        [-1, -1,  9, 11, 12,  9],
+        [-1, 14, 11, 11, 12, -1]
+      ]
+    }, {
+      name: 'sus4',
+      variations: [
+        [-1,  2,  4,  4,  5,  2],
+        [ 7,  9,  9,  9,  7,  7],
+        [-1, -1,  9,  9,  7,  7],
+        [-1, -1,  9, 11, 12, 12]
+      ]
+    }, {
+      name: 'dim',
+      variations: [
+        [-1,  2,  3,  1,  3, -1],
+        [ 7,  8,  9,  7,  9,  7]
+      ]
+    }, {
+      name: 'aug',
+      variations: [
+        [-1,  2,  1,  0,  0,  3],
+        [ 7, -1,  9,  8,  8, -1],
+        [-1, -1,  9,  8,  8,  7],
+        [-1, -1,  9,  8,  8, 11]
+      ]
+    }, {
+      name: '6/9',
+      variations: [
+        [-1,  2,  1,  1,  2,  2],
+        [ 7,  4,  4,  4,  4,  4],
+        [ 7,  6,  6,  6,  7, -1],
+        [ 7,  9, -1,  8,  9,  9]
+      ]
+    }, {
+      name: '7sus4',
+      variations: [
+        [-1,  2,  4,  2,  5,  2],
+        [ 7,  9,  7,  9,  7,  7]
+      ]
+    }, {
+      name: '7b5',
+      variations: [
+        [-1,  2,  3,  2,  4, -1],
+        [ 7,  8,  7,  8, -1, -1]
+      ]
+    }, {
+      name: '7b9',
+      variations: [
+        [-1,  2,  1,  2,  1,  2],
+        [ 7,  6, -1,  5,  7,  5],
+        [ 7,  9, 10,  8,  7,  7],
+        [ 7,  9,  7,  8,  7,  8]
+      ]
+    }, {
+      name: '9sus4',
+      variations: [
+        [-1,  2,  2,  2,  2,  2],
+        [ 7, -1,  7,  6,  5, -1],
+        [-1,  9,  9,  9, 10,  9]
+      ]
+    }, {
+      name: 'add9',
+      variations: [
+        [-1,  4,  4,  4,  4, -1],
+        [-1,  2,  4,  6,  4,  2],
+        [-1, -1,  9,  8,  7,  9],
+        [-1, -1, 11, 11, 12, 11]
+      ]
+    }, {
+      name: 'aug9',
+      variations: [
+        [-1,  2,  1,  2,  2,  3],
+        [ 7, -1,  7,  8,  8,  9]
+      ]
+    }]
+  }, {
+    root: ['C'],
+    types: [{
+      name: 'maj',
+      variations: [
+        [-1,  3,  2,  0,  1,  0],
+        [ 3,  3,  2,  0,  1,  0],
+        [ 3,  3,  5,  5,  5,  3],
+        [ 8,  7,  5,  5,  5, -1],
+        [-1, -1,  5,  5,  5,  8],
+        [ 8, 10, 10,  9,  8,  8],
+        [12, -1, 10, 12, 13, -1]
+      ]
+    }, {
+      name: '5',
+      variations: [
+        [-1,  3,  5,  5, -1, -1],
+        [-1, -1,  5,  5,  8,  8],
+        [ 8, 10, 10, -1, -1, -1],
+        [-1, -1, 10, 12, 13, -1]
+      ]
+    }, {
+      name: '6',
+      variations: [
+        [ 3, -1,  2,  2,  1, -1],
+        [-1,  3,  5,  5,  5,  5],
+        [ 8, -1,  7,  9,  8, -1],
+        [ 8, 10, -1,  9, 10,  8]
+      ]
+    }, {
+      name: '7',
+      variations: [
+        [-1,  3,  2,  3,  1,  0],
+        [-1,  3,  5,  3,  5,  3],
+        [ 8, 10, -1,  9, 11, -1],
+        [ 8, 10,  8,  9,  8,  8],
+        [12, -1, 10, 12, 11, -1],
+        [-1, -1, 10, 12, 11, 12]
+      ]
+    }, {
+      name: 'maj7',
+      variations: [
+        [-1,  3,  2,  0,  0,  0],
+        [-1,  3,  5,  4,  5,  3],
+        [-1, -1, 10,  9,  8,  7],
+        [ 8, 10, -1,  9, 12, 12]
+      ]
+    }, {
+      name: '9',
+      variations: [
+        [-1,  3,  2,  3,  3,  3],
+        [ 8, -1,  8,  7,  5, -1],
+        [ 8, 10,  8,  9,  8, 10],
+        [-1, -1, 10,  9, 11, 10]
+      ]
+    }, {
+      name: 'maj9',
+      variations: [
+        [-1,  3,  5,  4,  3,  0],
+        [-1,  7, 10,  7,  8,  7]
+      ]
+    }, {
+      name: '11',
+      variations: [
+        [-1,  3,  2,  3,  1,  1],
+        [-1,  3,  3,  3,  5,  3],
+        [-1,  7, -1,  5,  6,  6],
+        [-1, -1, 10, 10, 11, 12]
+      ]
+    }, {
+      name: '13',
+      variations: [
+        [-1,  1,  2,  2,  1, -1],
+        [ 8, -1,  8,  7,  5,  5],
+        [-1, -1,  8,  9, 10,  7],
+        [ 8, -1,  8,  9, 10, -1]
+      ]
+    }, {
+      name: 'maj13',
+      variations: [
+        [-1,  3, -1,  4,  5,  5],
+        [ 8,  7,  7,  7,  8,  7]
+      ]
+    }, {
+      name: 'min',
+      variations: [
+        [-1,  3,  1,  0,  1, -1],
+        [-1,  3,  5,  5,  4,  3],
+        [-1,  6,  5,  5,  4, -1],
+        [-1, -1,  5,  8,  8,  8],
+        [-1,  6,  5,  5,  8, -1],
+        [ 8, 10, 10,  8,  8,  8],
+        [11, -1, 10, 12, 13, -1]
+      ]
+    }, {
+      name: 'min6',
+      variations: [
+        [-1,  0,  1,  0,  1,  3],
+        [-1,  3, -1,  2,  4,  3],
+        [ 8, -1,  7,  8,  8, -1],
+        [ 8, 10, 10,  8, 10,  8]
+      ]
+    }, {
+      name: 'min7',
+      variations: [
+        [-1, -1,  1,  3,  1,  3],
+        [-1,  3,  5,  3,  4,  3],
+        [ 8, -1,  8,  8,  8, -1],
+        [11, -1, 10, 12, 11, -1]
+      ]
+    }, {
+      name: 'min9',
+      variations: [
+        [-1,  3,  1,  3,  3, -1],
+        [-1,  6,  8,  7,  8,  8]
+      ]
+    }, {
+      name: 'min11',
+      variations: [
+        [-1,  3,  3,  3,  4,  3],
+        [ 8, -1,  8,  8,  6, -1]
+      ]
+    }, {
+      name: 'min13',
+      variations: [
+        [-1,  3, -1,  3,  4,  5],
+        [ 8, 10,  8,  8, 10,  8]
+      ]
+    }, {
+      name: 'min(maj7)',
+      variations: [
+        [-1,  3,  5,  4,  4,  3],
+        [ 8, -1,  9,  8,  8, -1]
+      ]
+    }, {
+      name: 'sus2',
+      variations: [
+        [-1,  3,  0,  0,  1,  3],
+        [-1,  3,  5,  7, -1, -1],
+        [-1,  5,  5,  5,  8,  8],
+        [-1, -1, 10,  7,  8, 10]
+      ]
+    }, {
+      name: 'sus4',
+      variations: [
+        [-1,  3,  3,  0,  1, -1],
+        [-1,  3,  5,  5,  6,  3],
+        [ 8, 10, 10, 10,  8,  8]
+      ]
+    }, {
+      name: 'dim',
+      variations: [
+        [-1, -1,  1,  2,  1,  2],
+        [-1,  3, -1,  2,  4,  2]
+      ]
+    }, {
+      name: 'aug',
+      variations: [
+        [-1,  3,  2,  1,  1, -1],
+        [-1,  3, -1,  5,  5,  4],
+        [-1, -1,  6,  5,  5,  8],
+        [-1, -1, 10,  9,  9,  8]
+      ]
+    }, {
+      name: '6/9',
+      variations: [
+        [-1,  3,  2,  2,  3,  3],
+        [ 8, -1,  5,  7,  5,  5],
+        [-1,  7,  7,  7,  8,  8],
+        [-1, 10, 10,  9, 10, 10]
+      ]
+    }, {
+      name: '7sus4',
+      variations: [
+        [ 3, -1,  3,  3,  1, -1],
+        [-1,  3,  5,  3,  6,  3]
+      ]
+    }, {
+      name: '7b5',
+      variations: [
+        [-1,  3,  4,  3,  5, -1],
+        [ 8, -1,  8,  9,  7, -1]
+      ]
+    }, {
+      name: '7b9',
+      variations: [
+        [-1,  3,  2,  3,  2,  0],
+        [-1,  5,  4,  5,  4,  5],
+        [ 8,  7, -1,  6,  8,  6],
+        [ 8, 10, 11,  9,  8,  8],
+        [ 8, 10,  8,  9,  8,  9],
+        [-1, -1, 10,  9, 11,  9]
+      ]
+    }, {
+      name: '9sus4',
+      variations: [
+        [-1,  3, -1,  3,  3,  1],
+        [-1,  3,  3,  3,  3,  3],
+        [ 8, -1,  8,  7,  6, -1],
+        [-1, 10, 10, 10, 11, 10]
+      ]
+    }, {
+      name: 'add9',
+      variations: [
+        [-1,  3,  2,  0,  3,  3],
+        [-1,  3,  5,  7,  5,  3],
+        [-1,  5,  5,  5,  5, -1],
+        [-1,  7, -1,  7,  8,  8]
+      ]
+    }, {
+      name: 'aug9',
+      variations: [
+        [ 0,  1,  0,  1,  1,  0],
+        [ 8,  7,  8,  7,  9, -1]
+      ]
+    }]
+  }, {
+    root: ['C#', 'Db'],
+    types: [{
+      name: 'maj',
+      variations: [
+        [-1,  4,  3,  1,  2,  1],
+        [-1,  4,  6,  6,  6,  4],
+        [ 9,  8,  6,  6,  6, -1],
+        [-1, -1,  6,  6,  6,  9],
+        [ 9, 11, 11, 10,  9,  9]
+      ]
+    }, {
+      name: '5',
+      variations: [
+        [-1, -1, -1,  1,  2,  4],
+        [-1,  4,  6,  6, -1, -1],
+        [-1, -1,  6,  6,  9,  9],
+        [ 9, 11, 11, -1, -1, -1]
+      ]
+    }, {
+      name: '6',
+      variations: [
+        [-1, -1,  3,  3,  2,  4],
+        [-1,  4,  6,  6,  6,  6],
+        [ 9, -1,  8, 10,  9, -1],
+        [-1, -1, 11, 13, 11, 13]
+      ]
+    }, {
+      name: '7',
+      variations: [
+        [-1,  4,  3,  4,  2, -1],
+        [-1,  4,  6,  4,  6,  4],
+        [-1,  4,  6,  6,  6,  7],
+        [ 9, 11,  9, 10,  9,  9]
+      ]
+    }, {
+      name: 'maj7',
+      variations: [
+        [-1,  4,  3,  1,  1,  1],
+        [-1,  4,  6,  5,  6,  4],
+        [-1, -1, 11, 10,  9,  8],
+        [ 9, -1, 10, 10,  9, -1]
+      ]
+    }, {
+      name: '9',
+      variations: [
+        [-1,  4,  3,  4,  4,  4],
+        [ 9, -1,  9,  8,  6, -1],
+        [ 9,  8,  9,  8, -1, -1],
+        [ 9, 11,  9, 10,  9, 11]
+      ]
+    }, {
+      name: 'maj9',
+      variations: [
+        [-1,  4,  1,  1,  1,  1],
+        [ 9, -1, 10, 10, -1, 11]
+      ]
+    }, {
+      name: '11',
+      variations: [
+        [-1,  4,  3,  4,  2,  2],
+        [-1,  4,  4,  4,  6,  4],
+        [ 9, -1,  9, 10,  7, -1],
+        [-1,  9,  9, 10,  9,  9]
+      ]
+    }, {
+      name: '13',
+      variations: [
+        [-1,  4,  3,  4,  4,  6],
+        [ 9, -1,  9,  8,  6,  6],
+        [-1, -1,  9, 10, 11,  9],
+        [ 9, -1,  9, 10, 11, -1]
+      ]
+    }, {
+      name: 'maj13',
+      variations: [
+        [-1,  4, -1,  5,  6,  6],
+        [ 9,  8,  8,  8,  9,  8]
+      ]
+    }, {
+      name: 'min',
+      variations: [
+        [-1,  4,  2,  1,  2, -1],
+        [-1, -1,  2,  1,  2,  0],
+        [-1,  4,  6,  6,  5,  4],
+        [-1,  7,  6,  6,  9, -1],
+        [ 9, 11, 11,  9,  9,  9],
+        [-1, -1, 11,  9,  9, 12]
+      ]
+    }, {
+      name: 'min6',
+      variations: [
+        [-1,  4, -1,  3,  5,  4],
+        [-1,  4,  2,  3,  2,  4],
+        [ 9, -1,  8,  9,  9, -1],
+        [ 9, 11, 11,  9, 11,  9]
+      ]
+    }, {
+      name: 'min7',
+      variations: [
+        [-1,  4,  2,  1,  0,  0],
+        [-1,  4, -1,  4,  5,  4],
+        [ 9, -1,  9,  9,  9, -1],
+        [ 9, 11,  9,  9, 12,  9]
+      ]
+    }, {
+      name: 'min9',
+      variations: [
+        [-1,  4,  2,  4,  4, -1],
+        [ 9, -1,  9,  9,  9, 11]
+      ]
+    }, {
+      name: 'min11',
+      variations: [
+        [-1,  4,  1,  4,  4,  1],
+        [-1,  4,  4,  4,  5,  4]
+      ]
+    }, {
+      name: 'min13',
+      variations: [
+        [-1,  1, -1,  1,  2,  3],
+        [ 9, 11,  9,  9, 11,  9]
+      ]
+    }, {
+      name: 'min(maj7)',
+      variations: [
+        [-1,  4,  6,  5,  5,  4],
+        [ 9, 11, 10,  9,  9,  9]
+      ]
+    }, {
+      name: 'sus2',
+      variations: [
+        [-1, -1,  1,  1,  2, -1],
+        [-1,  4,  6,  6,  4,  4],
+        [-1,  6,  6,  6,  9,  9],
+        [ 9, -1, -1,  8, 10, -1]
+      ]
+    }, {
+      name: 'sus4',
+      variations: [
+        [-1,  4,  6,  6,  7, -1],
+        [-1, -1,  6,  6,  4,  7],
+        [-1,  4,  6,  6,  7,  4],
+        [ 9, 11, 11, 11,  9,  9]
+      ]
+    }, {
+      name: 'dim',
+      variations: [
+        [-1, -1,  2,  3,  2,  3],
+        [ 9, -1,  8,  9,  8, -1]
+      ]
+    }, {
+      name: 'aug',
+      variations: [
+        [-1,  4,  3,  2,  2, -1],
+        [-1,  4, -1,  6,  6,  5],
+        [-1, -1,  7,  6,  6,  9],
+        [-1, -1, 11, 10, 10,  9]
+      ]
+    }, {
+      name: '6/9',
+      variations: [
+        [-1,  1,  1,  1,  2,  1],
+        [ 9, -1,  6,  8,  6,  6],
+        [ 9,  8,  8,  8,  9,  9],
+        [-1, 11, 11, 10, 11, 11]
+      ]
+    }, {
+      name: '7sus4',
+      variations: [
+        [ 4, -1,  4,  4,  2, -1],
+        [-1,  4,  6,  4,  7,  4]
+      ]
+    }, {
+      name: '7b5',
+      variations: [
+        [ 3, -1,  3,  4,  2, -1],
+        [ 9, -1,  9, 10,  8, -1]
+      ]
+    }, {
+      name: '7b9',
+      variations: [
+        [-1,  4, -1,  4,  3,  1],
+        [-1,  4,  3,  4,  3,  4],
+        [-1,  4,  3,  4,  3, -1],
+        [ 9,  8, -1,  7,  9,  7],
+        [ 9, 11, 12, 10,  9,  9],
+        [ 9, 11,  9, 10,  9, 10]
+      ]
+    }, {
+      name: '9sus4',
+      variations: [
+        [-1,  4, -1,  4,  4,  2],
+        [-1,  4,  4,  4,  4,  4],
+        [ 9, -1,  9,  8,  7, -1],
+        [-1, 11, 11, 11, 12, 11]
+      ]
+    }, {
+      name: 'add9',
+      variations: [
+        [-1,  4,  3,  1,  4, -1],
+        [-1,  4,  6,  8,  6, -1],
+        [-1,  6,  6,  6,  6, -1],
+        [-1,  8, -1,  8,  9,  9]
+      ]
+    }, {
+      name: 'aug9',
+      variations: [
+        [-1,  4,  3,  4,  4,  5],
+        [ 9,  8,  9,  8, 10, -1]
+      ]
+    }]
+  }, {
+    root: ['D'],
+    types: [{
+      name: 'maj',
+      variations: [
+        [-1, -1,  0,  2,  3,  2],
+        [-1, -1,  4,  2,  4,  5],
+        [-1,  5,  4,  2,  3,  2],
+        [-1,  5,  7,  7,  7,  5],
+        [10,  9,  7,  7,  7, -1],
+        [-1, -1,  7,  7,  7, 10],
+        [10, 12, 12, 11, 10, 10]
+      ]
+    }, {
+      name: '5',
+      variations: [
+        [-1, -1,  0,  2,  3, -1],
+        [-1,  5,  7,  7, -1, -1],
+        [-1, -1,  7,  7, 10, 10],
+        [10, 12, 12, -1, -1, -1]
+      ]
+    }, {
+      name: '6',
+      variations: [
+        [-1, -1,  0,  2,  0,  2],
+        [-1,  5,  7,  7,  7,  7],
+        [10, -1,  9, 11, 10, -1],
+        [10, 12, -1, 11, 12, 10]
+      ]
+    }, {
+      name: '7',
+      variations: [
+        [-1, -1,  0,  2,  1,  2],
+        [-1,  5,  4,  5,  3, -1],
+        [-1, -1,  4,  5,  3,  5],
+        [-1,  5,  7,  7,  7,  8],
+        [-1,  5,  7,  5,  7,  5],
+        [10, 12, 10, 11, 10, 10]
+      ]
+    }, {
+      name: 'maj7',
+      variations: [
+        [-1,  5,  4,  2,  2,  2],
+        [-1,  5,  7,  6,  7,  5],
+        [-1, -1,  7,  7,  7,  9],
+        [-1, -1, 12, 11, 10,  9]
+      ]
+    }, {
+      name: '9',
+      variations: [
+        [-1,  5,  4,  2,  1,  0],
+        [-1,  5,  4,  5,  5,  5],
+        [10, -1, 10,  9,  7, -1],
+        [10, 12, 10, 11, 10, 12]
+      ]
+    }, {
+      name: 'maj9',
+      variations: [
+        [-1,  5,  2,  2,  2,  2],
+        [10, -1, 11, 11, -1, 12]
+      ]
+    }, {
+      name: '11',
+      variations: [
+        [-1, -1,  0,  0,  1,  2],
+        [-1,  5,  4,  5,  3,  3],
+        [-1,  5,  5,  5,  7,  5],
+        [-1,  9, -1,  7,  8,  8]
+      ]
+    }, {
+      name: '13',
+      variations: [
+        [-1,  3,  4,  4,  3, -1],
+        [-1,  5, -1,  5,  7,  7],
+        [-1, -1, 10,  7,  7,  7],
+        [10, -1, 10, 11, 12, 12]
+      ]
+    }, {
+      name: 'maj13',
+      variations: [
+        [-1,  5, -1,  6,  7,  7],
+        [10,  9,  9,  9, 10,  9]
+      ]
+    }, {
+      name: 'min',
+      variations: [
+        [-1, -1,  0,  2,  3,  1],
+        [-1,  5,  3,  2,  3, -1],
+        [-1,  5,  7,  7,  6,  5],
+        [-1,  8,  7,  7,  6, -1],
+        [-1,  8,  7,  7, 10, -1],
+        [-1, -1,  7, 10, 10, 10],
+        [10, 12, 12, 10, 10, 10]
+      ]
+    }, {
+      name: 'min6',
+      variations: [
+        [-1, -1,  0,  2,  0,  1],
+        [-1,  5,  3,  4,  3,  5],
+        [-1,  5,  7, -1,  6,  8],
+        [10, -1,  9, 10, 10, -1]
+      ]
+    }, {
+      name: 'min7',
+      variations: [
+        [-1, -1,  0,  2,  1,  1],
+        [-1,  5,  7,  5,  6,  5],
+        [-1, -1,  7,  7,  6,  8],
+        [10, -1, 10, 10, 10, -1]
+      ]
+    }, {
+      name: 'min9',
+      variations: [
+        [-1,  5,  3,  5,  5, -1],
+        [10, -1, 10, 10, 10, 12]
+      ]
+    }, {
+      name: 'min11',
+      variations: [
+        [-1, -1,  0,  0,  1,  1],
+        [-1,  5,  5,  5,  6,  5]
+      ]
+    }, {
+      name: 'min13',
+      variations: [
+        [-1, -1,  0,  4,  1,  1],
+        [10, 12, 10, 10, 12, 10]
+      ]
+    }, {
+      name: 'min(maj7)',
+      variations: [
+        [-1, -1,  0,  2,  2,  1],
+        [-1,  5,  7,  6,  6,  5]
+      ]
+    }, {
+      name: 'sus2',
+      variations: [
+        [-1, -1,  0,  2,  3,  0],
+        [-1,  5,  7,  7,  5,  5],
+        [-1,  7,  7,  9, 10, 10],
+        [-1, -1, 12,  9, 10, 12]
+      ]
+    }, {
+      name: 'sus4',
+      variations: [
+        [-1, -1,  0,  2,  3,  3],
+        [-1,  5,  7,  7,  8,  5],
+        [-1, -1,  7,  7,  8, 10],
+        [10, 12, 12, 12, 10, 10]
+      ]
+    }, {
+      name: 'dim',
+      variations: [
+        [-1, -1,  0,  1,  0,  1],
+        [-1,  5, -1,  4,  6,  4]
+      ]
+    }, {
+      name: 'aug',
+      variations: [
+        [-1, -1,  0,  3,  3,  2],
+        [-1,  5,  4,  3,  3, -1],
+        [-1,  5, -1,  7,  7,  6],
+        [-1, -1,  8,  7,  7, 10]
+      ]
+    }, {
+      name: '6/9',
+      variations: [
+        [-1,  5,  4,  2,  0,  0],
+        [-1,  5,  4,  4,  5,  5],
+        [10, -1,  7,  9,  7,  7],
+        [-1,  9,  9,  9, 10, 10]
+      ]
+    }, {
+      name: '7sus4',
+      variations: [
+        [-1, -1,  0,  2,  1,  3],
+        [10, 12, 10, 12, 13, 10]
+      ]
+    }, {
+      name: '7b5',
+      variations: [
+        [-1, -1,  0,  1,  1,  2],
+        [-1,  5,  6,  5,  7, -1]
+      ]
+    }, {
+      name: '7b9',
+      variations: [
+        [-1, -1,  0,  5,  4,  2],
+        [-1,  5,  4,  5,  4,  5],
+        [-1,  5,  4,  5,  4, -1],
+        [10,  9, -1,  8, 10,  8],
+        [10, 12, 13, 11, 10, 10],
+        [10, 12, 10, 11, 10, 11],
+        [-1, -1, 12, 11, 13, 11]
+      ]
+    }, {
+      name: '9sus4',
+      variations: [
+        [-1,  5, -1,  5,  5,  3],
+        [-1,  5,  5,  5,  5,  5],
+        [10, -1, 10,  9,  8, -1],
+        [-1, 12, 12, 12, 13, 12]
+      ]
+    }, {
+      name: 'add9',
+      variations: [
+        [-1, -1,  4,  2,  3,  0],
+        [ 5, -1,  4,  7,  5, -1],
+        [-1,  7,  7,  7,  7, -1],
+        [-1,  9, -1,  9, 10, 10]
+      ]
+    }, {
+      name: 'aug9',
+      variations: [
+        [ 2,  3,  2,  3,  3,  2],
+        [10,  9, 10,  9, 11, -1]
+      ]
+    }]
+  }, {
+    root: ['D#', 'Eb'],
+    types: [{
+      name: 'maj',
+      variations: [
+        [-1, -1,  1,  3,  4,  3],
+        [-1,  6,  5,  3,  4,  3],
+        [-1, -1,  5,  3,  4,  6],
+        [-1,  6,  8,  8,  8,  6],
+        [-1, -1,  8,  8,  8, 11],
+        [11, 10,  8,  8,  8, -1],
+        [11, 13, 13, 12, 11, 11]
+      ]
+    }, {
+      name: '5',
+      variations: [
+        [-1, -1,  1,  3,  4, -1],
+        [-1,  6,  8,  8, -1, -1],
+        [-1, -1,  8,  8, 11, 11],
+        [11, 13, 13, -1, -1, -1]
+      ]
+    }, {
+      name: '6',
+      variations: [
+        [-1, -1,  1,  3,  1,  3],
+        [-1,  6,  8,  8,  8,  8],
+        [-1, 10, 10,  8, 11, -1],
+        [11, -1, 10, 12, 11, -1]
+      ]
+    }, {
+      name: '7',
+      variations: [
+        [-1, -1,  1,  3,  2,  3],
+        [-1,  4, -1,  3,  4,  3],
+        [-1,  6,  8,  6,  8,  6],
+        [-1,  6,  8,  8,  8,  9],
+        [-1, 10, 11,  8, 11, -1],
+        [11, 13, 11, 12, 11, 11]
+      ]
+    }, {
+      name: 'maj7',
+      variations: [
+        [-1, -1,  1,  3,  3,  3],
+        [-1,  6,  5,  3,  3,  3],
+        [-1,  6,  8,  7,  8,  6],
+        [-1, -1, 13, 12, 11, 10]
+      ]
+    }, {
+      name: '9',
+      variations: [
+        [-1, -1,  1,  0,  2,  1],
+        [-1,  6,  5,  6,  6,  6],
+        [-1, -1, 10,  9,  8, 10],
+        [11, 13, 11, 12, 11, 13]
+      ]
+    }, {
+      name: 'maj9',
+      variations: [
+        [-1, -1,  1,  0,  3,  1],
+        [-1,  6,  3,  3,  3,  3]
+      ]
+    }, {
+      name: '11',
+      variations: [
+        [-1, -1,  1,  1,  2,  3],
+        [ 4,  4,  5,  6,  4,  4],
+        [-1,  6,  5,  6,  4,  4],
+        [-1,  6,  6,  6,  8,  6]
+      ]
+    }, {
+      name: '13',
+      variations: [
+        [-1,  4,  5,  5,  4, -1],
+        [-1,  6,  5,  6,  6,  8],
+        [-1, -1, 11,  8,  8,  8],
+        [11, -1, 11, 12, 13, -1]
+      ]
+    }, {
+      name: 'maj13',
+      variations: [
+        [-1,  2,  1,  3,  4,  4],
+        [11, 10, 10, 10, 11, 10]
+      ]
+    }, {
+      name: 'min',
+      variations: [
+        [ 2, -1,  1,  3,  4, -1],
+        [-1,  1,  4,  3,  4, -1],
+        [-1,  6,  4,  3,  4, -1],
+        [-1,  6,  8,  8,  7,  6],
+        [-1,  9,  8,  8,  7, -1],
+        [-1, -1,  8, 11, 11, 11],
+        [11, 13, 13, 11, 11, 11]
+      ]
+    }, {
+      name: 'min6',
+      variations: [
+        [-1, -1,  1,  3,  1,  2],
+        [-1,  3,  4,  3,  4, -1],
+        [-1,  6, -1,  5,  7,  6],
+        [11, -1, 10, 11, 11, -1]
+      ]
+    }, {
+      name: 'min7',
+      variations: [
+        [-1, -1,  1,  3,  2,  2],
+        [-1,  4,  4,  3,  4, -1],
+        [-1,  6,  8,  6,  7,  6],
+        [11, -1, 11, 11, 11, -1]
+      ]
+    }, {
+      name: 'min9',
+      variations: [
+        [ 2, -1,  1,  3,  2,  1],
+        [11, -1, 11, 11, 11, 13]
+      ]
+    }, {
+      name: 'min11',
+      variations: [
+        [-1,  1,  1,  1,  2,  2],
+        [11, 11, 11, 11, 11, 11]
+      ]
+    }, {
+      name: 'min13',
+      variations: [
+        [-1,  6, -1,  6,  7,  8],
+        [11, 13, 11, 11, 13, 11]
+      ]
+    }, {
+      name: 'min(maj7)',
+      variations: [
+        [-1, -1,  1,  3,  3,  2],
+        [-1,  6,  8,  7,  7,  6]
+      ]
+    }, {
+      name: 'sus2',
+      variations: [
+        [-1, -1,  1,  3,  4,  1],
+        [-1,  6,  8,  8,  6,  6],
+        [-1,  8,  8, 10, 11, 11],
+        [11, -1,  8, 10, 11, -1]
+      ]
+    }, {
+      name: 'sus4',
+      variations: [
+        [-1, -1,  1,  3,  4,  4],
+        [-1, -1,  8,  8,  9,  6],
+        [-1,  6,  8,  8,  9,  6],
+        [11, 13, 13, 13, 11, 11]
+      ]
+    }, {
+      name: 'dim',
+      variations: [
+        [-1, -1,  1,  2,  1,  2],
+        [-1,  6,  7,  5,  7, -1]
+      ]
+    }, {
+      name: 'aug',
+      variations: [
+        [-1, -1,  1,  0,  0,  3],
+        [-1, -1,  5,  4,  4,  3],
+        [-1,  6,  5,  4,  4, -1],
+        [-1,  6, -1,  8,  8,  7]
+      ]
+    }, {
+      name: '6/9',
+      variations: [
+        [-1,  3,  3,  3,  4,  3],
+        [-1,  6,  5,  5,  6,  6],
+        [11,  8,  8,  8,  8,  8],
+        [11, -1,  8, 10,  8,  8]
+      ]
+    }, {
+      name: '7sus4',
+      variations: [
+        [-1, -1,  1,  1,  2, -1],
+        [-1,  6,  8,  6,  9, -1]
+      ]
+    }, {
+      name: '7b5',
+      variations: [
+        [-1, -1,  1,  2,  2,  3],
+        [-1,  6,  7,  6,  8, -1]
+      ]
+    }, {
+      name: '7b9',
+      variations: [
+        [-1,  6, -1,  6,  5,  3],
+        [-1,  6,  5,  6,  5,  6],
+        [-1,  6,  5,  6,  5, -1],
+        [11, 10, -1,  9, 11,  9],
+        [11, 13, 11, 12, 11, 12],
+        [11, 13, 14, 12, 11, 11],
+        [11, 13, 14, 12, -1, -1]
+      ]
+    }, {
+      name: '9sus4',
+      variations: [
+        [-1, -1,  1,  1,  2,  1],
+        [-1,  6, -1,  6,  6,  4],
+        [-1,  6,  6,  6,  6,  6],
+        [11, -1, 11, 10,  9, -1]
+      ]
+    }, {
+      name: 'add9',
+      variations: [
+        [-1, -1,  3,  3,  4,  3],
+        [-1,  6,  5,  3,  6, -1],
+        [-1,  8,  8,  8,  8, -1],
+        [-1, 10, -1, 10, 11, 11]
+      ]
+    }, {
+      name: 'aug9',
+      variations: [
+        [ 3,  4,  3,  4,  4,  3],
+        [11, 10, 11, 10, 12, -1]
+      ]
+    }]
+  }, {
+    root: ['E'],
+    types: [{
+      name: 'maj',
+      variations: [
+        [ 0,  2,  2,  1,  0,  0],
+        [ 0,  2,  2,  4,  5,  4],
+        [-1,  7,  6,  4,  5,  4],
+        [-1, -1,  6,  4,  5,  7],
+        [-1,  7,  9,  9,  9,  7],
+        [12, 11,  9,  9,  9, -1],
+        [-1, -1,  9,  9,  9, 12]
+      ]
+    }, {
+      name: '5',
+      variations: [
+        [ 0,  2,  2, -1, -1, -1],
+        [-1, -1,  2,  4,  5, -1],
+        [-1,  7,  9,  9, -1, -1],
+        [-1, -1,  9,  9, 12, 12]
+      ]
+    }, {
+      name: '6',
+      variations: [
+        [-1, -1,  2,  4,  2,  4],
+        [ 0,  2,  2,  1,  2,  0],
+        [-1,  7,  9,  9,  9,  9],
+        [-1, 11, 11,  9, 12, -1]
+      ]
+    }, {
+      name: '7',
+      variations: [
+        [ 0,  2,  0,  1,  0,  0],
+        [ 0,  2,  2,  1,  3,  0],
+        [ 4, -1,  2,  4,  3, -1],
+        [-1,  7,  6,  7,  5, -1],
+        [-1,  7,  9,  7,  9,  7],
+        [-1,  7,  9,  9,  9, 10]
+      ]
+    }, {
+      name: 'maj7',
+      variations: [
+        [ 0,  2,  1,  1,  0,  0],
+        [-1,  7,  6,  4,  4,  4],
+        [-1, -1,  9,  9,  9, 11]
+      ]
+    }, {
+      name: '9',
+      variations: [
+        [ 4, -1,  2,  4,  3,  2],
+        [ 0,  2,  0,  1,  0,  2],
+        [-1,  7,  6,  7,  7,  7],
+        [12, -1, 12, 11,  9, -1]
+      ]
+    }, {
+      name: 'maj9',
+      variations: [
+        [ 0,  2,  4,  4,  4,  4],
+        [-1,  7,  4,  4,  4,  4]
+      ]
+    }, {
+      name: '11',
+      variations: [
+        [ 0,  0,  2,  1,  3,  2],
+        [-1, -1,  2,  2,  3,  4],
+        [-1,  7,  6,  7,  5,  5],
+        [-1,  7,  7,  7,  9,  7]
+      ]
+    }, {
+      name: '13',
+      variations: [
+        [ 0,  2,  0,  1,  2,  2],
+        [-1,  5,  6,  6,  5, -1],
+        [-1,  7, -1,  7,  9,  9]
+      ]
+    }, {
+      name: 'maj13',
+      variations: [
+        [ 0,  2,  1,  1,  2,  2],
+        [12, 11, 11, 11, 12, 11]
+      ]
+    }, {
+      name: 'min',
+      variations: [
+        [ 0,  2,  2,  0,  0,  0],
+        [-1, -1,  2,  4,  5,  3],
+        [-1, -1,  5,  4,  5,  3],
+        [-1,  7,  5,  4,  5, -1],
+        [-1,  7,  9,  9,  8,  7],
+        [-1, 10,  9,  9,  8, -1],
+        [-1, -1,  9, 12, 12, 12]
+      ]
+    }, {
+      name: 'min6',
+      variations: [
+        [ 0,  2,  2,  0,  2,  0],
+        [-1,  7,  5,  6,  5,  7],
+        [-1,  7, -1,  6,  8,  7],
+        [12, -1, 11, 12, 12, -1]
+      ]
+    }, {
+      name: 'min7',
+      variations: [
+        [ 0,  2,  0,  0,  0,  0],
+        [ 0,  2,  2,  0,  3,  0],
+        [-1,  7,  9,  7,  8,  7],
+        [-1,  7, -1,  7,  8,  7]
+      ]
+    }, {
+      name: 'min9',
+      variations: [
+        [ 0,  2,  0,  0,  0,  2],
+        [-1,  7,  5,  7,  7, -1]
+      ]
+    }, {
+      name: 'min11',
+      variations: [
+        [ 0,  0,  0,  0,  0,  0],
+        [-1,  7,  7,  7,  8,  7]
+      ]
+    }, {
+      name: 'min13',
+      variations: [
+        [ 0,  2,  0,  0,  2,  2],
+        [-1,  7, -1,  7,  8,  9]
+      ]
+    }, {
+      name: 'min(maj7)',
+      variations: [
+        [ 0,  2,  1,  0,  0,  0],
+        [-1,  7,  5,  4,  4, -1]
+      ]
+    }, {
+      name: 'sus2',
+      variations: [
+        [-1, -1,  2,  4,  5,  2],
+        [-1, -1,  4,  4,  5,  7],
+        [-1,  7,  9,  9,  7,  7],
+        [-1,  9,  9,  9, 12, 12]
+      ]
+    }, {
+      name: 'sus4',
+      variations: [
+        [ 0,  2,  2,  2,  0,  0],
+        [-1, -1,  2,  4,  5,  5],
+        [-1,  7,  7,  9, 10,  7],
+        [-1,  7,  9,  9, 10, -1]
+      ]
+    }, {
+      name: 'dim',
+      variations: [
+        [-1, -1,  2,  3,  2,  3],
+        [12, -1, 11, 12, 11, -1]
+      ]
+    }, {
+      name: 'aug',
+      variations: [
+        [-1, -1,  2,  1,  1,  0],
+        [ 4, -1, -1,  5,  5,  4],
+        [-1,  7,  6,  5,  5, -1],
+        [-1,  7, -1,  9,  9,  8]
+      ]
+    }, {
+      name: '6/9',
+      variations: [
+        [ 0,  2, -1,  1,  2,  2],
+        [-1,  4,  4,  4,  5,  4],
+        [-1, 11, 11, 11, 12, 12],
+        [12, 11, 11, 11, 12, 12]
+      ]
+    }, {
+      name: '7sus4',
+      variations: [
+        [-1,  2,  2,  2,  3, -1],
+        [-1,  7,  9,  7, 10, -1]
+      ]
+    }, {
+      name: '7b5',
+      variations: [
+        [-1, -1,  2,  3,  3,  4],
+        [-1,  7,  8,  7,  9, -1]
+      ]
+    }, {
+      name: '7b9',
+      variations: [
+        [ 0,  2,  3,  1,  3, -1],
+        [-1,  7,  6,  7,  6,  7],
+        [-1,  7,  6,  7,  6, -1],
+        [12, 11, -1, 10, 13, 10],
+        [12, 14, 15, 13, 12, 12],
+        [12, 14, 12, 13, 12, 13]
+      ]
+    }, {
+      name: '9sus4',
+      variations: [
+        [-1,  2,  2,  2,  3,  2],
+        [-1,  7, -1,  7,  7,  5],
+        [-1,  7,  7,  7,  7,  7],
+        [12, -1, 12, 11, 10, -1]
+      ]
+    }, {
+      name: 'add9',
+      variations: [
+        [-1, -1,  4,  4,  5,  4],
+        [ 0,  2,  2,  1,  0,  2],
+        [ 7, -1,  6,  9,  7, -1],
+        [-1,  9,  9,  9,  9, -1]
+      ]
+    }, {
+      name: 'aug9',
+      variations: [
+        [ 0,  3,  0,  1,  1,  2],
+        [-1,  7,  6,  7,  7,  8]
+      ]
+    }]
+  }, {
+    root: ['F'],
+    types: [{
+      name: 'maj',
+      variations: [
+        [ 1,  3,  3,  2,  1,  1],
+        [ 5, -1,  3,  5,  6, -1],
+        [-1,  8,  7,  5,  6,  5],
+        [ 8, -1,  7,  5,  6, -1],
+        [-1, -1,  7,  5,  6,  8],
+        [-1,  8, 10, 10, 10,  8],
+        [-1, -1, 10, 10, 10, 13]
+      ]
+    }, {
+      name: '5',
+      variations: [
+        [ 1,  3,  3, -1, -1, -1],
+        [-1, -1,  3,  5,  6, -1],
+        [-1,  8, 10, 10, -1, -1],
+        [-1, -1, 10, 10, 13, 13]
+      ]
+    }, {
+      name: '6',
+      variations: [
+        [ 1,  3, -1,  2,  3, -1],
+        [-1, -1,  3,  5,  3,  5],
+        [-1,  8, 10,  7, 10, -1],
+        [-1, 12, 12, 10, 13, -1]
+      ]
+    }, {
+      name: '7',
+      variations: [
+        [ 1,  3,  1,  2,  1,  1],
+        [ 1,  3, -1,  2,  4, -1],
+        [-1, -1,  3,  5,  4,  5],
+        [-1,  8,  7,  8,  6, -1],
+        [-1,  8, 10,  8, 10,  8],
+        [-1,  8, 10, 10, 10, 11]
+      ]
+    }, {
+      name: 'maj7',
+      variations: [
+        [ 1, -1,  2,  2,  1, -1],
+        [-1, -1,  3,  5,  5,  5],
+        [-1,  8,  7,  5,  5,  5],
+        [-1,  8, 10,  9, 10,  8]
+      ]
+    }, {
+      name: '9',
+      variations: [
+        [ 1,  3,  1,  2,  1,  3],
+        [-1,  8,  7,  8,  8,  8],
+        [13, -1, 13, 12, 10, -1],
+        [-1, 12, 13, 12, 13, 13]
+      ]
+    }, {
+      name: 'maj9',
+      variations: [
+        [ 1,  0,  2,  0,  1, -1],
+        [-1,  8,  5,  5,  5,  5]
+      ]
+    }, {
+      name: '11',
+      variations: [
+        [ 1,  1,  1,  2,  1,  3],
+        [-1, -1,  3,  3,  4,  5],
+        [ 6,  6,  7,  8,  6,  6],
+        [-1,  8,  7,  8,  6,  6]
+      ]
+    }, {
+      name: '13',
+      variations: [
+        [ 1,  3,  1,  2,  3,  1],
+        [-1,  8,  7,  8,  8, 10],
+        [13, -1, 13, 12, 10, 10]
+      ]
+    }, {
+      name: 'maj13',
+      variations: [
+        [ 1, -1,  2,  2,  3, -1]
+      ]
+    }, {
+      name: 'min',
+      variations: [
+        [ 1,  3,  3,  1,  1,  1],
+        [-1, -1,  3,  5,  6,  4],
+        [-1, -1,  6,  5,  6,  4],
+        [-1,  8,  6,  5,  6, -1],
+        [-1,  8, 10, 10,  9,  8],
+        [-1, 11, 10, 10,  9, -1],
+        [-1, 11, 10, 10, 13, -1]
+      ]
+    }, {
+      name: 'min6',
+      variations: [
+        [-1, -1,  0,  1,  1,  1],
+        [-1, -1,  3,  5,  3,  4],
+        [-1,  8, -1,  7,  9,  8]
+      ]
+    }, {
+      name: 'min7',
+      variations: [
+        [ 1,  3,  3,  1,  4,  1],
+        [-1,  8,  6,  5,  4, -1],
+        [-1, -1,  6,  8,  6,  8],
+        [-1,  8, 10,  8,  9,  8]
+      ]
+    }, {
+      name: 'min9',
+      variations: [
+        [ 1, -1,  1,  1,  1,  3],
+        [-1,  8,  6,  8,  8, -1]
+      ]
+    }, {
+      name: 'min11',
+      variations: [
+        [ 1,  1,  1,  1,  1,  1],
+        [-1,  8,  6,  8,  8,  6]
+      ]
+    }, {
+      name: 'min13',
+      variations: [
+        [ 1,  3,  1,  1,  3,  1],
+        [-1,  8,  6,  8,  8, 10]
+      ]
+    }, {
+      name: 'min(maj7)',
+      variations: [
+        [ 1,  3,  2,  1,  1,  1],
+        [-1,  8,  6,  5,  5, -1]
+      ]
+    }, {
+      name: 'sus2',
+      variations: [
+        [-1, -1,  3,  0,  1,  1],
+        [-1, -1,  3,  5,  6,  3],
+        [-1,  8,  5,  5,  6, -1],
+        [-1,  8, 10, 10,  8,  8]
+      ]
+    }, {
+      name: 'sus4',
+      variations: [
+        [ 1,  3,  3,  3,  1,  1],
+        [-1, -1,  3,  5,  6,  6],
+        [-1,  8,  8, 10, 11,  8],
+        [-1, -1, 10, 10, 11, 13]
+      ]
+    }, {
+      name: 'dim',
+      variations: [
+        [-1, -1,  3,  4,  3,  4],
+        [-1,  8,  9,  7,  9, -1]
+      ]
+    }, {
+      name: 'aug',
+      variations: [
+        [-1, -1,  3,  2,  2,  1],
+        [-1,  4, -1,  6,  6,  5],
+        [-1,  8,  7,  6,  6, -1],
+        [ 9, -1, 11, 10, 10, -1]
+      ]
+    }, {
+      name: '6/9',
+      variations: [
+        [ 1,  3, -1,  2,  3,  3],
+        [-1,  5,  5,  5,  6,  5],
+        [13, 10, 10, 10, 10, 10]
+      ]
+    }, {
+      name: '7sus4',
+      variations: [
+        [ 1,  3,  1,  3,  1,  1],
+        [-1,  8, 10,  8, 11, -1]
+      ]
+    }, {
+      name: '7b5',
+      variations: [
+        [ 1, -1,  1,  2,  0, -1],
+        [-1,  8,  9,  8, 10, -1]
+      ]
+    }, {
+      name: '7b9',
+      variations: [
+        [ 1,  3,  4,  2,  1,  1],
+        [ 1,  3,  1,  2,  1,  2],
+        [-1, -1,  3,  2,  4,  2],
+        [-1,  8,  7,  8,  7,  8],
+        [-1,  8,  7,  8,  7, -1],
+        [13, 12, -1, 11, 13, 11]
+      ]
+    }, {
+      name: '9sus4',
+      variations: [
+        [-1,  3,  3,  3,  4,  3],
+        [-1,  8, -1,  8,  8,  6],
+        [-1,  8,  8,  8,  8,  8],
+        [13, -1, 13, 12, 11, -1]
+      ]
+    }, {
+      name: 'add9',
+      variations: [
+        [-1, -1,  3,  2,  1,  3],
+        [-1, -1,  5,  5,  6,  5],
+        [ 8, -1,  7, 10,  8, -1],
+        [-1, 10, 10, 10, 10, -1]
+      ]
+    }, {
+      name: 'aug9',
+      variations: [
+        [ 1, -1,  1,  2,  2,  3],
+        [-1,  8,  7,  8,  8,  9]
+      ]
+    }]
+  }, {
+    root: ['F#', 'Gb'],
+    types: [{
+      name: 'maj',
+      variations: [
+        [ 2,  4,  4,  3,  2,  2],
+        [ 6, -1,  4,  6,  7, -1],
+        [-1, -1,  4,  6,  7,  6],
+        [ 9, -1,  8,  6,  7, -1],
+        [-1,  9,  8,  6,  7,  6],
+        [-1,  9, 11, 11, 11,  9]
+      ]
+    }, {
+      name: '5',
+      variations: [
+        [ 2,  4,  4, -1, -1, -1],
+        [-1, -1,  4,  6,  7, -1],
+        [-1,  9, 11, 11, -1, -1],
+        [-1, -1, 11, 11, 14, 14]
+      ]
+    }, {
+      name: '6',
+      variations: [
+        [ 2,  4, -1,  3,  4, -1],
+        [ 2, -1,  1,  3,  2, -1],
+        [-1,  9, 11,  8, 11, -1],
+        [-1,  9, 11, 11, 11, 11]
+      ]
+    }, {
+      name: '7',
+      variations: [
+        [-1, -1,  4,  3,  2,  0],
+        [ 2,  4,  2,  3,  2,  2],
+        [ 2,  4, -1,  3,  5, -1],
+        [-1, -1,  4,  6,  5,  6],
+        [-1,  9, 11, 11, 11, 12],
+        [-1,  9, 11,  9, 11,  9]
+      ]
+    }, {
+      name: 'maj7',
+      variations: [
+        [-1, -1,  4,  3,  2,  1],
+        [ 2, -1,  3,  3,  2, -1],
+        [-1,  9,  8,  6,  6,  6],
+        [-1,  9, 11, 10, 11,  9]
+      ]
+    }, {
+      name: '9',
+      variations: [
+        [-1, -1,  4,  3,  5,  4],
+        [-1,  1,  2,  1,  2,  2],
+        [-1,  9,  8,  9,  9,  9]
+      ]
+    }, {
+      name: 'maj9',
+      variations: [
+        [ 2, -1,  3,  3, -1,  4],
+        [-1,  9,  6,  6,  6,  6]
+      ]
+    }, {
+      name: '11',
+      variations: [
+        [ 2,  2,  2,  3,  2,  4],
+        [-1, -1,  4,  4,  5,  6],
+        [ 7,  7,  8,  9,  7,  7],
+        [-1,  9,  8,  9,  7,  7]
+      ]
+    }, {
+      name: '13',
+      variations: [
+        [-1, -1,  2,  3,  4,  2],
+        [ 2, -1,  2,  3,  4,  4],
+        [ 2,  4,  2,  3,  4,  2]
+      ]
+    }, {
+      name: 'maj13',
+      variations: [
+        [ 2,  1,  1,  1,  2,  1],
+        [-1,  9, -1, 10, 11, 11]
+      ]
+    }, {
+      name: 'min',
+      variations: [
+        [ 2,  4,  4,  2,  2,  2],
+        [-1, -1,  4,  2,  2,  5],
+        [ 5, -1,  4,  6,  7, -1],
+        [-1, -1,  4,  6,  7,  5],
+        [-1,  9,  7,  6,  7, -1],
+        [-1,  9, 11, 11, 10,  9],
+        [-1, 12, 11, 11, 10, -1]
+      ]
+    }, {
+      name: 'min6',
+      variations: [
+        [ 2, -1,  1,  2,  2,  2],
+        [-1, -1,  4,  6,  4,  5],
+        [-1, -1,  7,  8,  7,  9],
+        [-1, -1, 11, 11, 10, 11]
+      ]
+    }, {
+      name: 'min7',
+      variations: [
+        [ 2, -1,  2,  2,  2, -1],
+        [-1, -1,  4,  6,  5,  5],
+        [-1, -1,  7,  9,  7,  9],
+        [-1,  9, 11,  9, 10, 12]
+      ]
+    }, {
+      name: 'min9',
+      variations: [
+        [ 2,  0,  2,  1,  2, -1],
+        [-1,  9,  7,  9,  9, -1]
+      ]
+    }, {
+      name: 'min11',
+      variations: [
+        [ 2,  2,  2,  2,  2,  2],
+        [-1,  9,  9,  9, 10,  9]
+      ]
+    }, {
+      name: 'min13',
+      variations: [
+        [ 2,  4,  2,  2,  4,  2],
+        [-1,  9, -1,  9, 10, 11]
+      ]
+    }, {
+      name: 'min(maj7)',
+      variations: [
+        [ 2,  4,  3,  2,  2,  2],
+        [-1, -1,  4,  6,  6,  5]
+      ]
+    }, {
+      name: 'sus2',
+      variations: [
+        [ 2, -1, -1,  1,  2,  2],
+        [-1, -1,  4,  6,  7,  4],
+        [-1,  9,  6,  6,  7, -1],
+        [-1,  9, 11, 11,  9,  9]
+      ]
+    }, {
+      name: 'sus4',
+      variations: [
+        [ 2,  4,  4,  4,  2,  2],
+        [-1, -1,  4,  6,  7,  7],
+        [-1, -1,  9,  6,  7,  9],
+        [-1,  9,  9, 11, 12,  9]
+      ]
+    }, {
+      name: 'dim',
+      variations: [
+        [ 2, -1,  1,  2,  1, -1],
+        [-1,  6,  7,  5,  7, -1]
+      ]
+    }, {
+      name: 'aug',
+      variations: [
+        [-1, -1,  0,  3,  3,  2],
+        [-1,  5, -1,  7,  7,  6],
+        [-1,  9,  8,  7,  7, -1],
+        [10, -1, 12, 11, 11, -1]
+      ]
+    }, {
+      name: '6/9',
+      variations: [
+        [ 2,  1,  1,  1,  2,  2],
+        [-1,  4,  4,  3,  4,  4],
+        [-1,  9,  8,  8,  9,  9]
+      ]
+    }, {
+      name: '7sus4',
+      variations: [
+        [ 2,  4,  2,  4,  2,  2],
+        [-1, -1,  4,  6,  5,  7]
+      ]
+    }, {
+      name: '7b5',
+      variations: [
+        [ 2, -1,  2,  3,  1, -1],
+        [ 8, -1,  8,  9,  7, -1]
+      ]
+    }, {
+      name: '7b9',
+      variations: [
+        [ 2,  4,  5,  3,  2,  2],
+        [ 2,  4,  2,  3,  2,  3],
+        [-1, -1,  4,  3,  5,  3],
+        [-1,  9,  8,  9,  8,  9],
+        [14, 13, -1, 12, 14, 12]
+      ]
+    }, {
+      name: '9sus4',
+      variations: [
+        [-1,  4,  4,  4,  5,  4],
+        [-1,  9, -1,  9,  9,  7],
+        [-1,  9,  9,  9,  9,  9]
+      ]
+    }, {
+      name: 'add9',
+      variations: [
+        [-1, -1,  4,  3,  2,  4],
+        [-1, -1,  6,  6,  7,  6],
+        [-1,  9,  8,  6,  9,  6],
+        [-1, 11, 11, 11, 11, -1]
+      ]
+    }, {
+      name: 'aug9',
+      variations: [
+        [ 2, -1,  2,  3,  3,  4],
+        [-1,  9,  8,  9,  9, 10]
+      ]
+    }]
+  }, {
+    root: ['G'],
+    types: [{
+      name: 'maj',
+      variations: [
+        [ 3,  2,  0,  0,  0,  3],
+        [ 3,  5,  5,  4,  3,  3],
+        [ 7, -1,  5,  7,  8, -1],
+        [-1, -1,  5,  7,  8,  7],
+        [-1, 10,  9,  7,  8,  7],
+        [10, -1,  9,  7,  8, -1],
+        [-1, 10, 12, 12, 12, 10]
+      ]
+    }, {
+      name: '5',
+      variations: [
+        [-1, -1,  0,  0,  3,  3],
+        [ 3,  5,  5, -1, -1, -1],
+        [-1, -1,  5,  7,  8, -1],
+        [-1, 10, 12, 12, -1, -1]
+      ]
+    }, {
+      name: '6',
+      variations: [
+        [ 3,  2,  0,  0,  0,  0],
+        [-1, -1,  5,  4,  3,  0],
+        [ 3,  5, -1,  4,  5,  3],
+        [-1, 10, 12, 12, 12, 12]
+      ]
+    }, {
+      name: '7',
+      variations: [
+        [ 3,  2,  0,  0,  0,  1],
+        [ 3, -1,  3,  4,  3,  0],
+        [ 3,  5,  3,  4,  3,  3],
+        [-1, -1,  5,  7,  6,  7],
+        [ 7, -1,  5,  7,  6, -1],
+        [-1, 10, 12, 10, 12, 10]
+      ]
+    }, {
+      name: 'maj7',
+      variations: [
+        [ 3,  2,  0,  0,  0,  2],
+        [-1, -1,  5,  4,  3,  2],
+        [-1, -1,  5,  7,  7,  7],
+        [-1, 10, 12, 11, 12, 10]
+      ]
+    }, {
+      name: '9',
+      variations: [
+        [ 3, -1,  0,  2,  0,  1],
+        [ 3, -1,  3,  2,  0,  3],
+        [ 3,  5,  3,  4,  3,  5],
+        [-1, 10,  9, 10, 10, 10]
+      ]
+    }, {
+      name: 'maj9',
+      variations: [
+        [ 3, -1,  0,  2,  0,  2],
+        [-1, 10,  7,  7,  7,  7]
+      ]
+    }, {
+      name: '11',
+      variations: [
+        [ 3,  2,  0,  2,  1,  1],
+        [ 3,  3,  3,  4,  3,  5],
+        [-1, -1,  5,  5,  6,  7],
+        [-1, 10,  9, 10,  8,  8]
+      ]
+    }, {
+      name: '13',
+      variations: [
+        [-1, -1,  3,  0,  0,  0],
+        [ 3,  5,  3,  4,  5,  3],
+        [-1, -1,  3,  4,  5,  3],
+        [-1, 10,  9, 10, 10, 12]
+      ]
+    }, {
+      name: 'maj13',
+      variations: [
+        [ 3,  2,  2,  2,  3,  2],
+        [-1, 10, -1, 11, 12, 12]
+      ]
+    }, {
+      name: 'min',
+      variations: [
+        [ 3,  1,  0,  0,  3,  3],
+        [ 3,  5,  5,  3,  3,  3],
+        [-1, -1,  5,  3,  3,  6],
+        [-1, -1,  5,  7,  8,  6],
+        [-1, -1,  8,  7,  8,  6],
+        [-1, 10,  8,  7,  8, -1],
+        [-1, 10, 12, 12, 11, 10]
+      ]
+    }, {
+      name: 'min6',
+      variations: [
+        [-1, -1,  2,  3,  3,  3],
+        [ 3,  5,  5,  3,  5,  3],
+        [-1,  7,  8,  7,  8, -1],
+        [-1, 10, 12,  9, 11, -1]
+      ]
+    }, {
+      name: 'min7',
+      variations: [
+        [-1,  1,  3,  0,  3, -1],
+        [ 3, -1,  3,  3,  3, -1],
+        [ 3,  5,  3,  3,  6,  3],
+        [-1, 10, -1, 10, 11, 10]
+      ]
+    }, {
+      name: 'min9',
+      variations: [
+        [ 3, -1,  3,  3,  3,  5],
+        [-1, 10,  8, 10, 10, -1]
+      ]
+    }, {
+      name: 'min11',
+      variations: [
+        [ 3,  3,  3,  3,  3,  3],
+        [-1, 10, 10, 10, 11, 10]
+      ]
+    }, {
+      name: 'min13',
+      variations: [
+        [ 3,  5,  3,  3,  5,  3],
+        [-1, 10, -1, 10, 11, 12]
+      ]
+    }, {
+      name: 'min(maj7)',
+      variations: [
+        [ 3,  5,  4,  3,  3,  3],
+        [-1, 10,  8,  7,  7, -1]
+      ]
+    }, {
+      name: 'sus2',
+      variations: [
+        [ 3,  0,  0,  2,  3,  3],
+        [-1, -1,  5,  7,  8,  5],
+        [-1, 10,  7,  7,  8, -1],
+        [-1, 10, 12, 12, 10, 10]
+      ]
+    }, {
+      name: 'sus4',
+      variations: [
+        [ 3,  5,  5,  5,  3,  3],
+        [-1, -1, 10,  7,  8, 10],
+        [-1, -1, 12, 12, 13, 10]
+      ]
+    }, {
+      name: 'dim',
+      variations: [
+        [ 3, -1,  2,  3,  2, -1],
+        [-1, -1,  5,  6,  5,  6]
+      ]
+    }, {
+      name: 'aug',
+      variations: [
+        [ 3,  2,  1,  0,  0,  3],
+        [ 3, -1,  5,  4,  4, -1],
+        [-1,  6, -1,  8,  8,  7],
+        [-1, 10,  9,  8,  8, -1]
+      ]
+    }, {
+      name: '6/9',
+      variations: [
+        [ 3,  2,  2,  2,  3,  3],
+        [ 3,  5, -1,  4,  5,  5],
+        [-1,  5,  5,  4,  5,  5],
+        [-1,  7,  7,  7,  8,  7]
+      ]
+    }, {
+      name: '7sus4',
+      variations: [
+        [ 3,  5,  3,  5,  3,  3],
+        [-1, -1,  5,  7,  6,  8]
+      ]
+    }, {
+      name: '7b5',
+      variations: [
+        [ 3, -1,  3,  4,  2, -1],
+        [-1, -1,  5,  6,  6,  7]
+      ]
+    }, {
+      name: '7b9',
+      variations: [
+        [ 3,  2, -1,  1,  3,  1],
+        [ 3,  5,  6,  4,  3,  3],
+        [ 3,  5,  6,  4, -1, -1],
+        [ 3,  5,  3,  4,  3,  4],
+        [-1, -1,  5,  4,  6,  4],
+        [-1, 10,  9, 10,  9, -1],
+        [-1, 10,  9, 10,  9, 10]
+      ]
+    }, {
+      name: '9sus4',
+      variations: [
+        [ 3, -1,  3,  2,  1,  1],
+        [-1, -1,  5,  5,  6,  5],
+        [-1, 10, -1, 10, 10,  8],
+        [-1, 10, 10, 10, 10, 10]
+      ]
+    }, {
+      name: 'add9',
+      variations: [
+        [ 3,  0,  0,  2,  0,  3],
+        [-1, -1,  5,  4,  3,  5],
+        [-1, -1,  7,  7,  8,  7],
+        [-1, 10,  9,  7, 10,  7]
+      ]
+    }, {
+      name: 'aug9',
+      variations: [
+        [ 3, -1,  3,  4,  4,  5],
+        [-1, 10,  9, 10, 10, 11]
+      ]
+    }]
+  }, {
+    root: ['G#', 'Ab'],
+    types: [{
+      name: 'maj',
+      variations: [
+        [ 4,  3,  1,  1,  1, -1],
+        [-1, -1,  1,  1,  1,  4],
+        [ 4,  6,  6,  5,  4,  4],
+        [ 8, -1,  6,  7,  8, -1],
+        [-1, -1,  6,  8,  9,  8],
+        [-1, 11, 10,  8,  9, -1],
+        [-1, -1, 10,  8,  9, 11]
+      ]
+    }, {
+      name: '5',
+      variations: [
+        [-1, -1,  1,  1,  4,  4],
+        [ 4,  6,  6, -1, -1, -1],
+        [-1, -1,  6,  8,  9, -1],
+        [-1, 11, 13, 14, -1, -1]
+      ]
+    }, {
+      name: '6',
+      variations: [
+        [-1, -1,  1,  1,  1,  1],
+        [ 4,  6, -1,  5,  6,  4],
+        [-1, -1,  6,  8,  6,  8],
+        [-1, 11, 13, 10, 13, -1]
+      ]
+    }, {
+      name: '7',
+      variations: [
+        [-1, -1,  1,  1,  1,  2],
+        [ 4,  6,  4,  5,  4,  4],
+        [ 4,  6, -1,  5,  7, -1],
+        [ 4, -1,  4,  5,  4, -1],
+        [-1, -1,  6,  8,  7,  8],
+        [-1, 11, 13, 11, 13, 11]
+      ]
+    }, {
+      name: 'maj7',
+      variations: [
+        [-1, -1,  1,  1,  1,  3],
+        [-1, -1,  6,  5,  4,  3],
+        [ 4,  6,  5,  5,  4,  4],
+        [-1, 11, 10,  8,  8,  8]
+      ]
+    }, {
+      name: '9',
+      variations: [
+        [ 4, -1,  4,  3,  1, -1],
+        [ 4,  6,  4,  5,  4,  6],
+        [-1, -1,  6,  5,  7,  6],
+        [-1, 11, 10, 11, 11, 11]
+      ]
+    }, {
+      name: 'maj9',
+      variations: [
+        [ 4,  3,  5,  3,  4, -1],
+        [-1,  3,  6,  3,  4,  3]
+      ]
+    }, {
+      name: '11',
+      variations: [
+        [-1,  3,  1,  1,  2,  2],
+        [ 4,  4,  4,  5,  4,  6],
+        [-1, -1,  6,  6,  7,  8],
+        [-1, 11, 10, 11,  9,  9]
+      ]
+    }, {
+      name: '13',
+      variations: [
+        [ 4, -1,  4,  3,  1,  1],
+        [ 4, -1,  4,  5,  6, -1],
+        [ 4,  6,  4,  5,  6,  6],
+        [-1, 11, -1, 11, 13, 13]
+      ]
+    }, {
+      name: 'maj13',
+      variations: [
+        [ 4,  3,  3,  3,  4,  3],
+        [-1, 11, -1, 12, 13, 13]
+      ]
+    }, {
+      name: 'min',
+      variations: [
+        [-1,  2,  1,  1,  4,  4],
+        [ 4,  6,  6,  4,  4,  4],
+        [ 7, -1,  6,  4,  4,  4],
+        [-1, -1,  6,  8,  9,  7],
+        [-1, -1,  9,  8,  9,  7],
+        [-1, 11,  9,  8,  9, -1],
+        [-1, 11, 13, 13, 12, 11]
+      ]
+    }, {
+      name: 'min6',
+      variations: [
+        [ 4, -1,  3,  4,  4, -1],
+        [ 4,  6,  6,  4,  6,  4],
+        [-1, -1,  6,  8,  6,  7],
+        [-1, 11, -1, 10, 12, 11]
+      ]
+    }, {
+      name: 'min7',
+      variations: [
+        [ 4, -1,  4,  4,  4, -1],
+        [ 4,  6,  4,  4,  7,  4],
+        [-1, 11,  9,  8,  7, -1],
+        [-1, 11, 13, 11, 12, 11]
+      ]
+    }, {
+      name: 'min9',
+      variations: [
+        [-1,  2,  4,  3,  4,  4],
+        [ 4, -1,  4,  4,  4,  6]
+      ]
+    }, {
+      name: 'min11',
+      variations: [
+        [ 4,  4,  4,  4,  4,  4],
+        [-1, 11, 11, 11, 12, 11]
+      ]
+    }, {
+      name: 'min13',
+      variations: [
+        [ 4, -1,  4,  4,  6, -1]
+      ]
+    }, {
+      name: 'min(maj7)',
+      variations: [
+        [ 4,  6,  5,  4,  4,  4],
+        [-1, -1,  6,  8,  8,  7]
+      ]
+    }, {
+      name: 'sus2',
+      variations: [
+        [-1,  1,  1,  1,  4,  4],
+        [-1, -1,  6,  8,  9,  6],
+        [-1, 11,  8,  8,  9, -1],
+        [-1, 11, 13, 13, 11, 11]
+      ]
+    }, {
+      name: 'sus4',
+      variations: [
+        [-1, -1,  1,  1,  2,  4],
+        [ 4,  6,  6,  6,  4,  4],
+        [-1, -1,  6,  8,  9,  9]
+      ]
+    }, {
+      name: 'dim',
+      variations: [
+        [ 4, -1,  3,  4,  3, -1],
+        [-1, -1,  6,  7,  6,  7]
+      ]
+    }, {
+      name: 'aug',
+      variations: [
+        [ 0,  3,  2,  1,  1,  0],
+        [ 4, -1,  6,  5,  5, -1],
+        [-1, -1, 10,  9,  9,  8],
+        [-1, 11, 10,  9,  9, -1]
+      ]
+    }, {
+      name: '6/9',
+      variations: [
+        [ 4,  3,  3,  3,  4, -1],
+        [ 4,  6, -1,  5,  6,  6],
+        [-1,  6,  6,  5,  6,  6],
+        [-1, 11, 10, 10, 11, 11]
+      ]
+    }, {
+      name: '7sus4',
+      variations: [
+        [-1, -1,  1,  1,  2,  2],
+        [ 4,  6,  4,  6,  4,  4]
+      ]
+    }, {
+      name: '7b5',
+      variations: [
+        [ 4, -1,  4,  5,  3, -1],
+        [-1, -1,  6,  7,  7,  8]
+      ]
+    }, {
+      name: '7b9',
+      variations: [
+        [ 4,  3, -1,  2,  4,  2],
+        [ 4,  6,  7,  5,  4,  4],
+        [-1, 11, 10, 11, 10, 11],
+        [-1, 11, 10, 11, 10, -1]
+      ]
+    }, {
+      name: '9sus4',
+      variations: [
+        [ 4, -1,  4,  3,  2, -1],
+        [-1,  6,  6,  6,  7,  6],
+        [-1, 11, -1, 11, 11,  9],
+        [-1, 11, 11, 11, 11, 11]
+      ]
+    }, {
+      name: 'add9',
+      variations: [
+        [ 4,  3,  1,  3,  1, -1],
+        [-1, -1,  6,  5,  4,  6],
+        [-1, -1,  8,  8,  9,  8],
+        [-1, 11, 10,  8, 11, -1]
+      ]
+    }, {
+      name: 'aug9',
+      variations: [
+        [ 4,  3,  4,  3,  5, -1],
+        [ 4, -1,  4,  5,  5,  6]
+      ]
+    }]
+  }];
+  
+  var Chord = function(elementOrPosition, data, labelOrVariant) {
+    
+    if (typeof(elementOrPosition) === 'object' && elementOrPosition.x !== undefined && elementOrPosition.y !== undefined) {
+      this.element = Raphael(elementOrPosition.x, elementOrPosition.y, 100, 100);
+    }
+    
+    else {
+      this.element = Raphael(elementOrPosition, 100, 100);
+    }
+    
+    this.element.setViewBox(0, 0, 100, 100);
+
+    this.fret = 0;
+    this.frets = [];
+    this.lines = {};
+    
+    // Validate that the data is an array containing 6 elements.
+    if (typeof(data) === 'object' && data.length !== undefined && data.length === 6) {
+      this.data = data;
+      
+      var min = 99;
+      var max = 0;
+      
+      for (i = 0; i < 6; i++) {
+        min = (this.data[i] < min && this.data[i] > 0) ? this.data[i] : min;
+        max = (this.data[i] > max && this.data[i] > 0) ? this.data[i] : max;
+      }
+      
+      if (max > 5) {
+        this.fret = min;
+      }
+      
+      var offset = (this.fret > 0) ? this.fret - 1 : 0;
+      
+      for (i = 0; i < 6; i++) {
+        
+        // Muted strings.
+        if (this.data[i] === -1) {
+          this.frets[i] = this.element.path('M' + (16 + (10 * i)) + ' 7L' + (24 + (10 * i)) + ' 15M' + (16 + (10 * i)) + ' 15L' + (24 + (10 * i)) + ' 7');
+        }
+        
+        // Open strings.
+        else if (this.data[i] === 0) {
+          this.frets[i] = this.element.circle(20 + (10 * i), 11, 3.5);
+        }
+        
+        // All other strings.
+        else {
+          this.frets[i] = this.element.circle(20 + (10 * i), 15 + (10 * (this.data[i] - offset)), 3.5).attr({
+            'fill': '#000'
+          });
+        }
+      }
+      
+      if (this.fret > 0) {
+        this.element.text(84, 24, this.fret + 'fr');
+      } else {
+        this.lines.top = this.element.path('M20 18L70 18L70 20L20 20L20 18').attr({
+          'fill': '#000'
+        });
+      }
+      
+      if (labelOrVariant) {
+        this.label = this.element.text(45, 78, labelOrVariant);
+      }
+    }
+    
+    // Otherwise, treat the data as a chord represented as a string (e.g.: "C maj").
+    else if (typeof(data) === 'string') {
+      var splitData = data.split(' ');
+      var variant = 1;
+      
+      if (typeof(labelOrVariant) === 'number') {
+        variant = labelOrVariant;
+      }
+      
+      this.element.remove();
+      
+      if (splitData.length > 1) {
+        return new Chord(elementOrPosition, Raphael.chord.find(splitData[0], splitData[1], variant), splitData[0] + ' ' + splitData[1]);
+      } else {
+        return new Chord(elementOrPosition, Raphael.chord.find(data, 'maj', variant), data);
+      }
+    }
+    
+    this.lines.horizontal = [];
+    this.lines.vertical = [];
+    
+    for (var i = 0; i < 6; i++) {
+      var position = 20 + (10 * i);
+      
+      this.lines.horizontal.push(this.element.path('M20 ' + position + 'L70 ' + position));
+      this.lines.vertical.push(this.element.path('M' + position + ' 20L' + position + ' 70'));
+    }
+  };
+  
+  Chord.prototype.remove = function () {
+    this.element.remove();
+  };
+  
+})(window.Raphael);
+
+</script>
 </head>
 <body>
 
@@ -2054,7 +5107,6 @@
 </div>
 
 <!-- ── LOGIN SCREEN ── -->
-<canvas id="musicCanvas"></canvas>
 
 <div class="screen hidden" id="loginScreen">
   <div class="auth-box">
@@ -2084,30 +5136,23 @@
 </div>
 
 <!-- ── LOADING SPINNER ── -->
-<div id="loadingSpinner">
-  <div class="spinner-ring"></div>
-</div>
+
 
 <!-- ── HOME OVERLAY (aparece sobre o canvas animado, sem mudar de tela) ── -->
-<div id="homeOverlay">
+<div id="homeOverlay" style="display:none">
   <div class="home-overlay-box">
     <img class="home-overlay-logo" src="https://i.imgur.com/Nelv4ev.png" alt="CifraSet">
     <div class="home-overlay-welcome">Olá, <strong id="homeOverlayUserName">músico</strong>! O que vamos fazer hoje?</div>
     <div class="home-overlay-cards">
-      <div class="home-overlay-card" onclick="goMyPlaylists()">
-        <div class="home-overlay-card-icon"><img src="https://i.imgur.com/cdpK40G.png" alt="Minhas Playlists"></div>
-        <div class="home-overlay-card-title">Minhas Playlists</div>
-        <div class="home-overlay-card-desc">Ver, abrir e gerenciar</div>
+      <div class="home-overlay-card" onclick="openPlaylistsOverlay()">
+        <div class="home-overlay-card-icon"><img src="https://i.imgur.com/cdpK40G.png" alt="Playlists"></div>
+        <div class="home-overlay-card-title">Playlists</div>
+        <div class="home-overlay-card-desc">Ver, criar e gerenciar</div>
       </div>
       <div class="home-overlay-card" onclick="goJoinPlaylist()">
         <div class="home-overlay-card-icon"><img src="https://i.imgur.com/9l834dW.png" alt="Entrar por Código" style="width:52px;height:52px"></div>
         <div class="home-overlay-card-title">Entrar por Código</div>
         <div class="home-overlay-card-desc">Acesse playlist compartilhada</div>
-      </div>
-      <div class="home-overlay-card" onclick="goCreatePlaylist()">
-        <div class="home-overlay-card-icon"><img src="https://i.imgur.com/CpeprJX.png" alt="Nova Playlist"></div>
-        <div class="home-overlay-card-title">Nova Playlist</div>
-        <div class="home-overlay-card-desc">Crie e organize suas músicas</div>
       </div>
       <div class="home-overlay-card" onclick="openTuner()">
         <div class="home-overlay-card-icon"><img src="https://i.imgur.com/fscjlpX.png" alt="Afinador"></div>
@@ -2121,6 +5166,48 @@
       </div>
     </div>
     <div class="home-overlay-logout" onclick="doLogout()">Sair da conta</div>
+  </div>
+</div>
+
+<!-- ── PLAYLISTS OVERLAY ── -->
+<div id="playlistsOverlay" style="display:none">
+  <div class="plov-box" id="playlistsOverlayBox">
+
+    <!-- VIEW: lista -->
+    <div id="plovViewList">
+      <div class="plov-header">
+        <button class="btn btn-ghost btn-sm" onclick="closePlaylistsOverlay()">← Voltar</button>
+        <div class="plov-title">Playlists</div>
+        <button class="btn btn-primary btn-sm" onclick="plovShowCreate()">+ Nova</button>
+      </div>
+      <div id="playlistsOverlayList" class="plov-list"></div>
+    </div>
+
+    <!-- VIEW: nova playlist -->
+    <div id="plovViewCreate" style="display:none">
+      <div class="plov-header">
+        <button class="btn btn-ghost btn-sm" onclick="plovShowList()">← Voltar</button>
+        <div class="plov-title">Nova Playlist</div>
+        <div style="width:64px"></div>
+      </div>
+      <div class="plov-create-body">
+        <input type="text" id="plovNewName" class="plov-name-input" placeholder="Nome da playlist (ex: Domingo 15/06)"
+          onkeydown="if(event.key==='Enter') plovCreate()">
+        <div class="plov-perm-row">
+          <div class="plov-perm-label">Permissão para convidados</div>
+          <div class="plov-perm-toggle">
+            <button class="plov-perm-btn active" id="plovPermEdit" onclick="plovSetPerm('edit')">✏️ Edição</button>
+            <button class="plov-perm-btn" id="plovPermView" onclick="plovSetPerm('view')">👁 Leitura</button>
+          </div>
+          <div class="plov-perm-hint" id="plovPermHint">Convidados poderão editar as cifras</div>
+        </div>
+        <div class="plov-create-footer">
+          <button class="btn btn-ghost" onclick="plovShowList()">Cancelar</button>
+          <button class="btn btn-primary" id="plovCreateBtn" onclick="plovCreate()">Criar Playlist</button>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -2251,7 +5338,7 @@
     <div class="song-list" id="songList"></div>
     <div class="sidebar-footer">
       <button class="btn btn-primary btn-sm" style="width:100%;margin-bottom:6px" onclick="exportPlaylistPDF()">📄 Exportar PDF</button>
-      <button class="btn btn-ghost btn-sm" style="width:100%;background:#25D366;border-color:#25D366;color:#fff;margin-bottom:6px" onclick="shareWhatsApp()">💬 Compartilhar no WhatsApp</button>
+      <button class="btn btn-ghost btn-sm" style="width:100%;margin-bottom:6px" onclick="openShareSheet()">↗ Compartilhar</button>
       <div style="display:flex;gap:6px;margin-top:2px">
         <button class="btn btn-ghost btn-sm" style="flex:1" onclick="backupData()" title="Salvar todas as músicas num arquivo">💾 Backup</button>
         <label class="btn btn-ghost btn-sm" style="flex:1;cursor:pointer;text-align:center" title="Restaurar backup salvo anteriormente">📂 Restaurar<input type="file" accept=".json" style="display:none" onchange="restoreData(event)"></label>
@@ -2318,8 +5405,17 @@
       <div class="present-title" id="presentTitle"></div>
       <div class="present-key" id="presentKey"></div>
     </div>
-    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-      <button class="mic-btn" id="micScrollBtn" onclick="toggleMicScroll()" title="Modo Karaokê" style="display:none">
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <!-- Auto-scroll BPM bar -->
+      <div class="autoscroll-bar">
+        <span class="autoscroll-label">BPM</span>
+        <button class="as-btn" onclick="AutoScroll.changeBpm(-5)">−</button>
+        <div class="autoscroll-bpm-display" id="asBpmDisplay">80</div>
+        <button class="as-btn" onclick="AutoScroll.changeBpm(5)">+</button>
+        <button class="as-toggle" id="asToggleBtn" onclick="AutoScroll.toggle()">▶ Scroll</button>
+      </div>
+      <!-- Mic karaoke -->
+      <button class="mic-btn" id="micScrollBtn" onclick="toggleMicScroll()" title="Modo Karaokê">
         <span class="mic-icon">🎤</span>
         <span class="mic-label">Seguir Letra</span>
         <span class="mic-wave">
@@ -2463,6 +5559,7 @@ const db = firebase.firestore();
 let currentUser  = null;   // { uid, username, name }
 let currentPlDoc = null;
 let canEdit      = true;
+let localTransposeOffset = 0; // offset semitonal local para convidados em modo leitura
 
 let state = {
   playlists: [],
@@ -2497,14 +5594,18 @@ function save() {
 }
 
 // ── SCREEN MANAGER ───────────────────────────────────────
+function clearSpinner() {}
+
 function showScreen(id) {
   ['introScreen','loginScreen','registerScreen','homeScreen','joinScreen','myPlaylistsScreen'].forEach(s => {
     document.getElementById(s).classList.add('hidden');
   });
-  // Hide overlay/spinner if navigating away
+  // Always clear spinner when navigating
   if (id !== null) {
-    document.getElementById('homeOverlay').classList.remove('active');
-    document.getElementById('loadingSpinner').classList.remove('active');
+    const _ho = document.getElementById('homeOverlay');
+    _ho.classList.remove('active');
+    _ho.style.display = 'none';
+    clearSpinner();
   }
   // Hide canvas only when going to the full app — keep it for glass screens
   if (id && id !== 'loginScreen' && id !== 'registerScreen'
@@ -2523,25 +5624,134 @@ function showScreen(id) {
 // ── INTRO ─────────────────────────────────────────────────
 function runIntro(isDemo) {
   showScreen('introScreen');
+  // Fade out intro quickly, then go straight to auth check — no fake delay
+  const intro = document.getElementById('introScreen');
+  intro.style.transition = 'opacity 0.5s';
+  intro.style.opacity = '0';
   setTimeout(() => {
-    document.getElementById('introScreen').style.transition = 'opacity 0.5s';
-    document.getElementById('introScreen').style.opacity = '0';
-    setTimeout(() => {
-      document.getElementById('introScreen').classList.add('hidden');
-      if (isDemo) {
-        showScreen('loginScreen');
-        MusicCanvas.show();
-        const err = document.getElementById('loginErr');
-        err.style.color = 'var(--gold)';
-        err.textContent = '⚠️ Configure as credenciais do Firebase no código para usar o app.';
-      } else {
-        checkAuth();
-      }
-    }, 500);
-  }, 1800);
+    intro.classList.add('hidden');
+    intro.style.opacity = '';
+    intro.style.transition = '';
+    if (isDemo) {
+      showScreen('loginScreen');
+      MusicCanvas.show();
+      const err = document.getElementById('loginErr');
+      err.style.color = 'var(--gold)';
+      err.textContent = '⚠️ Configure as credenciais do Firebase no código para usar o app.';
+    } else {
+      checkAuth();
+    }
+  }, 500);
 }
 
 // ── AUTH CHECK (sessão salva) ─────────────────────────────
+// ── PUBLIC LINK AUTO-JOIN ──────────────────────────────────
+(function checkPublicLink() {
+  const params = new URLSearchParams(window.location.search);
+  const code   = params.get('code');
+  if (!code) return;
+  window._publicLinkCode = code.toUpperCase();
+  // Show public viewer immediately — no login needed
+  showPublicViewer(code.toUpperCase());
+})();
+
+async function showPublicViewer(code) {
+  // Hide everything, show a loading screen while we fetch
+  document.getElementById('introScreen')?.classList.add('hidden');
+  const pv = document.getElementById('publicViewOverlay');
+  if (!pv) return;
+  pv.style.display = 'flex';
+
+  const pvContent = document.getElementById('pvContent');
+  pvContent.innerHTML = `<div style="color:var(--muted);text-align:center;padding:40px">
+    <div style="font-size:32px;margin-bottom:12px">🎵</div>
+    <div>Carregando playlist…</div>
+  </div>`;
+
+  try {
+    const snap = await db.collection('playlists').where('code','==',code).limit(1).get();
+    if (snap.empty) {
+      pvContent.innerHTML = `<div style="color:var(--muted);text-align:center;padding:40px">
+        <div style="font-size:32px;margin-bottom:12px">🔍</div>
+        <div>Playlist não encontrada.<br><span style="font-size:12px">Verifique o código e tente novamente.</span></div>
+      </div>`;
+      return;
+    }
+    const d   = snap.docs[0].data();
+    const pl  = { name: d.name, songs: d.songs || [], code: d.code, owner: d.ownerName || '' };
+    renderPublicPlaylist(pl);
+  } catch(e) {
+    console.error(e);
+    pvContent.innerHTML = `<div style="color:var(--muted);text-align:center;padding:40px">Erro ao carregar. Verifique sua conexão.</div>`;
+  }
+}
+
+function renderPublicPlaylist(pl) {
+  const pvTitle   = document.getElementById('pvTitle');
+  const pvMeta    = document.getElementById('pvMeta');
+  const pvSongs   = document.getElementById('pvSongList');
+  const pvContent = document.getElementById('pvContent');
+
+  if (pvTitle) pvTitle.textContent = pl.name;
+  if (pvMeta)  pvMeta.textContent  = `${pl.songs.length} música${pl.songs.length!==1?'s':''} · código ${pl.code}${pl.owner?' · '+pl.owner:''}`;
+
+  // Song list
+  if (pvSongs) {
+    pvSongs.innerHTML = pl.songs.map((s,i) => `
+      <button class="pv-song-btn" onclick="renderPublicSong(${JSON.stringify(s).replace(/"/g,'&quot;')})">
+        <span class="pv-song-num">${String(i+1).padStart(2,'0')}</span>
+        <span class="pv-song-title">${esc(s.title)}</span>
+        <span class="pv-song-key">${s.key||''}</span>
+      </button>`).join('');
+  }
+
+  // Show first song by default
+  if (pl.songs.length > 0) {
+    renderPublicSong(pl.songs[0]);
+    // Highlight first
+    setTimeout(() => {
+      const first = document.querySelector('.pv-song-btn');
+      if (first) first.classList.add('active');
+    }, 50);
+  }
+}
+
+function renderPublicSong(song) {
+  // Unhighlight all
+  document.querySelectorAll('.pv-song-btn').forEach(b => b.classList.remove('active'));
+  // Find and highlight matching
+  document.querySelectorAll('.pv-song-btn .pv-song-title').forEach(el => {
+    if (el.textContent === song.title) el.closest('.pv-song-btn').classList.add('active');
+  });
+
+  const pvContent = document.getElementById('pvContent');
+  if (!pvContent) return;
+
+  const fs = 16;
+  let html = `
+    <div class="pv-song-header">
+      <div class="pv-song-name">${esc(song.title)}</div>
+      <div class="pv-song-info">Tom: <strong>${song.key||'—'}</strong>${song.capo&&song.capo!=='0'?' · Capo '+song.capo:''}</div>
+    </div>`;
+
+  song.sections?.forEach(sec => {
+    html += `<div class="pv-section">`;
+    html += `<div class="pv-section-label">${esc(sec.label)}</div>`;
+    sec.lines?.forEach(line => {
+      if (!line.chords && !line.lyrics) return;
+      html += `<div class="pv-line">`;
+      if (line.chords) {
+        html += `<div class="pv-chord" style="font-size:${fs}px">${esc(line.chords)}</div>`;
+      }
+      html += `<div class="pv-lyric" style="font-size:${fs}px">${esc(line.lyrics||' ')}</div>`;
+      html += `</div>`;
+    });
+    html += `</div>`;
+  });
+
+  pvContent.innerHTML = html;
+}
+
 function checkAuth() {
   const saved = loadSession();
   if (saved && saved.uid) {
@@ -2549,7 +5759,17 @@ function checkAuth() {
     renderUserBadge();
     fetchAllMyPlaylists();
     MusicCanvas.show();
-    showHomeOverlay();
+    if (window._publicLinkCode) {
+      const code = window._publicLinkCode;
+      window._publicLinkCode = null;
+      history.replaceState({}, '', window.location.pathname);
+      setTimeout(async () => {
+        document.getElementById('joinCode').value = code;
+        await doJoin();
+      }, 400);
+    } else {
+      showHomeOverlay();
+    }
   } else {
     showLogin();
   }
@@ -2557,7 +5777,10 @@ function checkAuth() {
 
 // ── LOGIN / REGISTER ──────────────────────────────────────
 function showLogin() {
-  // Reseta qualquer estilo inline que tenha ficado de animações anteriores
+  // Reabilita botão e limpa erro sempre que exibir login
+  const _lb = document.getElementById('loginBtn'); if (_lb) { _lb.disabled = false; _lb.textContent = 'Entrar'; }
+  const _le = document.getElementById('loginErr'); if (_le) _le.textContent = '';
+  clearSpinner();
   const loginBox = document.querySelector('#loginScreen .auth-box');
   if (loginBox) {
     loginBox.style.transition = 'none';
@@ -2575,19 +5798,22 @@ function showRegister() {
 }
 function showHomeOverlay() {
   if (!currentUser) { showLogin(); return; }
+  clearSpinner();
   document.getElementById('homeOverlayUserName').textContent = currentUser.name || currentUser.username;
   MusicCanvas.show();
   const overlay = document.getElementById('homeOverlay');
+  // Remove active so CSS resets opacity/transform on cards
+  overlay.classList.remove('active');
+  overlay.style.display = 'flex';
+  // Force reflow so browser registers the removed state before re-adding active
+  overlay.getBoundingClientRect();
   overlay.classList.add('active');
-  // Reset card transitions so they re-animate each time
-  overlay.querySelectorAll('.home-overlay-card').forEach(c => {
-    c.style.transitionDelay = '';
-  });
 }
 
 function hideHomeOverlay() {
   const overlay = document.getElementById('homeOverlay');
   overlay.classList.remove('active');
+  overlay.style.display = 'none';
 }
 
 function backToHome() {
@@ -2619,6 +5845,7 @@ function goJoinPlaylist() {
     homeOver.style.transition = 'opacity 0.22s ease';
     homeOver.style.opacity = '0';
     setTimeout(() => {
+      homeOver.style.display = 'none';
       homeOver.classList.remove('active');
       homeOver.style.opacity = '';
       homeOver.style.transition = '';
@@ -2645,26 +5872,183 @@ function goCreatePlaylist(){
   if (state.playlists.length > 0) { openPlaylistModal(); } else { showCreatePlaylistFlow(); }
 }
 function goMyPlaylists() {
+  // mantido para compatibilidade — agora abre o novo overlay
+  openPlaylistsOverlay();
+}
+
+async function openPlaylistsOverlay() {
+  if (!currentUser) return;
+  const ov = document.getElementById('playlistsOverlay');
+
+  // Esconde homeOverlay igual ao openTuner
   const homeOver = document.getElementById('homeOverlay');
   if (homeOver && homeOver.classList.contains('active')) {
     homeOver.style.transition = 'opacity 0.22s ease';
     homeOver.style.opacity = '0';
     setTimeout(() => {
+      homeOver.style.display = 'none';
       homeOver.classList.remove('active');
       homeOver.style.opacity = '';
       homeOver.style.transition = '';
-      // Show myPlaylistsScreen transparent over canvas
-      ['introScreen','loginScreen','registerScreen','homeScreen','joinScreen'].forEach(s => {
-        document.getElementById(s).classList.add('hidden');
-      });
-      document.getElementById('appWrapper').style.display = 'none';
-      showMyPlaylistsScreen();
     }, 220);
-  } else {
-    hideHomeOverlay();
-    showMyPlaylistsScreen();
+  }
+
+  ov.style.display = 'flex';
+  requestAnimationFrame(() => requestAnimationFrame(() => ov.classList.add('active')));
+  await _renderPlaylistsOverlayList();
+}
+
+async function _renderPlaylistsOverlayList() {
+  const list = document.getElementById('playlistsOverlayList');
+  list.innerHTML = '<div class="plov-empty">\u23f3 Carregando…</div>';
+  try {
+    const snap = await db.collection('playlists')
+      .where('ownerId', '==', currentUser.uid)
+      .get();
+
+    const pls = [];
+    snap.forEach(doc => pls.push({ id: doc.id, ...doc.data() }));
+    pls.sort((a, b) => (b.updatedAt?.seconds || 0) - (a.updatedAt?.seconds || 0));
+
+    if (pls.length === 0) {
+      list.innerHTML = '<div class="plov-empty">Voc\u00ea ainda n\u00e3o tem playlists.<br>Crie sua primeira! \ud83c\udfb5</div>';
+      return;
+    }
+
+    list.innerHTML = '';
+    pls.forEach(pl => {
+      const count = (pl.songs || []).length;
+      const safeName = pl.name.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+      const perm = pl.permission || 'edit';
+      const div = document.createElement('div');
+      div.className = 'plov-item';
+      div.innerHTML = `
+        <div class="plov-item-info">
+          <div class="plov-item-name">${esc(pl.name)}</div>
+          <div class="plov-item-meta">${count} m\u00fasica${count !== 1 ? 's' : ''}</div>
+        </div>
+        <div class="plov-inline-perm">
+          <button class="plov-inline-btn ${perm === 'edit' ? 'active' : ''}" title="Convidados podem editar" onclick="plovTogglePermItem('${pl.id}', 'edit', this)">✏️</button>
+          <button class="plov-inline-btn ${perm === 'view' ? 'active' : ''}" title="Convidados só visualizam" onclick="plovTogglePermItem('${pl.id}', 'view', this)">👁</button>
+        </div>
+        <span class="plov-code" title="Copiar c\u00f3digo" onclick="navigator.clipboard.writeText('${pl.code}').then(()=>showToast('C\u00f3digo copiado!'))">${pl.code}</span>
+        <button class="btn btn-primary btn-sm" onclick="closePlaylistsOverlay(); openPlaylistFromList('${pl.id}')">Abrir</button>
+        <button class="btn btn-danger btn-sm" style="padding:5px 10px" title="Apagar" onclick="deletePlFromOverlay('${pl.id}','${safeName.replace(/`/g,'\\`')}')">\ud83d\uddd1</button>
+      `;
+      list.appendChild(div);
+    });
+  } catch(e) {
+    console.error(e);
+    list.innerHTML = '<div class="plov-empty" style="color:var(--red)">Erro ao carregar.</div>';
   }
 }
+
+function plovShowCreate() {
+  const vList = document.getElementById('plovViewList');
+  const vCreate = document.getElementById('plovViewCreate');
+  vList.style.opacity = '0';
+  setTimeout(() => {
+    vList.style.display = 'none';
+    vCreate.style.display = 'block';
+    vCreate.style.opacity = '0';
+    requestAnimationFrame(() => {
+      vCreate.style.opacity = '1';
+      setTimeout(() => document.getElementById('plovNewName').focus(), 50);
+    });
+  }, 180);
+}
+
+function plovShowList() {
+  const vList = document.getElementById('plovViewList');
+  const vCreate = document.getElementById('plovViewCreate');
+  vCreate.style.opacity = '0';
+  setTimeout(() => {
+    vCreate.style.display = 'none';
+    document.getElementById('plovNewName').value = '';
+    vList.style.display = 'block';
+    vList.style.opacity = '0';
+    requestAnimationFrame(() => { vList.style.opacity = '1'; });
+  }, 180);
+}
+
+async function plovTogglePermItem(plId, perm, btn) {
+  try {
+    await db.collection('playlists').doc(plId).update({ permission: perm });
+    const pl = state.playlists.find(p => p.id === plId);
+    if (pl) pl.permission = perm;
+    // Update sibling buttons
+    const group = btn.closest('.plov-inline-perm');
+    group.querySelectorAll('.plov-inline-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    showToast(perm === 'edit' ? 'Convidados podem editar ✏️' : 'Convidados só visualizam 👁');
+  } catch(e) { showToast('Erro ao alterar permissão!'); }
+}
+
+function plovSetPerm(perm) {
+  document.getElementById('plovPermEdit').classList.toggle('active', perm === 'edit');
+  document.getElementById('plovPermView').classList.toggle('active', perm === 'view');
+  document.getElementById('plovPermHint').textContent = perm === 'edit'
+    ? 'Convidados poderão editar as cifras'
+    : 'Convidados só poderão visualizar as cifras';
+  document.getElementById('plovViewCreate').dataset.perm = perm;
+}
+
+async function plovCreate() {
+  const name = document.getElementById('plovNewName').value.trim();
+  if (!name) { document.getElementById('plovNewName').focus(); return; }
+  const perm = document.getElementById('plovViewCreate').dataset.perm || 'edit';
+  const btn = document.getElementById('plovCreateBtn');
+  btn.textContent = 'Criando…'; btn.disabled = true;
+  try {
+    const { id, code } = await createFirebasePlaylist(name, perm);
+    const pl = { id, name, code, songs: [], ownerId: currentUser.uid, permission: perm, isOwner: true };
+    state.playlists.push(pl);
+    showToast(`Playlist "${name}" criada! 🎵`);
+    plovShowList();
+    await _renderPlaylistsOverlayList();
+  } catch(e) {
+    console.error(e);
+    showToast('Erro ao criar playlist. Tente novamente.');
+  } finally {
+    btn.textContent = 'Criar Playlist'; btn.disabled = false;
+  }
+}
+
+async function deletePlFromOverlay(plId, plName) {
+  if (!confirm(`Apagar a playlist "${plName}"? Esta a\u00e7\u00e3o n\u00e3o pode ser desfeita.`)) return;
+  try {
+    await db.collection('playlists').doc(plId).delete();
+    state.playlists = state.playlists.filter(p => p.id !== plId);
+    if (state.activePl === plId) {
+      state.activePl = state.playlists[0]?.id || null;
+      state.activeSong = null;
+      currentPlDoc = null;
+    }
+    showToast(`"${plName}" apagada.`);
+    await _renderPlaylistsOverlayList();
+  } catch(e) {
+    console.error(e);
+    showToast('Erro ao apagar playlist!');
+  }
+}
+
+function closePlaylistsOverlay() {
+  const ov = document.getElementById('playlistsOverlay');
+  const box = document.getElementById('playlistsOverlayBox');
+  box.style.transition = 'opacity 0.22s ease, transform 0.22s ease';
+  box.style.opacity = '0';
+  box.style.transform = 'translateY(12px) scale(0.97)';
+  setTimeout(() => {
+    ov.classList.remove('active');
+    ov.style.display = 'none';
+    box.style.opacity = '';
+    box.style.transform = '';
+    box.style.transition = '';
+    // Mostra o homeOverlay de volta igual ao closeTuner
+    if (typeof showHomeOverlay === 'function') showHomeOverlay();
+  }, 220);
+}
+
 
 // Carrega todas as playlists do usuário em background e atualiza o state
 async function fetchAllMyPlaylists() {
@@ -2706,33 +6090,33 @@ async function doLogin() {
   errEl.textContent = '';
   if (!username || !pass) { errEl.textContent = 'Preencha usuário e senha.'; return; }
 
-  // Spinner aparece IMEDIATAMENTE ao clicar — este É o loading real
-  const loginBox = document.querySelector('#loginScreen .auth-box');
-  loginBox.style.transition = 'opacity 0.28s ease, transform 0.28s ease';
-  loginBox.style.opacity = '0';
-  loginBox.style.transform = 'translateY(-10px) scale(0.97)';
   btn.disabled = true;
-  setTimeout(() => {
-    document.getElementById('loginScreen').classList.add('hidden');
-    document.getElementById('loadingSpinner').classList.add('active');
-  }, 250);
+  btn.textContent = 'Entrando…';
+
+  // Mantém loginScreen forçadamente visível durante toda a operação
+  const loginScreen = document.getElementById('loginScreen');
+  loginScreen.classList.remove('hidden');
+
+  const showErr = (msg) => {
+    loginScreen.classList.remove('hidden');
+    errEl.textContent = msg;
+    btn.disabled = false;
+    btn.textContent = 'Entrar';
+  };
 
   try {
     const hash = await hashPassword(pass);
+
+    // Após await, re-garante que loginScreen ainda está visível (pode ter sido escondida)
+    loginScreen.classList.remove('hidden');
+
     const snap = await db.collection('users')
       .where('username', '==', username)
       .where('passwordHash', '==', hash)
       .limit(1).get();
 
     if (snap.empty) {
-      // Erro: esconde spinner, restaura card
-      document.getElementById('loadingSpinner').classList.remove('active');
-      document.getElementById('loginScreen').classList.remove('hidden');
-      loginBox.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-      loginBox.style.opacity = '1';
-      loginBox.style.transform = 'none';
-      errEl.textContent = 'Usuário ou senha incorretos.';
-      btn.disabled = false;
+      showErr('Usuário ou senha incorretos.');
       return;
     }
 
@@ -2743,18 +6127,13 @@ async function doLogin() {
     renderUserBadge();
     fetchAllMyPlaylists();
 
-    // Login OK: spinner some imediatamente, menu aparece
-    document.getElementById('loadingSpinner').classList.remove('active');
+    // Login OK — esconde a tela de login e mostra o menu
+    loginScreen.classList.add('hidden');
     showHomeOverlay();
 
   } catch(e) {
     console.error(e);
-    document.getElementById('loadingSpinner').classList.remove('active');
-    document.getElementById('loginScreen').classList.remove('hidden');
-    loginBox.style.opacity = '1';
-    loginBox.style.transform = 'none';
-    errEl.textContent = 'Erro ao conectar. Verifique sua internet.';
-    btn.disabled = false;
+    showErr('Erro ao conectar. Verifique sua internet.');
   }
 }
 
@@ -2790,20 +6169,16 @@ async function doRegister() {
     saveSession(currentUser, true);
     renderUserBadge();
 
-    // Animate out register box → spinner → overlay
+    // Animate out register box, go straight to home — account already created
     const regBox = document.querySelector('#registerScreen .auth-box');
-    regBox.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
+    regBox.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
     regBox.style.opacity = '0';
     regBox.style.transform = 'translateY(-16px) scale(0.97)';
     setTimeout(() => {
       document.getElementById('registerScreen').classList.add('hidden');
-      document.getElementById('loadingSpinner').classList.add('active');
-      setTimeout(() => {
-        document.getElementById('loadingSpinner').classList.remove('active');
-        showHomeOverlay();
-        showToast(`Bem-vindo, ${name}! 🎵`);
-      }, 900);
-    }, 380);
+      showHomeOverlay();
+      showToast(`Bem-vindo, ${name}! 🎵`);
+    }, 300);
   } catch(e) {
     console.error(e);
     errEl.textContent = 'Erro ao criar conta. Tente novamente.';
@@ -2836,7 +6211,7 @@ function genCode() {
   return Array.from({length:4}, () => chars[Math.floor(Math.random()*chars.length)]).join('');
 }
 
-async function createFirebasePlaylist(name) {
+async function createFirebasePlaylist(name, permission = 'edit') {
   // Garantir código único
   let code, tries = 0;
   do {
@@ -2850,7 +6225,7 @@ async function createFirebasePlaylist(name) {
     code,
     ownerId:   currentUser.uid,
     ownerName: currentUser.name || currentUser.username,
-    permission: 'edit',
+    permission,
     songs: [],
     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -2977,6 +6352,7 @@ async function doJoin() {
       });
     }
     await openPlaylist(doc.id);
+    btn.textContent = 'Acessar Playlist'; btn.disabled = false;
     showScreen('app');
     render();
     showToast(`✓ Playlist "${d.name}" acessada!`);
@@ -3316,6 +6692,7 @@ function renderSongList() {
     `;
     div.onclick = (e) => {
       if (e.target.classList.contains('song-del') || e.target.classList.contains('song-drag')) return;
+      localTransposeOffset = 0;
       state.activeSong = song.id; render(); closeMobileDrawer();
     };
 
@@ -3389,10 +6766,18 @@ function renderEditor() {
           <span class="ctrl-label">Semitom</span>
           <div class="transpose-widget">
             <button class="transpose-btn" onclick="transpose(-1)">−</button>
-            <div class="transpose-display">${song.key||'C'}</div>
+            <div class="transpose-display" id="transposeDisplay">${song.key||'C'}</div>
             <button class="transpose-btn" onclick="transpose(1)">+</button>
           </div>
-        </div>` : ''}
+        </div>` : `
+        <div class="ctrl-group">
+          <span class="ctrl-label" title="Só você vê essa mudança">Semitom (local)</span>
+          <div class="transpose-widget">
+            <button class="transpose-btn" onclick="transpose(-1)">−</button>
+            <div class="transpose-display" id="transposeDisplay">${song.key||'C'}</div>
+            <button class="transpose-btn" onclick="transpose(1)">+</button>
+          </div>
+        </div>`}
         <button class="btn btn-ghost btn-sm" onclick="openPresent()">▶ Apresentar</button>
       </div>
     </div>
@@ -3405,7 +6790,8 @@ function renderSections(song) {
   const body = document.getElementById('editorBody');
   if (!body) return;
   body.innerHTML = '';
-  song.sections.forEach((sec, si) => {
+  const sections = (!canEdit && song._localSections) ? song._localSections : song.sections;
+  sections.forEach((sec, si) => {
     const block = document.createElement('div');
     block.className = 'section-block';
     block.innerHTML = `
@@ -3653,12 +7039,43 @@ function transposeChordsStr(str, steps) {
 }
 
 function transpose(steps) {
-  if (!canEdit) return;
   const song = getSong(state.activeSong);
   if (!song) return;
-  // Garantir snapshot antes de transponar
-  if (!song.originalSections) snapshotOriginals(song);
 
+  if (!canEdit) {
+    // Modo leitura: transpor localmente sem salvar
+    localTransposeOffset += steps;
+    // Recalcular a partir dos dados originais + offset total
+    const base = song._localBase || JSON.parse(JSON.stringify(song.sections));
+    if (!song._localBase) song._localBase = JSON.parse(JSON.stringify(song.sections));
+
+    const baseKey = song._localBaseKey || song.key;
+    if (!song._localBaseKey) song._localBaseKey = song.key;
+
+    // Aplicar offset total sobre a base original
+    const ki = NOTES.indexOf(NOTE_ALT[baseKey] || baseKey);
+    const newKey = ki !== -1 ? NOTES[(ki + localTransposeOffset + 120) % 12] : baseKey;
+
+    // Renderizar com chords transpostos da base
+    song._localSections = song._localBase.map(sec => ({
+      ...sec,
+      lines: sec.lines.map(line => ({
+        ...line,
+        chords: line.chords ? transposeChordsStr(line.chords, localTransposeOffset) : line.chords
+      }))
+    }));
+    song._localKey = newKey;
+
+    // Atualizar display
+    const disp = document.getElementById('transposeDisplay');
+    if (disp) disp.textContent = newKey;
+    renderSections(song);
+    showToast(`Tom local: ${newKey} (só você vê)`);
+    return;
+  }
+
+  // Modo edição normal — salva no Firebase
+  if (!song.originalSections) snapshotOriginals(song);
   const i = NOTES.indexOf(NOTE_ALT[song.key] || song.key);
   if (i !== -1) song.key = NOTES[(i + steps + 12) % 12];
   song.sections.forEach(sec => {
@@ -3666,7 +7083,6 @@ function transpose(steps) {
       if (line.chords) line.chords = transposeChordsStr(line.chords, steps);
     });
   });
-  // Atualizar snapshot pro novo estado (botões +/- são relativos ao atual)
   snapshotOriginals(song);
   render();
   showToast(`Tom alterado: ${song.key}`);
@@ -3727,7 +7143,9 @@ function openPresent() {
   renderPresentBody(song);
   document.getElementById('presentOverlay').classList.add('active');
   document.getElementById('fontSizeDisplay').textContent = presentFontSize + 'px';
-  SmartScroll.start();
+  // Mic/karaoke starts only when user clicks the button — not automatically
+  // Attach chord tooltips via Raphael.chord
+  requestAnimationFrame(() => { if (typeof RaphaelChordTip !== 'undefined') RaphaelChordTip.wrapPresent(); });
 }
 
 // ── MASTER CHORD REGEX ───────────────────────────────────
@@ -3827,6 +7245,7 @@ function renderPresentBody(song) {
 
 function closePresent() {
   SmartScroll.reset();
+  AutoScroll.stop();
   document.getElementById('presentOverlay').classList.remove('active');
 }
 
@@ -3834,7 +7253,7 @@ function changePresentFont(delta) {
   const song = getSong(state.activeSong);
   presentFontSize = Math.max(12, Math.min(40, presentFontSize + delta));
   document.getElementById('fontSizeDisplay').textContent = presentFontSize + 'px';
-  if (song) renderPresentBody(song);
+  if (song) { renderPresentBody(song); requestAnimationFrame(()=>{ if(typeof RaphaelChordTip!=='undefined') RaphaelChordTip.wrapPresent(); }); }
 }
 
 // ── IMPORT ────────────────────────────────────────────────
@@ -4187,6 +7606,7 @@ async function createPlaylist() {
     closePlaylistModal();
     render();
     showToast(`Playlist "${name}" criada! 🎵`);
+
   } catch(e) {
     console.error(e);
     showToast('Erro ao criar playlist no banco. Tente novamente.');
@@ -4244,13 +7664,13 @@ function exportPlaylistPDF() {
     </div>`;
   });
 
-  const html = `<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<title>${escHtml(pl.name)}</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
+  const html = `\x3C!DOCTYPE html>
+\x3Chtml lang="pt-BR">
+\x3Chead>
+\x3Cmeta charset="UTF-8">
+\x3Ctitle>${escHtml(pl.name)}\x3C/title>
+\x3Clink href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+\x3Cstyle>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   @page { size: A4; margin: 12mm 14mm 18mm; }
 
@@ -4452,12 +7872,12 @@ function exportPlaylistPDF() {
     .cover { height: calc(297mm - 30mm); }
     .no-print { display: none !important; }
   }
-</style>
-</head>
-<body>
+\x3C/style>
+\x3C/head>
+\x3Cbody>
 
-<!-- BOTÃO VOLTAR -->
-<button onclick="window.close()" style="
+\x3C!-- BOTÃO VOLTAR -->
+\x3Cbutton onclick="window.close()" style="
   position: fixed; bottom: 24px; left: 24px;
   background: #0a0a0a; color: #fff;
   border: none; border-radius: 50px;
@@ -4469,130 +7889,170 @@ function exportPlaylistPDF() {
   transition: all 0.2s;
 " onmouseover="this.style.background='#333'" onmouseout="this.style.background='#0a0a0a'" class="no-print">
   ← Voltar ao site
-</button>
+\x3C/button>
 
-<!-- WATERMARK -->
-<div class="watermark">
-  <img src="https://i.imgur.com/rz3a926.png" alt="">
-</div>
+\x3C!-- WATERMARK -->
+\x3Cdiv class="watermark">
+  \x3Cimg src="https://i.imgur.com/rz3a926.png" alt="">
+\x3C/div>
 
-<!-- CAPA -->
-<div class="cover">
-  <div class="cover-inner">
-    <div class="cover-tag">CifraSet &nbsp;/&nbsp; Repertório</div>
-    <h1 class="cover-title">${escHtml(pl.name)}</h1>
-    <div class="cover-divider"></div>
-    <div class="cover-meta">
-      <div>${pl.songs.length} música${pl.songs.length !== 1 ? 's' : ''}</div>
-      <div>Gerado em <span>${date}</span></div>
-    </div>
-  </div>
-  <div class="cover-footer">
-    <div class="cover-footer-brand">CifraSet</div>
-    <div class="cover-footer-logo"><img src="https://i.imgur.com/rz3a926.png" alt=""></div>
-  </div>
-</div>
+\x3C!-- CAPA -->
+\x3Cdiv class="cover">
+  \x3Cdiv class="cover-inner">
+    \x3Cdiv class="cover-tag">CifraSet &nbsp;/&nbsp; Repertório\x3C/div>
+    \x3Ch1 class="cover-title">${escHtml(pl.name)}\x3C/h1>
+    \x3Cdiv class="cover-divider">\x3C/div>
+    \x3Cdiv class="cover-meta">
+      \x3Cdiv>${pl.songs.length} música${pl.songs.length !== 1 ? 's' : ''}\x3C/div>
+      \x3Cdiv>Gerado em \x3Cspan>${date}\x3C/span>\x3C/div>
+    \x3C/div>
+  \x3C/div>
+  \x3Cdiv class="cover-footer">
+    \x3Cdiv class="cover-footer-brand">CifraSet\x3C/div>
+    \x3Cdiv class="cover-footer-logo">\x3Cimg src="https://i.imgur.com/rz3a926.png" alt="">\x3C/div>
+  \x3C/div>
+\x3C/div>
 
-<!-- ÍNDICE -->
-<div class="index-page">
-  <div class="index-eyebrow">Conteúdo</div>
-  <div class="index-heading">Índice</div>
-  <table class="index-table">
-    <colgroup>
-      <col style="width:36px">
-      <col style="width:auto">
-      <col style="width:60px">
-      <col style="width:40px">
-      <col style="width:60px">
-    </colgroup>
-    ${pl.songs.map((song, i) => `<tr>
-      <td class="idx-num">${String(i+1).padStart(2,'0')}</td>
-      <td class="idx-name">${escHtml(song.title)}</td>
-      <td class="idx-fill"><span class="idx-fill-line"></span></td>
-      <td class="idx-key">${escHtml(song.key)}</td>
-      <td class="idx-capo">${song.capo && song.capo !== '0' ? `Capo ${escHtml(song.capo)}` : ''}</td>
-    </tr>`).join('')}
-  </table>
-</div>
+\x3C!-- ÍNDICE -->
+\x3Cdiv class="index-page">
+  \x3Cdiv class="index-eyebrow">Conteúdo\x3C/div>
+  \x3Cdiv class="index-heading">Índice\x3C/div>
+  \x3Ctable class="index-table">
+    \x3Ccolgroup>
+      \x3Ccol style="width:36px">
+      \x3Ccol style="width:auto">
+      \x3Ccol style="width:60px">
+      \x3Ccol style="width:40px">
+      \x3Ccol style="width:60px">
+    \x3C/colgroup>
+    ${pl.songs.map((song, i) => `\x3Ctr>
+      \x3Ctd class="idx-num">${String(i+1).padStart(2,'0')}\x3C/td>
+      \x3Ctd class="idx-name">${escHtml(song.title)}\x3C/td>
+      \x3Ctd class="idx-fill">\x3Cspan class="idx-fill-line">\x3C/span>\x3C/td>
+      \x3Ctd class="idx-key">${escHtml(song.key)}\x3C/td>
+      \x3Ctd class="idx-capo">${song.capo && song.capo !== '0' ? `Capo ${escHtml(song.capo)}` : ''}\x3C/td>
+    \x3C/tr>`).join('')}
+  \x3C/table>
+\x3C/div>
 
-<!-- MÚSICAS -->
+\x3C!-- MÚSICAS -->
 ${songsHtml}
 
-<!-- TUNER MODAL -->
-<div class="tuner-overlay" id="tunerOverlay">
-  <div class="tuner-box">
-    <button class="tuner-close" onclick="closeTuner()">✕</button>
-    <div class="tuner-header-label">🎸 Afinador Cromático</div>
+\x3C!-- TUNER MODAL -->
+\x3Cdiv class="tuner-overlay" id="tunerOverlay">
+  \x3Cdiv class="tuner-box">
+    \x3Cbutton class="tuner-close" onclick="closeTuner()">✕\x3C/button>
+    \x3Cdiv class="tuner-header-label">Afinador Cromático\x3C/div>
 
-    <!-- Note display -->
-    <div class="tuner-note-display">
-      <div class="tuner-note-row">
-        <div class="tuner-note idle" id="tunerNote">—</div>
-        <div class="tuner-octave" id="tunerOctave"></div>
-      </div>
-    </div>
-    <div class="tuner-freq" id="tunerFreq"></div>
+    \x3C!-- Note display -->
+    \x3Cdiv class="tuner-note-display">
+      \x3Cdiv class="tuner-note-row">
+        \x3Cdiv class="tuner-note idle" id="tunerNote">—\x3C/div>
+        \x3Cdiv class="tuner-octave" id="tunerOctave">\x3C/div>
+      \x3C/div>
+    \x3C/div>
+    \x3Cdiv class="tuner-freq" id="tunerFreq">\x3C/div>
 
-    <!-- Meter arc SVG -->
-    <div class="tuner-meter-wrap">
-      <svg class="tuner-meter-svg" viewBox="0 0 320 170" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M 30 148 A 130 130 0 0 1 290 148" stroke="#2a2a2a" stroke-width="6" stroke-linecap="round" fill="none"/>
-        <path id="tunerArcFill" d="M 30 148 A 130 130 0 0 1 290 148" stroke="#2a2a2a" stroke-width="6" stroke-linecap="round" fill="none" stroke-dasharray="407" stroke-dashoffset="407"/>
-        <line x1="160" y1="18" x2="160" y2="34" stroke="#3a3a3a" stroke-width="2" stroke-linecap="round"/>
-        <line x1="65" y1="45" x2="73" y2="57" stroke="#2a2a2a" stroke-width="1.5" stroke-linecap="round"/>
-        <line x1="255" y1="45" x2="247" y2="57" stroke="#2a2a2a" stroke-width="1.5" stroke-linecap="round"/>
-        <g id="tunerNeedle">
-          <line x1="160" y1="148" x2="160" y2="32" stroke="#505050" stroke-width="2.5" stroke-linecap="round"/>
-          <circle cx="160" cy="148" r="6" fill="#1f1f1f" stroke="#505050" stroke-width="2"/>
-          <circle cx="160" cy="34" r="4" fill="#505050"/>
-        </g>
-        <text x="18" y="165" font-family="IBM Plex Mono,monospace" font-size="10" fill="#404040">−50¢</text>
-        <text x="143" y="13" font-family="IBM Plex Mono,monospace" font-size="10" fill="#404040">0¢</text>
-        <text x="302" y="165" font-family="IBM Plex Mono,monospace" font-size="10" fill="#404040" text-anchor="end">+50¢</text>
-      </svg>
-      <div class="tuner-cents" id="tunerCents"></div>
-    </div>
+    \x3C!-- Meter arc SVG -->
+    \x3Cdiv class="tuner-meter-wrap">
+      \x3Csvg class="tuner-meter-svg" viewBox="0 0 320 170" fill="none" xmlns="http://www.w3.org/2000/svg">
+        \x3Cpath d="M 30 148 A 130 130 0 0 1 290 148" stroke="rgba(255,255,255,0.08)" stroke-width="6" stroke-linecap="round" fill="none"/>
+        \x3Cpath id="tunerArcFill" d="M 30 148 A 130 130 0 0 1 290 148" stroke="rgba(255,255,255,0.08)" stroke-width="6" stroke-linecap="round" fill="none" stroke-dasharray="407" stroke-dashoffset="407"/>
+        \x3Cline x1="160" y1="18" x2="160" y2="34" stroke="rgba(255,255,255,0.12)" stroke-width="2" stroke-linecap="round"/>
+        \x3Cline x1="65" y1="45" x2="73" y2="57" stroke="rgba(255,255,255,0.08)" stroke-width="1.5" stroke-linecap="round"/>
+        \x3Cline x1="255" y1="45" x2="247" y2="57" stroke="rgba(255,255,255,0.08)" stroke-width="1.5" stroke-linecap="round"/>
+        \x3Cg id="tunerNeedle">
+          \x3Cline x1="160" y1="148" x2="160" y2="32" stroke="rgba(255,255,255,0.25)" stroke-width="2.5" stroke-linecap="round"/>
+          \x3Ccircle cx="160" cy="148" r="6" fill="transparent" stroke="rgba(255,255,255,0.25)" stroke-width="2"/>
+          \x3Ccircle cx="160" cy="34" r="4" fill="rgba(255,255,255,0.25)"/>
+        \x3C/g>
+        \x3Ctext x="18" y="165" font-family="IBM Plex Mono,monospace" font-size="10" fill="rgba(255,255,255,0.3)">−50¢\x3C/text>
+        \x3Ctext x="143" y="13" font-family="IBM Plex Mono,monospace" font-size="10" fill="rgba(255,255,255,0.3)">0¢\x3C/text>
+        \x3Ctext x="302" y="165" font-family="IBM Plex Mono,monospace" font-size="10" fill="rgba(255,255,255,0.3)" text-anchor="end">+50¢\x3C/text>
+      \x3C/svg>
+      \x3Cdiv class="tuner-cents" id="tunerCents">\x3C/div>
+    \x3C/div>
 
-    <!-- Chromatic scale bar -->
-    <div class="tuner-chromatic-wrap">
-      <div class="tuner-chromatic-track">
-        <div class="tuner-chromatic-indicator" id="tunerChromaIndicator"></div>
-        <div class="tuner-chromatic-notes" id="tunerChromaNotes">
-          <div class="tuner-chromatic-note" data-note="A">A</div>
-          <div class="tuner-chromatic-note sharp-note" data-note="A#">A#</div>
-          <div class="tuner-chromatic-note" data-note="B">B</div>
-          <div class="tuner-chromatic-note" data-note="C">C</div>
-          <div class="tuner-chromatic-note sharp-note" data-note="C#">C#</div>
-          <div class="tuner-chromatic-note" data-note="D">D</div>
-          <div class="tuner-chromatic-note sharp-note" data-note="D#">D#</div>
-          <div class="tuner-chromatic-note" data-note="E">E</div>
-          <div class="tuner-chromatic-note" data-note="F">F</div>
-          <div class="tuner-chromatic-note sharp-note" data-note="F#">F#</div>
-          <div class="tuner-chromatic-note" data-note="G">G</div>
-          <div class="tuner-chromatic-note sharp-note" data-note="G#">G#</div>
-        </div>
-      </div>
-      <div class="tuner-chromatic-ticks">
-        <div class="tuner-chromatic-tick"></div><div class="tuner-chromatic-tick"></div>
-        <div class="tuner-chromatic-tick"></div><div class="tuner-chromatic-tick"></div>
-        <div class="tuner-chromatic-tick"></div><div class="tuner-chromatic-tick"></div>
-        <div class="tuner-chromatic-tick"></div><div class="tuner-chromatic-tick"></div>
-        <div class="tuner-chromatic-tick"></div><div class="tuner-chromatic-tick"></div>
-        <div class="tuner-chromatic-tick"></div><div class="tuner-chromatic-tick"></div>
-      </div>
-    </div>
+    \x3C!-- Chromatic scale bar -->
+    \x3Cdiv class="tuner-chromatic-wrap">
+      \x3Cdiv class="tuner-chromatic-track">
+        \x3Cdiv class="tuner-chromatic-indicator" id="tunerChromaIndicator">\x3C/div>
+        \x3Cdiv class="tuner-chromatic-notes" id="tunerChromaNotes">
+          \x3Cdiv class="tuner-chromatic-note" data-note="A">A\x3C/div>
+          \x3Cdiv class="tuner-chromatic-note sharp-note" data-note="A#">A#\x3C/div>
+          \x3Cdiv class="tuner-chromatic-note" data-note="B">B\x3C/div>
+          \x3Cdiv class="tuner-chromatic-note" data-note="C">C\x3C/div>
+          \x3Cdiv class="tuner-chromatic-note sharp-note" data-note="C#">C#\x3C/div>
+          \x3Cdiv class="tuner-chromatic-note" data-note="D">D\x3C/div>
+          \x3Cdiv class="tuner-chromatic-note sharp-note" data-note="D#">D#\x3C/div>
+          \x3Cdiv class="tuner-chromatic-note" data-note="E">E\x3C/div>
+          \x3Cdiv class="tuner-chromatic-note" data-note="F">F\x3C/div>
+          \x3Cdiv class="tuner-chromatic-note sharp-note" data-note="F#">F#\x3C/div>
+          \x3Cdiv class="tuner-chromatic-note" data-note="G">G\x3C/div>
+          \x3Cdiv class="tuner-chromatic-note sharp-note" data-note="G#">G#\x3C/div>
+        \x3C/div>
+      \x3C/div>
+      \x3Cdiv class="tuner-chromatic-ticks">
+        \x3Cdiv class="tuner-chromatic-tick">\x3C/div>\x3Cdiv class="tuner-chromatic-tick">\x3C/div>
+        \x3Cdiv class="tuner-chromatic-tick">\x3C/div>\x3Cdiv class="tuner-chromatic-tick">\x3C/div>
+        \x3Cdiv class="tuner-chromatic-tick">\x3C/div>\x3Cdiv class="tuner-chromatic-tick">\x3C/div>
+        \x3Cdiv class="tuner-chromatic-tick">\x3C/div>\x3Cdiv class="tuner-chromatic-tick">\x3C/div>
+        \x3Cdiv class="tuner-chromatic-tick">\x3C/div>\x3Cdiv class="tuner-chromatic-tick">\x3C/div>
+        \x3Cdiv class="tuner-chromatic-tick">\x3C/div>\x3Cdiv class="tuner-chromatic-tick">\x3C/div>
+      \x3C/div>
+    \x3C/div>
 
-    <button class="tuner-mic-btn" id="tunerMicBtn" onclick="tunerToggleMic()" style="display:none">
-      <span class="tmic-icon">🎙</span>
-      <span id="tunerMicLabel">Ativar Microfone</span>
-    </button>
-    <div class="tuner-status" id="tunerStatusMsg">Toque uma nota para detectar a afinação</div>
-  </div>
-</div>
+    \x3Cbutton class="tuner-mic-btn" id="tunerMicBtn" onclick="tunerToggleMic()" style="display:none">
+      \x3Cspan class="tmic-icon">🎙\x3C/span>
+      \x3Cspan id="tunerMicLabel">Ativar Microfone\x3C/span>
+    \x3C/button>
+    \x3Cdiv class="tuner-status" id="tunerStatusMsg">Toque uma nota para detectar a afinação\x3C/div>
+  \x3C/div>
+\x3C/div>
 
 
-</body>
-</html>`;
+\x3C!-- ── SHARE SHEET ── -->
+\x3Cdiv class="share-overlay" id="shareOverlay" onclick="if(event.target===this)closeShareSheet()">
+  \x3Cdiv class="share-sheet" id="shareSheet">
+    \x3Cdiv class="share-handle">\x3C/div>
+    \x3Cdiv class="share-title" id="shareSheetTitle">Compartilhar\x3C/div>
+    \x3Cdiv class="share-sub" id="shareSheetSub">Escolha como compartilhar\x3C/div>
+    \x3Cdiv class="share-options" id="shareOptions">\x3C/div>
+  \x3C/div>
+\x3C/div>
+
+
+\x3C!-- ── PUBLIC VIEWER ── -->
+\x3Cdiv id="publicViewOverlay">
+  \x3Cdiv class="pv-header">
+    \x3Cimg class="pv-logo" src="https://i.imgur.com/Nelv4ev.png" alt="CifraSet">
+    \x3Cdiv>
+      \x3Cdiv class="pv-playlist-name" id="pvTitle">Playlist\x3C/div>
+      \x3Cdiv class="pv-playlist-meta" id="pvMeta">\x3C/div>
+    \x3C/div>
+    \x3Cdiv class="pv-read-only-badge">Somente leitura\x3C/div>
+  \x3C/div>
+  \x3Cdiv class="pv-body">
+    \x3Cdiv class="pv-sidebar" id="pvSongList">\x3C/div>
+    \x3Cdiv class="pv-main" id="pvContent">\x3C/div>
+  \x3C/div>
+\x3C/div>
+
+
+\x3C!-- ── CHORD TOOLTIP (Raphael) ── -->
+\x3Cdiv id="rcTooltip">
+  \x3Cdiv id="rcDiagContainer">\x3C/div>
+  \x3Cdiv style="display:flex;align-items:center;justify-content:space-between;margin-top:4px;gap:4px">
+    \x3Cbutton id="rcPrevVar" onclick="RaphaelChordTip.prevVariant()" disabled
+      style="width:18px;height:18px;border-radius:4px;border:1px solid rgba(255,255,255,0.15);background:none;color:rgba(200,200,200,0.6);font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;pointer-events:all">‹\x3C/button>
+    \x3Cspan id="rcVarLabel" style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:rgba(160,160,160,0.7);letter-spacing:0.5px;flex:1;text-align:center">\x3C/span>
+    \x3Cbutton id="rcNextVar" onclick="RaphaelChordTip.nextVariant()"
+      style="width:18px;height:18px;border-radius:4px;border:1px solid rgba(255,255,255,0.15);background:none;color:rgba(200,200,200,0.6);font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;pointer-events:all">›\x3C/button>
+  \x3C/div>
+\x3C/div>
+
+\x3C/body>
+\x3C/html>`;
 
   const w = window.open('', '_blank');
   if (!w) { showToast('Permita pop-ups para gerar o PDF!'); return; }
@@ -4609,6 +8069,227 @@ function escHtml(str = '') {
 }
 
 // ── WHATSAPP SHARE ────────────────────────────────────────
+
+// ══════════════════════════════════════════════════════════
+// ── SHARE SHEET ────────────────────────────────────────────
+// ══════════════════════════════════════════════════════════
+function openShareSheet() {
+  const pl   = getActivePl();
+  const song = state.activeSong ? getSong(state.activeSong) : null;
+  const name = song ? song.title : (pl ? pl.name : 'CifraSet');
+
+  const overlay = document.getElementById('shareOverlay');
+  const optsCont= document.getElementById('shareOptions');
+  const titleEl = document.getElementById('shareSheetTitle');
+  const subEl   = document.getElementById('shareSheetSub');
+
+  titleEl.textContent = name;
+  subEl.textContent   = song ? 'Compartilhar esta música' : 'Compartilhar esta playlist';
+
+  // Build options
+  const options = [];
+
+  // 1. Native share (mobile/desktop with Web Share API)
+  if (navigator.share) {
+    options.push({
+      icon:'↗', bg:'rgba(100,100,255,0.15)', color:'#8888ff',
+      title:'Compartilhar…',
+      desc:'Abre as opções nativas do seu dispositivo',
+      action: () => {
+        const text = buildShareText(pl, song);
+        navigator.share({ title: name, text }).catch(()=>{});
+        closeShareSheet();
+      }
+    });
+  }
+
+  // 2. Export as image (current song)
+  if (song) {
+    options.push({
+      icon:'🖼', bg:'rgba(240,160,48,0.15)', color:'#f0a030',
+      title:'Salvar como Imagem',
+      desc:'Gera uma imagem com a cifra completa',
+      action: () => { closeShareSheet(); setTimeout(()=>exportSongAsImage(song), 300); }
+    });
+  }
+
+  // 3. Public link
+  if (pl && pl.code) {
+    options.push({
+      icon:'🔗', bg:'rgba(76,175,125,0.15)', color:'#4caf7d',
+      title:'Link Público',
+      desc:'Qualquer pessoa pode ver sem precisar de conta',
+      action: () => { showPublicLink(pl); }
+    });
+  }
+
+  // 4. Copy text
+  options.push({
+    icon:'📋', bg:'rgba(200,200,200,0.1)', color:'var(--muted)',
+    title:'Copiar Texto',
+    desc:'Copia a cifra como texto',
+    action: () => {
+      const text = buildShareText(pl, song);
+      navigator.clipboard.writeText(text).then(()=>showToast('Texto copiado!')).catch(()=>{});
+      closeShareSheet();
+    }
+  });
+
+  optsCont.innerHTML = options.map((o,i) => `
+    <div class="share-option" onclick="shareActions[${i}]()">
+      <div class="share-option-icon" style="background:${o.bg};color:${o.color}">${o.icon}</div>
+      <div class="share-option-info">
+        <div class="share-option-title">${o.title}</div>
+        <div class="share-option-desc">${o.desc}</div>
+      </div>
+      <div class="share-option-arrow">›</div>
+    </div>`).join('');
+
+  window.shareActions = options.map(o=>o.action);
+  overlay.classList.add('active');
+}
+
+function showPublicLink(pl) {
+  const base = window.location.origin + window.location.pathname;
+  const url  = `${base}?code=${pl.code}`;
+  const optsCont = document.getElementById('shareOptions');
+  const divider  = `<div class="share-divider"></div>`;
+  const linkRow  = `
+    <div class="share-link-row">
+      <input class="share-link-input" value="${url}" readonly onclick="this.select()">
+      <button class="share-link-copy" onclick="navigator.clipboard.writeText('${url}').then(()=>showToast('Link copiado!'))">Copiar</button>
+    </div>
+    <div style="font-size:10px;color:var(--muted);margin-top:6px">
+      Qualquer pessoa com este link pode ver a playlist sem precisar de conta.
+    </div>`;
+  optsCont.insertAdjacentHTML('beforeend', divider + linkRow);
+}
+
+function closeShareSheet() {
+  const sheet   = document.getElementById('shareSheet');
+  const overlay = document.getElementById('shareOverlay');
+  sheet.classList.add('exiting');
+  setTimeout(() => {
+    overlay.classList.remove('active');
+    sheet.classList.remove('exiting');
+  }, 220);
+}
+
+function buildShareText(pl, song) {
+  if (song) {
+    let t = `🎵 ${song.title}\nTom: ${song.key}${song.capo&&song.capo!=='0'?' · Capo '+song.capo:''}\n\n`;
+    song.sections.forEach(sec => {
+      t += `[ ${sec.label.toUpperCase()} ]\n`;
+      sec.lines.forEach(l => {
+        if (l.chords) t += l.chords + '\n';
+        if (l.lyrics) t += l.lyrics + '\n';
+      });
+      t += '\n';
+    });
+    t += '_CifraSet_ 🎸';
+    return t;
+  }
+  if (pl) {
+    let t = `🎵 ${pl.name}\n${pl.songs.length} música(s)\n${'─'.repeat(24)}\n\n`;
+    pl.songs.forEach((s,i) => { t += `${i+1}. ${s.title} · Tom ${s.key}\n`; });
+    t += '\n_CifraSet_ 🎸';
+    return t;
+  }
+  return 'CifraSet 🎸';
+}
+
+// ── EXPORT AS IMAGE ────────────────────────────────────────
+function exportSongAsImage(song) {
+  const canvas = document.createElement('canvas');
+  const scale  = 2; // retina
+  const W = 800, padX = 48, padY = 48;
+  let lines = [];
+
+  // Build text lines
+  lines.push({ text: song.title, type: 'title' });
+  lines.push({ text: `Tom: ${song.key}${song.capo&&song.capo!=='0'?' · Capo '+song.capo:''}`, type: 'meta' });
+  lines.push({ text: '', type: 'spacer' });
+
+  song.sections.forEach(sec => {
+    lines.push({ text: sec.label.toUpperCase(), type: 'section' });
+    sec.lines.forEach(l => {
+      if (l.chords) lines.push({ text: l.chords, type: 'chord' });
+      if (l.lyrics) lines.push({ text: l.lyrics, type: 'lyric' });
+      if (!l.chords && !l.lyrics) return;
+    });
+    lines.push({ text: '', type: 'spacer' });
+  });
+
+  // Measure height
+  const lineH = { title:38, meta:22, section:20, chord:22, lyric:22, spacer:10 };
+  const totalH = padY*2 + lines.reduce((a,l)=>a+(lineH[l.type]||20),0) + 40;
+
+  canvas.width  = W * scale;
+  canvas.height = totalH * scale;
+  const ctx = canvas.getContext('2d');
+  ctx.scale(scale, scale);
+
+  // Background
+  ctx.fillStyle = '#0f0f16';
+  ctx.fillRect(0, 0, W, totalH);
+
+  // Subtle gradient top
+  const grad = ctx.createLinearGradient(0,0,W,0);
+  grad.addColorStop(0,'rgba(240,160,48,0.06)');
+  grad.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle = grad; ctx.fillRect(0,0,W,totalH);
+
+  // Left accent bar
+  ctx.fillStyle = '#f0a030';
+  ctx.fillRect(0, 0, 4, totalH);
+
+  // Watermark
+  ctx.font = 'bold 11px IBM Plex Mono, monospace';
+  ctx.fillStyle = 'rgba(255,255,255,0.12)';
+  ctx.textAlign = 'right';
+  ctx.fillText('CifraSet', W - padX, totalH - 16);
+  ctx.textAlign = 'left';
+
+  let y = padY;
+  lines.forEach(l => {
+    const h = lineH[l.type] || 20;
+    if (l.type === 'title') {
+      ctx.font = 'bold 28px Syne, sans-serif';
+      ctx.fillStyle = '#f0f0f0';
+      ctx.fillText(l.text, padX, y + 24);
+    } else if (l.type === 'meta') {
+      ctx.font = '13px IBM Plex Mono, monospace';
+      ctx.fillStyle = '#888';
+      ctx.fillText(l.text, padX, y + 14);
+    } else if (l.type === 'section') {
+      ctx.font = 'bold 10px IBM Plex Mono, monospace';
+      ctx.fillStyle = '#f0a030';
+      ctx.fillText(l.text, padX, y + 14);
+      ctx.fillStyle = 'rgba(240,160,48,0.15)';
+      ctx.fillRect(padX, y+16, W-padX*2, 1);
+    } else if (l.type === 'chord') {
+      ctx.font = 'bold 13px IBM Plex Mono, monospace';
+      ctx.fillStyle = '#f0a030';
+      ctx.fillText(l.text, padX, y + 14);
+    } else if (l.type === 'lyric') {
+      ctx.font = '13px IBM Plex Mono, monospace';
+      ctx.fillStyle = '#c8c8c8';
+      ctx.fillText(l.text, padX, y + 14);
+    }
+    y += h;
+  });
+
+  // Download
+  canvas.toBlob(blob => {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `${song.title.replace(/[^a-zA-Z0-9 ]/g,'')}.png`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+    showToast('Imagem salva! 🖼');
+  }, 'image/png');
+}
+
 function shareWhatsApp() {
   const pl = getActivePl();
   if (!pl || pl.songs.length === 0) { showToast('A playlist está vazia!'); return; }
@@ -5429,6 +9110,7 @@ function openTuner() {
     homeOver.style.transition = 'opacity 0.25s ease';
     homeOver.style.opacity = '0';
     setTimeout(() => {
+      homeOver.style.display = 'none';
       homeOver.classList.remove('active');
       homeOver.style.opacity = '';
       homeOver.style.transition = '';
@@ -6671,6 +10353,21 @@ function openEarTraining() {
   try {
     const screen = document.getElementById('earTrainingScreen');
     if (!screen) { showToast('earTrainingScreen não encontrado'); return; }
+    const homeOver = document.getElementById('homeOverlay');
+    const fromHome = homeOver && homeOver.classList.contains('active');
+    if (fromHome) {
+      homeOver.style.transition = 'opacity 0.25s ease';
+      homeOver.style.opacity = '0';
+      setTimeout(() => {
+        homeOver.classList.remove('active');
+        homeOver.style.opacity = '';
+        homeOver.style.transition = '';
+      }, 250);
+      screen.dataset.fromHome = 'true';
+    } else {
+      screen.dataset.fromHome = '';
+    }
+    MusicCanvas.show();
     screen.classList.add('active');
     EarTraining.restart();
   } catch(e) {
@@ -6684,10 +10381,13 @@ function closeEarTraining() {
   if (typeof EscutarEngine !== 'undefined') EscutarEngine.stop();
   const screen = document.getElementById('earTrainingScreen');
   const box = screen.querySelector('.ear-box');
+  const fromHome = screen.dataset.fromHome === 'true';
   if (box) box.classList.add('card-exiting');
   setTimeout(() => {
     screen.classList.remove('active');
     if (box) box.classList.remove('card-exiting');
+    screen.dataset.fromHome = '';
+    if (fromHome && typeof showHomeOverlay === 'function') showHomeOverlay();
   }, 220);
 }
 
@@ -6747,6 +10447,383 @@ document.addEventListener('gesturestart', function(e) {
 // ══════════════════════════════════════════════════════════
 // ── MUSIC CANVAS — fundo dinâmico das telas de auth/home ─
 // ══════════════════════════════════════════════════════════
+
+// ══════════════════════════════════════════════════════════
+// ── AUTO SCROLL ENGINE ─────────────────────────────────────
+// ══════════════════════════════════════════════════════════
+const AutoScroll = (() => {
+  let bpm = 80, active = false, raf = null, lastT = null, acc = 0;
+
+  function pxPerMs() {
+    // Estimate total content height vs window to derive a reasonable px/beat
+    const body = document.getElementById('presentBody');
+    if (!body) return 0;
+    const totalH = body.scrollHeight;
+    const viewH  = window.innerHeight;
+    if (totalH <= viewH) return 0;
+    // At bpm, one beat = 60000/bpm ms
+    // We want to scroll total scrollable height in ~(beats_per_bar * estimated_bars) beats
+    // Simple heuristic: scroll 1px per (60000/bpm/4) ms  → adjustable
+    return 1 / (60000 / bpm / 4);
+  }
+
+  function loop(ts) {
+    if (!active) return;
+    raf = requestAnimationFrame(loop);
+    if (lastT === null) { lastT = ts; return; }
+    const dt = ts - lastT; lastT = ts;
+    acc += dt * pxPerMs();
+    if (acc >= 1) {
+      const px = Math.floor(acc);
+      acc -= px;
+      const overlay = document.getElementById('presentOverlay');
+      if (overlay) overlay.scrollTop += px;
+    }
+  }
+
+  function updateUI() {
+    const disp = document.getElementById('asBpmDisplay');
+    const btn  = document.getElementById('asToggleBtn');
+    if (disp) { disp.textContent = bpm; disp.className = 'autoscroll-bpm-display' + (active?' running':''); }
+    if (btn)  { btn.textContent = active ? '⏸ Parar' : '▶ Scroll'; btn.className = 'as-toggle' + (active?' active':''); }
+  }
+
+  function toggle() {
+    active = !active;
+    if (active) { lastT = null; acc = 0; raf = requestAnimationFrame(loop); }
+    else { if (raf) cancelAnimationFrame(raf); raf = null; }
+    updateUI();
+  }
+
+  function changeBpm(delta) {
+    bpm = Math.max(20, Math.min(300, bpm + delta));
+    updateUI();
+  }
+
+  function stop() {
+    active = false;
+    if (raf) cancelAnimationFrame(raf); raf = null;
+    updateUI();
+  }
+
+  return { toggle, changeBpm, stop, get bpm(){ return bpm; } };
+})();
+
+// ══════════════════════════════════════════════════════════
+// ── CHORD DIAGRAMS ─────────────────────────────────────────
+// ══════════════════════════════════════════════════════════
+
+
+
+
+
+// ══════════════════════════════════════════════════════════════════════════
+// ── CHORD TOOLTIP — usa Raphael.chord() ───────────────────────────────────
+// ══════════════════════════════════════════════════════════════════════════
+const RaphaelChordTip = (() => {
+  const SIZE = 130;
+
+  // Raphael.chord.find() type map
+  const QUAL_MAP = {
+    '':       'maj', 'm':'min',   '7':'7',      'maj7':'maj7',
+    'm7':     'min7','9':'9',     'maj9':'maj9','m9':'min9',
+    '6':      '6',   'm6':'min6','dim':'dim',   'aug':'aug',
+    'sus2':   'sus2','sus4':'sus4','add9':'add9','dim7':'dim',
+    'm7b5':   'min7','11':'11',   '13':'13',    'maj13':'maj13',
+    'm11':    'min11','m13':'min13','7sus4':'7sus4',
+  };
+  const ENHARMONIC = {Db:'C#',Eb:'D#',Gb:'F#',Ab:'G#',Bb:'A#',Cb:'B'};
+
+  let hideTimer = null;
+  let currentRaf = null;
+
+  const tip     = () => document.getElementById('rcTooltip');
+  const diagCnt = () => document.getElementById('rcDiagContainer');
+
+  // Parse "Am7", "C#", "Gsus4" → {root, rapType} for Raphael.chord.find()
+  function parseChord(raw) {
+    // Strip bass note suffix (/E etc)
+    const name = (raw || '').replace(/\/[A-G][b#]?$/, '').trim();
+    const m = name.match(/^([A-G][b#]?)(.*)$/);
+    if (!m) return null;
+    let root = m[1], qual = m[2].trim();
+    // Normalise root to sharp form
+    root = ENHARMONIC[root] || root;
+    // Normalise quality to Raphael type key
+    qual = qual
+      .replace(/^min(?=7|9|6|$)/i, 'm').replace(/^min$/i, 'm')
+      .replace(/^maj(?=7|9|11|13)/i, 'maj').replace(/^major$/i, '')
+      .replace(/^minor$/i, 'm').replace(/^M7$/, 'maj7')
+      .replace(/add2$/, 'add9');
+    const rapType = QUAL_MAP[qual] ?? QUAL_MAP[qual.toLowerCase()] ?? 'maj';
+    return { root, rapType };
+  }
+
+  // Draw chord into #rcDiagContainer using Raphael.chord()
+  // chordName comes DIRECTLY from data-acorde attribute — no textContent
+  function draw(chordName) {
+    const container = diagCnt();
+    if (!container) return;
+
+    if (currentRaf) { try { currentRaf.remove(); } catch(e){} currentRaf = null; }
+    container.innerHTML = '';
+
+    const p = parseChord(chordName);
+    if (!p) return;
+
+    // Find total variants available
+    let variant = 1, totalVariants = 1;
+    for (let v = 1; v <= 20; v++) {
+      if (!Raphael.chord.find(p.root, p.rapType, v)) break;
+      totalVariants = v;
+    }
+
+    // Use requested variant (default 1)
+    const requestedVariant = draw._variant || 1;
+    variant = Math.min(requestedVariant, totalVariants);
+
+    const fretData = Raphael.chord.find(p.root, p.rapType, variant);
+    if (!fretData) return;
+
+    // Update variant UI
+    const varLabel = document.getElementById('rcVarLabel');
+    const prevBtn  = document.getElementById('rcPrevVar');
+    const nextBtn  = document.getElementById('rcNextVar');
+    if (varLabel) varLabel.textContent = totalVariants > 1 ? `${variant}/${totalVariants}` : '';
+    if (prevBtn)  prevBtn.disabled = variant <= 1;
+    if (nextBtn)  nextBtn.disabled = variant >= totalVariants;
+    draw._variant     = variant;
+    draw._total       = totalVariants;
+    draw._currentName = chordName;
+
+    currentRaf = Raphael.chord(container, fretData, chordName);
+    if (!currentRaf || !currentRaf.element) return;
+    currentRaf.element.setSize(SIZE, SIZE);
+
+    // ── Style all elements for dark background ──────────────
+    currentRaf.element.forEach(function(el) {
+      const fill = el.attr('fill');
+      if (el.type === 'text') {
+        el.attr({ fill: '#ffffff', stroke: 'none' });
+        return;
+      }
+      if (el.type === 'circle') {
+        if (fill === '#000' || fill === 'black' || fill === '#000000') {
+          el.attr({ fill: '#f0a030', stroke: '#f0a030' });
+        } else {
+          el.attr({ fill: 'none', stroke: '#ffffff', 'stroke-width': 1.5 });
+        }
+        return;
+      }
+      if (el.type === 'path') {
+        if (fill === '#000' || fill === 'black' || fill === '#000000') {
+          el.attr({ fill: '#ffffff', stroke: '#ffffff' });
+        } else {
+          el.attr({ stroke: '#888888' });
+        }
+      }
+    });
+
+    // ── Detect and draw barre ───────────────────────────────
+    // Chords that should NOT show a barre (their standard shape doesn't use one)
+    const NO_BARRE = new Set(['A','Am','A7','Amaj7','Am7','Aaug','Adim','Asus2','Asus4','Aadd9',
+                               'D','Dm','D7','Dmaj7','Dm7','Daug','Ddim','Dsus2','Dsus4','Dadd9',
+                               'Em','Em7','Emaj7']);
+    if (NO_BARRE.has(chordName)) return;
+
+    const validFrets = fretData.filter(f => f > 0);
+    if (validFrets.length === 0) return;
+    const minFret = Math.min(...validFrets);
+    const maxFret = Math.max(...validFrets);
+    const offset  = maxFret > 5 ? minFret - 1 : 0;
+
+    const barreFret = minFret;
+    const barreStrings = fretData
+      .map((f, i) => f === barreFret ? i : -1)
+      .filter(i => i >= 0);
+
+    if (barreStrings.length < 2) return;
+
+    const firstStr = barreStrings[0];
+    const lastStr  = barreStrings[barreStrings.length - 1];
+    if (lastStr - firstStr < 1) return;
+
+    // Require span ≥ 3 strings OR span is 2 but there's a muted/open in between
+    // This avoids false positives on chords like Em (just 2 adjacent dots)
+    const span = lastStr - firstStr;
+    if (span < 2) {
+      // Only 2 strings with same fret — check if they're truly separated by others
+      const midFrets = fretData.slice(firstStr + 1, lastStr);
+      const hasGap = midFrets.some(f => f <= 0); // muted or open between them
+      if (!hasGap) return; // adjacent dots, not a barre
+    }
+
+    const spanFrets = fretData.slice(firstStr, lastStr + 1);
+    const hasMidNote = spanFrets.some(f => f > 0);
+    if (!hasMidNote) return;
+
+    // Coordinates in the 100×100 viewBox
+    const barreY  = 15 + 10 * (barreFret - offset);
+    const barreX1 = 20 + 10 * firstStr;
+    const barreX2 = 20 + 10 * lastStr;
+    const barreH  = 4.5;  // height of the barre bar
+
+    // Draw barre as a rounded rect on the Raphael paper
+    const paper = currentRaf.element;
+    const barreBar = paper.rect(
+      barreX1 - 3.5,        // x: slightly past first string
+      barreY - barreH / 2,  // y: centered on the fret row
+      (barreX2 - barreX1) + 7, // width: span + padding
+      barreH,                   // height
+      barreH / 2                // radius (pill shape)
+    ).attr({
+      fill:         '#f0a030',
+      stroke:       'none',
+      opacity:      0.92,
+    });
+
+    // Highlight on top of barre
+    paper.rect(
+      barreX1 - 2,
+      barreY - barreH / 2 + 1,
+      (barreX2 - barreX1) + 4,
+      barreH * 0.35,
+      barreH * 0.18
+    ).attr({
+      fill:   'rgba(255,255,255,0.28)',
+      stroke: 'none',
+    });
+  }
+
+  function showAt(chordName, mx, my, keepVariant) {
+    cancelHide();
+    if (!keepVariant || draw._currentName !== chordName) {
+      draw._variant = 1; // reset to most popular on new chord
+    }
+    draw(chordName);
+    const t = tip();
+    if (!t) return;
+    t.classList.add('visible');
+    reposition(mx, my);
+  }
+
+  function changeVariant(delta) {
+    const v = (draw._variant || 1) + delta;
+    const total = draw._total || 1;
+    draw._variant = Math.max(1, Math.min(total, v));
+    draw(draw._currentName || '');
+  }
+
+  function reposition(mx, my) {
+    const t = tip();
+    if (!t || !t.classList.contains('visible')) return;
+    const tw = SIZE + 16, th = SIZE + 14;
+    const vw = window.innerWidth, vh = window.innerHeight;
+    let left = mx + 16, top = my - Math.round(th / 2);
+    if (left + tw > vw - 8) left = mx - tw - 8;
+    if (top < 8) top = 8;
+    if (top + th > vh - 8) top = vh - th - 8;
+    t.style.left = left + 'px';
+    t.style.top  = top  + 'px';
+  }
+
+  function scheduleHide() {
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(() => {
+      const t = tip();
+      if (t) t.classList.remove('visible');
+    }, 200);
+  }
+
+  function cancelHide() {
+    clearTimeout(hideTimer);
+    hideTimer = null;
+  }
+
+  // Wrap each chord in .present-chord with a span carrying data-acorde
+  function wrapPresent() {
+    const body = document.getElementById('presentBody');
+    if (!body) return;
+
+    body.querySelectorAll('.present-chord').forEach(el => {
+      if (el.querySelector('.chord-token')) return; // already wrapped
+
+      el.innerHTML = el.textContent.replace(CHORD_RE, match => {
+        const trimmed = match.trim();
+        if (!trimmed) return match;
+        const p = parseChord(trimmed);
+        if (!p) return match;
+        if (!Raphael.chord.find(p.root, p.rapType, 1)) return match;
+        // Use data-acorde (as requested) — the EXACT chord name, nothing else
+        return `<span class="chord-token" data-acorde="${trimmed}">${match}</span>`;
+      });
+    });
+
+    const isTouchDevice = () => window.matchMedia('(pointer: coarse)').matches;
+
+    // ── DESKTOP: hover ──────────────────────────────────────
+    body.addEventListener('mouseover', function(e) {
+      if (isTouchDevice()) return; // touch handles via click
+      const tok = e.target.closest('.chord-token');
+      if (!tok) return;
+      const acorde = tok.dataset.acorde;
+      if (!acorde) return;
+      cancelHide();
+      showAt(acorde, e.clientX, e.clientY);
+    });
+
+    body.addEventListener('mouseout', function(e) {
+      if (isTouchDevice()) return;
+      const tok = e.target.closest('.chord-token');
+      if (!tok) return;
+      const related = e.relatedTarget;
+      if (related && (related.closest?.('.chord-token') || related.closest?.('#rcTooltip'))) return;
+      scheduleHide();
+    });
+
+    const tipEl = document.getElementById('rcTooltip');
+    tipEl?.addEventListener('mouseenter', () => { if (!isTouchDevice()) cancelHide(); });
+    tipEl?.addEventListener('mouseleave', () => { if (!isTouchDevice()) scheduleHide(); });
+
+    // ── MOBILE: tap to show, tap outside to hide ────────────
+    body.addEventListener('click', function(e) {
+      const tok = e.target.closest('.chord-token');
+      if (tok) {
+        e.stopPropagation();
+        const acorde = tok.dataset.acorde;
+        if (!acorde) return;
+        const t = tip();
+        // Toggle: if already showing this chord, hide it
+        if (t?.classList.contains('visible') && draw._currentName === acorde) {
+          t.classList.remove('visible');
+          return;
+        }
+        cancelHide();
+        // Position near the tapped element (center-above)
+        const rect = tok.getBoundingClientRect();
+        const mx = rect.left + rect.width / 2;
+        const my = rect.top;
+        showAt(acorde, mx, my);
+      }
+    });
+
+    // Tap outside tooltip or chord → close on mobile
+    document.addEventListener('click', function(e) {
+      if (!isTouchDevice()) return;
+      if (e.target.closest('.chord-token') || e.target.closest('#rcTooltip')) return;
+      const t = tip();
+      if (t?.classList.contains('visible')) t.classList.remove('visible');
+    });
+
+    // Prevent tooltip clicks from bubbling to document close handler
+    tipEl?.addEventListener('click', function(e) { e.stopPropagation(); });
+  }
+
+  function prevVariant() { changeVariant(-1); }
+  function nextVariant() { changeVariant(1); }
+  return { wrapPresent, prevVariant, nextVariant };
+})();
+
 const MusicCanvas = (() => {
   let canvas, ctx, W, H, raf;
   let mouse = { x: -999, y: -999, vx: 0, vy: 0, px: 0, py: 0 };
@@ -7052,21 +11129,20 @@ const MusicCanvas = (() => {
     mouse.vx=mouse.x-mouse.px; mouse.vy=mouse.y-mouse.py;
     const speed = Math.sqrt(mouse.vx*mouse.vx+mouse.vy*mouse.vy);
     if (speed > 5 && active) {
-      const mc = particles.filter(p=>p.fromMouse).length;
-      if (mc < MAX_MOUSE_PARTICLES && Math.random() < Math.min(speed/18, 0.7))
-        particles.push(new Particle(mouse.x+(Math.random()-0.5)*20, mouse.y+(Math.random()-0.5)*20, true));
+      // Não spawnar partículas se o mouse estiver sobre um card do menu
+      const overCard = document.elementFromPoint(e.clientX, e.clientY)?.closest('.home-overlay-card, .home-overlay-box');
+      if (!overCard) {
+        const mc = particles.filter(p=>p.fromMouse).length;
+        if (mc < MAX_MOUSE_PARTICLES && Math.random() < Math.min(speed/18, 0.7))
+          particles.push(new Particle(mouse.x+(Math.random()-0.5)*20, mouse.y+(Math.random()-0.5)*20, true));
+      }
     }
     const now = Date.now();
-    if (speed > 15 && now - lastRipple > 115 && active) {
-      ripples.push(new Ripple(mouse.x, mouse.y)); lastRipple = now;
-    }
+
   }
 
   function onMouseClick(e) {
-    if (!active) return;
-    for (let i=0;i<8;i++) particles.push(new Particle(e.clientX, e.clientY, true));
-    ripples.push(new Ripple(e.clientX,e.clientY));
-    ripples.push(new Ripple(e.clientX,e.clientY));
+    // click particles removed
   }
 
   function loop() {
@@ -7129,10 +11205,7 @@ const MusicCanvas = (() => {
       particles[i].update(); particles[i].draw();
       if (particles[i].dead) particles.splice(i,1);
     }
-    for (let i=ripples.length-1;i>=0;i--) {
-      ripples[i].update(); ripples[i].draw();
-      if (ripples[i].dead) ripples.splice(i,1);
-    }
+
 
     // Vignette
     const vg = ctx.createRadialGradient(W/2,H/2,H*0.08,W/2,H/2,H*0.9);
@@ -7168,7 +11241,7 @@ window.addEventListener('DOMContentLoaded', () => {
 <div class="tuner-overlay" id="tunerOverlay">
   <div class="tuner-box">
     <button class="tuner-close" onclick="closeTuner()">✕</button>
-    <div class="tuner-header-label">🎸 Afinador Cromático</div>
+    <div class="tuner-header-label">Afinador Cromático</div>
 
     <!-- Note display -->
     <div class="tuner-note-display">
@@ -7182,19 +11255,19 @@ window.addEventListener('DOMContentLoaded', () => {
     <!-- Meter arc SVG -->
     <div class="tuner-meter-wrap">
       <svg class="tuner-meter-svg" viewBox="0 0 320 170" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M 30 148 A 130 130 0 0 1 290 148" stroke="#2a2a2a" stroke-width="6" stroke-linecap="round" fill="none"/>
-        <path id="tunerArcFill" d="M 30 148 A 130 130 0 0 1 290 148" stroke="#2a2a2a" stroke-width="6" stroke-linecap="round" fill="none" stroke-dasharray="407" stroke-dashoffset="407"/>
-        <line x1="160" y1="18" x2="160" y2="34" stroke="#3a3a3a" stroke-width="2" stroke-linecap="round"/>
-        <line x1="65" y1="45" x2="73" y2="57" stroke="#2a2a2a" stroke-width="1.5" stroke-linecap="round"/>
-        <line x1="255" y1="45" x2="247" y2="57" stroke="#2a2a2a" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M 30 148 A 130 130 0 0 1 290 148" stroke="rgba(255,255,255,0.08)" stroke-width="6" stroke-linecap="round" fill="none"/>
+        <path id="tunerArcFill" d="M 30 148 A 130 130 0 0 1 290 148" stroke="rgba(255,255,255,0.08)" stroke-width="6" stroke-linecap="round" fill="none" stroke-dasharray="407" stroke-dashoffset="407"/>
+        <line x1="160" y1="18" x2="160" y2="34" stroke="rgba(255,255,255,0.12)" stroke-width="2" stroke-linecap="round"/>
+        <line x1="65" y1="45" x2="73" y2="57" stroke="rgba(255,255,255,0.08)" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="255" y1="45" x2="247" y2="57" stroke="rgba(255,255,255,0.08)" stroke-width="1.5" stroke-linecap="round"/>
         <g id="tunerNeedle">
-          <line x1="160" y1="148" x2="160" y2="32" stroke="#505050" stroke-width="2.5" stroke-linecap="round"/>
-          <circle cx="160" cy="148" r="6" fill="#1f1f1f" stroke="#505050" stroke-width="2"/>
-          <circle cx="160" cy="34" r="4" fill="#505050"/>
+          <line x1="160" y1="148" x2="160" y2="32" stroke="rgba(255,255,255,0.25)" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="160" cy="148" r="6" fill="transparent" stroke="rgba(255,255,255,0.25)" stroke-width="2"/>
+          <circle cx="160" cy="34" r="4" fill="rgba(255,255,255,0.25)"/>
         </g>
-        <text x="18" y="165" font-family="IBM Plex Mono,monospace" font-size="10" fill="#404040">−50¢</text>
-        <text x="143" y="13" font-family="IBM Plex Mono,monospace" font-size="10" fill="#404040">0¢</text>
-        <text x="302" y="165" font-family="IBM Plex Mono,monospace" font-size="10" fill="#404040" text-anchor="end">+50¢</text>
+        <text x="18" y="165" font-family="IBM Plex Mono,monospace" font-size="10" fill="rgba(255,255,255,0.3)">−50¢</text>
+        <text x="143" y="13" font-family="IBM Plex Mono,monospace" font-size="10" fill="rgba(255,255,255,0.3)">0¢</text>
+        <text x="302" y="165" font-family="IBM Plex Mono,monospace" font-size="10" fill="rgba(255,255,255,0.3)" text-anchor="end">+50¢</text>
       </svg>
       <div class="tuner-cents" id="tunerCents"></div>
     </div>
@@ -7253,6 +11326,61 @@ window.addEventListener('DOMContentLoaded', () => {
     <div class="analysis-title" id="analysisSongTitle"></div>
     <div class="analysis-subtitle">Análise Musical • Teoria Aplicada</div>
     <div id="analysisContent"></div>
+  </div>
+</div>
+
+<!-- ── SHARE SHEET ── -->
+<div class="share-overlay" id="shareOverlay" onclick="if(event.target===this)closeShareSheet()">
+  <div class="share-sheet" id="shareSheet">
+    <div class="share-handle"></div>
+    <div class="share-title" id="shareSheetTitle">Compartilhar</div>
+    <div class="share-sub" id="shareSheetSub">Escolha como compartilhar</div>
+    <div class="share-options" id="shareOptions"></div>
+  </div>
+</div>
+
+
+<!-- ── PUBLIC VIEWER ── -->
+<div id="publicViewOverlay">
+  <div class="pv-header">
+    <img class="pv-logo" src="https://i.imgur.com/Nelv4ev.png" alt="CifraSet">
+    <div>
+      <div class="pv-playlist-name" id="pvTitle">Playlist</div>
+      <div class="pv-playlist-meta" id="pvMeta"></div>
+    </div>
+    <div class="pv-read-only-badge">Somente leitura</div>
+  </div>
+  <div class="pv-body">
+    <div class="pv-sidebar" id="pvSongList"></div>
+    <div class="pv-main" id="pvContent"></div>
+  </div>
+</div>
+
+
+<!-- ── CHORD TOOLTIP ── -->
+<div id="chordTooltip" style="display:none">
+  <div class="ct-header">
+    <div class="ct-title" id="ctTitle"></div>
+    <button class="ct-mode-btn active" id="ctModeG" onclick="ChordTip.setMode('g')">🎸</button>
+    <button class="ct-mode-btn"       id="ctModeP" onclick="ChordTip.setMode('p')">🎹</button>
+  </div>
+  <div id="ctDiagram"></div>
+  <div class="ct-variants">
+    <button class="ct-nav" id="ctPrev" onclick="ChordTip.navigate(-1)" disabled>‹</button>
+    <span class="ct-var-label" id="ctLabel"></span>
+    <button class="ct-nav" id="ctNext" onclick="ChordTip.navigate(1)">›</button>
+  </div>
+</div>
+
+<!-- ── CHORD TOOLTIP (Raphael) ── -->
+<div id="rcTooltip">
+  <div id="rcDiagContainer"></div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-top:4px;gap:4px">
+    <button id="rcPrevVar" onclick="RaphaelChordTip.prevVariant()" disabled
+      style="width:18px;height:18px;border-radius:4px;border:1px solid rgba(255,255,255,0.15);background:none;color:rgba(200,200,200,0.6);font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;pointer-events:all">‹</button>
+    <span id="rcVarLabel" style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:rgba(160,160,160,0.7);letter-spacing:0.5px;flex:1;text-align:center"></span>
+    <button id="rcNextVar" onclick="RaphaelChordTip.nextVariant()"
+      style="width:18px;height:18px;border-radius:4px;border:1px solid rgba(255,255,255,0.15);background:none;color:rgba(200,200,200,0.6);font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;pointer-events:all">›</button>
   </div>
 </div>
 
