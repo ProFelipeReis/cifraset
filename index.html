@@ -378,9 +378,12 @@
     background: #0a0908;
     z-index: 1060;
     display: none; flex-direction: column;
-    overflow-y: auto;
+    overflow-y: scroll;
     overflow-x: hidden;
-    max-width: 100vw;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    width: 100%; max-width: 100vw;
+    touch-action: pan-y;
   }
   .present-overlay.active { display: flex; }
   .present-header {
@@ -388,10 +391,12 @@
     border-bottom: 1px solid rgba(255,255,255,0.08);
     display: flex; justify-content: space-between; align-items: center;
     position: sticky; top: 0; background: #0a0908; z-index: 10;
+    width: 100%;
   }
   .present-title {
     font-family: 'Syne', serif;
     font-size: 28px; font-weight: 900; color: var(--cream);
+    min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
   }
   .present-key {
     font-family: 'IBM Plex Mono', monospace;
@@ -405,24 +410,22 @@
     color: var(--gold); margin-bottom: 12px;
     padding-bottom: 6px; border-bottom: 1px solid rgba(255,255,255,0.08);
   }
-  .present-line { margin-bottom: 16px; }
+  .present-line { margin-bottom: 16px; min-width: 0; }
   .present-chord {
     font-family: 'IBM Plex Mono', monospace;
     color: #f0a030; font-weight: 700;
     white-space: pre-wrap; word-break: break-word;
     display: block; line-height: 1.3;
     text-shadow: 0 0 18px rgba(240,160,48,0.22);
-    letter-spacing: 0; overflow-x: hidden;
+    letter-spacing: 0; max-width: 100%;
   }
 
   .present-lyric {
     font-family: 'IBM Plex Mono', monospace;
     color: var(--cream); font-weight: 400;
     line-height: 1.5; white-space: pre-wrap; word-break: break-word;
-    display: block; letter-spacing: 0; overflow-x: hidden;
+    display: block; letter-spacing: 0; max-width: 100%;
   }
-  .present-line { overflow-x: hidden; }
-  .present-body { overflow-x: hidden; }
   /* keep inline token styles for editor preview if used */
   .inline-line { display: flex; flex-wrap: wrap; align-items: flex-end; overflow-x: hidden; }
   .chord-token { display: inline-flex; flex-direction: column; align-items: flex-start; flex-shrink: 0; }
@@ -2084,10 +2087,9 @@
 
     /* Presentation mode */
     .present-overlay { overflow-x: hidden; }
-    .present-header { padding: 12px 16px 10px; max-width: 100vw; overflow: hidden; }
-    .present-body { padding: 16px; overflow-x: hidden; }
+    .present-header { padding: 12px 16px 10px; }
+    .present-body { padding: 16px; }
     .present-title { font-size: 18px; }
-    .present-chord, .present-lyric { word-break: break-word; overflow-wrap: break-word; }
 
     /* Modals full width */
     .modal { width: 95vw !important; padding: 20px; }
@@ -7994,119 +7996,6 @@ function exportPlaylistPDF() {
 
 \x3C!-- MÚSICAS -->
 ${songsHtml}
-
-\x3C!-- TUNER MODAL -->
-\x3Cdiv class="tuner-overlay" id="tunerOverlay">
-  \x3Cdiv class="tuner-box">
-    \x3Cbutton class="tuner-close" onclick="closeTuner()">✕\x3C/button>
-    \x3Cdiv class="tuner-header-label">Afinador Cromático\x3C/div>
-
-    \x3C!-- Note display -->
-    \x3Cdiv class="tuner-note-display">
-      \x3Cdiv class="tuner-note-row">
-        \x3Cdiv class="tuner-note idle" id="tunerNote">—\x3C/div>
-        \x3Cdiv class="tuner-octave" id="tunerOctave">\x3C/div>
-      \x3C/div>
-    \x3C/div>
-    \x3Cdiv class="tuner-freq" id="tunerFreq">\x3C/div>
-
-    \x3C!-- Meter arc SVG -->
-    \x3Cdiv class="tuner-meter-wrap">
-      \x3Csvg class="tuner-meter-svg" viewBox="0 0 320 170" fill="none" xmlns="http://www.w3.org/2000/svg">
-        \x3Cpath d="M 30 148 A 130 130 0 0 1 290 148" stroke="rgba(255,255,255,0.08)" stroke-width="6" stroke-linecap="round" fill="none"/>
-        \x3Cpath id="tunerArcFill" d="M 30 148 A 130 130 0 0 1 290 148" stroke="rgba(255,255,255,0.08)" stroke-width="6" stroke-linecap="round" fill="none" stroke-dasharray="407" stroke-dashoffset="407"/>
-        \x3Cline x1="160" y1="18" x2="160" y2="34" stroke="rgba(255,255,255,0.12)" stroke-width="2" stroke-linecap="round"/>
-        \x3Cline x1="65" y1="45" x2="73" y2="57" stroke="rgba(255,255,255,0.08)" stroke-width="1.5" stroke-linecap="round"/>
-        \x3Cline x1="255" y1="45" x2="247" y2="57" stroke="rgba(255,255,255,0.08)" stroke-width="1.5" stroke-linecap="round"/>
-        \x3Cg id="tunerNeedle">
-          \x3Cline x1="160" y1="148" x2="160" y2="32" stroke="rgba(255,255,255,0.25)" stroke-width="2.5" stroke-linecap="round"/>
-          \x3Ccircle cx="160" cy="148" r="6" fill="transparent" stroke="rgba(255,255,255,0.25)" stroke-width="2"/>
-          \x3Ccircle cx="160" cy="34" r="4" fill="rgba(255,255,255,0.25)"/>
-        \x3C/g>
-        \x3Ctext x="18" y="165" font-family="IBM Plex Mono,monospace" font-size="10" fill="rgba(255,255,255,0.3)">−50¢\x3C/text>
-        \x3Ctext x="143" y="13" font-family="IBM Plex Mono,monospace" font-size="10" fill="rgba(255,255,255,0.3)">0¢\x3C/text>
-        \x3Ctext x="302" y="165" font-family="IBM Plex Mono,monospace" font-size="10" fill="rgba(255,255,255,0.3)" text-anchor="end">+50¢\x3C/text>
-      \x3C/svg>
-      \x3Cdiv class="tuner-cents" id="tunerCents">\x3C/div>
-    \x3C/div>
-
-    \x3C!-- Chromatic scale bar -->
-    \x3Cdiv class="tuner-chromatic-wrap">
-      \x3Cdiv class="tuner-chromatic-track">
-        \x3Cdiv class="tuner-chromatic-indicator" id="tunerChromaIndicator">\x3C/div>
-        \x3Cdiv class="tuner-chromatic-notes" id="tunerChromaNotes">
-          \x3Cdiv class="tuner-chromatic-note" data-note="A">A\x3C/div>
-          \x3Cdiv class="tuner-chromatic-note sharp-note" data-note="A#">A#\x3C/div>
-          \x3Cdiv class="tuner-chromatic-note" data-note="B">B\x3C/div>
-          \x3Cdiv class="tuner-chromatic-note" data-note="C">C\x3C/div>
-          \x3Cdiv class="tuner-chromatic-note sharp-note" data-note="C#">C#\x3C/div>
-          \x3Cdiv class="tuner-chromatic-note" data-note="D">D\x3C/div>
-          \x3Cdiv class="tuner-chromatic-note sharp-note" data-note="D#">D#\x3C/div>
-          \x3Cdiv class="tuner-chromatic-note" data-note="E">E\x3C/div>
-          \x3Cdiv class="tuner-chromatic-note" data-note="F">F\x3C/div>
-          \x3Cdiv class="tuner-chromatic-note sharp-note" data-note="F#">F#\x3C/div>
-          \x3Cdiv class="tuner-chromatic-note" data-note="G">G\x3C/div>
-          \x3Cdiv class="tuner-chromatic-note sharp-note" data-note="G#">G#\x3C/div>
-        \x3C/div>
-      \x3C/div>
-      \x3Cdiv class="tuner-chromatic-ticks">
-        \x3Cdiv class="tuner-chromatic-tick">\x3C/div>\x3Cdiv class="tuner-chromatic-tick">\x3C/div>
-        \x3Cdiv class="tuner-chromatic-tick">\x3C/div>\x3Cdiv class="tuner-chromatic-tick">\x3C/div>
-        \x3Cdiv class="tuner-chromatic-tick">\x3C/div>\x3Cdiv class="tuner-chromatic-tick">\x3C/div>
-        \x3Cdiv class="tuner-chromatic-tick">\x3C/div>\x3Cdiv class="tuner-chromatic-tick">\x3C/div>
-        \x3Cdiv class="tuner-chromatic-tick">\x3C/div>\x3Cdiv class="tuner-chromatic-tick">\x3C/div>
-        \x3Cdiv class="tuner-chromatic-tick">\x3C/div>\x3Cdiv class="tuner-chromatic-tick">\x3C/div>
-      \x3C/div>
-    \x3C/div>
-
-    \x3Cbutton class="tuner-mic-btn" id="tunerMicBtn" onclick="tunerToggleMic()" style="display:none">
-      \x3Cspan class="tmic-icon">🎙\x3C/span>
-      \x3Cspan id="tunerMicLabel">Ativar Microfone\x3C/span>
-    \x3C/button>
-    \x3Cdiv class="tuner-status" id="tunerStatusMsg">Toque uma nota para detectar a afinação\x3C/div>
-  \x3C/div>
-\x3C/div>
-
-
-\x3C!-- ── SHARE SHEET ── -->
-\x3Cdiv class="share-overlay" id="shareOverlay" onclick="if(event.target===this)closeShareSheet()">
-  \x3Cdiv class="share-sheet" id="shareSheet">
-    \x3Cdiv class="share-handle">\x3C/div>
-    \x3Cdiv class="share-title" id="shareSheetTitle">Compartilhar\x3C/div>
-    \x3Cdiv class="share-sub" id="shareSheetSub">Escolha como compartilhar\x3C/div>
-    \x3Cdiv class="share-options" id="shareOptions">\x3C/div>
-  \x3C/div>
-\x3C/div>
-
-
-\x3C!-- ── PUBLIC VIEWER ── -->
-\x3Cdiv id="publicViewOverlay">
-  \x3Cdiv class="pv-header">
-    \x3Cimg class="pv-logo" src="https://i.imgur.com/Nelv4ev.png" alt="CifraSet">
-    \x3Cdiv>
-      \x3Cdiv class="pv-playlist-name" id="pvTitle">Playlist\x3C/div>
-      \x3Cdiv class="pv-playlist-meta" id="pvMeta">\x3C/div>
-    \x3C/div>
-    \x3Cdiv class="pv-read-only-badge">Somente leitura\x3C/div>
-  \x3C/div>
-  \x3Cdiv class="pv-body">
-    \x3Cdiv class="pv-sidebar" id="pvSongList">\x3C/div>
-    \x3Cdiv class="pv-main" id="pvContent">\x3C/div>
-  \x3C/div>
-\x3C/div>
-
-
-\x3C!-- ── CHORD TOOLTIP (Raphael) ── -->
-\x3Cdiv id="rcTooltip">
-  \x3Cdiv id="rcDiagContainer">\x3C/div>
-  \x3Cdiv style="display:flex;align-items:center;justify-content:space-between;margin-top:4px;gap:4px">
-    \x3Cbutton id="rcPrevVar" onclick="RaphaelChordTip.prevVariant()" disabled
-      style="width:18px;height:18px;border-radius:4px;border:1px solid rgba(255,255,255,0.15);background:none;color:rgba(200,200,200,0.6);font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;pointer-events:all">‹\x3C/button>
-    \x3Cspan id="rcVarLabel" style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:rgba(160,160,160,0.7);letter-spacing:0.5px;flex:1;text-align:center">\x3C/span>
-    \x3Cbutton id="rcNextVar" onclick="RaphaelChordTip.nextVariant()"
-      style="width:18px;height:18px;border-radius:4px;border:1px solid rgba(255,255,255,0.15);background:none;color:rgba(200,200,200,0.6);font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;pointer-events:all">›\x3C/button>
-  \x3C/div>
-\x3C/div>
 
 \x3C/body>
 \x3C/html>`;
