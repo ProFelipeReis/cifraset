@@ -361,6 +361,62 @@
   }
   .add-line-btn:hover { border-color: var(--gold); color: var(--gold); }
 
+  /* ── MODO LETRA ── */
+  .mode-toggle {
+    display: flex; align-items: center; gap: 0;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 8px; overflow: hidden;
+  }
+  .mode-toggle-btn {
+    background: none; border: none; color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+    padding: 5px 10px; cursor: pointer; transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .mode-toggle-btn.active {
+    background: var(--gold); color: var(--bg); font-weight: 700;
+  }
+  .mode-toggle-btn:first-child { border-right: 1px solid var(--border); }
+
+  /* Barra de formatação de texto no modo letra */
+  .text-format-bar {
+    display: none; align-items: center; gap: 4px;
+    padding: 6px 28px;
+    background: rgba(255,255,255,0.02);
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .text-format-bar.visible { display: flex; }
+  .fmt-btn {
+    background: none; border: 1px solid var(--border);
+    color: var(--muted); border-radius: 5px;
+    padding: 3px 8px; font-size: 12px; cursor: pointer;
+    transition: all 0.15s; min-width: 28px; text-align: center;
+    font-family: 'IBM Plex Sans', sans-serif;
+  }
+  .fmt-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(255,255,255,0.04); }
+  .fmt-btn.fmt-bold { font-weight: 700; }
+  .fmt-btn.fmt-italic { font-style: italic; }
+  .fmt-btn.fmt-strike { text-decoration: line-through; }
+  .fmt-sep { width: 1px; height: 18px; background: var(--border); margin: 0 4px; }
+  .fmt-label { font-size: 10px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; letter-spacing: 1px; margin-right: 4px; }
+
+  /* No modo letra, a linha de cifra some */
+  body.letter-mode .chord-line { display: none !important; }
+  /* No modo letra, a lyric-line vira um contenteditable rico */
+  body.letter-mode .lyric-line {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 15px; line-height: 1.7;
+  }
+
+  /* Placeholder para contenteditable */
+  .lyric-rich:empty::before {
+    content: attr(data-placeholder);
+    color: var(--muted); font-style: italic; font-size: 13px;
+    pointer-events: none;
+  }
+
   .add-section-btn {
     margin: 12px 28px;
     background: none; border: 1px dashed var(--border);
@@ -5623,6 +5679,7 @@ let state = {
   playlists: [],
   activePl: null,
   activeSong: null,
+  letterMode: false,
 };
 
 // ── HASH (SHA-256 nativo do browser) ──────────────────────
@@ -6838,11 +6895,88 @@ function renderEditor() {
           </div>
         </div>`}
         <button class="btn btn-ghost btn-sm" onclick="openPresent()">▶ Apresentar</button>
+        ${canEdit ? `
+        <div class="mode-toggle" title="Alternar modo de edição">
+          <button class="mode-toggle-btn ${state.letterMode ? '' : 'active'}" id="modeCifraBtn" onclick="setEditorMode('cifra')">🎸 Cifra</button>
+          <button class="mode-toggle-btn ${state.letterMode ? 'active' : ''}" id="modeLetraBtn" onclick="setEditorMode('letra')">📝 Letra</button>
+        </div>` : ''}
       </div>
+    </div>
+    <div class="text-format-bar ${state.letterMode && canEdit ? 'visible' : ''}" id="textFormatBar">
+      <span class="fmt-label">Formatar:</span>
+      <button class="fmt-btn fmt-bold" title="Negrito (Ctrl+B)" onclick="applyFormat('bold')"><b>N</b></button>
+      <button class="fmt-btn fmt-italic" title="Itálico (Ctrl+I)" onclick="applyFormat('italic')"><i>I</i></button>
+      <button class="fmt-btn fmt-strike" title="Riscado (Ctrl+S)" onclick="applyFormat('strikethrough')"><s>S</s></button>
+      <div class="fmt-sep"></div>
+      <button class="fmt-btn" title="Remover formatação" onclick="applyFormat('removeFormat')" style="font-size:11px">✕ limpar</button>
+      <div class="fmt-sep"></div>
+      <button class="fmt-btn" title="Limpar formatação externa colada (cores, fontes, fundo…)" onclick="sanitizeAllRich()" style="font-size:11px;color:var(--red);border-color:rgba(224,82,82,0.35)">🧹 limpar colagem</button>
     </div>
     <div class="editor-body" id="editorBody"></div>
   `;
   renderSections(song);
+}
+
+// ── MODO LETRA ─────────────────────────────────────────────
+function setEditorMode(mode) {
+  state.letterMode = (mode === 'letra');
+  document.body.classList.toggle('letter-mode', state.letterMode);
+  // Atualiza botões do toggle
+  const cifraBtn = document.getElementById('modeCifraBtn');
+  const letraBtn = document.getElementById('modeLetraBtn');
+  if (cifraBtn) cifraBtn.classList.toggle('active', !state.letterMode);
+  if (letraBtn) letraBtn.classList.toggle('active', state.letterMode);
+  // Mostra/esconde barra de formatação
+  const fmtBar = document.getElementById('textFormatBar');
+  if (fmtBar) fmtBar.classList.toggle('visible', state.letterMode);
+  // Reconstrói seções para trocar input por contenteditable
+  const song = getSong(state.activeSong);
+  if (song) renderSections(song);
+}
+
+function applyFormat(cmd) {
+  document.execCommand(cmd, false, null);
+}
+
+// Limpa formatação externa de todos os campos ricos (cores, fontes, spans com style, etc.)
+// Mantém apenas <b>, <strong>, <i>, <em>, <s>, <strike>
+function sanitizeRichEl(el) {
+  // Percorre todos os elementos filhos e remove atributos de estilo
+  el.querySelectorAll('*').forEach(node => {
+    // Remove style, class, color, bgcolor, face e outros attrs externos
+    ['style','class','color','bgcolor','face','size','align','data-mce-style'].forEach(a => node.removeAttribute(a));
+    // Remove tags que não fazem parte da nossa formatação (span, font, div, p, etc.)
+    // mas mantém b, strong, i, em, s, strike, br
+    const allowed = ['B','STRONG','I','EM','S','STRIKE','BR'];
+    if (!allowed.includes(node.tagName)) {
+      // Substitui pelo conteúdo interno
+      node.replaceWith(...node.childNodes);
+    }
+  });
+  return el.innerHTML;
+}
+
+function sanitizeAllRich() {
+  const song = getSong(state.activeSong);
+  if (!song) return;
+  document.querySelectorAll('.lyric-rich').forEach(el => {
+    const clean = sanitizeRichEl(el);
+    el.innerHTML = clean;
+  });
+  // Salva o conteúdo limpo
+  song.sections.forEach(sec => {
+    sec.lines.forEach(line => {
+      // Já foi atualizado via innerHTML acima; re-dispara o save
+    });
+  });
+  save();
+  showToast('Formatação externa removida 🧹');
+}
+
+// Salva HTML do contenteditable de volta ao objeto da música
+function saveLyricHTML(secId, lineId, el) {
+  // Extrai texto puro com marcações simples
+  updateLine(secId, lineId, 'lyrics', el.innerHTML);
 }
 
 function renderSections(song) {
@@ -6863,25 +6997,58 @@ function renderSections(song) {
     sec.lines.forEach((line, li) => {
       const row = document.createElement('div');
       row.className = 'line-row';
-      row.innerHTML = `
-        <input class="chord-line" value="${esc(line.chords)}" placeholder="Am  F  C  G"
-          ${canEdit
-            ? `oninput="updateLine('${sec.id}','${line.id}','chords',this.value)" onkeydown="handleChordKey(event,'${sec.id}','${line.id}')"`
-            : 'readonly'}>
-        <div style="display:flex;align-items:flex-start;gap:4px">
-          <textarea class="lyric-line" placeholder="Escreva a letra aqui…"
+
+      if (state.letterMode && canEdit) {
+        // Modo letra: só contenteditable com formatação, sem campo de cifra
+        row.innerHTML = `
+          <div style="display:flex;align-items:flex-start;gap:4px">
+            <div class="lyric-line lyric-rich"
+              contenteditable="true"
+              data-placeholder="Escreva a letra aqui…"
+              style="min-height:24px;outline:none;cursor:text;"
+            >${line.lyrics || ''}</div>
+            <button class="line-del-btn" title="Apagar linha" onclick="deleteLine('${sec.id}','${line.id}')">✕</button>
+          </div>
+        `;
+        block.appendChild(row);
+        const rich = row.querySelector('.lyric-rich');
+        rich.addEventListener('input', () => {
+          updateLine(sec.id, line.id, 'lyrics', rich.innerHTML);
+        });
+        rich.addEventListener('keydown', (e) => {
+          if (e.ctrlKey || e.metaKey) {
+            if (e.key === 'b') { e.preventDefault(); document.execCommand('bold', false, null); }
+            if (e.key === 'i') { e.preventDefault(); document.execCommand('italic', false, null); }
+            if (e.key === 's') { e.preventDefault(); document.execCommand('strikethrough', false, null); }
+          }
+        });
+        // Colar sem formatação externa — mantém só texto puro
+        rich.addEventListener('paste', (e) => {
+          e.preventDefault();
+          const text = (e.clipboardData || window.clipboardData).getData('text/plain');
+          document.execCommand('insertText', false, text);
+        });
+      } else {
+        row.innerHTML = `
+          <input class="chord-line" value="${esc(line.chords)}" placeholder="Am  F  C  G"
             ${canEdit
-              ? `oninput="updateLine('${sec.id}','${line.id}','lyrics',this.value);autoResize(this)" onkeydown="handleLyricKey(event,'${sec.id}','${line.id}')"`
-              : 'readonly'}
-            rows="1">${esc(line.lyrics)}</textarea>
-          ${canEdit ? `<button class="line-del-btn" title="Apagar linha" onclick="deleteLine('${sec.id}','${line.id}')">✕</button>` : ''}
-        </div>
-      `;
-      block.appendChild(row);
-      setTimeout(() => {
-        const ta = row.querySelector('textarea');
-        if (ta) autoResize(ta);
-      }, 0);
+              ? `oninput="updateLine('${sec.id}','${line.id}','chords',this.value)" onkeydown="handleChordKey(event,'${sec.id}','${line.id}')"`
+              : 'readonly'}>
+          <div style="display:flex;align-items:flex-start;gap:4px">
+            <textarea class="lyric-line" placeholder="Escreva a letra aqui…"
+              ${canEdit
+                ? `oninput="updateLine('${sec.id}','${line.id}','lyrics',this.value);autoResize(this)" onkeydown="handleLyricKey(event,'${sec.id}','${line.id}')"`
+                : 'readonly'}
+              rows="1">${esc(line.lyrics)}</textarea>
+            ${canEdit ? `<button class="line-del-btn" title="Apagar linha" onclick="deleteLine('${sec.id}','${line.id}')">✕</button>` : ''}
+          </div>
+        `;
+        block.appendChild(row);
+        setTimeout(() => {
+          const ta = row.querySelector('textarea');
+          if (ta) autoResize(ta);
+        }, 0);
+      }
     });
     if (canEdit) {
       const addLine = document.createElement('button');
@@ -7680,6 +7847,7 @@ function exportPlaylistPDF() {
   if (!pl || pl.songs.length === 0) { showToast('A playlist está vazia!'); return; }
 
   const date = new Date().toLocaleDateString('pt-BR', { day:'2-digit', month:'long', year:'numeric' });
+  const isLetterMode = state.letterMode;
 
   // ── Song pages ──
   let songsHtml = '';
@@ -7689,14 +7857,21 @@ function exportPlaylistPDF() {
       let linesHtml = '';
       sec.lines.forEach(line => {
         if (!line.chords && !line.lyrics) return;
-        if (line.chords) {
-          // Envolve cada acorde em <span class="chord-token"> preservando espaços de alinhamento
+        if (!isLetterMode && line.chords) {
           const chordHtml = line.chords.replace(/(\S+)/g, (match) =>
             `<span class="chord-token">${escHtml(match)}</span>`
           );
           linesHtml += `<div class="chord-row">${chordHtml}</div>`;
         }
-        linesHtml += `<div class="lyric-row">${escHtml(line.lyrics || '\u00A0')}</div>`;
+        if (line.lyrics) {
+          // Suporte a HTML rico (negrito, itálico, riscado) no modo letra
+          const lyricContent = isLetterMode
+            ? (line.lyrics || '\u00A0')  // HTML rico preservado
+            : escHtml(line.lyrics || '\u00A0');
+          linesHtml += `<div class="lyric-row">${lyricContent}</div>`;
+        } else if (!isLetterMode) {
+          linesHtml += `<div class="lyric-row">&nbsp;</div>`;
+        }
       });
       if (!linesHtml) return;
       sectionsHtml += `<div class="section">
@@ -7706,9 +7881,10 @@ function exportPlaylistPDF() {
     });
 
     const pills = [
-      `<span class="pill pill-key">${escHtml(song.key)}</span>`,
-      song.capo && song.capo !== '0' ? `<span class="pill">Capo ${escHtml(song.capo)}</span>` : '',
+      !isLetterMode ? `<span class="pill pill-key">${escHtml(song.key)}</span>` : '',
+      !isLetterMode && song.capo && song.capo !== '0' ? `<span class="pill">Capo ${escHtml(song.capo)}</span>` : '',
       song.bpm ? `<span class="pill">&#9834; ${escHtml(song.bpm)} BPM</span>` : '',
+      isLetterMode ? `<span class="pill pill-letra">Letra</span>` : '',
     ].filter(Boolean).join('');
 
     songsHtml += `<div class="song-page${idx > 0 ? ' page-break' : ''}">
@@ -7924,6 +8100,14 @@ function exportPlaylistPDF() {
     white-space: pre-wrap; line-height: 1.6;
     margin-bottom: 10px; overflow-wrap: break-word;
   }
+  /* Formatação rica no modo letra */
+  .lyric-row b, .lyric-row strong { font-weight: 700; color: #0a0a0a; }
+  .lyric-row i, .lyric-row em { font-style: italic; }
+  .lyric-row s, .lyric-row strike { text-decoration: line-through; color: #888; }
+  .pill-letra {
+    background: #2a2a2a; color: #fff; border-color: #2a2a2a;
+    font-size: 7.5pt;
+  }
 
   @media print {
     body { background: #fff; }
@@ -7981,15 +8165,14 @@ function exportPlaylistPDF() {
       \x3Ccol style="width:36px">
       \x3Ccol style="width:auto">
       \x3Ccol style="width:60px">
-      \x3Ccol style="width:40px">
-      \x3Ccol style="width:60px">
+      ${!isLetterMode ? `\x3Ccol style="width:40px">\x3Ccol style="width:60px">` : ''}
     \x3C/colgroup>
     ${pl.songs.map((song, i) => `\x3Ctr>
       \x3Ctd class="idx-num">${String(i+1).padStart(2,'0')}\x3C/td>
       \x3Ctd class="idx-name">${escHtml(song.title)}\x3C/td>
       \x3Ctd class="idx-fill">\x3Cspan class="idx-fill-line">\x3C/span>\x3C/td>
-      \x3Ctd class="idx-key">${escHtml(song.key)}\x3C/td>
-      \x3Ctd class="idx-capo">${song.capo && song.capo !== '0' ? `Capo ${escHtml(song.capo)}` : ''}\x3C/td>
+      ${!isLetterMode ? `\x3Ctd class="idx-key">${escHtml(song.key)}\x3C/td>
+      \x3Ctd class="idx-capo">${song.capo && song.capo !== '0' ? `Capo ${escHtml(song.capo)}` : ''}\x3C/td>` : ''}
     \x3C/tr>`).join('')}
   \x3C/table>
 \x3C/div>
