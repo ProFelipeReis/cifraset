@@ -7694,6 +7694,9 @@ let _pendingCifraUrl = null;
 // Testa se uma única palavra é um acorde válido (notação BR + internacional)
 const SINGLE_CHORD_RE = /^[A-G][b#]?(?:maj(?:13|11|9|7)?|7M|7b5|7sus[24]|7\+|7|m(?:aj(?:13|11|9|7)?|13|11|9|7b5|7|6|m)?|13|11|9sus[24]|9|6\/9|6|5\+|5|4|2|sus[24]|dim7?|aug|°|ø|\+|add(?:9|4|2))?(?:\([^)]{1,16}\))?(?:\/[A-G][b#]?)?$/;
 
+// Tokens que podem aparecer numa linha de cifra mas não são acordes (pontuação)
+const CHORD_LINE_PUNCTUATION = /^[()\[\]{},.\-|\/\\x]+$/;
+
 function isChord(token) {
   return SINGLE_CHORD_RE.test(token);
 }
@@ -7701,16 +7704,34 @@ function isChord(token) {
 function isChordLine(line) {
   const stripped = line.trim();
   if (!stripped) return false;
-  // Separar por espaços — cada token deve ser um acorde válido
   const tokens = stripped.split(/\s+/).filter(t => t.length > 0);
   if (tokens.length === 0) return false;
-  // Pelo menos 1 token tem que ser acorde, e NENHUM pode não ser acorde
+
   let chordCount = 0;
+  let wordCount = 0; // tokens que claramente são palavras comuns (letras de música)
+
   for (const token of tokens) {
-    if (isChord(token)) { chordCount++; }
-    else { return false; }
+    // Ignorar pontuação isolada
+    if (CHORD_LINE_PUNCTUATION.test(token)) continue;
+    if (isChord(token)) {
+      chordCount++;
+    } else {
+      // Token não é acorde — verificar se parece palavra de música (2+ letras minúsculas)
+      if (/[a-záéíóúãõâêôàüçñ]{2,}/i.test(token) && !/^[A-G]/.test(token)) {
+        wordCount++;
+      } else {
+        // Pode ser algo como "C9", "D/F#" que o regex não pegou — tentar variante mais ampla
+        if (/^[A-G][b#]?[\w#+°ø\/]*$/.test(token)) {
+          chordCount++;
+        } else {
+          wordCount++;
+        }
+      }
+    }
   }
-  return chordCount > 0;
+
+  // É linha de cifra se tem pelo menos 1 acorde e nenhuma palavra de música
+  return chordCount > 0 && wordCount === 0;
 }
 
 function doImport() {
@@ -7849,29 +7870,106 @@ function exportPlaylistPDF() {
   const date = new Date().toLocaleDateString('pt-BR', { day:'2-digit', month:'long', year:'numeric' });
   const isLetterMode = state.letterMode;
 
-  // ── Song pages ──
-  let songsHtml = '';
-  pl.songs.forEach((song, idx) => {
+  // ── Divide um par cifra+letra em sub-pares quando não cabem na coluna ──
+  // Lógica: usa a letra para encontrar ponto de quebra (fim de palavra),
+  // e fatia cifra+letra no mesmo ponto de posição de caractere.
+  function splitLinePair(chords, lyrics, colWidth) {
+    // Sem cifras: retorna apenas a linha de letra (sem chord-row)
+    if (!chords || !chords.trim()) {
+      return [{ chords: '', lyrics: lyrics || '' }];
+    }
+
+    // Normaliza para o mesmo comprimento (pad com espaços)
+    const maxLen = Math.max((chords || '').length, (lyrics || '').length);
+    const ch = (chords  || '').padEnd(maxLen, ' ');
+    const ly = (lyrics  || '').padEnd(maxLen, ' ');
+
+    // Cabe na coluna — retorna simples
+    if (maxLen <= colWidth) {
+      return [{ chords: chords.trimEnd(), lyrics: (lyrics || '').trimEnd() }];
+    }
+
+    const pairs = [];
+    let pos = 0;
+
+    while (pos < maxLen) {
+      const remaining = maxLen - pos;
+      if (remaining <= colWidth) {
+        // Último segmento
+        const c = ch.slice(pos).trimEnd();
+        const l = ly.slice(pos).trimEnd();
+        if (c || l) pairs.push({ chords: c, lyrics: l });
+        break;
+      }
+
+      // Tenta cortar no limite; recua até espaço em AMBAS as strings
+      // para não cortar no meio de acorde NEM no meio de palavra
+      let cut = pos + colWidth;
+
+      // Recua até achar espaço na LETRA (prioridade: não cortar palavra)
+      let cutLy = cut;
+      while (cutLy > pos + 1 && ly[cutLy] !== ' ') cutLy--;
+
+      // Garante que esse ponto também não cai no meio de um acorde na cifra
+      let cutCh = cutLy;
+      while (cutCh > pos + 1 && ch[cutCh] !== ' ' && ch[cutCh - 1] !== ' ') cutCh--;
+
+      // Usa o menor dos dois (mais conservador); se recuou demais, usa limite duro
+      cut = Math.min(cutLy, cutCh);
+      if (cut <= pos) cut = pos + colWidth; // fallback: corte duro
+
+      pairs.push({
+        chords: ch.slice(pos, cut).trimEnd(),
+        lyrics: ly.slice(pos, cut).trimEnd()
+      });
+      // Avança pulando espaços
+      pos = cut;
+      while (pos < maxLen && ch[pos] === ' ' && ly[pos] === ' ') pos++;
+    }
+
+    return pairs;
+  }
+
+  // Largura em caracteres monospace por coluna (A4, 2 colunas, fonte 9.5pt IBM Plex Mono)
+  // A4 útil ~182mm − 28mm gap = ~154mm / 2 = ~77mm por coluna
+  // 9.5pt ≈ 3.35mm → ~77 / (3.35 * 0.6) ≈ 38 chars (conservador para não cortar)
+  const COL_CHARS = 43;
+
+  // ── Construir HTML de uma música ──
+  function buildSongHtml(song, idx) {
     let sectionsHtml = '';
     song.sections.forEach(sec => {
       let linesHtml = '';
       sec.lines.forEach(line => {
         if (!line.chords && !line.lyrics) return;
-        if (!isLetterMode && line.chords) {
-          const chordHtml = line.chords.replace(/(\S+)/g, (match) =>
-            `<span class="chord-token">${escHtml(match)}</span>`
-          );
-          linesHtml += `<div class="chord-row">${chordHtml}</div>`;
+
+        if (isLetterMode) {
+          // Modo letra: sem cifras, apenas a lyric-row
+          const lyricContent = line.lyrics || '\u00A0';
+          linesHtml += `<div class="line-pair"><div class="lyric-row">${lyricContent}</div></div>`;
+          return;
         }
-        if (line.lyrics) {
-          // Suporte a HTML rico (negrito, itálico, riscado) no modo letra
-          const lyricContent = isLetterMode
-            ? (line.lyrics || '\u00A0')  // HTML rico preservado
-            : escHtml(line.lyrics || '\u00A0');
-          linesHtml += `<div class="lyric-row">${lyricContent}</div>`;
-        } else if (!isLetterMode) {
-          linesHtml += `<div class="lyric-row">&nbsp;</div>`;
-        }
+
+        // Modo cifra: divide em sub-pares se necessário
+        const subPairs = splitLinePair(
+          line.chords || '',
+          line.lyrics || '',
+          COL_CHARS
+        );
+
+        subPairs.forEach(({ chords: c, lyrics: l }, i) => {
+          let pairHtml = '';
+          if (c && c.trim()) {
+            pairHtml += `<div class="chord-row">${escHtml(c)}</div>`;
+          }
+          if (l && l.trim()) {
+            pairHtml += `<div class="lyric-row">${escHtml(l)}</div>`;
+          } else {
+            // linha de cifra sem letra correspondente (ex: intro)
+            pairHtml += `<div class="lyric-row">&nbsp;</div>`;
+          }
+          linesHtml += `<div class="line-pair">${pairHtml}</div>`;
+        });
       });
       if (!linesHtml) return;
       sectionsHtml += `<div class="section">
@@ -7887,7 +7985,7 @@ function exportPlaylistPDF() {
       isLetterMode ? `<span class="pill pill-letra">Letra</span>` : '',
     ].filter(Boolean).join('');
 
-    songsHtml += `<div class="song-page${idx > 0 ? ' page-break' : ''}">
+    return `<div class="song-page">
       <div class="song-header">
         <div class="song-num">${String(idx + 1).padStart(2,'0')}</div>
         <div class="song-header-main">
@@ -7897,6 +7995,13 @@ function exportPlaylistPDF() {
       </div>
       <div class="sections">${sectionsHtml}</div>
     </div>`;
+  }
+
+  // ── Montar músicas: separadas por page-break explícito ──
+  let songsHtml = '';
+  pl.songs.forEach((song, idx) => {
+    if (idx > 0) songsHtml += '<div class="page-break"></div>';
+    songsHtml += buildSongHtml(song, idx);
   });
 
   const html = `\x3C!DOCTYPE html>
@@ -8030,84 +8135,106 @@ function exportPlaylistPDF() {
     width: 56px;
   }
 
+
+
   /* ══════════════════════
      PÁGINA DE MÚSICA
   ══════════════════════ */
   .song-page {
-    width: 100%;
+    margin-bottom: 0;
     padding: 0;
-    display: flex; flex-direction: column;
+    overflow: hidden;
   }
-  .page-break { page-break-before: always; }
+  .song-page {
+    /* sem page-break aqui — controlado por .page-break entre músicas */
+  }
 
+  .page-break {
+    page-break-after: always;
+    break-after: page;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    display: block;
+  }
+
+  /* Header FORA das colunas — evita column-span que causa páginas em branco */
   .song-header {
     display: flex; align-items: flex-start; gap: 20px;
-    padding-bottom: 24px;
-    margin-bottom: 32px;
+    padding: 8px 0 20px;
+    margin-bottom: 16px;
     border-bottom: 3px solid #0a0a0a;
-    padding-top: 8px;
+  }
+
+  /* 2 colunas apenas para o conteúdo das seções */
+  .sections {
+    column-count: 2;
+    column-gap: 28px;
+    column-rule: 1px solid #ddd;
+    orphans: 2;
+    widows: 2;
   }
   .song-num {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 9pt; font-weight: 600; color: #ccc;
-    padding-top: 6px; min-width: 32px;
-    letter-spacing: 1px;
+    padding-top: 6px; min-width: 32px; letter-spacing: 1px;
   }
   .song-header-main { flex: 1; }
   .song-title {
-    font-size: 28pt; font-weight: 900;
-    letter-spacing: -1px; color: #0a0a0a;
-    line-height: 1.0; margin-bottom: 14px;
+    font-size: 24pt; font-weight: 900;
+    letter-spacing: -0.5px; color: #0a0a0a;
+    line-height: 1.0; margin-bottom: 10px;
   }
   .song-pills { display: flex; gap: 6px; flex-wrap: wrap; }
   .pill {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 8pt; font-weight: 600;
-    padding: 4px 10px; border-radius: 2px;
+    font-size: 7.5pt; font-weight: 600;
+    padding: 3px 8px; border-radius: 2px;
     border: 1.5px solid #0a0a0a; color: #0a0a0a;
     text-transform: uppercase; letter-spacing: 1px;
   }
-  .pill-key {
-    background: #0a0a0a; color: #fff; border-color: #0a0a0a;
-  }
+  .pill-key { background: #0a0a0a; color: #fff; border-color: #0a0a0a; }
+  .pill-letra { background: #2a2a2a; color: #fff; border-color: #2a2a2a; }
 
-  /* ── SEÇÕES ── */
-  .sections { display: flex; flex-direction: column; gap: 20px; }
-  .section { }
+  /* Seções */
+  .section {
+    margin-bottom: 16px;
+  }
   .section-label {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 7pt; font-weight: 600;
+    font-size: 6.5pt; font-weight: 700;
     letter-spacing: 3px; text-transform: uppercase;
-    color: #bbb; margin-bottom: 10px;
-    display: flex; align-items: center; gap: 10px;
+    color: #bbb; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 8px;
   }
-  .section-label::after {
-    content: ''; flex: 1; height: 1px; background: #ebebeb;
+  .section-label::after { content: ''; flex: 1; height: 1px; background: #ebebeb; }
+
+  /* Par cifra+letra: nunca separado entre colunas ou páginas */
+  .line-pair {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    -webkit-column-break-inside: avoid;
+    margin-bottom: 8px;
   }
-  .section-body { padding-left: 0; }
+
+  /* ── CIFRAS E LETRAS: mesma fonte mono para alinhamento perfeito ── */
   .chord-row {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 9pt; font-weight: 800; color: #e07820;
-    white-space: pre-wrap; line-height: 1.2;
-    letter-spacing: 0.5px; overflow-wrap: break-word;
-  }
-  .chord-token {
-    font-size: 11pt; font-weight: 800; color: #e07820;
+    font-size: 9.5pt; font-weight: 700; color: #e07820;
+    white-space: pre; line-height: 1.3;
+    overflow: hidden; max-width: 100%;
   }
   .lyric-row {
-    font-family: 'Inter', sans-serif;
-    font-size: 11.5pt; font-weight: 400; color: #1a1a1a;
-    white-space: pre-wrap; line-height: 1.6;
-    margin-bottom: 10px; overflow-wrap: break-word;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9.5pt; font-weight: 400; color: #1a1a1a;
+    white-space: pre; line-height: 1.5;
+    overflow: hidden; max-width: 100%;
   }
   /* Formatação rica no modo letra */
   .lyric-row b, .lyric-row strong { font-weight: 700; color: #0a0a0a; }
   .lyric-row i, .lyric-row em { font-style: italic; }
   .lyric-row s, .lyric-row strike { text-decoration: line-through; color: #888; }
-  .pill-letra {
-    background: #2a2a2a; color: #fff; border-color: #2a2a2a;
-    font-size: 7.5pt;
-  }
 
   @media print {
     body { background: #fff; }
