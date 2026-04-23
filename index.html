@@ -44,6 +44,106 @@
     flex-direction: column;
   }
 
+
+  /* ══════════════════════
+     MODAL EXPORT PDF
+  ══════════════════════ */
+  .pdf-overlay {
+    position: fixed; inset: 0; z-index: 1200;
+    background: rgba(0,0,0,0.88);
+    display: none; align-items: center; justify-content: center;
+    padding: 24px;
+    backdrop-filter: blur(6px);
+  }
+  .pdf-overlay.active { display: flex; }
+  .pdf-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    width: 100%; max-width: 520px;
+    padding: 36px 40px;
+    position: relative;
+  }
+  .pdf-close {
+    position: absolute; top: 18px; right: 20px;
+    background: none; border: none; color: var(--muted);
+    font-size: 18px; cursor: pointer; line-height: 1;
+    transition: color 0.15s;
+  }
+  .pdf-close:hover { color: var(--cream); }
+  .pdf-modal-title {
+    font-family: 'Syne', serif;
+    font-size: 20px; font-weight: 800;
+    color: var(--cream); margin-bottom: 4px;
+  }
+  .pdf-modal-sub {
+    font-size: 10px; color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .pdf-field { margin-bottom: 18px; }
+  .pdf-field-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 6px; display: block;
+  }
+  .pdf-input {
+    width: 100%; background: var(--surface2);
+    border: 1px solid var(--border); color: var(--cream);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 14px; padding: 10px 14px; border-radius: 8px;
+    outline: none; transition: border-color 0.15s;
+  }
+  .pdf-input:focus { border-color: var(--gold); }
+  .pdf-input::placeholder { color: var(--muted); }
+  textarea.pdf-input { resize: none; height: 72px; line-height: 1.5; }
+
+  /* Temas */
+  .pdf-themes { display: flex; gap: 10px; margin-bottom: 20px; }
+  .pdf-theme-card {
+    flex: 1; border-radius: 10px; padding: 14px 12px;
+    border: 2px solid var(--border);
+    cursor: pointer; transition: all 0.18s;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+  }
+  .pdf-theme-card:hover { border-color: var(--gold); }
+  .pdf-theme-card.selected { border-color: var(--gold); background: rgba(255,255,255,0.04); }
+  .pdf-theme-preview {
+    width: 100%; height: 52px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-family: 'IBM Plex Mono', monospace;
+    font-weight: 700; letter-spacing: 2px;
+  }
+  .pdf-theme-preview.dark  { background: #0a0a0a; color: #ffffff; }
+  .pdf-theme-preview.brown { background: #ffffff; color: #A37753; border: 1px solid #e8ddd4; }
+  .pdf-theme-name {
+    font-size: 11px; font-family: 'IBM Plex Mono', monospace;
+    color: var(--muted); letter-spacing: 1px;
+  }
+  .pdf-theme-card.selected .pdf-theme-name { color: var(--gold); }
+
+  /* Imagem da capa */
+  .pdf-img-upload {
+    width: 100%; border: 1.5px dashed var(--border);
+    border-radius: 10px; padding: 18px;
+    display: flex; align-items: center; gap: 14px;
+    cursor: pointer; transition: all 0.18s; background: none;
+  }
+  .pdf-img-upload:hover { border-color: var(--gold); }
+  .pdf-img-icon { font-size: 22px; flex-shrink: 0; }
+  .pdf-img-text { flex: 1; }
+  .pdf-img-text strong { font-size: 13px; color: var(--cream); display: block; margin-bottom: 2px; }
+  .pdf-img-text span { font-size: 11px; color: var(--muted); }
+  .pdf-img-preview {
+    width: 52px; height: 52px; border-radius: 6px;
+    object-fit: cover; flex-shrink: 0;
+    border: 1px solid var(--border);
+    display: none;
+  }
+  .pdf-actions { display: flex; gap: 10px; margin-top: 24px; }
+  .pdf-actions .btn { flex: 1; justify-content: center; }
+
   /* ── HEADER ── */
   header {
     display: flex; align-items: center; justify-content: space-between;
@@ -5451,7 +5551,7 @@
     </div>
     <div class="song-list" id="songList"></div>
     <div class="sidebar-footer">
-      <button class="btn btn-primary btn-sm" style="width:100%;margin-bottom:6px" onclick="exportPlaylistPDF()">📄 Exportar PDF</button>
+      <button class="btn btn-primary btn-sm" style="width:100%;margin-bottom:6px" onclick="openPdfModal()">📄 Exportar PDF</button>
       <button class="btn btn-ghost btn-sm" style="width:100%;margin-bottom:6px" onclick="openShareSheet()">↗ Compartilhar</button>
       <div style="display:flex;gap:6px;margin-top:2px">
         <button class="btn btn-ghost btn-sm" style="flex:1" onclick="backupData()" title="Salvar todas as músicas num arquivo">💾 Backup</button>
@@ -7862,8 +7962,56 @@ async function createPlaylist() {
   }
 }
 
+
+// ── PDF EXPORT MODAL ──────────────────────────────────────
+let _pdfTheme = 'default';
+let _pdfImgBase64 = null;
+
+function openPdfModal() {
+  const pl = getActivePl();
+  if (!pl || pl.songs.length === 0) { showToast('A playlist está vazia!'); return; }
+  document.getElementById('pdfCoverTitle').value = pl.name || '';
+  document.getElementById('pdfCoverDesc').value = '';
+  _pdfImgBase64 = null;
+  document.getElementById('pdfImgPreview').style.display = 'none';
+  document.getElementById('pdfImgLabel').textContent = 'Selecionar imagem';
+  selectPdfTheme('default');
+  document.getElementById('pdfExportOverlay').classList.add('active');
+}
+
+function closePdfModal() {
+  document.getElementById('pdfExportOverlay').classList.remove('active');
+}
+
+function selectPdfTheme(theme) {
+  _pdfTheme = theme;
+  document.getElementById('themeCardDefault').classList.toggle('selected', theme === 'default');
+  document.getElementById('themeCardBrown').classList.toggle('selected', theme === 'brown');
+}
+
+function onPdfImgChange(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    _pdfImgBase64 = ev.target.result;
+    const preview = document.getElementById('pdfImgPreview');
+    preview.src = _pdfImgBase64;
+    preview.style.display = 'block';
+    document.getElementById('pdfImgLabel').textContent = file.name;
+  };
+  reader.readAsDataURL(file);
+}
+
+function confirmExportPDF() {
+  closePdfModal();
+  const coverTitle = document.getElementById('pdfCoverTitle').value.trim();
+  const coverDesc  = document.getElementById('pdfCoverDesc').value.trim();
+  exportPlaylistPDF(coverTitle, coverDesc, _pdfTheme, _pdfImgBase64);
+}
+
 // ── EXPORT PDF ────────────────────────────────────────────
-function exportPlaylistPDF() {
+function exportPlaylistPDF(coverTitle, coverDesc, pdfTheme, coverImgBase64) {
   const pl = getActivePl();
   if (!pl || pl.songs.length === 0) { showToast('A playlist está vazia!'); return; }
 
@@ -8018,7 +8166,7 @@ function exportPlaylistPDF() {
 
   body {
     font-family: 'Inter', sans-serif;
-    background: #fff; color: #0a0a0a;
+    background: #ffffff; color: #0a0a0a;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
@@ -8036,51 +8184,70 @@ function exportPlaylistPDF() {
   .cover {
     width: 100%; height: 100vh;
     display: flex; flex-direction: column;
-    background: #fff; color: #0a0a0a;
+    align-items: center; justify-content: center;
+    background: #fff;
     position: relative;
     page-break-after: always;
+    text-align: center;
+    padding: 52px 52px;
+    gap: 0;
   }
-  .cover-inner {
-    flex: 1; display: flex; flex-direction: column;
-    justify-content: flex-end;
-    padding: 0 52px 52px;
-    position: relative; z-index: 1;
+
+  /* Imagem opcional — pura, sem container */
+  .cover-img {
+    max-width: 220px; max-height: 220px;
+    width: auto; height: auto;
+    object-fit: contain;
+    margin-bottom: 32px;
+    display: block;
   }
-  .cover-tag {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 9pt; letter-spacing: 4px; text-transform: uppercase;
-    color: rgba(0,0,0,0.3); margin-bottom: 20px;
-  }
+
+  /* Logo CifraSet */
+  .cover-logo-wrap { margin-bottom: 48px; }
+  .cover-logo { height: 32px; width: auto; opacity: 0.7; }
+
+  /* Conteúdo central */
+  .cover-center { display: flex; flex-direction: column; align-items: center; }
   .cover-title {
-    font-size: 52pt; font-weight: 900; line-height: 0.95;
-    letter-spacing: -2px; color: #0a0a0a;
-    margin-bottom: 32px; max-width: 480px;
-    word-break: break-word;
+    font-size: 44pt; font-weight: 900; line-height: 1.0;
+    letter-spacing: -2px; color: var(--cover-accent, #0a0a0a);
+    margin-bottom: 16px;
+    word-break: break-word; max-width: 420px;
   }
-  .cover-divider {
-    width: 48px; height: 3px; background: #0a0a0a;
-    margin-bottom: 28px;
+  .cover-desc {
+    font-size: 13pt; color: rgba(0,0,0,0.5);
+    margin-bottom: 24px; max-width: 360px;
+    line-height: 1.5; font-weight: 400;
   }
-  .cover-meta {
+  .cover-meta-line {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 9pt; color: rgba(0,0,0,0.35);
-    display: flex; flex-direction: column; gap: 4px;
+    font-size: 8pt; color: rgba(0,0,0,0.35);
+    letter-spacing: 1px;
   }
-  .cover-meta span { color: rgba(0,0,0,0.65); }
-  .cover-footer {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 20px 52px;
-    border-top: 1px solid rgba(0,0,0,0.08);
-    position: relative; z-index: 1;
-  }
-  .cover-footer-brand {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 8pt; letter-spacing: 3px; text-transform: uppercase;
-    color: rgba(0,0,0,0.2);
-  }
-  .cover-footer-logo img {
-    width: 28px; opacity: 0.12;
-  }
+  .cover-dot { margin: 0 6px; opacity: 0.4; }
+
+  /* Tema padrão (preto) */
+  body.theme-default .cover-title { color: #0a0a0a; }
+  body.theme-default .section-label { color: #aaa; }
+  body.theme-default .chord-row { color: #e07820; }
+  body.theme-default .idx-key { background: #0a0a0a; color: #fff; }
+  body.theme-default .pill-key { background: #0a0a0a; color: #fff; }
+  body.theme-default .song-header { border-bottom-color: #0a0a0a; }
+
+  /* Tema marrom */
+  body.theme-brown .cover-title { color: #A37753; }
+  body.theme-brown .section-label { color: #C4A882; }
+  body.theme-brown .chord-row { color: #A37753; }
+  body.theme-brown .idx-key { background: #A37753; color: #fff; border-color: #A37753; }
+  body.theme-brown .pill-key { background: #A37753; color: #fff; border-color: #A37753; }
+  body.theme-brown .pill { border-color: #A37753; color: #A37753; }
+  body.theme-brown .song-header { border-bottom-color: #A37753; }
+  body.theme-brown .section-label::after { background: #e8ddd4; }
+  body.theme-brown .index-heading { color: #A37753; }
+  body.theme-brown .index-table tr:first-child { border-top-color: #A37753; }
+  body.theme-brown .index-table tr:last-child { border-bottom-color: #A37753; }
+  body.theme-brown .song-title { color: #3a2a1a; }
+  body.theme-brown .song-num { color: #C4A882; }
 
   /* ══════════════════════
      ÍNDICE
@@ -8244,7 +8411,7 @@ function exportPlaylistPDF() {
   }
 \x3C/style>
 \x3C/head>
-\x3Cbody>
+\x3Cbody class="theme-${pdfTheme || 'default'}">
 
 \x3C!-- BOTÃO VOLTAR -->
 \x3Cbutton onclick="window.close()" style="
@@ -8268,18 +8435,18 @@ function exportPlaylistPDF() {
 
 \x3C!-- CAPA -->
 \x3Cdiv class="cover">
-  \x3Cdiv class="cover-inner">
-    \x3Cdiv class="cover-tag">CifraSet &nbsp;/&nbsp; Repertório\x3C/div>
-    \x3Ch1 class="cover-title">${escHtml(pl.name)}\x3C/h1>
-    \x3Cdiv class="cover-divider">\x3C/div>
-    \x3Cdiv class="cover-meta">
-      \x3Cdiv>${pl.songs.length} música${pl.songs.length !== 1 ? 's' : ''}\x3C/div>
-      \x3Cdiv>Gerado em \x3Cspan>${date}\x3C/span>\x3C/div>
-    \x3C/div>
+  ${coverImgBase64 ? `\x3Cimg class="cover-img" src="${coverImgBase64}" alt="">` : ''}
+  \x3Cdiv class="cover-logo-wrap">
+    \x3Cimg class="cover-logo" src="https://i.imgur.com/Nelv4ev.png" alt="CifraSet">
   \x3C/div>
-  \x3Cdiv class="cover-footer">
-    \x3Cdiv class="cover-footer-brand">CifraSet\x3C/div>
-    \x3Cdiv class="cover-footer-logo">\x3Cimg src="https://i.imgur.com/rz3a926.png" alt="">\x3C/div>
+  \x3Cdiv class="cover-center">
+    \x3Ch1 class="cover-title">${escHtml(coverTitle || pl.name)}\x3C/h1>
+    ${coverDesc ? `\x3Cp class="cover-desc">${escHtml(coverDesc)}\x3C/p>` : ''}
+    \x3Cdiv class="cover-meta-line">
+      \x3Cspan>${pl.songs.length} música${pl.songs.length !== 1 ? 's' : ''}\x3C/span>
+      \x3Cspan class="cover-dot"> &middot; \x3C/span>
+      \x3Cspan>${date}\x3C/span>
+    \x3C/div>
   \x3C/div>
 \x3C/div>
 
@@ -11470,6 +11637,58 @@ window.addEventListener('DOMContentLoaded', () => {
   runIntro(isDemo);
 });
 </script>
+
+<!-- ── MODAL EXPORT PDF ── -->
+<div class="pdf-overlay" id="pdfExportOverlay">
+  <div class="pdf-box">
+    <button class="pdf-close" onclick="closePdfModal()">✕</button>
+    <div class="pdf-modal-title">Exportar PDF</div>
+    <div class="pdf-modal-sub">Personalize a capa</div>
+
+    <div class="pdf-field">
+      <label class="pdf-field-label">Título da capa</label>
+      <input class="pdf-input" id="pdfCoverTitle" type="text" placeholder="Nome do repertório...">
+    </div>
+
+    <div class="pdf-field">
+      <label class="pdf-field-label">Descrição (opcional)</label>
+      <textarea class="pdf-input" id="pdfCoverDesc" placeholder="Ex: Culto domingo, banda de louvor..."></textarea>
+    </div>
+
+    <div class="pdf-field">
+      <label class="pdf-field-label">Tema</label>
+      <div class="pdf-themes">
+        <div class="pdf-theme-card selected" id="themeCardDefault" onclick="selectPdfTheme('default')">
+          <div class="pdf-theme-preview dark">CIFRASET</div>
+          <span class="pdf-theme-name">Padrão</span>
+        </div>
+        <div class="pdf-theme-card" id="themeCardBrown" onclick="selectPdfTheme('brown')">
+          <div class="pdf-theme-preview brown">CIFRASET</div>
+          <span class="pdf-theme-name">Marrom</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pdf-field">
+      <label class="pdf-field-label">Imagem da capa (opcional)</label>
+      <div class="pdf-img-upload" onclick="document.getElementById('pdfImgInput').click()">
+        <div class="pdf-img-icon">🖼️</div>
+        <div class="pdf-img-text">
+          <strong id="pdfImgLabel">Selecionar imagem</strong>
+          <span>JPG, PNG — aparece no topo da capa</span>
+        </div>
+        <img class="pdf-img-preview" id="pdfImgPreview" alt="">
+      </div>
+      <input type="file" id="pdfImgInput" accept="image/*" style="display:none" onchange="onPdfImgChange(event)">
+    </div>
+
+    <div class="pdf-actions">
+      <button class="btn btn-ghost" onclick="closePdfModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="confirmExportPDF()">📄 Gerar PDF</button>
+    </div>
+  </div>
+</div>
+
 <!-- TUNER MODAL -->
 <div class="tuner-overlay" id="tunerOverlay">
   <div class="tuner-box">
