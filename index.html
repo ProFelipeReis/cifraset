@@ -7789,11 +7789,15 @@ async function doImportUrl() {
   // devolve a página convertida em markdown limpo — sem depender de scraping
   // de classes CSS do Cifra Club, que mudam com redesigns. É colocado primeiro
   // por ser hoje o mais estável dessa lista.
+  // Prioriza proxies que devolvem o HTML original do Cifra Club (extração
+  // por seletores CSS, testada e previsível). r.jina.ai fica por último:
+  // ele reescreve a página em markdown "à sua maneira", o que é ótimo quando
+  // os outros falham, mas o formato exato varia e a extração é menos confiável.
   const proxies = [
-    u => `https://r.jina.ai/${u}`,
     u => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
     u => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(u)}`,
     u => `https://api.allorigins.win/get?url=${encodeURIComponent(u)}`,
+    u => `https://r.jina.ai/${u}`,
   ];
 
   const looksLikeCifraClubPage = html =>
@@ -7850,98 +7854,89 @@ async function doImportUrl() {
   setUrlStatus('loading', 'Extraindo cifra…');
 
   try {
-    // r.jina.ai devolve markdown (front-matter "---", texto corrido e um
-    // bloco de código ``` com a cifra) em vez de HTML — detectamos esse
-    // formato e extraímos com regex, sem passar pelo DOMParser.
-    const isMarkdownReader = !/<html[\s>]/i.test(rawHtml) && /```/.test(rawHtml);
+    // Estratégia única de extração, independente do proxy que respondeu:
+    // convertemos o conteúdo (seja HTML de verdade ou o markdown do r.jina.ai)
+    // em texto corrido, e localizamos a cifra pelos rótulos fixos que o
+    // Cifra Club sempre exibe ("Tom:", "Capotraste") em vez de depender de
+    // nomes de classe CSS específicos — que mudam com redesigns do site e
+    // foram a causa da falha anterior (o proxy respondeu certo, mas os
+    // seletores CSS não bateram mais com o HTML atual da página).
+    const isHtmlDoc = /<html[\s>]/i.test(rawHtml) || /<\/(div|p|body)>/i.test(rawHtml);
 
-    let title = 'Música Importada';
-    let artist = '';
-    let scrapedKey = '';
-    let capo = '0';
-    let importText = '';
-
-    if (isMarkdownReader) {
-      // Título: prioriza o front-matter "title: X - Y - Cifra Club"
-      const fmTitle = rawHtml.match(/^title:\s*(.+)$/mi)?.[1]?.trim();
-      const h1Title = rawHtml.match(/^#\s+(.+)$/m)?.[1]?.trim();
-      let rawTitle = fmTitle || h1Title || '';
-      rawTitle = rawTitle.replace(/\s*[-–]\s*Cifra Club\s*$/i, '').trim();
-      if (rawTitle) {
-        // Se o front-matter já vier como "Música - Artista", separa os dois
-        const parts = rawTitle.split(/\s+[-–]\s+/);
-        if (parts.length >= 2) { title = parts[0].trim(); artist = parts.slice(1).join(' - ').trim(); }
-        else title = rawTitle;
-      }
-      if (!artist) {
-        artist = rawHtml.match(/^##\s+\[([^\]]+)\]/m)?.[1]?.trim() || '';
-      }
-      if (artist) title = `${title} - ${artist}`;
-
-      // Tom — aparece como "Tom:  G" logo antes do bloco de código da cifra
-      const tomMatch = rawHtml.match(/\bTom:\s*\n*\s*([A-G][b#]?m?)\b/);
-      if (tomMatch) scrapedKey = normalizeKeyText(tomMatch[1]) || '';
-
-      // Capotraste — "Capotraste\n\n    Sem capotraste" ou "...2ª casa"
-      const capoMatch = rawHtml.match(/Capotraste\s*\n+\s*([^\n]+)/i);
-      if (capoMatch && !/sem capotraste/i.test(capoMatch[1])) {
-        const m = capoMatch[1].match(/\d+/);
-        if (m) capo = m[0];
-      }
-
-      // Conteúdo da cifra — primeiro bloco de código ``` ... ``` do documento
-      const cifraBlock = rawHtml.match(/```[a-z]*\n([\s\S]*?)```/i);
-      importText = cifraBlock ? cifraBlock[1] : '';
-    } else {
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(rawHtml, 'text/html');
-
-      // Título
-      title = doc.querySelector('h1.t1')?.textContent?.trim()
-        || doc.querySelector('h1')?.textContent?.trim()
-        || doc.querySelector('title')?.textContent?.replace(/\s*[|\-–].*$/, '').trim()
-        || 'Música Importada';
-
-      // Artista
-      artist = doc.querySelector('h2.t3 a, .artist a, h2 a')?.textContent?.trim() || '';
-      if (artist) title = `${title} - ${artist}`;
-
-      // Tom e capo — o Cifra Club exibe o tom já "soante" (considerando o capotraste),
-      // então usar esse valor é mais confiável que tentar adivinhar pelos acordes.
-      // Seletores restritos (evita casar classes tipo "bottom"/"custom" que também
-      // contêm a substring "tom" e faziam o app pegar texto errado como tom).
-      const tomEl = doc.querySelector('.cifra_tom a, #cifra_tom a, .js-tone, .js-cifra-key, [class="tom"] a');
-      if (tomEl) scrapedKey = normalizeKeyText(tomEl.textContent.trim()) || '';
-      const capoEl = doc.querySelector('.cifra_capo, #cifra_capo, .js-cifra-capo, [class="capo"]');
-      if (capoEl) {
-        const m = capoEl.textContent.match(/\d+/);
-        if (m) capo = m[0];
-      }
-
-      // Conteúdo da cifra — o Cifra Club usa <pre> com spans para acordes
-      const preEl = doc.querySelector('pre.cifra, .cifra_cnt pre, #cifra_cnt pre, pre');
-      let cifraText = '';
-      if (preEl) {
-        // Preservar quebras de linha e extrair texto com acordes nos spans
-        cifraText = preEl.innerHTML
-          .replace(/<br\s*\/?>/gi, '\n')
-          .replace(/<a[^>]*>([^<]+)<\/a>/gi, '$1')  // acordes dentro de <a>
-          .replace(/<b[^>]*>([^<]+)<\/b>/gi, '$1')
-          .replace(/<[^>]+>/g, '')
-          .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&nbsp;/g, ' ');
-      }
-
-      importText = cifraText || '';
-
-      // Se não achou <pre>, tentar pegar texto corrido de containers conhecidos
-      if (!importText) {
-        const containers = ['.cifra_cnt', '#cifra_cnt', 'article', 'main'];
-        for (const sel of containers) {
-          const el = doc.querySelector(sel);
-          if (el) { importText = el.innerText || el.textContent || ''; break; }
-        }
-      }
+    function htmlToPlainText(html) {
+      let t = html
+        .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+        .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+        .replace(/<(br|\/p|\/div|\/li|\/tr|\/h[1-6])\s*\/?>/gi, '\n')
+        .replace(/<[^>]+>/g, '')
+        .replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&')
+        .replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+        .replace(/&quot;/g, '"').replace(/&#0?39;/g, "'");
+      return t;
     }
+    function markdownToPlainText(md) {
+      return md
+        .replace(/^---[\s\S]*?---\s*/, '')          // remove front-matter
+        .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')    // [texto](link) → texto
+        .replace(/^\s*[-*]\s+/gm, '')                // marcadores de lista
+        .replace(/^#{1,6}\s+/gm, '')                 // marcadores de título
+        .replace(/```[a-z]*\n?/gi, '');              // cercas de bloco de código
+    }
+
+    const plain = isHtmlDoc ? htmlToPlainText(rawHtml) : markdownToPlainText(rawHtml);
+
+    // Título — tenta <title>/<h1> (HTML) ou front-matter/heading (markdown)
+    let rawTitle = rawHtml.match(/<title>([^<]+)<\/title>/i)?.[1]
+      || rawHtml.match(/<h1[^>]*>([^<]+)<\/h1>/i)?.[1]
+      || rawHtml.match(/^title:\s*(.+)$/mi)?.[1]
+      || rawHtml.match(/^#\s+(.+)$/m)?.[1]
+      || '';
+    rawTitle = rawTitle.replace(/\s*[-–|]\s*Cifra Club\s*$/i, '').trim();
+    let title = 'Música Importada', artist = '';
+    if (rawTitle) {
+      const parts = rawTitle.split(/\s+[-–]\s+/);
+      if (parts.length >= 2) { title = parts[0].trim(); artist = parts.slice(1).join(' - ').trim(); }
+      else title = rawTitle;
+    }
+    if (!artist) {
+      artist = rawHtml.match(/<h2[^>]*>(?:[^<]*<a[^>]*>)?([^<]+)<\/a?>?/i)?.[1]?.trim()
+        || rawHtml.match(/^##\s+\[?([^\]\n]+)\]?/m)?.[1]?.trim()
+        || '';
+    }
+    if (artist && !title.includes(artist)) title = `${title} - ${artist}`;
+
+    // Tom — único ponto do texto onde aparece "Tom:" seguido do valor;
+    // essa posição também marca onde a cifra de fato começa (tudo antes
+    // disso é menu/navegação).
+    const tomMatch = plain.match(/\bTom\s*:\s*\n*[ \t]*([A-G][b#]?m?)\b/i);
+    const scrapedKey = tomMatch ? (normalizeKeyText(tomMatch[1]) || '') : '';
+
+    // Capotraste — "Capotraste" seguido da descrição na linha/bloco seguinte
+    let capo = '0';
+    const capoMatch = plain.match(/Capotraste\s*\n+[ \t]*([^\n]+)/i);
+    if (capoMatch && !/sem\s+capotraste/i.test(capoMatch[1])) {
+      const m = capoMatch[1].match(/\d+/);
+      if (m) capo = m[0];
+    }
+
+    // Corpo da cifra: tudo a partir do "Tom:" encontrado acima, até o
+    // primeiro marcador de fim de conteúdo (informações/rodapé do site)
+    let importText = tomMatch
+      ? plain.slice(plain.indexOf(tomMatch[0]) + tomMatch[0].length)
+      : plain;
+    const endMarkers = [
+      /informa[çc](?:[ãa]o|[õo]es)\s+da\s+m[uú]sica/i,
+      /envio por/i,
+      /composi[çc][ãa]o\s*:/i,
+      /essa informa[çc][ãa]o est[áa] errada/i,
+      /todos artistas/i,
+    ];
+    for (const re of endMarkers) {
+      const m = importText.search(re);
+      if (m > 0) { importText = importText.slice(0, m); break; }
+    }
+    // Colapsa espaços/linhas em branco excessivos deixados pela limpeza de tags
+    importText = importText.replace(/[ \t]+\n/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
 
     if (!importText || importText.trim().length < 20) {
       setUrlStatus('error', '✗ Não encontrei a cifra nessa página. Tente copiar e colar manualmente.');
