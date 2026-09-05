@@ -8248,13 +8248,9 @@ function exportPlaylistPDF(coverTitle, coverDesc, pdfTheme, coverImgBase64) {
 
   // ── Construir HTML de uma música ──
   function buildSongHtml(song, idx) {
-    // Lista plana de blocos (rótulo de seção ou par cifra+letra), na ordem
-    // em que devem aparecer. A distribuição entre coluna esquerda/direita
-    // (e, se necessário, novas páginas) é feita depois, via JS, com base
-    // na altura real de cada bloco — não depende de CSS column-count.
-    let blocksHtml = '';
+    let sectionsHtml = '';
     song.sections.forEach(sec => {
-      let secBlocksHtml = '';
+      let linesHtml = '';
       sec.lines.forEach(line => {
         if (!line.chords && !line.lyrics) return;
 
@@ -8262,7 +8258,7 @@ function exportPlaylistPDF(coverTitle, coverDesc, pdfTheme, coverImgBase64) {
           // Modo letra: sem cifras, apenas a lyric-row (com quebra de linha
           // normal, já que aqui não há cifra pra manter alinhada).
           const lyricContent = line.lyrics || '\u00A0';
-          secBlocksHtml += `<div class="line-pair"><div class="lyric-row wrap">${lyricContent}</div></div>`;
+          linesHtml += `<div class="line-pair"><div class="lyric-row wrap">${lyricContent}</div></div>`;
           return;
         }
 
@@ -8284,11 +8280,14 @@ function exportPlaylistPDF(coverTitle, coverDesc, pdfTheme, coverImgBase64) {
             // linha de cifra sem letra correspondente (ex: intro)
             pairHtml += `<div class="lyric-row">&nbsp;</div>`;
           }
-          secBlocksHtml += `<div class="line-pair">${pairHtml}</div>`;
+          linesHtml += `<div class="line-pair">${pairHtml}</div>`;
         });
       });
-      if (!secBlocksHtml) return;
-      blocksHtml += `<div class="section-label">${escHtml(sec.label)}</div>${secBlocksHtml}`;
+      if (!linesHtml) return;
+      sectionsHtml += `<div class="section">
+        <div class="section-label">${escHtml(sec.label)}</div>
+        <div class="section-body">${linesHtml}</div>
+      </div>`;
     });
 
     const pills = [
@@ -8298,21 +8297,15 @@ function exportPlaylistPDF(coverTitle, coverDesc, pdfTheme, coverImgBase64) {
       isLetterMode ? `<span class="pill pill-letra">Letra</span>` : '',
     ].filter(Boolean).join('');
 
-    return `<div class="song-page-outer" data-song>
-      <div class="song-page">
-        <div class="song-header">
-          <div class="song-num">${String(idx + 1).padStart(2,'0')}</div>
-          <div class="song-header-main">
-            <h1 class="song-title">${escHtml(song.title)}</h1>
-            <div class="song-pills">${pills}</div>
-          </div>
-        </div>
-        <div class="sections">
-          <div class="blocks-flow">${blocksHtml}</div>
-          <div class="sections-col col-left"></div>
-          <div class="sections-col col-right"></div>
+    return `<div class="song-page">
+      <div class="song-header">
+        <div class="song-num">${String(idx + 1).padStart(2,'0')}</div>
+        <div class="song-header-main">
+          <h1 class="song-title">${escHtml(song.title)}</h1>
+          <div class="song-pills">${pills}</div>
         </div>
       </div>
+      <div class="sections">${sectionsHtml}</div>
     </div>`;
   }
 
@@ -8322,119 +8315,6 @@ function exportPlaylistPDF(coverTitle, coverDesc, pdfTheme, coverImgBase64) {
     if (idx > 0) songsHtml += '<div class="page-break"></div>';
     songsHtml += buildSongHtml(song, idx);
   });
-
-  // ── Script que distribui os blocos entre as duas colunas ──
-  // Preenche a coluna esquerda até lotar (com base na altura real de cada
-  // bloco, medida no próprio documento) e só então passa para a direita.
-  // Se um verso não couber nas duas colunas de uma página, cria
-  // automaticamente uma página de continuação (sem repetir o cabeçalho).
-  songsHtml += `
-    <script>
-    (function () {
-      var PAGE_CONTENT_MM = 267; // 297mm (A4) - 12mm - 18mm de margem (@page)
-
-      function mmToPx(v) {
-        var probe = document.createElement('div');
-        probe.style.cssText = 'position:absolute;visibility:hidden;height:' + v + 'mm;width:0;';
-        document.body.appendChild(probe);
-        var px = probe.getBoundingClientRect().height;
-        probe.remove();
-        return px;
-      }
-
-      function outerHeight(el) {
-        var h = el.getBoundingClientRect().height;
-        var cs = getComputedStyle(el);
-        return h + parseFloat(cs.marginTop || 0) + parseFloat(cs.marginBottom || 0);
-      }
-
-      function makeContinuationPage() {
-        var outer = document.createElement('div');
-        outer.className = 'song-page-outer';
-        outer.innerHTML =
-          '<div class="page-break"></div>' +
-          '<div class="song-page">' +
-            '<div class="sections">' +
-              '<div class="sections-col col-left"></div>' +
-              '<div class="sections-col col-right"></div>' +
-            '</div>' +
-          '</div>';
-        return outer;
-      }
-
-      function distribute() {
-        var pageHeightPx = mmToPx(PAGE_CONTENT_MM);
-        var outers = Array.prototype.slice.call(document.querySelectorAll('.song-page-outer[data-song]'));
-
-        outers.forEach(function (outer) {
-          var page = outer.querySelector('.song-page');
-          var header = page.querySelector('.song-header');
-          var sections = page.querySelector('.sections');
-          var flow = sections.querySelector('.blocks-flow');
-          if (!flow) return;
-          var blocks = Array.prototype.slice.call(flow.children);
-
-          var headerH = header ? outerHeight(header) : 0;
-
-          var lastOuter = outer;
-          var curLeft = sections.querySelector('.col-left');
-          var curRight = sections.querySelector('.col-right');
-          var curAvail = pageHeightPx - headerH;
-          var curCol = 'left';
-          var curEl = curLeft;
-          var curUsed = 0;
-
-          if (blocks.length === 0) {
-            flow.remove();
-            return;
-          }
-
-          blocks.forEach(function (block) {
-            var h = outerHeight(block);
-
-            if (curUsed > 0 && curUsed + h > curAvail) {
-              if (curCol === 'left') {
-                curCol = 'right';
-                curEl = curRight;
-                curUsed = 0;
-              } else {
-                var contPage = makeContinuationPage();
-                lastOuter.parentNode.insertBefore(contPage, lastOuter.nextSibling);
-                lastOuter = contPage;
-                curLeft = contPage.querySelector('.col-left');
-                curRight = contPage.querySelector('.col-right');
-                curAvail = pageHeightPx;
-                curCol = 'left';
-                curEl = curLeft;
-                curUsed = 0;
-              }
-            }
-
-            curEl.appendChild(block);
-            curUsed += h;
-          });
-
-          flow.remove();
-        });
-      }
-
-      function go() {
-        distribute();
-        requestAnimationFrame(function () {
-          requestAnimationFrame(function () {
-            window.print();
-          });
-        });
-      }
-
-      if (document.fonts && document.fonts.ready) {
-        document.fonts.ready.then(go);
-      } else {
-        setTimeout(go, 500);
-      }
-    })();
-    <\/script>
-  `;
 
   const html = `\x3C!DOCTYPE html>
 \x3Chtml lang="pt-BR">
@@ -8619,40 +8499,17 @@ function exportPlaylistPDF(coverTitle, coverDesc, pdfTheme, coverImgBase64) {
   }
 
   /* 2 colunas apenas para o conteúdo das seções.
-     Preenchimento manual via JS (não usa CSS column-count):
-     motores de impressão/PDF frequentemente "balanceiam" mal as colunas
-     CSS, jogando todo o conteúdo na coluna da direita e deixando a
-     esquerda vazia. Aqui a coluna esquerda é sempre preenchida primeiro
-     até lotar; só então o conteúdo passa para a direita. */
+     column-fill: auto força o navegador a encher a coluna esquerda
+     primeiro (até lotar) antes de passar pra direita, em vez de
+     "balancear" as colunas — que é o que causava conteúdo aparecendo
+     só do lado direito na exportação. */
   .sections {
-    position: relative;
-    display: flex;
-  }
-  .sections-col {
-    width: calc((100% - 28px) / 2);
-    min-width: 0;
-  }
-  .sections-col.col-right {
-    margin-left: 14px;
-    padding-left: 13px;
-    border-left: 1px solid #ddd;
-  }
-  /* Contêiner temporário só para medir a altura real de cada bloco
-     (linha ou rótulo de seção) antes de distribuí-los entre as colunas.
-     Fica fora do fluxo visual e é removido depois da distribuição. */
-  .blocks-flow {
-    position: absolute;
-    top: 0; left: 0;
-    visibility: hidden;
-    width: calc((100% - 28px) / 2);
-    pointer-events: none;
-  }
-  .section-label {
-    margin-top: 16px;
-  }
-  .sections-col > .section-label:first-child,
-  .blocks-flow > .section-label:first-child {
-    margin-top: 0;
+    column-count: 2;
+    column-gap: 28px;
+    column-rule: 1px solid #ddd;
+    column-fill: auto;
+    orphans: 2;
+    widows: 2;
   }
   .song-num {
     font-family: 'IBM Plex Mono', monospace;
@@ -8800,10 +8657,7 @@ ${songsHtml}
   if (!w) { showToast('Permita pop-ups para gerar o PDF!'); return; }
   w.document.write(html);
   w.document.close();
-  // A impressão é disparada de dentro do próprio documento gerado (veja o
-  // <script> embutido em songsHtml), depois que as fontes carregam e os
-  // blocos são distribuídos entre as colunas — por isso não chamamos
-  // w.print() aqui.
+  w.onload = () => setTimeout(() => w.print(), 700);
   showToast('PDF gerado! Desmarque "Cabeçalhos e rodapés" nas opções de impressão 🎵');
 }
 
