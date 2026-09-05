@@ -144,6 +144,36 @@
   .pdf-actions { display: flex; gap: 10px; margin-top: 24px; }
   .pdf-actions .btn { flex: 1; justify-content: center; }
 
+  /* Escala do conteúdo */
+  .pdf-scale-control { display: flex; align-items: center; gap: 14px; }
+  .pdf-scale-slider {
+    flex: 1; -webkit-appearance: none; appearance: none;
+    height: 4px; border-radius: 2px;
+    background: var(--border); outline: none; cursor: pointer;
+  }
+  .pdf-scale-slider::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--gold); cursor: pointer;
+    border: 2px solid var(--surface);
+    box-shadow: 0 0 0 1px var(--gold);
+  }
+  .pdf-scale-slider::-moz-range-thumb {
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--gold); cursor: pointer;
+    border: 2px solid var(--surface);
+    box-shadow: 0 0 0 1px var(--gold);
+  }
+  .pdf-scale-value {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px; font-weight: 700; color: var(--gold);
+    min-width: 44px; text-align: right; flex-shrink: 0;
+  }
+  .pdf-scale-hint {
+    font-size: 10.5px; color: var(--muted);
+    margin-top: 8px; line-height: 1.4;
+  }
+
   /* ── HEADER ── */
   header {
     display: flex; align-items: center; justify-content: space-between;
@@ -8127,6 +8157,7 @@ async function createPlaylist() {
 // ── PDF EXPORT MODAL ──────────────────────────────────────
 let _pdfTheme = 'default';
 let _pdfImgBase64 = null;
+let _pdfScale = 100;
 
 function openPdfModal() {
   const pl = getActivePl();
@@ -8137,7 +8168,15 @@ function openPdfModal() {
   document.getElementById('pdfImgPreview').style.display = 'none';
   document.getElementById('pdfImgLabel').textContent = 'Selecionar imagem';
   selectPdfTheme('default');
+  _pdfScale = 100;
+  document.getElementById('pdfScaleRange').value = 100;
+  document.getElementById('pdfScaleValue').textContent = '100%';
   document.getElementById('pdfExportOverlay').classList.add('active');
+}
+
+function onPdfScaleChange(val) {
+  _pdfScale = parseInt(val, 10) || 100;
+  document.getElementById('pdfScaleValue').textContent = _pdfScale + '%';
 }
 
 function closePdfModal() {
@@ -8168,16 +8207,20 @@ function confirmExportPDF() {
   closePdfModal();
   const coverTitle = document.getElementById('pdfCoverTitle').value.trim();
   const coverDesc  = document.getElementById('pdfCoverDesc').value.trim();
-  exportPlaylistPDF(coverTitle, coverDesc, _pdfTheme, _pdfImgBase64);
+  exportPlaylistPDF(coverTitle, coverDesc, _pdfTheme, _pdfImgBase64, _pdfScale);
 }
 
 // ── EXPORT PDF ────────────────────────────────────────────
-function exportPlaylistPDF(coverTitle, coverDesc, pdfTheme, coverImgBase64) {
+function exportPlaylistPDF(coverTitle, coverDesc, pdfTheme, coverImgBase64, pdfScale) {
   const pl = getActivePl();
   if (!pl || pl.songs.length === 0) { showToast('A playlist está vazia!'); return; }
 
   const date = new Date().toLocaleDateString('pt-BR', { day:'2-digit', month:'long', year:'numeric' });
   const isLetterMode = state.letterMode;
+  // Escala do conteúdo (80%–130%, definida pelo usuário no modal de exportação).
+  // Reduz/aumenta proporcionalmente fontes e espaçamentos das cifras, mantendo
+  // a regra das 2 colunas (só passa de página quando as duas colunas enchem).
+  const scaleFactor = Math.max(0.8, Math.min(1.3, (pdfScale || 100) / 100));
 
   // ── Divide um par cifra+letra em sub-pares quando não cabem na coluna ──
   // Lógica: usa a letra para encontrar ponto de quebra (fim de palavra),
@@ -8244,7 +8287,10 @@ function exportPlaylistPDF(coverTitle, coverDesc, pdfTheme, coverImgBase64) {
   // Largura em caracteres monospace por coluna (A4, 2 colunas, fonte 9.5pt IBM Plex Mono)
   // A4 útil ~182mm − 28mm gap = ~154mm / 2 = ~77mm por coluna
   // 9.5pt ≈ 3.35mm → ~77 / (3.35 * 0.6) ≈ 38 chars (conservador para não cortar)
-  const COL_CHARS = 43;
+  // A largura da coluna em mm não muda com a escala — só o tamanho da fonte.
+  // Por isso o nº de caracteres que cabem varia na proporção inversa da escala
+  // (fonte menor = mais caracteres cabem por linha, e vice-versa).
+  const COL_CHARS = Math.max(20, Math.round(43 / scaleFactor));
 
   // ── Construir HTML de uma música ──
   function buildSongHtml(song, idx) {
@@ -8327,6 +8373,7 @@ function exportPlaylistPDF(coverTitle, coverDesc, pdfTheme, coverImgBase64) {
   @page { size: A4; margin: 12mm 14mm 18mm; }
 
   html { margin: 0; }
+  :root { --pdf-scale: ${scaleFactor}; }
 
   body {
     font-family: 'Inter', sans-serif;
@@ -8334,13 +8381,6 @@ function exportPlaylistPDF(coverTitle, coverDesc, pdfTheme, coverImgBase64) {
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
-
-  /* ── WATERMARK ── */
-  .watermark {
-    position: fixed; bottom: 18px; right: 20px;
-    pointer-events: none; z-index: 999;
-  }
-  .watermark img { width: 72px; height: auto; opacity: 0.18; filter: grayscale(1); }
 
   /* ══════════════════════
      CAPA
@@ -8365,10 +8405,6 @@ function exportPlaylistPDF(coverTitle, coverDesc, pdfTheme, coverImgBase64) {
     margin-bottom: 32px;
     display: block;
   }
-
-  /* Logo CifraSet */
-  .cover-logo-wrap { margin-bottom: 48px; }
-  .cover-logo { height: 32px; width: auto; opacity: 0.7; }
 
   /* Conteúdo central */
   .cover-center { display: flex; flex-direction: column; align-items: center; }
@@ -8505,7 +8541,7 @@ function exportPlaylistPDF(coverTitle, coverDesc, pdfTheme, coverImgBase64) {
      só do lado direito na exportação. */
   .sections {
     column-count: 2;
-    column-gap: 28px;
+    column-gap: calc(28px * var(--pdf-scale));
     column-rule: 1px solid #ddd;
     column-fill: auto;
     orphans: 2;
@@ -8513,20 +8549,20 @@ function exportPlaylistPDF(coverTitle, coverDesc, pdfTheme, coverImgBase64) {
   }
   .song-num {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 9pt; font-weight: 600; color: #ccc;
+    font-size: calc(9pt * var(--pdf-scale)); font-weight: 600; color: #ccc;
     padding-top: 6px; min-width: 32px; letter-spacing: 1px;
   }
   .song-header-main { flex: 1; }
   .song-title {
-    font-size: 24pt; font-weight: 900;
+    font-size: calc(24pt * var(--pdf-scale)); font-weight: 900;
     letter-spacing: -0.5px; color: #0a0a0a;
-    line-height: 1.0; margin-bottom: 10px;
+    line-height: 1.0; margin-bottom: calc(10px * var(--pdf-scale));
   }
   .song-pills { display: flex; gap: 6px; flex-wrap: wrap; }
   .pill {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 7.5pt; font-weight: 600;
-    padding: 3px 8px; border-radius: 2px;
+    font-size: calc(7.5pt * var(--pdf-scale)); font-weight: 600;
+    padding: calc(3px * var(--pdf-scale)) calc(8px * var(--pdf-scale)); border-radius: 2px;
     border: 1.5px solid #0a0a0a; color: #0a0a0a;
     text-transform: uppercase; letter-spacing: 1px;
   }
@@ -8535,13 +8571,13 @@ function exportPlaylistPDF(coverTitle, coverDesc, pdfTheme, coverImgBase64) {
 
   /* Seções */
   .section {
-    margin-bottom: 16px;
+    margin-bottom: calc(16px * var(--pdf-scale));
   }
   .section-label {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 6.5pt; font-weight: 700;
+    font-size: calc(6.5pt * var(--pdf-scale)); font-weight: 700;
     letter-spacing: 3px; text-transform: uppercase;
-    color: #bbb; margin-bottom: 8px;
+    color: #bbb; margin-bottom: calc(8px * var(--pdf-scale));
     display: flex; align-items: center; gap: 8px;
   }
   .section-label::after { content: ''; flex: 1; height: 1px; background: #ebebeb; }
@@ -8551,19 +8587,19 @@ function exportPlaylistPDF(coverTitle, coverDesc, pdfTheme, coverImgBase64) {
     break-inside: avoid;
     page-break-inside: avoid;
     -webkit-column-break-inside: avoid;
-    margin-bottom: 8px;
+    margin-bottom: calc(8px * var(--pdf-scale));
   }
 
   /* ── CIFRAS E LETRAS: mesma fonte mono para alinhamento perfeito ── */
   .chord-row {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 9.5pt; font-weight: 700; color: #e07820;
+    font-size: calc(9.5pt * var(--pdf-scale)); font-weight: 700; color: #e07820;
     white-space: pre; line-height: 1.3;
     overflow: hidden; max-width: 100%;
   }
   .lyric-row {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 9.5pt; font-weight: 400; color: #1a1a1a;
+    font-size: calc(9.5pt * var(--pdf-scale)); font-weight: 400; color: #1a1a1a;
     white-space: pre; line-height: 1.5;
     overflow: hidden; max-width: 100%;
   }
@@ -8581,7 +8617,6 @@ function exportPlaylistPDF(coverTitle, coverDesc, pdfTheme, coverImgBase64) {
 
   @media print {
     body { background: #fff; }
-    .watermark { position: fixed; bottom: 10mm; right: 12mm; }
     .cover { height: calc(297mm - 30mm); }
     .no-print { display: none !important; }
   }
@@ -8604,17 +8639,9 @@ function exportPlaylistPDF(coverTitle, coverDesc, pdfTheme, coverImgBase64) {
   ← Voltar ao site
 \x3C/button>
 
-\x3C!-- WATERMARK -->
-\x3Cdiv class="watermark">
-  \x3Cimg src="https://i.imgur.com/rz3a926.png" alt="">
-\x3C/div>
-
 \x3C!-- CAPA -->
 \x3Cdiv class="cover">
   ${coverImgBase64 ? `\x3Cimg class="cover-img" src="${coverImgBase64}" alt="">` : ''}
-  \x3Cdiv class="cover-logo-wrap">
-    \x3Cimg class="cover-logo" src="https://i.imgur.com/Nelv4ev.png" alt="CifraSet">
-  \x3C/div>
   \x3Cdiv class="cover-center">
     \x3Ch1 class="cover-title">${escHtml(coverTitle || pl.name)}\x3C/h1>
     ${coverDesc ? `\x3Cp class="cover-desc">${escHtml(coverDesc)}\x3C/p>` : ''}
@@ -11843,6 +11870,15 @@ window.addEventListener('DOMContentLoaded', () => {
           <span class="pdf-theme-name">Marrom</span>
         </div>
       </div>
+    </div>
+
+    <div class="pdf-field">
+      <label class="pdf-field-label">Escala do conteúdo</label>
+      <div class="pdf-scale-control">
+        <input type="range" class="pdf-scale-slider" id="pdfScaleRange" min="80" max="130" step="5" value="100" oninput="onPdfScaleChange(this.value)">
+        <span class="pdf-scale-value" id="pdfScaleValue">100%</span>
+      </div>
+      <div class="pdf-scale-hint">Menor = texto mais compacto, cabe mais música por página &middot; Maior = texto mais legível</div>
     </div>
 
     <div class="pdf-field">
