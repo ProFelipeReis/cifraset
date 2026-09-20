@@ -320,6 +320,37 @@
   .song-item:hover .song-del { opacity: 1; }
   .song-del:hover { color: var(--red); }
 
+  .song-menu-btn {
+    background: none; border: none; color: var(--muted);
+    cursor: pointer; font-size: 16px; padding: 2px 5px;
+    opacity: 0; transition: opacity 0.2s, background 0.15s, color 0.15s;
+    line-height: 1; border-radius: 5px; flex-shrink: 0;
+  }
+  .song-item:hover .song-menu-btn { opacity: 1; }
+  .song-menu-btn:hover { color: var(--cream); background: var(--surface2); }
+  .song-menu-popup {
+    position: fixed; z-index: 1500;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 6px;
+    min-width: 190px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.45);
+    animation: songMenuIn 0.12s ease;
+  }
+  @keyframes songMenuIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .song-menu-item {
+    display: flex; align-items: center; gap: 8px;
+    width: 100%; text-align: left;
+    background: none; border: none; color: var(--text);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13px; padding: 9px 10px;
+    border-radius: 6px; cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .song-menu-item:hover { background: var(--surface); color: var(--gold); }
+
   .sidebar-footer {
     padding: 12px 20px;
     border-top: 1px solid var(--border);
@@ -6829,6 +6860,9 @@ function render() {
   document.querySelectorAll('.song-del').forEach(btn => {
     btn.style.display = canEdit ? '' : 'none';
   });
+  document.querySelectorAll('.song-menu-btn').forEach(btn => {
+    btn.style.display = canEdit ? '' : 'none';
+  });
   save();
 }
 
@@ -6981,10 +7015,11 @@ function renderSongList() {
           ${song.capo && song.capo !== '0' ? `<span>Capo ${song.capo}</span>` : ''}
         </div>
       </div>
+      <button class="song-menu-btn" title="Mais opções" onclick="toggleSongMenu('${song.id}',event)">⋮</button>
       <button class="song-del" title="Remover" onclick="deleteSong('${song.id}',event)">✕</button>
     `;
     div.onclick = (e) => {
-      if (e.target.classList.contains('song-del') || e.target.classList.contains('song-drag')) return;
+      if (e.target.classList.contains('song-del') || e.target.classList.contains('song-drag') || e.target.classList.contains('song-menu-btn')) return;
       localTransposeOffset = 0;
       state.activeSong = song.id; render(); closeMobileDrawer();
     };
@@ -7431,6 +7466,77 @@ function deleteSong(id, e) {
   const pl = getActivePl();
   pl.songs = pl.songs.filter(s => s.id !== id);
   if (state.activeSong === id) state.activeSong = pl.songs[0]?.id || null;
+  render();
+}
+
+// ── MENU DE OPÇÕES DA MÚSICA (3 pontinhos) ────────────────
+let openSongMenuId = null;
+
+function closeSongMenu() {
+  const existing = document.getElementById('songMenuPopup');
+  if (existing) existing.remove();
+  openSongMenuId = null;
+}
+
+function toggleSongMenu(id, e) {
+  e.stopPropagation();
+  if (!canEdit) return;
+  const wasOpenForThis = openSongMenuId === id;
+  closeSongMenu();
+  if (wasOpenForThis) return;
+
+  openSongMenuId = id;
+  const btn = e.currentTarget;
+  const rect = btn.getBoundingClientRect();
+
+  const popup = document.createElement('div');
+  popup.id = 'songMenuPopup';
+  popup.className = 'song-menu-popup';
+  popup.innerHTML = `<button class="song-menu-item" onclick="duplicateSong('${id}',event)">⧉ Duplicar música</button>`;
+  document.body.appendChild(popup);
+
+  const popupRect = popup.getBoundingClientRect();
+  let top = rect.bottom + 4;
+  let left = rect.right - popupRect.width;
+  if (left < 8) left = 8;
+  if (left + popupRect.width > window.innerWidth - 8) left = window.innerWidth - popupRect.width - 8;
+  if (top + popupRect.height > window.innerHeight - 8) top = rect.top - popupRect.height - 4;
+  popup.style.top = top + 'px';
+  popup.style.left = left + 'px';
+}
+
+document.addEventListener('click', (e) => {
+  const popup = document.getElementById('songMenuPopup');
+  if (!popup) return;
+  if (popup.contains(e.target) || e.target.classList.contains('song-menu-btn')) return;
+  closeSongMenu();
+});
+document.addEventListener('scroll', closeSongMenu, true);
+
+function duplicateSong(id, e) {
+  if (e) e.stopPropagation();
+  if (!canEdit) return;
+  const pl = getActivePl();
+  if (!pl) return;
+  const idx = pl.songs.findIndex(s => s.id === id);
+  if (idx === -1) return;
+
+  const clone = JSON.parse(JSON.stringify(pl.songs[idx]));
+  clone.id = uid();
+  // Regenera os IDs internos (seções/linhas) para não colidir com o original
+  const regenIds = (secs) => {
+    if (!Array.isArray(secs)) return;
+    secs.forEach(sec => {
+      sec.id = uid();
+      if (Array.isArray(sec.lines)) sec.lines.forEach(line => { line.id = uid(); });
+    });
+  };
+  regenIds(clone.sections);
+  regenIds(clone.originalSections);
+
+  pl.songs.splice(idx + 1, 0, clone);
+  closeSongMenu();
+  state.activeSong = clone.id;
   render();
 }
 
